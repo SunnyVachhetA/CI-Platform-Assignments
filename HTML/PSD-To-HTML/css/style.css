@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400&display=swap');
+*,
+::after,
+::before
+{
+    box-sizing: border-box;
+    padding: 0;
+    letter-spacing: 0;
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+}
+:root
+{
+    --col-white: #F8863400; 
+    --col-blue: #2B64B1;
+    --col-black: #414141;
+    --col-gray: #D9D9D9;
+    --col-orange: #F88634;
+}
+img { max-width: 100%; }
+a {text-decoration: none;}
+.bg-hero-login
+{
+    background-image: url('../assets/Grow-Trees-On-the-path-to-environment-sustainability-login.png');
+    /* width: 70%; */
+    background-size: cover;
+    height: 100vh;
+    /* background-position: center; */
+    background-repeat: no-repeat;
+}
+
+.text-light-custom
+{
+    font-weight: 300;
+}
+.custom-input:focus
+{
+    border-radius: 3px;
+    border-color: #2B64B1;
+    box-shadow: none;
+}
+.custom-input
+{
+    border-radius: 3px;
+    /* font-size: 16px; */
+    /* height: 56px; */
+    /* height: min(40px, 100%); */
+    width: min(401px, 100%);
+    color: var(--col-black);
+    /* width: 401px; */
+    border-color: var(--col-gray);
+}
+.custom-input-active
+{
+    border-radius: 3px;
+    /* height: 56px; */
+    /* width: 401px; */
+    border-color: var(--col-blue);
+}
+
+.input-label
+{
+    border-radius: 24px;
+}
+
+.btn-login
+{
+    border-radius: 24px;
+    border: 2px solid var(--col-orange);
+    color: var(--col-orange);
+    font-size: 17px;
+    width: 80%;
+    /* height: 48px;
+    width: 401px; */
+    background-color: var(--col-white);
+}
+
+.btn-login:hover { background-color: var(--col-orange); }
+.login-help-text, form-subtitle, .login-link-text   
+{
+    font-size: 14px;
+    color: var(--col-black);
+}
+
+.login-link-text:hover
+{
+    font-size: 16px;
+    color: var(--col-orange);
+}
+
+.hero-title
+{
+    font-size: 43px;
+    color: white;
+    text-align: left;
+    width: min(592px, 100%);    
+}
+.hero-text
+{
+    width: min(820px, 100%);
+    text-align: left;
+    color: white;
+}
+
+.form-title
+{
+    color: var(--col-black);
+    font-size: 22px;
+}
+
+@media screen and (min-width: 1000px) {
+    .bg-hero-login { 
+        /* background-position: cover !important; */
+        width: 70vw; 
+        padding-left: 110px !important;
+        padding-bottom: 50px !important;
+    }
+    .right-section
+    {
+        width: 30vw;
+    }
+    /* .custom-input-active, .custom-input, .btn-login
+    {
+        height: 56px; 
+        width: 401px;
+    } */
+    .policy-text 
+    {
+        position: fixed !important;
+        bottom: 10px;
+    }
+}
+
+
+@media (min-width: 768px) and (max-width: 999px){
+    .bg-hero-login
+    {
+        width: 100%;
+        height: 80vh;
+        background-position: center;
+    }
+
+    .btn-login {width: 80%;}
+    .hero-title {font-size: 22px;} 
+    .hero-text { font-size: 15px; } 
+}
+
+@media (max-width:576px) {
+    .bg-hero-login { height: 70vh; background-position: center;}
+    .btn-login { width: 80%; }
+    .hero-title { font-size: 25px; } 
+    .form-title { font-size: 20px; }
+    .form-subtitle { font-size: 10px; }
+    .input-label { font-size: 14px; }  
+}

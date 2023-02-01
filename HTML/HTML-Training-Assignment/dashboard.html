@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
+    <title>Dashboard | Assignment</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-white">
+        <div class="container-fluid">
+            <div class="navbar-brand">
+                <img src="./images/menu-bar.svg" id="menu-bar">
+                <a href="#">
+                    <picture class = "ms-3">
+                    <source media="(min-width:576px)" srcset="./images/header-logo.svg">    
+                    <img src="./images/mobile-header-logo.svg" alt="Company logo"></picture>
+                </a>
+            </div>
+            <div class="navar-nav me-auto ms-md-5 d-none d-md-block">
+                <div class="d-flex align-items-center"> 
+                    <img src="./images/search-icon.svg" class="search-icon" alt="Seach Icon">
+                    <input type="text" class="border border-0 ms-1" placeholder="Search">
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center me-0 d-sm-block">
+                <img src="./images/notification-icon.svg" class="me-4 me-md-5" alt="Notifications">
+
+                <img src="./images/profile.png" alt="Profile picture" class="nav-profile-picture">
+
+                <span class="ms-1">John Doe</span>
+
+                <img src="./images/downward-arrow.svg" class="ms-1" alt="Select Arrow">
+            </div>
+
+        </div>
+    </nav>
+
+    <main class="d-flex">
+        <aside class="flex-shrink-0">
+            <div class="d-flex flex-column gap-2 align-items-center bg-white">
+                <div class="d-flex align-items-center gap-2 ps-4 menu-item-active">
+                    <img class="menu-icon" src="./images/dashboard-active.svg" alt="Active Dashboard">
+                    <span class="menu-text">Dashboard</span>
+                </div>
+                <div class="d-flex align-items-center gap-2 ps-4 menu-item">
+                    <img class="menu-icon" src="./images/graph-default.svg" alt="Default Analysis">
+                    <span class="menu-text">Analysis</span>
+                </div>
+
+                <div class="d-flex align-items-center gap-2 ps-4 menu-item">
+                    <img class="menu-icon" src="./images/inbox-default.svg" alt="Default Inbox">
+                    <span class="menu-text">Inbox</span>
+                </div>
+
+
+                <div class="d-flex align-items-center gap-2 ps-4 menu-item">
+                    <img class="menu-icon" src="./images/clock-default.svg" alt="Defaut Clock">
+                    <span class="menu-text">History</span>
+                </div>
+
+
+                <div class="d-flex align-items-center gap-2 ps-4 menu-item">
+                    <img class="menu-icon" src="./images/user-default.svg" alt="Default Users">
+                    <span class="menu-text">Users</span>
+                </div>
+
+
+                <div class="d-flex align-items-center gap-2 ps-4 menu-item">
+                    <img class="menu-icon" src="./images/maintenance-default.svg" alt="Default Maintenance">
+                    <span class="menu-text">Maintenance</span>
+                </div>
+
+
+                <div class="d-flex align-items-center gap-2 ps-4 menu-item">
+                    <img class="menu-icon" src="./images/setting-default.svg" alt="Default Setting">
+                    <span class="menu-text">Setting</span>
+                </div>
+
+            </div>
+        </aside>
+
+        <div class="p-2 p-md-4 w-100 bg-light main-content">
+            <h1 class="dashboard-active-title">Dashboard</h1>
+
+            <!-- Dashboard Cards -->
+            <div class="container-fluid">
+                <div class="row gap-4" id="dashboard-cards-row">
+                    <div class="dashboard-cards col">
+                        <img src="./images/money-bag.svg" class="dash-icon" alt="">
+                        <div class="d-flex flex-column gap-0 ms-4 dash-content">
+                            <h4 class="dash-digits">
+                                23,456
+                            </h4>
+                            <span class="dash-text">
+                                New Products
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-cards col">
+                        <img src="./images/new-product.svg" class="dash-icon" alt="New Products">
+                        <div class="d-flex flex-column gap-0 ms-4 dash-content">
+                            <h4 class="dash-digits">
+                                2345
+                            </h4>
+                            <span class="dash-text">
+                                Added Products
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="dashboard-cards col">
+                        <img src="./images/total-product.svg" class="dash-icon" alt="Total Products">
+                        <div class="d-flex flex-column gap-0 ms-4 dash-content">
+                            <h4 class="dash-digits">
+                                32,456
+                            </h4>
+                            <span class="dash-text">
+                                Total Products
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="dashboard-cards col">
+                        <img src="./images/dollar-filled.svg" class="dash-icon" alt="Currency Icon">
+                        <div class="d-flex flex-column gap-0 ms-4 dash-content">
+                            <h4 class="dash-digits">
+                                5678
+                            </h4>
+                            <span class="dash-text">
+                                Today's Sale
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="dashboard-cards col">
+                        <img src="./images/money-bag.svg" class="dash-icon" alt="Money Bag">
+                        <div class="d-flex flex-column gap-0 ms-4 dash-content">
+                            <h4 class="dash-digits">
+                                33,5342
+                            </h4>
+                            <span class="dash-text">
+                                Total Sale
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Graphical Infomration -->
+            <section class="mt-4 d-flex flex-column flex-lg-row gap-4">
+
+                <!-- Graph of sale  -->
+                <div class="graph-background p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="data-graph-title">Sale</div>
+                        <div class="d-flex gap-3 parameter-text">
+                            <div>Weekly</div>
+                            <div>Monthly</div>
+                            <div class="active-graph-parameter">Yearly</div>
+                        </div>
+                    </div>
+                    <img src="./images/data-graph.png" class="mt-4 mx-auto d-block" alt="Data graph">
+                </div>
+
+
+                <!-- pie -->
+                <div class="graph-background p-4 flex-grow-1">
+                    <div class="data-graph-title">Sales by Country</div>
+                    <div class="container d-flex align-items-center justify-content-center"><img
+                            src="./images/pie-chart.svg" alt="Pie Chart"></div>
+                    <!-- List goes here -->
+                    <div class="list-container d-grid ">
+                        <div class="d-flex gap-2">
+                            <div class="red-circle flex-shrink-0"></div>
+                            <span class="pie-text">United States of America</span>
+                        </div>
+                        <div class="d-flex gap-2 ">
+                            <div class="green-circle flex-shrink-0"></div>
+                            <span class="pie-text">Canada</span>
+                        </div>
+                        <div class="d-flex gap-2 flex-shrink-0">
+                            <div class="orange-circle"></div   >
+                            <span class="pie-text">Russia</span>
+                        </div>
+                        <div class="d-flex gap-2 flex-shrink-0">
+                            <div class="yellow-circle"></div>
+                            <span class="pie-text">India</span>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <!-- Table -->
+            <section class="bg-white p-4 mt-4">
+                <div class="">
+                    <span class="data-graph-title">
+                        Invoices
+                    </span>
+                    <a href="#" class="view-table f-right">View All</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Invoice</th>
+                                <th scope="col">Company Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Due Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>651535</td>
+                                <td>Public Adjusting Firm</td>
+                                <td>georgia.young@example.com</td>
+                                <td>24 May, 2020</td>
+                                <td><span class="payment-success">Paid</span></td>
+                                <td>$47,800</td>
+                            </tr>
+
+                            <tr>
+                                <td>558612</td>
+                                <td>Other</td>
+                                <td>jessica.hanson@example.com</td>
+                                <td>24 May, 2020</td>
+                                <td><span class="payment-success">Paid</span></td>
+                                <td>$98,000</td>
+                            </tr>
+
+
+                            <tr>
+                                <td>558612</td>
+                                <td>Vendor</td>
+                                <td>alma.lawson@example.com</td>
+                                <td>8 Sept, 2020</td>
+                                <td><span class="payment-success">Paid</span></td>
+                                <td>$20,900</td>
+                            </tr>
+                            <tr>
+                                <td>558612</td>
+                                <td>Property Management Company</td>
+                                <td>kenzi.lawson@example.com</td>
+                                <td>22 Oct, 2020</td>
+                                <td><span class="payment-success">Paid</span></td>
+                                <td>$10,570</td>
+                            </tr>
+
+                            <tr>
+                                <td>651535</td>
+                                <td>Subcontractor Company</td>
+                                <td>jackson.graham@example.com</td>
+                                <td>1 Feb, 2020</td>
+                                <td><span class="payment-failed">Failed</span></td>
+                                <td>$10,200</td>
+                            </tr>
+
+                            <tr>
+                                <td>651538</td>
+                                <td>Mortgage Company</td>
+                                <td>felicia.red@example.com</td>
+                                <td>22 Oct, 2020</td>
+                                <td><span class="payment-pending">Pending</span></td>
+                                <td>$12,600</td>
+                            </tr>
+
+                            <tr>
+                                <td>487441</td>
+                                <td>TPA</td>
+                                <td>dolores.chambers@example.com</td>
+                                <td>21 Sept, 2020</td>
+                                <td><span class="payment-success">Paid</span></td>
+                                <td>$11,170</td>
+                            </tr>
+
+                            <tr>
+                                <td>267400</td>
+                                <td>Fire Department</td>
+                                <td>nevaeh.simmons@example.com</td>
+                                <td>17 Oct, 2020</td>
+                                <td><span class="payment-failed">Failed</span></td>
+                                <td>$28,000</td>
+                            </tr>
+
+                            <tr>
+                                <td>449003</td>
+                                <td>Insurance Carrier</td>
+                                <td>curtis.weaver@example.com</td>
+                                <td>21 Sept, 2020</td>
+                                <td><span class="payment-success">Paid</span></td>
+                                <td>$28,000</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/custom.js"></script>
+</body>
+
+</html>
