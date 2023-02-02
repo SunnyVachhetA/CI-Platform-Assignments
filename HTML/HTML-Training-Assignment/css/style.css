@@ -116,11 +116,11 @@ a {
         font-size: 40px;
     }
 
-    .hero-image {
+    /* .hero-image {
         height: 536px;
         width: 536px;
         border: 20px solid white;
-    }
+    } */
 
     .header-logo {
         height: 58px;
@@ -165,7 +165,7 @@ a {
 }
 
 /* Medium Screen */
-@media (min-width:720px) and (max-width:991px) {
+@media (min-width:720px) and (max-width:1300px) {
     .sub-header {
         font-size: 20px;
     }
