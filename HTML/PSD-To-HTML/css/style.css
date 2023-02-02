@@ -108,6 +108,13 @@ a {text-decoration: none;}
     font-size: 22px;
 }
 
+@media screen and (min-width:1375px)
+{
+    .custom-input, .custom-input-active {
+        width: 401px;
+        height: 56px;
+    }
+}
 @media screen and (min-width: 1000px) {
     .bg-hero-login { 
         /* background-position: cover !important; */
@@ -119,11 +126,10 @@ a {text-decoration: none;}
     {
         width: 30vw;
     }
-    /* .custom-input-active, .custom-input, .btn-login
+    /* .custom-input-active, .custom-input
     {
-        height: 56px; 
-        width: 401px;
-    } */
+        width: 100%;    
+    }  */
     .policy-text 
     {
         position: fixed !important;
@@ -142,7 +148,12 @@ a {text-decoration: none;}
 
     .btn-login {width: 80%;}
     .hero-title {font-size: 22px;} 
-    .hero-text { font-size: 15px; } 
+    .hero-text { font-size: 15px; }
+    
+    .custom-input, .custom-input-active
+    {
+        width: 50vw;
+    }
 }
 
 @media (max-width:576px) {
