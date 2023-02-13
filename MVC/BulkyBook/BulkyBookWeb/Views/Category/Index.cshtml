@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Category List | Category";
+}
+
+<partial name = "_Notification"></partial>
+<div class="container">
+    <div class="row py-2">
+        <div class="col-6">
+            <h2>Category List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Category" asp-action="Create"
+            class = "btn btn-primary">
+                <i class="bi bi-plus-circle"></i>
+                Create New Category    
+            </a>
+        </div>
+    </div>
+    
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Category Name
+            </th>
+            <th>
+                Display Order
+            </th>
+            <th class = "text-center">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class = "col-4">
+                    @item.Name
+                </td>
+                <td class = "col-4">
+                    @item.DisplayOrder
+                </td>
+                <td class = "text-center col-4">
+                    <div class = "btn-group btn btn-info" role = "group">
+                        <a asp-controller="Category" asp-action="Edit" 
+                        asp-route-id="@item.Id" class = "text-black mx-2"
+                        ><i class="bi bi-pencil-square"></i> Edit</a>
+                    </div>
+
+                    <div class = "btn-group btn btn-danger" role = "group">
+                        <a asp-controller="Category" asp-action="Delete" 
+                        asp-route-id="@item.Id" class = "text-black mx-2"
+                        > <i class="bi bi-trash"></i> Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
