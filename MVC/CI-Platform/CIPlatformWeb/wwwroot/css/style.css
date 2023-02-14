@@ -27,12 +27,17 @@ a {
 }
 
 .bg-hero-login {
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("/assets/Grow-Trees-On-the-path-to-environment-sustainability-login.png");
+    /*background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("/assets/Grow-Trees-On-the-path-to-environment-sustainability-login.png");
     /* width: 70%; */
     background-size: cover;
-    height: 100vh;
+    /*height: 100vh;*/
     /* background-position: center; */
     background-repeat: no-repeat;
+}
+
+.carousel-item img {
+    height: 100vh;
+    width: 100%;
 }
 
 .text-light-custom {
@@ -121,12 +126,16 @@ form-subtitle,
 }
 
 @media screen and (min-width: 1000px) {
-    .bg-hero-login {
+    /*.bg-hero-login {*/
         /* background-position: cover !important; */
-        width: 70vw;
+        /*width: 70vw;
         padding-left: 110px !important;
         padding-bottom: 50px !important;
-    }
+    }*/
+
+    .bg-hero-login {
+        width: 70vw;
+    } 
 
     .right-section {
         width: 30vw;
@@ -142,11 +151,11 @@ form-subtitle,
 }
 
 @media (min-width: 768px) and (max-width: 999px) {
-    .bg-hero-login {
+    /*.bg-hero-login {
         width: 100%;
         height: 80vh;
         background-position: center;
-    }
+    }*/
 
     .btn-login {
         width: 80%;
@@ -164,14 +173,28 @@ form-subtitle,
     .custom-input-active {
         width: 50vw;
     }
+    .carousel-item img {
+        height: 70vh !important;
+    }
+
+    .bg-hero-login {
+        height: 70vh;
+    } 
 }
 
 @media (max-width: 576px) {
-    .bg-hero-login {
+    . /*bg-hero-login {
         height: 70vh;
         background-position: center;
+    }*/
+
+    .bg-hero-login {
+        height: 70vh !important;
     }
 
+    .carousel-item img {
+        height: 70vh !important;
+    }
     .btn-login {
         width: 80%;
     }

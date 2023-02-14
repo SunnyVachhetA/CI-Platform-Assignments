@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Login | User";
+}
+
+<section class="d-flex flex-column flex-lg-row gap-2 gap-lg-0">
+    <partial name="_HeroBanner" />
+    <div class="right-section d-flex flex-column align-items-center justify-content-center gap-3">
+        <form class="d-grid gap-4 gap-md-2 gap-xxl-4">
+            <div class="form-group text-start">
+                <label for="first-name" class="input-label text-light-custom">First Name</label>
+                <input type="text" class="form-control custom-input" id="first-name" placeholder="Enter your first name">
+            </div>
+            <div class="form-group text-start">
+                <label for="last-name" class="input-label text-light-custom">Last Name</label>
+                <input type="text" class="form-control custom-input" id="last-name" placeholder="Enter your last name">
+            </div>
+            <div class="form-group text-start">
+                <label for="phone-number" class="input-label text-light-custom">Email address</label>
+                <input type="tel" class="form-control custom-input" id="phone-number" placeholder="Enter your phone number">
+            </div>
+            <div class="form-group text-start">
+                <label for="email" class="input-label text-light-custom">Email address</label>
+                <input type="email" class="form-control custom-input" id="email" placeholder="Enter your email address">
+            </div>
+            <div class="form-group text-start">
+                <label for="password" class="input-label text-light-custom">Password</label>
+                <input type="password" value="hellothere" class="form-control custom-input" id="password" placeholder="Create new password">
+            </div>
+            <div class="form-group text-start">
+                <label for="confirm-password" class="input-label text-light-custom">Confirm Password</label>
+                <input type="password" class="form-control custom-input" id="confirm-password" value="hellothere" placeholder="Enter password again">
+            </div>
+            <button class="btn mx-auto btn-login">
+                Reset my Password
+            </button>
+        </form>
+
+        <a asp-controller="User" asp-action="ForgotPassword" class=" login-link-text text-light-custom">
+            Lost your password?
+        </a>
+
+        <span class="login-help-text text-light-custom">
+            Already registered? <a asp-controller="User" asp-action = "Login" class="login-link-text">Login now</a>
+        </span>
+
+        <span class="login-help-text text-light-custom mt-4 policy-text">
+            Privacy Policy
+        </span>
+    </div>
+</section>

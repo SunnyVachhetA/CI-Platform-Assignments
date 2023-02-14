@@ -1,10 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Login | Home";
+    ViewData["Title"] = "Login | User";
 }
 
 <section class="d-flex flex-column flex-lg-row gap-2 gap-lg-0">
     <partial name="_HeroBanner" />
-    <!-- <img src="./assets/Grow-Trees-On-the-path-to-environment-sustainability-login.png" alt="Login Hero Image"> -->
     <div class="right-section d-flex flex-column align-items-center justify-content-center flex-shrink-0 p-0 p-md-5">
         <form class="d-grid gap-2 gap-md-4">
             <div class="form-group m-4 text-start">
@@ -23,12 +22,12 @@
             </button>
         </form>
 
-        <a href="forget-password.html" class="mt-3 login-help-text text-light-custom">
+        <a asp-controller="User" asp-action="ForgotPassword" class="mt-3 login-help-text text-light-custom">
             Lost your password?
         </a>
 
         <span class="mt-3 login-help-text text-light-custom">
-            Don’t have an account? <a href="">Create an account</a>
+            Don’t have an account? <a asp-controller="User" asp-action="Registration">Create an account</a>
         </span>
 
         <span class="login-help-text text-light-custom mt-4 policy-text">

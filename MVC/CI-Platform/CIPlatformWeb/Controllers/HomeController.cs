@@ -23,12 +23,6 @@ namespace CIPlatformWeb.Controllers
             return View();
         }
 
-        public IActionResult ForgotPassword()
-        {
-            Console.WriteLine("Forgot Password called");
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
