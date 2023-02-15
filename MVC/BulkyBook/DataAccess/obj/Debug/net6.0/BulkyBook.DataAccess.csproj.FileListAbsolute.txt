@@ -1,0 +1,15 @@
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\obj\Debug\net6.0\BulkyBook.DataAccess.csproj.AssemblyReference.cache
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\obj\Debug\net6.0\BulkyBook.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\obj\Debug\net6.0\BulkyBook.DataAccess.AssemblyInfoInputs.cache
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\obj\Debug\net6.0\BulkyBook.DataAccess.AssemblyInfo.cs
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\obj\Debug\net6.0\BulkyBook.DataAccess.csproj.CoreCompileInputs.cache
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\bin\Debug\net6.0\BulkyBook.DataAccess.deps.json
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\bin\Debug\net6.0\BulkyBook.DataAccess.dll
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\bin\Debug\net6.0\BulkyBook.DataAccess.pdb
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\bin\Debug\net6.0\BulkyBook.Models.dll
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\bin\Debug\net6.0\BulkyBook.Models.pdb
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\obj\Debug\net6.0\BulkyBook.DataAccess.csproj.CopyComplete
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\obj\Debug\net6.0\BulkyBook.DataAccess.dll
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\obj\Debug\net6.0\refint\BulkyBook.DataAccess.dll
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\obj\Debug\net6.0\BulkyBook.DataAccess.pdb
+F:\Project\CI-Platform-Assignments\MVC\BulkyBook\DataAccess\obj\Debug\net6.0\ref\BulkyBook.DataAccess.dll

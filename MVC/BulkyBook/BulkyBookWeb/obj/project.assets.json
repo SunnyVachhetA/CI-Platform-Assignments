@@ -1155,6 +1155,32 @@
             "rid": "win"
           }
         }
+      },
+      "BulkyBook.DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "BulkyBook.Models": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "7.0.2",
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.2",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.2"
+        },
+        "compile": {
+          "bin/placeholder/BulkyBook.DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BulkyBook.DataAccess.dll": {}
+        }
+      },
+      "BulkyBook.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BulkyBook.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BulkyBook.Models.dll": {}
+        }
       }
     }
   },
@@ -3500,10 +3526,22 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "BulkyBook.DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../DataAccess/BulkyBook.DataAccess.csproj",
+      "msbuildProject": "../DataAccess/BulkyBook.DataAccess.csproj"
+    },
+    "BulkyBook.Models/1.0.0": {
+      "type": "project",
+      "path": "../Models/BulkyBook.Models.csproj",
+      "msbuildProject": "../Models/BulkyBook.Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "BulkyBook.DataAccess >= 1.0.0",
+      "BulkyBook.Models >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 7.0.2",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.2",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.2"
@@ -3535,7 +3573,14 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "F:\\Project\\CI-Platform-Assignments\\MVC\\BulkyBook\\DataAccess\\BulkyBook.DataAccess.csproj": {
+              "projectPath": "F:\\Project\\CI-Platform-Assignments\\MVC\\BulkyBook\\DataAccess\\BulkyBook.DataAccess.csproj"
+            },
+            "F:\\Project\\CI-Platform-Assignments\\MVC\\BulkyBook\\Models\\BulkyBook.Models.csproj": {
+              "projectPath": "F:\\Project\\CI-Platform-Assignments\\MVC\\BulkyBook\\Models\\BulkyBook.Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
