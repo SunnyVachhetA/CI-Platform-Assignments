@@ -1,0 +1,14 @@
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\bin\Debug\net6.0\ThreeTier.Entities.deps.json
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\bin\Debug\net6.0\ThreeTier.Entities.runtimeconfig.json
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\bin\Debug\net6.0\ThreeTier.Entities.dll
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\bin\Debug\net6.0\ThreeTier.Entities.pdb
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\obj\Debug\net6.0\ThreeTier.Entities.csproj.AssemblyReference.cache
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\obj\Debug\net6.0\ThreeTier.Entities.GeneratedMSBuildEditorConfig.editorconfig
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\obj\Debug\net6.0\ThreeTier.Entities.AssemblyInfoInputs.cache
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\obj\Debug\net6.0\ThreeTier.Entities.AssemblyInfo.cs
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\obj\Debug\net6.0\ThreeTier.Entities.csproj.CoreCompileInputs.cache
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\obj\Debug\net6.0\ThreeTier.Entities.dll
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\obj\Debug\net6.0\refint\ThreeTier.Entities.dll
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\obj\Debug\net6.0\ThreeTier.Entities.pdb
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\obj\Debug\net6.0\ThreeTier.Entities.genruntimeconfig.cache
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierEntities\obj\Debug\net6.0\ref\ThreeTier.Entities.dll

@@ -1,0 +1,17 @@
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\bin\Debug\net6.0\ThreeTier.Repositories.deps.json
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\bin\Debug\net6.0\ThreeTier.Repositories.runtimeconfig.json
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\bin\Debug\net6.0\ThreeTier.Repositories.dll
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\bin\Debug\net6.0\ThreeTier.Repositories.pdb
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\bin\Debug\net6.0\ThreeTier.Entities.dll
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\bin\Debug\net6.0\ThreeTier.Entities.pdb
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\ThreeTier.Repositories.csproj.AssemblyReference.cache
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\ThreeTier.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\ThreeTier.Repositories.AssemblyInfoInputs.cache
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\ThreeTier.Repositories.AssemblyInfo.cs
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\ThreeTier.Repositories.csproj.CoreCompileInputs.cache
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\ThreeTier.Repositories.csproj.CopyComplete
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\ThreeTier.Repositories.dll
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\refint\ThreeTier.Repositories.dll
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\ThreeTier.Repositories.pdb
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\ThreeTier.Repositories.genruntimeconfig.cache
+F:\Project\CI-Platform-Assignments\MVC\Three-Tier-Architecture\ThreeTierRepositories\obj\Debug\net6.0\ref\ThreeTier.Repositories.dll

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ThreeTier.Entities.ViewModels.EmployeeModel>
+
+<table class = "table table-stripped" id="employeeTable">
+    <thead">
+        <tr class="row">
+            <th class="col-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="col-3">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th class="col-3">
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th class="col-4 text-center">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr class="row">
+                <td class="col-2">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td class="col-3">
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td class="col-3">
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td class="col-4 text-center">
+                    
+                    <div class="btn-group btn btn-info" role="group">
+
+                        <a asp-controller="Home" asp-action="Edit"
+                           asp-route-id="@item.Id" class="text-black mx-2">
+                           Edit
+                       </a>
+                    </div>
+
+                    <div class="btn-group btn btn-danger" role="group">
+                        <a asp-controller="Home" asp-action="Delete"
+                           asp-route-id="@item.Id" class="text-black mx-2">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }        
+    </tbody>
+</table>

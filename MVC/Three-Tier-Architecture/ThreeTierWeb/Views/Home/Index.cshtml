@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ThreeTier.Entities.ViewModels.EmployeeModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="container p-2">
+    <h1 class="d-inline"> Employee List </h1>
+    <p class="float-end btn btn-info p-2 text-white" >
+        <a asp-action="CreateEmployee" asp-controller="Home" class="text-decoration-none"> New Employee </a>
+    </p>
+</div>
+<div>
+    <partial name = "_Notification"></partial>
+</div>
+<partial name="_EmployeeGrid" model="Model" />
