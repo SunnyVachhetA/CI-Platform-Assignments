@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400&display=swap");
+
 *,
 ::after,
 ::before {
@@ -8,19 +9,37 @@
   margin: 0;
   font-family: "Noto Sans", sans-serif;
 }
+
 :root {
   --col-white: #f8863400;
   --col-blue: #2b64b1;
   --col-black: #414141;
   --col-gray: #d9d9d9;
   --col-orange: #f88634;
+  --col-black-text: #333333;
+  --col-brown: #E8E8E8;
 }
+
+body { max-width: 1920px; }
+
+.cursor-pointer { cursor: pointer; }
+
+.small-light-text { font-size: 13px; font-weight: 300; }
+.custom-text-black { color: var(--col-black-text); }
+.medium-text
+{
+  font-size: 1rem;
+  color: var(--col-black-text);
+}
+
 img {
   max-width: 100%;
 }
+
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
+
 .bg-hero-login {
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
     url("../assets/Grow-Trees-On-the-path-to-environment-sustainability-login.png");
@@ -34,11 +53,13 @@ a {
 .text-light-custom {
   font-weight: 300;
 }
+
 .custom-input:focus {
   border-radius: 3px;
   border-color: #2b64b1;
   box-shadow: none;
 }
+
 .custom-input {
   border-radius: 3px;
   /* font-size: 16px; */
@@ -49,6 +70,7 @@ a {
   /* width: 401px; */
   border-color: var(--col-gray);
 }
+
 .custom-input-active {
   border-radius: 3px;
   /* height: 56px; */
@@ -74,6 +96,7 @@ a {
 .btn-login:hover {
   background-color: var(--col-orange);
 }
+
 .login-help-text,
 form-subtitle,
 .login-link-text {
@@ -92,6 +115,7 @@ form-subtitle,
   text-align: left;
   width: min(592px, 100%);
 }
+
 .hero-text {
   width: min(820px, 100%);
   text-align: left;
@@ -104,12 +128,14 @@ form-subtitle,
 }
 
 @media screen and (min-width: 1375px) {
+
   .custom-input,
   .custom-input-active {
     width: 401px;
     height: 56px;
   }
 }
+
 @media screen and (min-width: 1000px) {
   .bg-hero-login {
     /* background-position: cover !important; */
@@ -117,9 +143,11 @@ form-subtitle,
     padding-left: 110px !important;
     padding-bottom: 50px !important;
   }
+
   .right-section {
     width: 30vw;
   }
+
   /* .custom-input-active, .custom-input
     {
         width: 100%;    
@@ -140,9 +168,11 @@ form-subtitle,
   .btn-login {
     width: 80%;
   }
+
   .hero-title {
     font-size: 22px;
   }
+
   .hero-text {
     font-size: 15px;
   }
@@ -158,19 +188,112 @@ form-subtitle,
     height: 70vh;
     background-position: center;
   }
+
   .btn-login {
     width: 80%;
   }
+
   .hero-title {
     font-size: 25px;
   }
+
   .form-title {
     font-size: 20px;
   }
+
   .form-subtitle {
     font-size: 10px;
   }
+
   .input-label {
     font-size: 14px;
   }
 }
+
+
+/*
+  Landing Page CSS Start
+*/
+
+
+.navbar-home
+{
+  padding: 1rem;
+}
+
+.nav-profile-picture {
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+ 
+.dropdown-toggle::after
+{
+  display: none !important;
+} 
+
+.dropdown-item { cursor: pointer; }
+
+.icon-search { height: 20px; width: 20px; }
+
+.search-input { border: none; }
+
+.search-input:focus { outline: none; border: none;}
+
+.filter-section > div
+{
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dropdown 
+{
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-filter
+{
+  height: 10px;
+  width: 10px;
+}
+
+.filter-option-value
+{
+  border-radius: 14px solid var(--col-brown);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 300;
+  border-radius: 14px;
+  border: 1px solid var(--col-brown);
+}
+
+.filter-option-value:hover
+{
+  outline:none;
+  border-color: #9ecaed;
+  box-shadow: 0 0 4px #9ecaed;
+}
+
+#clear-all-filter:hover
+{
+  font-size: 15px !important;
+  color: var(--col-black-text) !important;
+}
+
+
+.filter-list 
+{
+  padding: 0 !important;
+}
+
+#clear-all-filter
+{
+  background-color: white;
+  border:none;
+}
+
+/* Landing Page CSS Complete */
