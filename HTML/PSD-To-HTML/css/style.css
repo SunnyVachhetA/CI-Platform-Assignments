@@ -19,21 +19,25 @@
   --col-black-text: #333333;
   --col-brown: #E8E8E8;
   --col-secondary-brown: #757575;
-  --transition: all 0.3s linear;
+  --transition: all 0.3 linear;
 }
 
-body { max-width: 1920px; }
-
+body { max-width: 1920px; color: var(--col-black); }
 .mb-n1 { margin-bottom: -1.125rem; }
 .mt-n1 { margin-top: -0.5rem; }
+.ms-n4 { margin-left: -1.5rem; }
+.me-n4 { margin-right: -1.5rem; } 
 .cursor-pointer { cursor: pointer; }
-.text-brown { color: var(--col-secondary-brown); }
+.text-brown { color: var(--col-secondary-brown) !important; }
 .bg-orange { background-color: var(--col-orange) !important; } 
 .text-black-1 { color: var(--col-black); } 
 .font-lg-size { font-size: 24px; }
+.font-22 { font-size: 22px; }
 .font-xl-size { font-size: 28px; }
+.font-xxl { font-size: 2.125rem; }
 .font-title-size { font-size: 26px; }
 .font-xs { font-size: 14px; }
+.font-15 { font-size: 15px; }
 .font-md { font-size: 18px; }
 .small-light-text { font-size: 13px; font-weight: 300; }
 .custom-text-black { color: var(--col-black-text); }
@@ -41,8 +45,12 @@ body { max-width: 1920px; }
 .medium-text{font-size: 1rem;color: var(--col-black-text);}
 .rounded-18 { border-radius: 1.125rem; }
 .h-90 { height: 90%; }
+.h-80 { height: 80% }
+.msn-img-sm { max-height: 7.5rem; max-width: 10.9375rem; }
+.-translate-middle-x { transform: translateX(50%); }
 img { max-width: 100%;}
-
+.flex-basis { flex-basis: 100%; }
+.border-bottom-1 { border-bottom: 1px solid var(--col-black); }
 a {text-decoration: none !important;}
 
 .bg-hero-login {
@@ -284,11 +292,6 @@ form-subtitle,
 .c-pagination-item > button { border-radius: 3px; font-weight: 300; }
 .c-pagination-item .active { color: white; font-weight: 400; background-color: var(--col-orange) !important;}
 
-.msn-grid-view { 
-  display: grid;
-  column-gap: 1rem;
-  row-gap: 2rem;
-}
 .mission-desc-ellips 
 {
   text-overflow: ellipsis;
@@ -318,3 +321,25 @@ form-subtitle,
 }
 
 /* Landing Page CSS Complete */
+
+
+/* Volunteering Mission Page CSS Start */
+.btn-favourite, .btn-share { border-radius: 1.5625rem; border: 2px solid var(--col-secondary-brown); background-color: var(--col-white);
+max-width: 20rem; transition: var(--transition);}
+.btn-favourite:hover, .btn-share:hover { color: black !important; }
+.msn-box-info { border-radius: 3px; border: 1px solid var(--col-brown); height: 8rem; }
+.msn-box-img { max-height: 1.5rem; max-width: 1.125rem; }
+#msn-box > div { flex: 1 1 0 !important;}
+
+.tabs { font-weight: 300; transition: var(--transition);}
+.tabs .active { font-weight: 400; border-bottom: 0.2rem solid var(--col-black);}
+.pdf-file, .doc-file, .xl-file { border-radius: 1.4375rem; background-color: var(--col-white); border: 1px solid var(--col-brown); transition: var(--transition); }
+.pdf-file:hover, .doc-file:hover, .xl-file:hover { border: 1px solid var(--col-blue); }
+.comma-list li { display: inline; }
+.comma-list li::after { content: ", "; }
+.comma-list li:last-child::after { content: "";}
+.volunteer-img { height: 4.375rem; width: 4.375rem; }
+@media screen and (max-width: 576px){
+  #msn-box > div { width: 60%; }
+}
+/* Volunteering Mission Page CSS Complete */
