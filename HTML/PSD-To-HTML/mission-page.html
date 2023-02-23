@@ -720,9 +720,9 @@
             'click',
             () =>
             {   
-                const scrollValue = slider.scrollLeft;
-                const offset = 
-                slider.scroll(0, scrollValue);
+                const scrollValue = slider.scrollLeft - scrollWidth;
+                console.log(scrollValue, slider.scrollLeft);
+                slider.scroll( scrollValue , 0 );
             }
         );  
 
@@ -731,7 +731,7 @@
             () =>
             {
                 const scrollValue = scrollWidth + slider.scrollLeft;
-                slider.scrollLeft += scrollValue;
+                slider.scroll(scrollValue, 0);
             }
         );
         //Scroll Fin

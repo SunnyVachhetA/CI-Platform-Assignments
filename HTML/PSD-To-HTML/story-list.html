@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story List | CI</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar-home container d-flex gap-2 gap-md-5 navbar-light">
+            <img src="./assets/logo.png" alt="Logo" />
+            <div class="d-flex gap-2 gap-sm-5 align-items-center">
+                <a class="medium-text ">Stories</a>
+                <div class="dropdown">
+                    <a class="dropdown-toggle medium-text" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Policy
+                        <img src="./assets/drop-down.png" class="ms-2" alt="Options">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-2 ms-auto">
+                <div class="dropdown">
+                    <a class="dropdown-toggle medium-text " href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="./assets/user-img.png" alt="Profile Image" class="nav-profile-picture">
+                        <span class="d-none d-sm-inline">Evan Donohue</span>
+                        <img src="./assets/drop-down.png" class="ms-2" alt="Options">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Missions</a></li>
+                        <li><a class="dropdown-item" href="#">Favourites</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <hr class = "m-0">
+        <!-- Search Section Begin -->
+        <section class="border border-bottom">
+            <div class="container">
+                <div
+                    class="d-flex flex-wrap flex-column flex-sm-row justify-content-between bg-transparent filter-section gap-4 gap-xl-0">
+                    <div class="d-flex align-items-center justify-content-between border-bottom flex-grow-1">
+                        <img src="./assets/search.png" alt="Search" class="icon-search">
+                        <input type="text" class="search-input ms-2 me-auto form-control"
+                            placeholder="Search Mission...">
+                        <button class="cursor-pointer bg-transparent border-0 " data-bs-toggle="collapse"
+                            data-bs-target="#collapseFilterMenu" aria-expanded="false"
+                            aria-controls="collapseFilterMenu">
+                            <img src="./assets/filter.png" alt="Filter" class="d-block d-sm-none ">
+                        </button>
+                    </div>
+                    <div class="d-flex flex-column flex-sm-row flex-wrap border collapse gap-2 gap-md-4 gap-xl-0"
+                        id="collapseFilterMenu">
+                        <!-- <div class=""> -->
+                        <div class="dropdown text-center">
+
+                            <button
+                                class="d-flex w-100 bg-transparent justify-content-around align-items-center gap-5 p-3 dropdown dropdown-toggle px-4 border custom-text-black text-light-custom"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Country
+                                <img src="./assets/drop-down.png" alt="Options">
+                            </button>
+                            <!-- <a class="dropdown-toggle custom-text-black text-light-custom " href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Country
+                                    <img src="./assets/drop-down.png" class="ms-2" alt="Options">
+                                </a> -->
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Missions</a></li>
+                                <li><a class="dropdown-item" href="#">Favourites</a></li>
+                            </ul>
+                        </div>
+                        <!-- </div> -->
+                        <!-- <div class=""> -->
+                        <div class="dropdown text-center ">
+                            <button
+                                class="d-flex w-100 bg-transparent p-3 px-4 justify-content-around align-items-center gap-5 p-2 dropdown dropdown-toggle custom-text-black text-light-custom border border-1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                City
+                                <img src="./assets/drop-down.png" alt="Options">
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Missions</a></li>
+                                <li><a class="dropdown-item" href="#">Favourites</a></li>
+                            </ul>
+                        </div>
+                        <!-- </div> -->
+                        <!-- <div class=""> -->
+                        <div class="dropdown text-center ">
+                            <button
+                                class="d-flex w-100 bg-transparent justify-content-around align-items-center gap-5 dropdown dropdown-toggle border p-3 px-4 custom-text-black text-light-custom"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Theme
+                                <img src="./assets/drop-down.png" alt="Options">
+                            </button>
+                            <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Missions</a></li>
+                                <li><a class="dropdown-item" href="#">Favourites</a></li>
+                            </ul>
+                        </div>
+                        <!-- </div> -->
+                        <!-- <div class=""> -->
+                        <div class="dropdown text-center">
+                            <button
+                                class="w-100 d-flex bg-transparent justify-content-around align-items-center gap-5 p-3 px-4 dropdown dropdown-toggle border custom-text-black text-light-custom"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Skills
+                                <img src="./assets/drop-down.png" alt="Options">
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Missions</a></li>
+                                <li><a class="dropdown-item" href="#">Favourites</a></li>
+                            </ul>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Search Section End -->
+
+        <!-- Filter List Begin -->
+        <section class="mt-3 container d-none">
+            <ul class="d-flex flex-wrap gap-2 p-0">
+                <li class="filter-option-value px-2">Tree Plantation<img src="./assets/cancel1.png" alt="Cancel"
+                        class="cancel-filter cursor-pointer">
+                </li>
+                <li class="filter-option-value px-2">Canada<img src="./assets/cancel1.png" alt="Cancel"
+                        class="cancel-filter cursor-pointer">
+                </li>
+                <li class="filter-option-value px-2">Toronto<img src="./assets/cancel1.png" alt="Cancel"
+                        class="cancel-filter cursor-pointer">
+                </li>
+                <li class="filter-option-value px-2">Montreal<img src="./assets/cancel1.png" alt="Cancel"
+                        class="cancel-filter cursor-pointer">
+                </li>
+                <li class="filter-option-value px-2">Environment<img src="./assets/cancel1.png" alt="Cancel"
+                        class="cancel-filter cursor-pointer">
+                </li>
+                <li class="filter-option-value px-2">Nutrition<img src="./assets/cancel1.png" alt="Cancel"
+                        class="cancel-filter cursor-pointer">
+                </li>
+                <li class="list-unstyled">
+                    <button id="clear-all-filter" class="small-light-text">
+                        Clear All
+                    </button>
+                </li>
+            </ul>
+        </section>
+        <!-- Filter List End -->
+
+        <!-- Story Hero -->
+        <section class="bg-hero-story mt-4 mt-md-0 d-flex flex-column text-center align-items-center justify-content-center flex-nowrap">
+                <p class="text-white story-hero-text d-none d-md-block mx-5">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa sed architecto, amet odio doloremque voluptatum
+                    consectetur natus quos ipsam! Recusandae illo accusamus minus vitae nemo?
+                </p>
+                <button class="btn-g-white mt-4 mx-content mx-auto font-md ">
+                    Share Your Story
+                    <img src="./assets/right-arrow2.png" alt="Right Arrow">
+                </button>
+        
+        </section>
+        <!-- Story Hero Fin  -->
+    </header>
+
+    <!-- Story Listing Section -->
+    <section class = "container mt-4">
+        <div class = "row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-xl-4">
+            
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative">
+                        <img src="./assets/Grow-Trees-On-the-path-to-environment-sustainability-3.png" alt="Story Thumbnail" class = "w-100 h-90 story-thumbnail">
+
+                        <div class = "position-absolute d-flex justify-content-center align-items-center btn-story-center">
+                            <a href="btn-g-orange">
+                                View Details
+                                <img src="./assets/right-arrow1.png" alt="Right Arrow">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <div class = "position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Environment
+                        </div>
+                        <h3 class="mt-0 px-4">
+                            10 User and customer engagement strategies for 2019
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                        <button class = "btn-g-orange mx-auto d-none" class = "btn-story-details">
+                            View Details
+                            <img src="./assets/right-arrow.png" alt="Right Arrow">
+                        </button>
+                    </div>
+                    <div class = "px-4 mt-auto mb-4">
+                        <img src="./assets/volunteer5.png" alt="Volunteer Image" class = "rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative">
+                        <img src="./assets/Grow-Trees-On-the-path-to-environment-sustainability-3.png" alt="Story Thumbnail" class = "w-100 h-90">
+
+                        <div class = "btn-g-white position-absolute mx-auto btn-story-center">
+                            View Details
+                            <img src="./assets/right-arrow1.png" alt="Right Arrow">
+                        </div>
+                        <div class = "position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Environment
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            Lorem ipsum dolor sit.
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class = "px-4 mt-auto mb-4">
+                        <img src="./assets/volunteer5.png" alt="Volunteer Image" class = "rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative">
+                        <img src="./assets/img1.png" alt="Story Thumbnail" class = "w-100 h-90">
+
+                        <div class = "btn-g-white position-absolute btn-story-center">
+                            View Details
+                            <img src="./assets/right-arrow1.png" alt="Right Arrow">
+                        </div>
+                        <div class = "position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Customer Support
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            Grow-Trees-On-the-path-to-environment-sustainability
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+
+                    </div>
+                    <div class = "px-4 mt-auto mb-4">
+                        <img src="./assets/volunteer5.png" alt="Volunteer Image" class = "rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative">
+                        <img src="./assets/Grow-Trees-On-the-path-to-environment-sustainability-3.png" alt="Story Thumbnail" class = "w-100 h-90">
+
+                        <div class = "btn-g-white position-absolute mx-auto btn-story-center">
+                            View Details
+                            <img src="./assets/right-arrow1.png" alt="Right Arrow">
+                        </div>
+                        <div class = "position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Environment
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            Lorem ipsum dolor sit.
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class = "px-4 mt-auto mb-4">
+                        <img src="./assets/volunteer5.png" alt="Volunteer Image" class = "rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    <!-- Story Listing Fin -->
+
+    <!-- Pagination Section -->
+    <section class = "container my-2 my-md-5 d-flex justify-content-center gap-2 text-light-custom c-pagination-item">
+        <button class = "btn p-2 px-3 d-flex align-items-center border bg-transparent">
+            <img src="./assets/previous.png" alt="Previous Pages">
+        </button>
+        <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent ">
+            <img src="./assets/left.png" alt="Previous">
+        </button>
+        <button
+            class="btn p-2 px-3 d-flex align-items-center border bg-transparent active">
+            1
+        </button>
+        <button
+            class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
+            2
+        </button>
+        <button
+            class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
+            3
+        </button>
+        <button
+            class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
+            4
+        </button>
+        <button
+            class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
+            5
+        </button>
+        <button
+            class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
+            <img src="./assets/right-arrow1.png" alt="Next Item">
+        </button>
+        <button
+            class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
+            <img src="./assets/next.png" alt="Next Pages">
+        </button>
+    </section>
+    <!-- Pagination Section Fin -->
+
+    <!-- Footer(New) -->
+    <div class = "position-absolute w-100 mt-4">
+        <footer class = "border position-relative bottom-0 ">
+            <div class="container p-4">
+                <a href="#" class = "font-xs text-light-custom text-black-1">
+                    Privacy Policy
+                </a>
+            </div>
+        </footer>
+    </div>
+    <!-- Footer(New) Fin -->
+    <script src="./js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
