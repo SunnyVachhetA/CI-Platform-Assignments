@@ -88,16 +88,17 @@
 
                     <div class="form-group">
                         <p class = "text-light-custom">Upload Your Photos</p>
-                        <label for="file-upload" class = "d-block">
-                                <div class = "form-control-file d-flex justify-content-center align-items-center p-4 cursor-pointer">
+                        
+                            <div class = "form-control-file d-flex justify-content-center align-items-center p-4 cursor-pointer" id = "upload-area">
                                 <img src="./assets/drag-and-drop.png" alt="Drag and drop" for = "file-upload">
+                                <input type="file" multiple id = "file-upload" onchange="handleFiles(this.files)" accept=".png, .jpg, .jpeg" hidden>
                             </div>
-                        </label>
-                        <input type="file" multiple id = "file-upload" hidden>
+                        
+                        
                         
                         <!-- Uploaded files  -->
                         <div class = "mt-2 uploaded-files">
-                            <ul class = "list-unstyled d-flex flex-wrap gap-4 gap-md-4 justify-content-md-start justify-content-between" id = "file-list">
+                            <ul class = "list-unstyled d-flex flex-wrap gap-4 gap-md-4 justify-content-md-start" id = "file-list">
                                 <li class = "list">
                                     <div class = "position-relative" >     
                                         <img src="./assets/Animal-welfare-&-save-birds-campaign-1.png" alt="uploaded file" class = "upload-img">
@@ -150,30 +151,71 @@
 
         //Script for Upload Files
         const fileUpload = document.querySelector('#file-upload');
-        
+        const fileList = document.querySelector('#file-list');
+        const uploadArea = document.querySelector('#upload-area');
         const structure = `<div class = "position-relative" >     
-                                        <img src="./assets/Animal-welfare-&-save-birds-campaign-1.png" alt="uploaded file" class = "upload-img">
+                                        <img alt="uploaded file" class = "upload-img">
                                         <button class = "btn-cancel">
                                             <img src="./assets/cross.png" alt="Cancel">
                                         </button>
                                     </div>`;
-        console.log(structure);
-        fileUpload.addEventListener(
-            'change',
-            () =>
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.png)$/;
+ 
+        const addDom =  (imgSrc) =>
+        {
+                const template = document.createElement("li");
+                let tempStructure = structure;
+
+                let replace = `<img alt="uploaded file" class = "upload-img">`;
+                let replaceBy = `<img src="${imgSrc}" alt = "uploaded file" class = "upload-img">`;
+                tempStructure = tempStructure.replace( 
+                    replace, replaceBy
+                );
+                console.log(tempStructure);
+                template.innerHTML = tempStructure.trim();
+                fileList.appendChild(template);
+        }
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, preventDefaults, false)
+        });
+        uploadArea.addEventListener('click', () => fileUpload.click() );
+        function preventDefaults (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        uploadArea.addEventListener('drop', handleDrop, false);
+        function handleDrop(e) 
+        {
+            let dt = e.dataTransfer;
+            let files = dt.files;
+            handleFiles(files);
+        }
+        fileUpload.addEventListener('change', handleFiles(fileUpload.files) );
+        function handleFiles(files)
+        {
+            if( files[0] )
             {
-                const fileList = document.querySelector('#file-list');
-                
-                let list = document.createElement("li");
+                let len = files.length;
+                for(let i = 0; i < len; i++)
+                {
+                    let file = files[i];
+                    if( ! regex.test( file.name.toLowerCase() ) )
+                    {
+                        alert("Invalid format!");
+                        return;
+                    }
 
-                let div = document.createElement("div");
-                div.classList.add('position-relative');
-                div.classList.add('temp');
-
-                fileList.appendChild(list);
-                
+                    let reader = new FileReader();
+                    reader.onload = function(evt)
+                    {
+                        addDom(evt.target.result);
+                    }
+                    reader.readAsDataURL(file);
+                }
             }
-        );
+        }
     </script>
 </body>
 </html>
