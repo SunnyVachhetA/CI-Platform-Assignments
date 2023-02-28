@@ -1,50 +1,80 @@
-﻿@{
+﻿@model UserVM
+@{
     ViewData["Title"] = "Login | User";
 }
 
 <section class="d-flex flex-column flex-lg-row gap-2 gap-lg-0">
     <partial name="_HeroBanner" />
-    <div class="right-section d-flex flex-column align-items-center justify-content-center gap-3">
-        <form class="d-grid gap-4 gap-md-2 gap-xxl-4">
+    <div class="right-section d-flex flex-column flex-nowrap justify-content-center align-items-center gap-1">
+        <form class="d-grid gap-0 gap-xxl-2" asp-action="Registration" method="POST" id="reg-form">
             <div class="form-group text-start">
-                <label for="first-name" class="input-label text-light-custom">First Name</label>
-                <input type="text" class="form-control custom-input" id="first-name" placeholder="Enter your first name">
+                <label asp-for="FirstName" class="input-label fw-light"></label>
+                <input class="form-control custom-input" asp-for="FirstName" id ="first-name" placeholder="Enter your first name">
+                <span asp-validation-for="FirstName" class="text-danger font-13"></span>
             </div>
             <div class="form-group text-start">
-                <label for="last-name" class="input-label text-light-custom">Last Name</label>
-                <input type="text" class="form-control custom-input" id="last-name" placeholder="Enter your last name">
+                <label asp-for="LastName" class="input-label fw-light"></label>
+                <input class="form-control custom-input" asp-for="LastName" id="last-name" placeholder="Enter your last name">
+                <span asp-validation-for="LastName" class="text-danger font-13"></span>
             </div>
             <div class="form-group text-start">
-                <label for="phone-number" class="input-label text-light-custom">Email address</label>
-                <input type="tel" class="form-control custom-input" id="phone-number" placeholder="Enter your phone number">
+                <label asp-for="PhoneNumber" class="input-label fw-light"></label>
+                <input type="tel" class="form-control custom-input" asp-for="PhoneNumber" id="phone-number" placeholder="Enter your phone number">
+                <span asp-validation-for="PhoneNumber" class="text-danger font-13"></span>
             </div>
             <div class="form-group text-start">
-                <label for="email" class="input-label text-light-custom">Email address</label>
-                <input type="email" class="form-control custom-input" id="email" placeholder="Enter your email address">
+                <label asp-for="Email" class="input-label fw-light"></label>
+                <input type="email" class="form-control custom-input" asp-for="Email" id="email" placeholder="Enter your email address">
+                <span asp-validation-for="Email" class="text-danger font-13"></span>
             </div>
             <div class="form-group text-start">
-                <label for="password" class="input-label text-light-custom">Password</label>
-                <input type="password" value="hellothere" class="form-control custom-input" id="password" placeholder="Create new password">
+                <label asp-for="Password" class="input-label fw-light"></label>
+                <input type="password" value= "pass" class="form-control custom-input" asp-for="Password" id="password" placeholder="Create new password">
+                <span asp-validation-for="Password" class="text-danger font-13"></span>
             </div>
             <div class="form-group text-start">
-                <label for="confirm-password" class="input-label text-light-custom">Confirm Password</label>
-                <input type="password" class="form-control custom-input" id="confirm-password" value="hellothere" placeholder="Enter password again">
+                <label for="confirm-password" class="input-label fw-light">Confirm Password</label>
+                <input value = "pass" type="password" class="form-control custom-input" id="cnf-password" placeholder="Enter password again" required>
+                <span class="text-danger font-13" id="cnf-pass-error">Confirm password must be same as password!</span>
             </div>
-            <button class="btn mx-auto btn-login">
-                Reset my Password
-            </button>
+            <input class="btn mx-auto btn-login w-100" type = "submit" value="Register">
+                
+            </input>
         </form>
 
-        <a asp-controller="User" asp-action="ForgotPassword" class=" login-link-text text-light-custom">
+        <a asp-controller="User" asp-action="ForgotPassword" class="login-link-text fw-light">
             Lost your password?
         </a>
 
-        <span class="login-help-text text-light-custom">
+        <span class="login-help-text fw-light">
             Already registered? <a asp-controller="User" asp-action = "Login" class="login-link-text">Login now</a>
         </span>
 
-        <span class="login-help-text text-light-custom mt-4 policy-text">
+        <span class="login-help-text fw-light policy-text">
             Privacy Policy
         </span>
     </div>
 </section>
+
+@section Scripts{
+    @{
+        <partial name ="_ValidationScriptsPartial"></partial>
+    }
+}
+@*<script>
+    const password = document.querySelector('#password');
+    const cnfPassword = document.querySelector("#cnf-password");
+    const regForm = document.querySelector("#reg-form");
+
+    regForm.addEventListener
+    (
+        'submit',
+        () =>
+        {
+            let pass = password.value;
+            let conf = cnfPassword.value;
+            console.log(pass === conf);
+            return (pass === conf)
+        }
+    );
+</script>*@

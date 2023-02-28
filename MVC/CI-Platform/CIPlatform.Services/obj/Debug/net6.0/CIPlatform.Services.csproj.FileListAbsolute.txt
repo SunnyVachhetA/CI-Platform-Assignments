@@ -1,0 +1,17 @@
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\bin\Debug\net6.0\CIPlatform.Services.deps.json
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\bin\Debug\net6.0\CIPlatform.Services.dll
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\bin\Debug\net6.0\CIPlatform.Services.pdb
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\bin\Debug\net6.0\CIPlatform.DataAccessLayer.dll
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\bin\Debug\net6.0\CIPlatform.Entities.dll
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\bin\Debug\net6.0\CIPlatform.DataAccessLayer.pdb
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\bin\Debug\net6.0\CIPlatform.Entities.pdb
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\obj\Debug\net6.0\CIPlatform.Services.csproj.AssemblyReference.cache
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\obj\Debug\net6.0\CIPlatform.Services.GeneratedMSBuildEditorConfig.editorconfig
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\obj\Debug\net6.0\CIPlatform.Services.AssemblyInfoInputs.cache
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\obj\Debug\net6.0\CIPlatform.Services.AssemblyInfo.cs
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\obj\Debug\net6.0\CIPlatform.Services.csproj.CoreCompileInputs.cache
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\obj\Debug\net6.0\CIPlatform.Services.csproj.CopyComplete
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\obj\Debug\net6.0\CIPlatform.Services.dll
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\obj\Debug\net6.0\refint\CIPlatform.Services.dll
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\obj\Debug\net6.0\CIPlatform.Services.pdb
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Services\obj\Debug\net6.0\ref\CIPlatform.Services.dll

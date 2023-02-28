@@ -1,8 +1,18 @@
+using CIPlatform.DataAccessLayer.Data;
+using CIPlatform.DataAccessLayer.Repository;
+using CIPlatform.DataAccessLayer.Repository.IRepository;
+using CIPlatform.Services.Service;
+using CIPlatform.Services.Service.Interface;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<CIDbContext>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IServiceUnit, ServiceUnit>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +32,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Volunteer}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Volunteer}/{controller=User}/{action=Registration}/{id?}");
 
 app.Run();

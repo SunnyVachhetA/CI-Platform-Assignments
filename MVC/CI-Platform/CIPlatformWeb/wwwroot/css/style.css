@@ -174,7 +174,6 @@ a {
 .z-index-pos {
     z-index: 1000;
 }
-
 .btn-g-orange, .btn-g-white {
     background-color: var(--col-white);
     cursor: pointer;
@@ -228,16 +227,25 @@ a {
     border-color: var(--col-blue);
 }
 
-.input-label {
-    border-radius: 24px;
+#reg-form .input-label, #reg-form .custom-input {
+    font-size: 14px !important;
 }
 
+@media (min-width: 1400px){
+    #reg-form .input-label, #reg-form .custom-input {
+        font-size: 17px;
+    }
+}
+@media (max-width: 992px){
+    #reg-form .input-label, #reg-form .custom-input {
+        font-size: 1rem;
+    }
+}
 .btn-login {
     border-radius: 24px;
     border: 2px solid var(--col-orange);
     color: var(--col-orange);
     font-size: 17px;
-    width: 80%;
     /* height: 48px;
       width: 401px; */
     background-color: var(--col-white);
@@ -282,7 +290,6 @@ form-subtitle,
     .custom-input,
     .custom-input-active {
         width: 401px;
-        height: 56px;
     }
 }
 
@@ -290,28 +297,23 @@ form-subtitle,
     .bg-hero-login {
         width: 70vw;
     }
-
     .right-section {
         width: 30vw;
     }
 
     .policy-text {
-        position: fixed !important;
-        bottom: 10px;
+        position: absolute !important;
+        bottom: 0;
+        right: 2px;
     }
 }
 
 @media (min-width: 768px) and (max-width: 999px) {
-    .bg-hero-login {
+   
+    .carousel-item img {
+        height: 50vh;
         width: 100%;
-        height: 80vh;
-        background-position: center;
     }
-
-    .btn-login {
-        width: 80%;
-    }
-
     .hero-title {
         font-size: 22px;
     }
@@ -327,15 +329,11 @@ form-subtitle,
 }
 
 @media (max-width: 576px) {
-    .bg-hero-login {
-        height: 70vh;
-        background-position: center;
+   
+    .carousel-item img {
+        height: 50vh;
+        width: 100%;
     }
-
-    .btn-login {
-        width: 80%;
-    }
-
     .hero-title {
         font-size: 25px;
     }
@@ -346,10 +344,6 @@ form-subtitle,
 
     .form-subtitle {
         font-size: 10px;
-    }
-
-    .input-label {
-        font-size: 14px;
     }
 }
 

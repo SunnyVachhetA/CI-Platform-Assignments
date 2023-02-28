@@ -1,5 +1,4 @@
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\bin\Debug\net6.0\CIPlatform.DataAccessLayer.deps.json
-F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\bin\Debug\net6.0\CIPlatform.DataAccessLayer.runtimeconfig.json
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\bin\Debug\net6.0\CIPlatform.DataAccessLayer.dll
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\bin\Debug\net6.0\CIPlatform.DataAccessLayer.pdb
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\obj\Debug\net6.0\CIPlatform.DataAccessLayer.csproj.AssemblyReference.cache
@@ -10,7 +9,6 @@ F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\ob
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\obj\Debug\net6.0\CIPlatform.DataAccessLayer.dll
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\obj\Debug\net6.0\refint\CIPlatform.DataAccessLayer.dll
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\obj\Debug\net6.0\CIPlatform.DataAccessLayer.pdb
-F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\obj\Debug\net6.0\CIPlatform.DataAccessLayer.genruntimeconfig.cache
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\obj\Debug\net6.0\ref\CIPlatform.DataAccessLayer.dll
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\bin\Debug\net6.0\CIPlatform.Entities.dll
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.DataAccessLayer\bin\Debug\net6.0\CIPlatform.Entities.pdb

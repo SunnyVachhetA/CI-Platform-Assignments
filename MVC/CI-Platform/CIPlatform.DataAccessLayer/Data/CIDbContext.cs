@@ -1,4 +1,9 @@
-﻿namespace CIPlatform.Entities.DataModels;
+﻿using System;
+using System.Collections.Generic;
+using CIPlatform.Entities.DataModels;
+using Microsoft.EntityFrameworkCore;
+
+namespace CIPlatform.DataAccessLayer.Data;
 
 public partial class CIDbContext : DbContext
 {
@@ -28,7 +33,6 @@ public partial class CIDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=.;Database=CI_PLATFORM;Trusted_Connection=True;Encrypt=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,7 +43,9 @@ public partial class CIDbContext : DbContext
 
             entity.HasIndex(e => e.Email, "UQ_admin_email").IsUnique();
 
-            entity.Property(e => e.AdminId).HasColumnName("admin_id");
+            entity.Property(e => e.AdminId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("admin_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnName("created_at");
@@ -67,9 +73,7 @@ public partial class CIDbContext : DbContext
         {
             entity.ToTable("banner");
 
-            entity.Property(e => e.BannerId)
-                .ValueGeneratedNever()
-                .HasColumnName("banner_id");
+            entity.Property(e => e.BannerId).HasColumnName("banner_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnName("created_at");
@@ -92,9 +96,7 @@ public partial class CIDbContext : DbContext
         {
             entity.ToTable("city");
 
-            entity.Property(e => e.CityId)
-                .ValueGeneratedNever()
-                .HasColumnName("city_id");
+            entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
@@ -111,9 +113,7 @@ public partial class CIDbContext : DbContext
         {
             entity.ToTable("cms_page");
 
-            entity.Property(e => e.CmsPageId)
-                .ValueGeneratedNever()
-                .HasColumnName("cms_page_id");
+            entity.Property(e => e.CmsPageId).HasColumnName("cms_page_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnName("created_at");
@@ -139,7 +139,9 @@ public partial class CIDbContext : DbContext
         {
             entity.ToTable("country");
 
-            entity.Property(e => e.CountryId).HasColumnName("country_id");
+            entity.Property(e => e.CountryId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("country_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnName("created_at");
@@ -180,9 +182,7 @@ public partial class CIDbContext : DbContext
 
             entity.HasIndex(e => e.Name, "UQ_skill_name").IsUnique();
 
-            entity.Property(e => e.SkillId)
-                .ValueGeneratedNever()
-                .HasColumnName("skill_id");
+            entity.Property(e => e.SkillId).HasColumnName("skill_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnName("created_at");
@@ -203,9 +203,7 @@ public partial class CIDbContext : DbContext
 
             entity.HasIndex(e => e.Email, "UQ_user_email").IsUnique();
 
-            entity.Property(e => e.UserId)
-                .ValueGeneratedNever()
-                .HasColumnName("user_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.Avatar).HasColumnName("avatar");
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");

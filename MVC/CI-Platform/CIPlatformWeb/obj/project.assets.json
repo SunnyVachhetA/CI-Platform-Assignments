@@ -3687,9 +3687,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "CIPlatform.Entities": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "7.0.3",
-          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3"
+          "CIPlatform.Entities": "1.0.0"
         },
         "compile": {
           "bin/placeholder/CIPlatform.DataAccessLayer.dll": {}
@@ -3701,11 +3699,29 @@
       "CIPlatform.Entities/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.3",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3"
+        },
         "compile": {
           "bin/placeholder/CIPlatform.Entities.dll": {}
         },
         "runtime": {
           "bin/placeholder/CIPlatform.Entities.dll": {}
+        }
+      },
+      "CIPlatform.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "CIPlatform.DataAccessLayer": "1.0.0",
+          "CIPlatform.Entities": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CIPlatform.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CIPlatform.Services.dll": {}
         }
       }
     }
@@ -10497,12 +10513,17 @@
       "type": "project",
       "path": "../CIPlatform.Entities/CIPlatform.Entities.csproj",
       "msbuildProject": "../CIPlatform.Entities/CIPlatform.Entities.csproj"
+    },
+    "CIPlatform.Services/1.0.0": {
+      "type": "project",
+      "path": "../CIPlatform.Services/CIPlatform.Services.csproj",
+      "msbuildProject": "../CIPlatform.Services/CIPlatform.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "CIPlatform.DataAccessLayer >= 1.0.0",
       "CIPlatform.Entities >= 1.0.0",
+      "CIPlatform.Services >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.3",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.12"
     ]
@@ -10534,11 +10555,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.DataAccessLayer\\CIPlatform.DataAccessLayer.csproj": {
-              "projectPath": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.DataAccessLayer\\CIPlatform.DataAccessLayer.csproj"
-            },
             "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj": {
               "projectPath": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj"
+            },
+            "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Services\\CIPlatform.Services.csproj": {
+              "projectPath": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Services\\CIPlatform.Services.csproj"
             }
           }
         }
