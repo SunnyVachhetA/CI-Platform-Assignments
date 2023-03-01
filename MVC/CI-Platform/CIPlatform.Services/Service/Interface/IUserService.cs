@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace CIPlatform.Services.Service.Interface;
 public interface IUserService
 {
-    void Add(UserVM user);
+    void Add(UserRegistrationVM user);
     bool IsEmailExists(string email);
+    UserRegistrationVM ValidateUserCredential(UserLoginVM credential);
 }

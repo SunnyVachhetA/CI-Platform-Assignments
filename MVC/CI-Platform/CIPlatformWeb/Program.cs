@@ -13,6 +13,10 @@ builder.Services.AddDbContext<CIDbContext>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IServiceUnit, ServiceUnit>();
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddSession(); //Session Registration
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +33,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession(); //Session Used
 
 app.MapControllerRoute(
     name: "default",

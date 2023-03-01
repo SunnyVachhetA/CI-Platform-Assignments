@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CIPlatform.Entities.ViewModels;
-public class UserVM
+public class UserRegistrationVM
 {
     public long? UserId { get; set; }
+    
     [Required(ErrorMessage = "Please enter first name!")]
     [DisplayName("First Name")]
+    [StringLength(16, MinimumLength = 3, ErrorMessage = "Minimum 3 characters are required!")]
     public string FirstName { get; set; } = null!;
 
     [Required(ErrorMessage = "Please enter last name!")]
     [DisplayName("Last Name")]
+    [StringLength(16, MinimumLength = 3, ErrorMessage = "Minimum 3 characters are required!")]
+
     public string LastName { get; set; } = null!;
 
     [Required(ErrorMessage = "Please enter valid email ID!")]
@@ -25,7 +24,7 @@ public class UserVM
     public string Email { get; set; } = null!;
 
     [Required(ErrorMessage = "Password cannot be empty!")]
-    
+    [StringLength(255, MinimumLength = 8, ErrorMessage = "Password must have at least 8 character!")]
     public string Password { get; set; } = null!;
 
     [Required(ErrorMessage = "Please enter valid phone number")]
@@ -34,6 +33,10 @@ public class UserVM
     [RegularExpression("^[0-9]+$", ErrorMessage = "Phone number should contains only numbers!")]
     public string PhoneNumber { get; set; } = null!;
 
+    [Required(ErrorMessage = "Confirm password must be same as password!")]
+    [Compare("Password")]
+    [DisplayName("Confirm Password")]
+    public string ConfirmPassword { get; set; } = null!;
     public override string ToString()
     {
         return UserId + " " + FirstName;
