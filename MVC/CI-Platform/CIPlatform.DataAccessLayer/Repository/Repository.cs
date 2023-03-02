@@ -35,4 +35,9 @@ public class Repository<T> : IRepository<T> where T : class
         IQueryable<T> query = dbSet.Where(filter);
         return query.FirstOrDefault();
     }
+
+    public void Remove(T entity)
+    {
+        dbSet.Remove(entity);
+    }
 }

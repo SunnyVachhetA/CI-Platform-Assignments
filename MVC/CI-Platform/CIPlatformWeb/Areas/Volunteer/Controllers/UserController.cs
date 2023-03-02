@@ -9,10 +9,11 @@ namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 public class UserController : Controller
 {
     private readonly IServiceUnit _serviceUnit;
-
-    public UserController(IServiceUnit serviceUnit)
+    private readonly IEmailService _emailService;
+    public UserController(IServiceUnit serviceUnit, IEmailService emailService)
     {
         _serviceUnit = serviceUnit;
+        _emailService = emailService;
     }
 
     [Route("Login", Name = "Login")]
@@ -59,6 +60,7 @@ public class UserController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Route("ForgotPassword", Name = "ForgotPasswordPost")]
     public IActionResult ForgotPassword(string email)
     {
         if (email == null)
@@ -66,22 +68,76 @@ public class UserController : Controller
             ModelState.AddModelError("EmailError", "Please enter valid email address!");
             return View();
         }
+        bool tokenExists = _serviceUnit.PasswordResetService.IsTokenExists(email);
+        if( tokenExists )
+        {
+            ModelState.AddModelError("multiRequestError", "Please check your email box for reset password link!");
+            TempData["multiRequestError"] = "Please check your email box for reset password link!";
+            return RedirectToAction("ForgotPassword");
+        }
         bool result = _serviceUnit.UserService.IsEmailExists(email);
         if (result)
         {
-
+            try
+            {
+                PasswordResetVM obj = GenerateTokenObject(email);
+                _serviceUnit.PasswordResetService.AddResetPasswordToken(obj);
+                TempData["TokenMessage"] = "Reset password link is sent to your email address!";
+                return RedirectToAction("Login", "User");
+            }
+            catch(Exception)
+            {
+                return StatusCode(404); //Not found
+            }
         }
         else 
         {
             ModelState.AddModelError("EmailError", "Given email address account does not exsits!!");
         }
-        return View();
+        return RedirectToAction("ForgotPassword");
     }
 
-    [Route("Reset-Password", Name = "ResetPassword")]
-    public IActionResult ResetPassword()
+    [Route("ResetPassword", Name = "ResetPassword")]
+    public IActionResult ResetPassword(string _email, string _token)
     {
-        return View();
+
+        bool result = _serviceUnit.PasswordResetService.IsTokenExists(_email);
+
+        if (!result)
+        {
+            /*ModelState.AddModelError("EmailExistsError", "Please check your mailbox for rest password link!");
+            return RedirectToAction("ForgotPassword");*/
+            return NotFound();
+        }
+
+        ResetPasswordPostVM postVm = new()
+        {
+            Email = _email,
+            Token = _token
+        };
+        return View(postVm);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Route("ResetPassword", Name = "ResetPasswordPost")]
+    public IActionResult ResetPassword(ResetPasswordPostVM reset)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                UserRegistrationVM user = _serviceUnit.UserService.UpdateUserPassword(reset.Email, reset.Password);
+                CreateUserLoginSession(user);
+                _serviceUnit.PasswordResetService.DeleteResetPasswordToken(reset.Email);
+                return RedirectToAction("Index", "Home");
+            }
+            catch(Exception)
+            {
+                return NotFound();
+            }
+        }
+        return View(reset);
     }
 
     [Route("Registration")]
@@ -118,4 +174,18 @@ public class UserController : Controller
         HttpContext.Session.Remove("Avatar");
         return RedirectToAction("Login");
     }
+
+    public PasswordResetVM GenerateTokenObject(string email)
+    {
+        string token = Guid.NewGuid().ToString();
+        var href = Url.Action("ResetPassword", "User", new { _email = email, _token = token }, "https");
+        _emailService.SendResetPasswordLink(email, href);
+        PasswordResetVM obj = new()
+        {
+            Email = email,
+            Token = token
+        };
+        return obj;
+    }
+       
 }

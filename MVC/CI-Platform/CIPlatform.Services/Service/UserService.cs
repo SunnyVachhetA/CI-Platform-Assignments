@@ -2,7 +2,6 @@
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Services.Service.Interface;
-using System.Reflection.Metadata.Ecma335;
 
 namespace CIPlatform.Services.Service;
 public class UserService: IUserService
@@ -37,6 +36,28 @@ public class UserService: IUserService
             );
         Console.WriteLine("Email Exists: " + result!=null);
         return (result != null);
+    }
+
+    public UserRegistrationVM UpdateUserPassword(string? email, string password)
+    {
+        
+        _unitOfWork.UserRepo.UpdatePassword(email, password);
+
+        var result = _unitOfWork.UserRepo.GetFirstOrDefault(
+                user => user.Email == email
+            );
+
+        UserRegistrationVM user = new()
+        {
+            UserId = result.UserId,
+            FirstName = result.FirstName,
+            LastName = result.LastName,
+            Email = result.Email,
+            PhoneNumber = result.PhoneNumber,
+            Password = result.Password
+        };
+
+        return user;
     }
 
     public UserRegistrationVM ValidateUserCredential(UserLoginVM credential)

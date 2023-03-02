@@ -8,5 +8,7 @@ namespace CIPlatform.DataAccessLayer.Repository.IRepository;
 public interface IUnitOfWork
 {
     IUserRepository UserRepo { get; }
+    IPasswordResetRepository PasswordResetRepo { get; }
+
     void Save();
 }

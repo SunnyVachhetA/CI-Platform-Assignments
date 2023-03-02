@@ -159,17 +159,17 @@ public partial class CIDbContext : DbContext
 
         modelBuilder.Entity<PasswordReset>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("password_reset");
+            entity.HasKey(e => e.Email);
 
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnName("created_at");
+            entity.ToTable("password_reset");
+
             entity.Property(e => e.Email)
                 .HasMaxLength(128)
                 .IsUnicode(false)
                 .HasColumnName("email");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("created_at");
             entity.Property(e => e.Token)
                 .HasMaxLength(191)
                 .IsUnicode(false)

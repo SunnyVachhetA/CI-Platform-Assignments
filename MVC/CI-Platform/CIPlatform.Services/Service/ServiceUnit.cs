@@ -11,7 +11,10 @@ public class ServiceUnit: IServiceUnit
 	{
 		_unitOfWork= unitOfWork;
 		UserService = new UserService(_unitOfWork);
+		PasswordResetService = new PasswordResetService(_unitOfWork);
 	}
 
     public IUserService UserService { get; private set; }
+
+    public IPasswordResetService PasswordResetService { get; private set; }
 }

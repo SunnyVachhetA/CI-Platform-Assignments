@@ -2,6 +2,8 @@
 using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace CIPlatform.DataAccessLayer.Repository;
@@ -12,6 +14,15 @@ public class UserRepository : Repository<User>, IUserRepository
     public UserRepository(CIDbContext db) : base(db)
     {
         _dbContext = db;
+    }
+
+    public void UpdatePassword(string? email, string password)
+    {
+        var user = new SqlParameter("@email", email);
+        var passwordParam = new SqlParameter("@password", password);
+
+        _dbContext.Database.ExecuteSqlRaw("UPDATE [user] SET password = @password WHERE email = @email", user, passwordParam);
+        Console.WriteLine("Record updated!!");
     }
 
     public User ValidateUserCredentialRepo(UserLoginVM credential)

@@ -2,4 +2,5 @@
 public interface IServiceUnit
 {
     IUserService UserService { get; }
+    IPasswordResetService PasswordResetService { get; }
 }

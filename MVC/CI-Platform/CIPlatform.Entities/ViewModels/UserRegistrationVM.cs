@@ -14,7 +14,6 @@ public class UserRegistrationVM
     [Required(ErrorMessage = "Please enter last name!")]
     [DisplayName("Last Name")]
     [StringLength(16, MinimumLength = 3, ErrorMessage = "Minimum 3 characters are required!")]
-
     public string LastName { get; set; } = null!;
 
     [Required(ErrorMessage = "Please enter valid email ID!")]
@@ -28,9 +27,8 @@ public class UserRegistrationVM
     public string Password { get; set; } = null!;
 
     [Required(ErrorMessage = "Please enter valid phone number")]
-    [StringLength(10, ErrorMessage = "Phone number should be of length 10!")]
     [DisplayName("Phone Number")]
-    [RegularExpression("^[0-9]+$", ErrorMessage = "Phone number should contains only numbers!")]
+    [RegularExpression("^[0-9]{10}$", ErrorMessage = "Phone number should contains only numbers!")]
     public string PhoneNumber { get; set; } = null!;
 
     [Required(ErrorMessage = "Confirm password must be same as password!")]

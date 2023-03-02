@@ -13,7 +13,7 @@ builder.Services.AddDbContext<CIDbContext>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IServiceUnit, ServiceUnit>();
-
+builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddSession(); //Session Registration
