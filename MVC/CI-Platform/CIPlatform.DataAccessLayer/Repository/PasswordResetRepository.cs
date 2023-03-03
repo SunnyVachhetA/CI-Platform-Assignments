@@ -10,4 +10,5 @@ public class PasswordResetRepository : Repository<PasswordReset>, IPasswordReset
     {
         _dbContext = dbContext;
     }
+
 }

@@ -20,18 +20,18 @@
         </div>
     </div>
     <div class="d-flex align-items-center gap-2 ms-auto">
-        <div class="dropdown">
-            <a class="dropdown-toggle medium-text " href="#" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false">
-                <img src="~/assets/user-img.png" alt="Profile Image" class="nav-profile-picture">
-                <span class="d-none d-sm-inline">@UserName</span>
-                <img src="~/assets/drop-down.png" class="ms-2" alt="Options">
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Favourites</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
-            </ul>
-        </div>
+       <div class="dropdown">
+          <a class="dropdown-toggle medium-text " href="#" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+                    <img src="~/assets/user-img.png" alt="Profile Image" class="nav-profile-picture">
+                    <span class="d-none d-sm-inline">@UserName</span>
+                    <img src="~/assets/drop-down.png" class="ms-2" alt="Options">
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Favourites</a></li>
+                    <li><a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a></li>
+                </ul>
+       </div>
     </div>
 </nav>

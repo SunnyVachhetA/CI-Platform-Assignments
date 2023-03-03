@@ -1,4 +1,5 @@
-﻿using CIPlatformWeb.Models;
+﻿using CIPlatformWeb.Areas.Volunteer.Utilities;
+using CIPlatformWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -14,6 +15,7 @@ namespace CIPlatformWeb.Areas.User.Controllers
             _logger = logger;
         }
 
+        [Authentication]
         public IActionResult Index()
         {
             return View();

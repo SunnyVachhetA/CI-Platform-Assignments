@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CIPlatform.Entities.DataModels;
+﻿using CIPlatform.Entities.DataModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.DataAccessLayer.Data;
@@ -25,6 +23,12 @@ public partial class CIDbContext : DbContext
     public virtual DbSet<CmsPage> CmsPages { get; set; }
 
     public virtual DbSet<Country> Countries { get; set; }
+
+    public virtual DbSet<Mission> Missions { get; set; }
+
+    public virtual DbSet<MissionMedium> MissionMedia { get; set; }
+
+    public virtual DbSet<MissionTheme> MissionThemes { get; set; }
 
     public virtual DbSet<PasswordReset> PasswordResets { get; set; }
 
@@ -157,6 +161,105 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
         });
 
+        modelBuilder.Entity<Mission>(entity =>
+        {
+            entity.ToTable("mission");
+
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.Availability).HasColumnName("availability");
+            entity.Property(e => e.CityId).HasColumnName("city_id");
+            entity.Property(e => e.CountryId).HasColumnName("country_id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.Desciription)
+                .HasColumnType("text")
+                .HasColumnName("desciription");
+            entity.Property(e => e.EndDate).HasColumnName("end_date");
+            entity.Property(e => e.MissionType).HasColumnName("mission_type");
+            entity.Property(e => e.OrganizationDetail)
+                .HasColumnType("text")
+                .HasColumnName("organization_detail");
+            entity.Property(e => e.OrganizationName)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("organization_name");
+            entity.Property(e => e.RegistrationDeadline).HasColumnName("registration_deadline");
+            entity.Property(e => e.ShortDescription)
+                .HasColumnType("text")
+                .HasColumnName("short_description");
+            entity.Property(e => e.StartDate).HasColumnName("start_date");
+            entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.ThemeId).HasColumnName("theme_id");
+            entity.Property(e => e.Title)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("title");
+            entity.Property(e => e.TotalSeat).HasColumnName("total_seat");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+
+            entity.HasOne(d => d.City).WithMany(p => p.Missions)
+                .HasForeignKey(d => d.CityId)
+                .HasConstraintName("FK_mission_city");
+
+            entity.HasOne(d => d.Country).WithMany(p => p.Missions)
+                .HasForeignKey(d => d.CountryId)
+                .HasConstraintName("FK_mission_country");
+
+            entity.HasOne(d => d.Theme).WithMany(p => p.Missions)
+                .HasForeignKey(d => d.ThemeId)
+                .HasConstraintName("FK_mission_mission_theme");
+        });
+
+        modelBuilder.Entity<MissionMedium>(entity =>
+        {
+            entity.HasKey(e => e.MissionMediaId);
+
+            entity.ToTable("mission_media");
+
+            entity.Property(e => e.MissionMediaId).HasColumnName("mission_media_id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.Default).HasColumnName("default");
+            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.MediaName)
+                .HasMaxLength(64)
+                .IsUnicode(false)
+                .HasColumnName("media_name");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.MissionPath)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("mission_path");
+            entity.Property(e => e.MissionType)
+                .HasMaxLength(4)
+                .IsUnicode(false)
+                .HasColumnName("mission_type");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Mission).WithMany(p => p.MissionMedia)
+                .HasForeignKey(d => d.MissionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_mission_media_mission");
+        });
+
+        modelBuilder.Entity<MissionTheme>(entity =>
+        {
+            entity.HasKey(e => e.ThemeId);
+
+            entity.ToTable("mission_theme");
+
+            entity.Property(e => e.ThemeId).HasColumnName("theme_id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.Status)
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("status");
+            entity.Property(e => e.Title)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("title");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+        });
+
         modelBuilder.Entity<PasswordReset>(entity =>
         {
             entity.HasKey(e => e.Email);
@@ -204,7 +307,10 @@ public partial class CIDbContext : DbContext
             entity.HasIndex(e => e.Email, "UQ_user_email").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
-            entity.Property(e => e.Avatar).HasColumnName("avatar");
+            entity.Property(e => e.Avatar)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("avatar");
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
             entity.Property(e => e.CreatedAt)
@@ -257,6 +363,14 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.WhyIVolunteer)
                 .HasColumnType("text")
                 .HasColumnName("why_i_volunteer");
+
+            entity.HasOne(d => d.City).WithMany(p => p.Users)
+                .HasForeignKey(d => d.CityId)
+                .HasConstraintName("FK_user_city");
+
+            entity.HasOne(d => d.Country).WithMany(p => p.Users)
+                .HasForeignKey(d => d.CountryId)
+                .HasConstraintName("FK_user_country");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -35,8 +35,6 @@ public class UserRegistrationVM
     [Compare("Password")]
     [DisplayName("Confirm Password")]
     public string ConfirmPassword { get; set; } = null!;
-    public override string ToString()
-    {
-        return UserId + " " + FirstName;
-    }
+
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 }

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="wwwroot\static\images\" />
   </ItemGroup>
 
   <ItemGroup>

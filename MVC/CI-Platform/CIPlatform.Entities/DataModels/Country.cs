@@ -16,4 +16,8 @@ public partial class Country
     public DateTimeOffset? UpdatedAt { get; set; }
 
     public DateTimeOffset? DeletedAt { get; set; }
+
+    public virtual ICollection<Mission> Missions { get; } = new List<Mission>();
+
+    public virtual ICollection<User> Users { get; } = new List<User>();
 }

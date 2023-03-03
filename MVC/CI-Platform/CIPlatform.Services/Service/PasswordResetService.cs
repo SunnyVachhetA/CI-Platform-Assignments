@@ -18,7 +18,7 @@ public class PasswordResetService : IPasswordResetService
         {
             Email = obj.Email,
             Token = obj.Token,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = obj.CreatedAt
         };
         _unitOfWork.PasswordResetRepo.Add(passwordReset);
         _unitOfWork.Save();
@@ -31,9 +31,27 @@ public class PasswordResetService : IPasswordResetService
         _unitOfWork.Save();
     }
 
+
     public bool IsTokenExists(string email)
     {
         var result = _unitOfWork.PasswordResetRepo.GetFirstOrDefault( record => record.Email == email );
         return result != null;
+    }
+    public TokenStatus GetTokenStatus(string email)
+    {
+        var entity = _unitOfWork.PasswordResetRepo.GetFirstOrDefault(record => record.Email == email);
+        if (entity == null) return TokenStatus.Empty;
+        else
+        {
+            var tokenTimeElapsed = DateTimeOffset.Now - entity.CreatedAt;
+            Console.WriteLine("Time Minute: " + tokenTimeElapsed.TotalMinutes);
+            if (tokenTimeElapsed.TotalMinutes > 30)
+            {
+                _unitOfWork.PasswordResetRepo.Remove(entity); //Removing if expired
+                return TokenStatus.Expired;
+            }
+            else
+                return TokenStatus.Active;
+        }
     }
 }

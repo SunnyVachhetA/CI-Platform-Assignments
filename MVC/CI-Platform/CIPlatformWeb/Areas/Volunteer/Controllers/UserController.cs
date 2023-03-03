@@ -68,11 +68,12 @@ public class UserController : Controller
             ModelState.AddModelError("EmailError", "Please enter valid email address!");
             return View();
         }
+        
         bool tokenExists = _serviceUnit.PasswordResetService.IsTokenExists(email);
         if( tokenExists )
         {
             ModelState.AddModelError("multiRequestError", "Please check your email box for reset password link!");
-            TempData["multiRequestError"] = "Please check your email box for reset password link!";
+            TempData["multiRequestError"] = "Please wait 30 minutes for new reset password link!";
             return RedirectToAction("ForgotPassword");
         }
         bool result = _serviceUnit.UserService.IsEmailExists(email);
@@ -105,9 +106,8 @@ public class UserController : Controller
 
         if (!result)
         {
-            /*ModelState.AddModelError("EmailExistsError", "Please check your mailbox for rest password link!");
-            return RedirectToAction("ForgotPassword");*/
-            return NotFound();
+            TempData["TokenNotFound"] = "Reset Password link is expired!\nReset password again to change password!";
+            return RedirectToAction("ForgotPassword");
         }
 
         ResetPasswordPostVM postVm = new()
@@ -128,9 +128,8 @@ public class UserController : Controller
             try
             {
                 UserRegistrationVM user = _serviceUnit.UserService.UpdateUserPassword(reset.Email, reset.Password);
-                CreateUserLoginSession(user);
                 _serviceUnit.PasswordResetService.DeleteResetPasswordToken(reset.Email);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login");
             }
             catch(Exception)
             {
@@ -141,7 +140,6 @@ public class UserController : Controller
     }
 
     [Route("Registration")]
-    [Route("/")]
     public IActionResult Registration()
     {
         return View();
@@ -166,6 +164,7 @@ public class UserController : Controller
         else return View(user);
     }
 
+    [Route("Logout", Name = "Logout")]
     public ActionResult Logout()
     {
         HttpContext.Session.Clear();
@@ -187,5 +186,29 @@ public class UserController : Controller
         };
         return obj;
     }
-       
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Route("ForgotPasswordV1", Name = "ForgotPasswordPostV1")]
+    public IActionResult ForgotPasswordV1(string email)
+    {
+        if (email == null || !ModelState.IsValid) { return NotFound(); }
+
+        TokenStatus tokenStatus = _serviceUnit.PasswordResetService.GetTokenStatus(email);
+
+        if (tokenStatus == TokenStatus.Empty || tokenStatus == TokenStatus.Expired)
+        {
+            PasswordResetVM resetVm = GenerateTokenObject(email);
+            _serviceUnit.PasswordResetService.AddResetPasswordToken(resetVm);
+            TempData["TokenMessage"] = "Reset password link is sent to your email address!";
+            return RedirectToAction("Login", "User");
+        }
+        else
+        {
+            TempData["multiRequestError"] = "Please check your email for reset password link!(30 Minute Timeout)";
+        }
+
+        return RedirectToAction("ForgotPassword");
+    }
 }

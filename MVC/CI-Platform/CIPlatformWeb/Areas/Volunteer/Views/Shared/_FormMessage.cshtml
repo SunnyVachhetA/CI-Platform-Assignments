@@ -1,0 +1,23 @@
+﻿@*For Already sent reset password link*@
+@if (TempData["multiRequestError"] != null)
+{
+    <div class="alert alert-danger font-15">
+        @TempData["multiRequestError"]
+    </div>
+}
+
+@*Token is sent to email notification*@
+@if (TempData["TokenMessage"] != null)
+{
+    <div class="alert alert-success font-15">
+        @TempData["TokenMessage"]
+    </div>
+}
+
+@*If Token is not found*@
+@if (TempData["TokenNotFound"] != null)
+{
+    <div class="alert alert-danger font-15">
+        @TempData["TokenNotFound"]
+    </div>
+}

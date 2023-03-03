@@ -37,6 +37,6 @@ app.UseSession(); //Session Used
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Volunteer}/{controller=User}/{action=Registration}/{id?}");
+    pattern: "{area=Volunteer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
