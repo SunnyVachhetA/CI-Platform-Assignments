@@ -11,9 +11,9 @@ public partial class MissionMedium
 
     public string? MediaName { get; set; }
 
-    public string? MissionType { get; set; }
+    public string? MediaType { get; set; }
 
-    public string? MissionPath { get; set; }
+    public string? MediaPath { get; set; }
 
     public bool Default { get; set; }
 

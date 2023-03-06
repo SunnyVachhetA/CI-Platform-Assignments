@@ -9,10 +9,40 @@
     <partial name ="_GridListView"></partial>
 </header>
 
-<section class="container mt-2">
-    <partial name="_MissionGrid"/>
-    <partial name = "_MissionList"/>
+<section class="container mt-2" id="partial-mission-listing">
+<partial name ="_MissionGrid"></partial>
+<partial name="_MissionList"></partial>
+
 </section>
+
+
+
+@*@section Scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            const gridView = $('#grid-view');
+            const listView = $('#list-view');
+            
+            gridView.click(function()
+            {
+                $.get('/Volunteer/User/RenderPartialViewMissionGrid', function(data)
+                {
+                    console.log("Grid called");
+                    $('#partial-mission-listing').html(data);
+                });
+            });
+
+            listView.click(function () {
+                $.get('/Volunteer/User/RenderPartialViewMissionList', function (data) {
+                    console.log("Grid called");
+                    $('#partial-mission-listing').html(data);
+                });
+            });
+        });
+    </script>
+}*@
 
 <script>
     const gridView = document.querySelector('#grid-view-msn');

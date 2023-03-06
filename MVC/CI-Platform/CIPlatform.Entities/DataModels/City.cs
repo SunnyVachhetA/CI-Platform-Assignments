@@ -17,6 +17,8 @@ public partial class City
 
     public DateTimeOffset? DeletedAt { get; set; }
 
+    public virtual Country Country { get; set; } = null!;
+
     public virtual ICollection<Mission> Missions { get; } = new List<Mission>();
 
     public virtual ICollection<User> Users { get; } = new List<User>();

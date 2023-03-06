@@ -4,7 +4,6 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class UserRepository : Repository<User>, IUserRepository

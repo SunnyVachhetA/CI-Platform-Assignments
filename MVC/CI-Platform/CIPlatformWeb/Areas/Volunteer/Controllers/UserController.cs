@@ -49,7 +49,7 @@ public class UserController : Controller
     {
         HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
         HttpContext.Session.SetString("UserId", user.UserId.ToString()!);
-        HttpContext.Session.SetString("UserAvatar", "~/assets/");
+        HttpContext.Session.SetString("UserAvatar", "/images/static/");
     }
 
     [Route("ForgotPassword")]
@@ -171,7 +171,7 @@ public class UserController : Controller
         HttpContext.Session.Remove("UserName");
         HttpContext.Session.Remove("UserId");
         HttpContext.Session.Remove("Avatar");
-        return RedirectToAction("Login");
+        return RedirectToAction("Index", "Home");
     }
 
     public PasswordResetVM GenerateTokenObject(string email)
@@ -211,4 +211,8 @@ public class UserController : Controller
 
         return RedirectToAction("ForgotPassword");
     }
+
+    #region AJAX CALLS
+    
+    #endregion
 }

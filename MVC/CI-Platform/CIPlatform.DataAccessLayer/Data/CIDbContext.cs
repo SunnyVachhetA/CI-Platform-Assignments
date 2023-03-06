@@ -24,9 +24,17 @@ public partial class CIDbContext : DbContext
 
     public virtual DbSet<Country> Countries { get; set; }
 
+    public virtual DbSet<FavouriteMission> FavouriteMissions { get; set; }
+
+    public virtual DbSet<GoalMission> GoalMissions { get; set; }
+
     public virtual DbSet<Mission> Missions { get; set; }
 
+    public virtual DbSet<MissionApplication> MissionApplications { get; set; }
+
     public virtual DbSet<MissionMedium> MissionMedia { get; set; }
+
+    public virtual DbSet<MissionSkill> MissionSkills { get; set; }
 
     public virtual DbSet<MissionTheme> MissionThemes { get; set; }
 
@@ -111,6 +119,11 @@ public partial class CIDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("name");
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Country).WithMany(p => p.Cities)
+                .HasForeignKey(d => d.CountryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_city_country");
         });
 
         modelBuilder.Entity<CmsPage>(entity =>
@@ -161,6 +174,52 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
         });
 
+        modelBuilder.Entity<FavouriteMission>(entity =>
+        {
+            entity.ToTable("favourite_mission");
+
+            entity.Property(e => e.FavouriteMissionId).HasColumnName("favourite_mission_id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Mission).WithMany(p => p.FavouriteMissions)
+                .HasForeignKey(d => d.MissionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_favourite_mission_mission");
+
+            entity.HasOne(d => d.User).WithMany(p => p.FavouriteMissions)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_favourite_mission_user");
+        });
+
+        modelBuilder.Entity<GoalMission>(entity =>
+        {
+            entity.ToTable("goal_mission");
+
+            entity.Property(e => e.GoalMissionId).HasColumnName("goal_mission_id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.GoalAchived)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("goal_achived");
+            entity.Property(e => e.GoalObjectiveText)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("goal_objective_text");
+            entity.Property(e => e.GoalValue).HasColumnName("goal_value");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Mission).WithMany(p => p.GoalMissions)
+                .HasForeignKey(d => d.MissionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_goal_mission_mission");
+        });
+
         modelBuilder.Entity<Mission>(entity =>
         {
             entity.ToTable("mission");
@@ -171,9 +230,9 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.CountryId).HasColumnName("country_id");
             entity.Property(e => e.CreatedAt).HasColumnName("created_at");
             entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
-            entity.Property(e => e.Desciription)
+            entity.Property(e => e.Description)
                 .HasColumnType("text")
-                .HasColumnName("desciription");
+                .HasColumnName("description");
             entity.Property(e => e.EndDate).HasColumnName("end_date");
             entity.Property(e => e.MissionType).HasColumnName("mission_type");
             entity.Property(e => e.OrganizationDetail)
@@ -183,6 +242,7 @@ public partial class CIDbContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("organization_name");
+            entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.RegistrationDeadline).HasColumnName("registration_deadline");
             entity.Property(e => e.ShortDescription)
                 .HasColumnType("text")
@@ -210,6 +270,32 @@ public partial class CIDbContext : DbContext
                 .HasConstraintName("FK_mission_mission_theme");
         });
 
+        modelBuilder.Entity<MissionApplication>(entity =>
+        {
+            entity.ToTable("mission_application");
+
+            entity.Property(e => e.MissionApplicationId).HasColumnName("mission_application_id");
+            entity.Property(e => e.AppliedAt).HasColumnName("applied_at");
+            entity.Property(e => e.ApprovalStatus)
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("approval_status");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Mission).WithMany(p => p.MissionApplications)
+                .HasForeignKey(d => d.MissionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_mission_application_mission");
+
+            entity.HasOne(d => d.User).WithMany(p => p.MissionApplications)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_mission_application_user");
+        });
+
         modelBuilder.Entity<MissionMedium>(entity =>
         {
             entity.HasKey(e => e.MissionMediaId);
@@ -224,21 +310,46 @@ public partial class CIDbContext : DbContext
                 .HasMaxLength(64)
                 .IsUnicode(false)
                 .HasColumnName("media_name");
-            entity.Property(e => e.MissionId).HasColumnName("mission_id");
-            entity.Property(e => e.MissionPath)
+            entity.Property(e => e.MediaPath)
                 .HasMaxLength(255)
                 .IsUnicode(false)
-                .HasColumnName("mission_path");
-            entity.Property(e => e.MissionType)
-                .HasMaxLength(4)
+                .HasColumnName("media_path");
+            entity.Property(e => e.MediaType)
+                .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasColumnName("mission_type");
+                .HasColumnName("media_type");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
 
             entity.HasOne(d => d.Mission).WithMany(p => p.MissionMedia)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_mission_media_mission");
+        });
+
+        modelBuilder.Entity<MissionSkill>(entity =>
+        {
+            entity.ToTable("mission_skill");
+
+            entity.Property(e => e.MissionSkillId).HasColumnName("mission_skill_id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.SkillId).HasColumnName("skill_id");
+            entity.Property(e => e.Status)
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("status");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Mission).WithMany(p => p.MissionSkills)
+                .HasForeignKey(d => d.MissionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_mission_skill_mission");
+
+            entity.HasOne(d => d.Skill).WithMany(p => p.MissionSkills)
+                .HasForeignKey(d => d.SkillId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_mission_skill_skill");
         });
 
         modelBuilder.Entity<MissionTheme>(entity =>

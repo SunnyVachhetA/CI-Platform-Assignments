@@ -216,7 +216,7 @@ a {
 
 .custom-input, .story-form .custom-input, .form-select > option {
     border-radius: 3px;
-    width: min(401px, 100%);
+    max-width: min(401px, 100%);
     color: var(--col-black);
     border-color: var(--col-gray);
 }
@@ -290,7 +290,7 @@ form-subtitle,
 
     .custom-input,
     .custom-input-active {
-        width: 401px;
+        max-width: 401px;
     }
 }
 

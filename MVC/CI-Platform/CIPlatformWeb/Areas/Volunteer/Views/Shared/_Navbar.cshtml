@@ -20,8 +20,10 @@
         </div>
     </div>
     <div class="d-flex align-items-center gap-2 ms-auto">
-       <div class="dropdown">
-          <a class="dropdown-toggle medium-text " href="#" role="button" data-bs-toggle="dropdown"
+        @if (UserName != null)
+        {
+            <div class="dropdown">
+                <a class="dropdown-toggle medium-text " href="#" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
                     <img src="~/assets/user-img.png" alt="Profile Image" class="nav-profile-picture">
                     <span class="d-none d-sm-inline">@UserName</span>
@@ -32,6 +34,16 @@
                     <li><a class="dropdown-item" href="#">Favourites</a></li>
                     <li><a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a></li>
                 </ul>
-       </div>
+            </div>
+        }else
+        {
+            <a class="btn-g-orange" asp-controller="User" asp-action="Login">
+               Login
+            </a>
+
+            <a class="btn-g-orange" asp-controller="User" asp-action="Registration">
+                Register
+            </a>
+        }
     </div>
 </nav>

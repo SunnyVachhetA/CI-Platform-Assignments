@@ -445,6 +445,34 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\CSR-initiative-stands-for-Coffee--and-Farmer-Equity-4.png",
+      "PackagePath": "staticwebassets\\images\\static\\CSR-initiative-stands-for-Coffee--and-Farmer-Equity-4.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png",
+      "PackagePath": "staticwebassets\\images\\static\\Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\Grow-Trees-On-the-path-to-environment-sustainability-login.png",
+      "PackagePath": "staticwebassets\\images\\static\\Grow-Trees-On-the-path-to-environment-sustainability-login.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\Nourish-the-Children-in--African-country-1.png",
+      "PackagePath": "staticwebassets\\images\\static\\Nourish-the-Children-in--African-country-1.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\Plantation-and-Afforestation-programme-1.png",
+      "PackagePath": "staticwebassets\\images\\static\\Plantation-and-Afforestation-programme-1.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\image.png",
+      "PackagePath": "staticwebassets\\images\\static\\image.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\img2.png",
+      "PackagePath": "staticwebassets\\images\\static\\img2.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

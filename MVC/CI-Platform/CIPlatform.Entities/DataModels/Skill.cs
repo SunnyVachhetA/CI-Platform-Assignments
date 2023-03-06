@@ -16,4 +16,6 @@ public partial class Skill
     public DateTimeOffset? UpdatedAt { get; set; }
 
     public DateTimeOffset? DeletedAt { get; set; }
+
+    public virtual ICollection<MissionSkill> MissionSkills { get; } = new List<MissionSkill>();
 }
