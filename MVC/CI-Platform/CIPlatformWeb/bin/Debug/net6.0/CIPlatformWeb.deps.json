@@ -2457,7 +2457,8 @@
       "CIPlatform.Entities/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.3",
-          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3"
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3",
+          "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
           "CIPlatform.Entities.dll": {}

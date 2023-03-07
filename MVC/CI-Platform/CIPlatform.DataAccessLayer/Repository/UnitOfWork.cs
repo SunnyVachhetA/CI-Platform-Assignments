@@ -33,6 +33,12 @@ public class UnitOfWork : IUnitOfWork
         CityRepo = new CityRepository(_dbContext);    
         SkillRepo = new SkillRepository(_dbContext);
         ThemeRepo = new ThemeRepository(_dbContext);
+        MissionRepo = new MissionRepository(_dbContext);
+        FavouriteMissionRepo = new FavouriteMissionRepository(_dbContext);
+        MissionApplicationRepo = new MissionApplicationRepository(_dbContext);
+        GoalMissionRepo = new GoalMissionRepository(_dbContext);
+        MissionMediaRepo = new MissionMediaRepository(_dbContext);
+        MissionSkillRepo = new MissionSkillRepository(_dbContext);
     }
 
     public void Save()

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KQ50kb/KAwy7Pjzl0gDuL+XKAI3/+5k8iHqg4adUGPaC8X9ZA52MjF53qKO/+xtDEPC3Gd1qJ3vtYw+gd0D76A==",
+  "dgSpecHash": "zkEePc9A+nQrDA+04ftFPqvRv+6/SvZ26D3ktY20XOwlI2dG0xPdZ1BGZ4INyVfIkO3J05g3k9JBs2ERDcZajg==",
   "success": true,
   "projectFilePath": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj",
   "expectedPackageFiles": [
@@ -42,6 +42,7 @@
     "C:\\Users\\sunny\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
     "C:\\Users\\sunny\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\sunny\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\sunny\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\sunny\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\sunny\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\sunny\\.nuget\\packages\\system.configuration.configurationmanager\\5.0.0\\system.configuration.configurationmanager.5.0.0.nupkg.sha512",

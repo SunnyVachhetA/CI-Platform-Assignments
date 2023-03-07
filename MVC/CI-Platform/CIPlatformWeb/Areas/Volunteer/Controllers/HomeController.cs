@@ -15,6 +15,15 @@ namespace CIPlatformWeb.Areas.User.Controllers
         private List<CityVM> cityList = new();
         private List<ThemeVM> themeList = new();
         private List<SkillVM> skillList = new();
+        private List<MissionCardVM> missionList = new();
+        private MissionLandingVM missionLanding = new()
+        {
+             countryList = new(),
+             cityList = new(),
+             themeList = new(),
+             missionList = new(),
+             skillList = new()
+        };
         public HomeController(ILogger<HomeController> logger, IServiceUnit serviceUnit)
         {
             _logger = logger;
@@ -26,7 +35,17 @@ namespace CIPlatformWeb.Areas.User.Controllers
             cityList = _serviceUnit.CityService.GetAllCities();
             themeList = _serviceUnit.ThemeService.GetAllThemes();
             skillList = _serviceUnit.SkillService.GetAllSkills();
-            return View();
+            missionList = _serviceUnit.MissionService.GetAllMissionCards();
+
+            missionLanding = new()
+            {
+                countryList = countryList,
+                cityList = cityList,
+                themeList = themeList,
+                skillList = skillList,
+                missionList = missionList
+            };
+            return View( missionLanding );
         }
 
         public IActionResult Privacy()

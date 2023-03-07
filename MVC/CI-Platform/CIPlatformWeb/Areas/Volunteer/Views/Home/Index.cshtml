@@ -1,49 +1,31 @@
-﻿@{
+﻿@model MissionLandingVM
+@{
     ViewData["Title"] = "Mission Home | Home";
 }
-
 <header>
-    <partial name = "_Navbar"></partial>
+    <partial name = "_Navbar" ></partial>
     <hr class ="m-0"/>
-    <partial name = "_SearchSection"></partial>
-    <partial name ="_GridListView"></partial>
+    <partial name="_SearchSection" model="Model"></partial>
 </header>
 
 <section class="container mt-2" id="partial-mission-listing">
-<partial name ="_MissionGrid"></partial>
-<partial name="_MissionList"></partial>
-
+    <partial name="_MissionIndexListing" model="Model"></partial>
 </section>
 
 
+<!-- Footer(New) -->
+<div class="position-relative w-100 mt-4 bottom-0">
+    <footer class="border">
+        <div class="container p-4">
+            <a href="#" class="font-xs text-light-custom text-black-1">
+                Privacy Policy
+            </a>
+        </div>
+    </footer>
+</div>
+<!-- Footer(New) Fin -->
 
-@*@section Scripts
-{
-
-    <script>
-        $(document).ready(function () {
-            const gridView = $('#grid-view');
-            const listView = $('#list-view');
-            
-            gridView.click(function()
-            {
-                $.get('/Volunteer/User/RenderPartialViewMissionGrid', function(data)
-                {
-                    console.log("Grid called");
-                    $('#partial-mission-listing').html(data);
-                });
-            });
-
-            listView.click(function () {
-                $.get('/Volunteer/User/RenderPartialViewMissionList', function (data) {
-                    console.log("Grid called");
-                    $('#partial-mission-listing').html(data);
-                });
-            });
-        });
-    </script>
-}*@
-
+@section Scripts{
 <script>
     const gridView = document.querySelector('#grid-view-msn');
     const listView = document.querySelector('#list-view-msn');
@@ -80,3 +62,5 @@
     );
 
 </script>
+}
+

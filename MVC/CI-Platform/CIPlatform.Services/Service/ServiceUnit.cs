@@ -15,6 +15,18 @@ public class ServiceUnit: IServiceUnit
 
     public IThemeService ThemeService { get; private set; }
 
+    public IMissionApplicationService MissionApplicationService { get; private set; }
+
+    public IFavouriteMissionService FavouriteMissionService { get; private set; }
+
+    public IMissionService MissionService { get; private set; }
+
+    public IGoalMissionService GoalMissionService { get; private set; }
+
+    public IMissionMediaService MissionMediaService { get; private set; }
+
+    public IMissionSkillService MissionSkillService { get; private set; }
+
     public ServiceUnit(IUnitOfWork unitOfWork)
 	{
 		_unitOfWork= unitOfWork;
@@ -24,5 +36,11 @@ public class ServiceUnit: IServiceUnit
 		CityService = new CityService(_unitOfWork);
 		SkillService = new SkillService(_unitOfWork);
 		ThemeService = new ThemeService(_unitOfWork);
+        MissionApplicationService = new MissionApplicationService(_unitOfWork);
+        FavouriteMissionService = new FavouriteMissionService(_unitOfWork);
+        MissionService = new MissionService(_unitOfWork);
+        GoalMissionService = new GoalMissionService(_unitOfWork);
+        MissionMediaService = new MissionMediaService(_unitOfWork);
+        MissionSkillService = new MissionSkillService(_unitOfWork);
 	}
 }
