@@ -15,7 +15,8 @@ namespace CIPlatformWeb.Areas.User.Controllers
         private List<CityVM> cityList = new();
         private List<ThemeVM> themeList = new();
         private List<SkillVM> skillList = new();
-        private List<MissionCardVM> missionList = new();
+        //public List<MissionCardVM> missionList = new();
+        public List<MissionCardVM> missionList { get; set; } = new();
         private MissionLandingVM missionLanding = new()
         {
              countryList = new(),
@@ -36,6 +37,7 @@ namespace CIPlatformWeb.Areas.User.Controllers
             themeList = _serviceUnit.ThemeService.GetAllThemes();
             skillList = _serviceUnit.SkillService.GetAllSkills();
             missionList = _serviceUnit.MissionService.GetAllMissionCards();
+            Console.WriteLine($"FirstMethod - Controller instance hash code: {GetHashCode()}");
 
             missionLanding = new()
             {
@@ -50,6 +52,8 @@ namespace CIPlatformWeb.Areas.User.Controllers
 
         public IActionResult Privacy()
         {
+            Console.WriteLine($"SecondMethod - Controller instance hash code: {GetHashCode()}");
+            Console.WriteLine( missionList.Count );
             return View();
         }
 

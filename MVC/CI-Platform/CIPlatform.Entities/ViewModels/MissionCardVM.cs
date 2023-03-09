@@ -27,8 +27,8 @@ public class MissionCardVM
 
     public string? GoalText { get; set; }
 
-    public int? GoalAchieved { get; set; }
-
+    public long? GoalAchieved { get; set; }
+    public long? NumberOfVolunteer { get; set; }
     public override string ToString()
     {
         return JsonConvert.SerializeObject(this);

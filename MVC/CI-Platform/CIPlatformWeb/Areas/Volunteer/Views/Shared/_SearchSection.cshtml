@@ -74,43 +74,21 @@
 </section>
 <!-- Search Section End -->
 <!-- Filter List Begin -->
-<section class="mt-3 container d-none">
+<section class="mt-3 container d-flex align-items-start gap-4">
     <ul class="d-flex flex-wrap gap-2 p-0">
         <li class="filter-option-value px-2">
-            Tree Plantation<img src="~/assets/cancel1.png" alt="Cancel"
+            Tree Plantation<img src="~/assets/cancel1.png" ault="Cancel"
                                 class="cancel-filter cursor-pointer">
         </li>
-        <li class="filter-option-value px-2">
-            Canada<img src="~/assets/cancel1.png" alt="Cancel"
-                       class="cancel-filter cursor-pointer">
-        </li>
-        <li class="filter-option-value px-2">
-            Toronto<img src="~/assets/cancel1.png" alt="Cancel"
-                        class="cancel-filter cursor-pointer">
-        </li>
-        <li class="filter-option-value px-2">
-            Montreal<img src="~/assets/cancel1.png" alt="Cancel"
-                         class="cancel-filter cursor-pointer">
-        </li>
-        <li class="filter-option-value px-2">
-            Environment<img src="~/assets/cancel1.png" alt="Cancel"
-                            class="cancel-filter cursor-pointer">
-        </li>
-        <li class="filter-option-value px-2">
-            Nutrition<img src="~/assets/cancel1.png" alt="Cancel"
-                          class="cancel-filter cursor-pointer">
-        </li>
-        <li class="list-unstyled">
-            <button id="clear-all-filter" class="small-light-text">
-                Clear All
-            </button>
-        </li>
     </ul>
+    <button id="clear-all-filter" class="small-light-text">
+        Clear All
+    </button>
 </section>
 <!-- Filter List End -->
 <!-- Mission View Listing Begin -->
 <section class="mt-2 container">
-    @if (Model.missionList.Count > 0)
+    @if (Model.missionList?.Count > 0)
     {
         <div class="d-flex justify-content-between align-items-center">
             <div class="font-lg-size text-light-custom">

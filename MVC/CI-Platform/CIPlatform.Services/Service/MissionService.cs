@@ -45,6 +45,7 @@ public class MissionService : IMissionService
             Status = (bool)mission.Status ? MissionStatus.ONGOING : MissionStatus.FINISHED,
             OrganizationName = mission.OrganizationName,
             TotalSeat = mission.TotalSeat,
+            NumberOfVolunteer = mission.MissionApplications?.Where( application => application.ApprovalStatus == 1 ).LongCount(),
             SeatLeft = mission?.TotalSeat - mission?.MissionApplications.LongCount(),
             RegistrationDeadline = mission?.RegistrationDeadline,
             Rating = mission?.Rating,
