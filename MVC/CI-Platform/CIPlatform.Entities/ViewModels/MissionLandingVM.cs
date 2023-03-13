@@ -6,4 +6,5 @@ public class MissionLandingVM
     public List<ThemeVM>? themeList ;
     public List<SkillVM>? skillList ;
     public List<MissionCardVM>? missionList ;
+    public long? UserId { get; set; }
 }

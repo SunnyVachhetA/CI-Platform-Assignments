@@ -44,7 +44,10 @@ body {
 .cursor-pointer {
     cursor: pointer;
 }
-
+.msn-detail-progress
+{
+    width: 150%;
+}
 .text-brown {
     color: var(--col-secondary-brown) !important;
 }
@@ -667,6 +670,9 @@ form-subtitle,
 .btn-g-orange:hover, .btn-g-white:hover {
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
 }
+.btn-g-orange:hover {
+    color: var(--col-orange) !important;
+}
 /* .slider::-webkit-scrollbar { display: none; } 
   .slider { scrollbar-width: none; } */
 @media screen and (max-width: 576px) {
@@ -698,7 +704,10 @@ form-subtitle,
 .story-hero-text {
     max-width: 60rem;
 }
-
+#sort-options{
+    padding: 0.325rem !important;
+    border: 1px solid var(--col-brown);
+}
 .story-form .custom-input, .form-select > option {
     width: min(420px, 100%);
     height: min(38px, 100%);

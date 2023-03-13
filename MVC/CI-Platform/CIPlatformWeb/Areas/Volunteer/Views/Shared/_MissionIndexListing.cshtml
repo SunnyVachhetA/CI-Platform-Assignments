@@ -12,7 +12,7 @@
     {
         <!-- Upcoming Mission Listing Begin -->
         <div class="col">
-            <article class="card h-100">
+            <article class="card h-100 flex-nowrap">
                 <div class="position-relative">
                     <img src='@mission.ThumbnailUrl'
                          alt="Mission Image" class="w-100 h-90">
@@ -43,7 +43,7 @@
                 </div>
 
 
-                <div class="d-flex flex-column mt-n1">
+                <div class="d-flex flex-column mt-n1 mb-3">
                     <h3 class="mt-0 px-4">
                         @mission.Title
                     </h3>
@@ -164,11 +164,22 @@
                             }
                         </div>
                     }
-                    <button class="my-2 my-md-3 mx-auto btn-g-orange">
+                    
+                </div>
+                @if (mission.Status == MissionStatus.ONGOING && userId != 0L)
+                {
+                    <a class="my-2 my-md-3 mx-auto btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
                         Apply
                         <img src="~/assets/right-arrow.png" alt="Right Arrow">
-                    </button>
-                </div>
+                    </a>
+                }
+                else
+                {
+                    <a class="mt-auto mb-3 mx-auto btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
+                        View Details
+                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                    </a>
+                }
             </article>
         </div>
         <!-- Upcoming Mission Listing End -->
@@ -361,3 +372,4 @@
     }
 </div>
 <!-- List View End -->
+

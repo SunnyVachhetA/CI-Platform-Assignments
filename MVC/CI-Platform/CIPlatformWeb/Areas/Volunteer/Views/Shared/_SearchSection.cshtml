@@ -1,4 +1,9 @@
 ﻿@model MissionLandingVM
+@{
+    var userId = 0L;
+    if( Context.Session.GetString("userId") != null)
+        userId = long.Parse("userId");
+}
 <!-- Search Section Begin -->
 <section class="border border-bottom">
     <div class="container">
@@ -6,7 +11,7 @@
             <div class="d-flex align-items-center justify-content-between border-bottom flex-grow-1">
                 <img src="~/assets/search.png" alt="Search" class="icon-search">
                 <input type="text" class="search-input ms-2 me-auto form-control"
-                       placeholder="Search Mission...">
+                       placeholder="Search Mission..." id="search-mission">
                 <button class="cursor-pointer bg-transparent border-0 " data-bs-toggle="collapse"
                         data-bs-target="#collapseFilterMenu" aria-expanded="false"
                         aria-controls="collapseFilterMenu">
@@ -22,10 +27,10 @@
                         Country
                         <img src="~/assets/drop-down.png" alt="Options">
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" id="country-filter">
                         @foreach(var country in Model.countryList)
                         {
-                            <li class="dropdown-item">@country.Name</li>
+                            <li class="dropdown-item" data-id="@country.CountryId">@country.Name</li>
                         }
                     </ul>
                 </div>
@@ -35,10 +40,12 @@
                         City
                         <img src="~/assets/drop-down.png" alt="Options">
                     </button>
-                    <ul class="dropdown-menu country-list">
+                    <ul class="dropdown-menu" id="city-filter">
                         @foreach (var city in Model.cityList)
                         {
-                            <li class="dropdown-item">@city.Name</li>
+                            <li class="dropdown-item" data-id = "@city.CityId" >
+                                @city.Name
+                            </li>
                         }
                     </ul>
                 </div>
@@ -48,10 +55,10 @@
                         Theme
                         <img src="~/assets/drop-down.png" alt="Options">
                     </button>
-                    <ul class="dropdown-menu ">
+                    <ul class="dropdown-menu" id="theme-filter">
                         @foreach (var theme in Model.themeList)
                         {
-                            <li class="dropdown-item">@theme.Title</li>
+                            <li class="dropdown-item" data-id="@theme.ThemeId">@theme.Title</li>
                         }
                     </ul>
                 </div>
@@ -61,10 +68,10 @@
                         Skills
                         <img src="~/assets/drop-down.png" alt="Options">
                     </button>
-                    <ul class="dropdown-menu">
-                        @foreach (var skill in Model.skillList)
+                    <ul class="dropdown-menu" id="skill-filter">
+                        @foreach (var skill in Model.skillList!)
                         {
-                            <li class="dropdown-item">@skill.Name</li>
+                            <li class="dropdown-item" data-id="@skill.SkillId">@skill.Name</li>
                         }
                     </ul>
                 </div>
@@ -74,12 +81,8 @@
 </section>
 <!-- Search Section End -->
 <!-- Filter List Begin -->
-<section class="mt-3 container d-flex align-items-start gap-4">
-    <ul class="d-flex flex-wrap gap-2 p-0">
-        <li class="filter-option-value px-2">
-            Tree Plantation<img src="~/assets/cancel1.png" ault="Cancel"
-                                class="cancel-filter cursor-pointer">
-        </li>
+<section class="mt-3 container d-flex align-items-start gap-4 d-none" id = "filter-option-area">
+    <ul class="d-flex flex-wrap gap-2 p-0" id="selected-filter-list">
     </ul>
     <button id="clear-all-filter" class="small-light-text">
         Clear All
@@ -95,16 +98,31 @@
                 Explore <span class="font-xl-size">@Model.missionList.Count missions</span>
             </div>
             <div class="d-flex align-items-center gap-4">
-                <button class="d-flex bg-transparent justify-content-around align-items-center gap-5 p-2 dropdown dropdown-toggle btn-sort-by"
+                @*<button class="d-flex bg-transparent justify-content-around align-items-center gap-5 p-2 dropdown dropdown-toggle btn-sort-by"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Sort By
                     <img src="./assets/drop-down.png" alt="Options">
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Missions</a></li>
-                    <li><a class="dropdown-item" href="#">Favourites</a></li>
-                </ul>
+                <ul class="dropdown-menu" id="sort-options">
+                    <li class="dropdown-item">Newest</li>
+                    <li class="dropdown-item">Oldest</li>
+                    <li class="dropdown-item">Lowest Available Seats</li>
+                    <li class="dropdown-item">Highest Available Seats</li>
+                    <li class="dropdown-item">My Favourites</li>
+                    <li class="dropdown-item">Registration Deadline</li>
+                </ul>*@
+                <select id="sort-options" class="fw-light font-15 cursor-pointer">
+                    <option class="dropdown-item" selected disabled>Sort By</option>
+                    <option class="dropdown-item" value="1">Newest</option>
+                    <option class="dropdown-item" value="2">Oldest</option>
+                    <option class="dropdown-item" value="3">Lowest Available Seats</option>
+                    <option class="dropdown-item" value="4">Highest Available Seats</option>
+                    @if (userId != 0L)
+                    {
+                        <option class="dropdown-item" value="5">My Favourites</option>
+                    }
+                    <option class="dropdown-item" value="6">Registration Deadline</option>
+                </select>
                 <button class="border-0 btn-view d-none d-md-block" id="grid-view">
                     <img src="./assets/grid.png"
                      alt="Grid View">
