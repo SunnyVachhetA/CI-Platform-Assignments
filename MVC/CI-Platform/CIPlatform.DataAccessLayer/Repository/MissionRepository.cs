@@ -1,7 +1,9 @@
 ﻿using CIPlatform.DataAccessLayer.Data;
 using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
+using CIPlatform.Entities.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class MissionRepository : Repository<Mission>, IMissionRepository
@@ -12,17 +14,10 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
         _dbContext = dbContext;
     }
 
-
     public List<Mission> GetAllMissions()
     {
 
-        var result = _dbContext.Missions.Include(mission => mission.MissionMedia)
-                    .Include(mission => mission.GoalMissions)
-                    .Include(mission => mission.MissionApplications)
-                    .Include(mission => mission.FavouriteMissions)
-                    .Include(mission => mission.MissionSkills)
-                    .Include(mission => mission.Theme)
-                    .ToList();
+        var result = FetchMissionInformation().ToList();
 
         return result;
     }
@@ -62,5 +57,21 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                     .Include(mission => mission.Theme)
                     .Include(mission => mission.City)
                     .Include(mission => mission.Country);
+    }
+
+    //Db call for filtering out missions
+    public List<Mission> LoadFilteredMissions(FilterModel filterModel)
+    {
+        var missions = FetchMissionInformation().AsQueryable();
+
+        if(filterModel != null)
+        {
+            if( !string.IsNullOrEmpty(filterModel.SearchKeyword) )
+            {
+                missions = missions.Where( msn =>  msn.Theme.Title!.Contains(filterModel.SearchKeyword)  );
+            }
+        }
+
+        return missions.ToList();
     }
 }

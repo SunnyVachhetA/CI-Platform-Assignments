@@ -109,18 +109,20 @@ clearAllFilter.addEventListener(
         themeList.splice(0, themeList.length);
         skillList.splice(0, skillList.length);
         userFilterList.innerHTML = '';
+        filterMissionCardAjax();    
     }
 );
 
 searchMission.addEventListener('input', () => {
     searchText = searchMission.value;
-    if (searchText.length >= 3)
-        filterMissionCardAjax();
+    filterMissionCardAjax();
 });
 
 $('#sort-options').change((e) => {
-    sortByOption = $(this);
-    alert(sortByOption);
+    sortByOption = $('#sort-options').val();
+
+    console.log('Selected Sort Option: ' + sortByOption);
+
     filterMissionCardAjax();
 });
 
@@ -142,6 +144,8 @@ function filterMissionCardAjax() {
         data: filterList,
         success: function (result) {
             console.log("Data sent successfully!");
+            console.log(result);
+            $('#partial-mission-listing').html(result);
         },
         error: function (xhr, status, error) {
             console.log("Error sending data: " + error);

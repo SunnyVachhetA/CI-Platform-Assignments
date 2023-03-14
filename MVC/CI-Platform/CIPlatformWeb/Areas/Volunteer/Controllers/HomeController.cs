@@ -1,8 +1,10 @@
 ﻿using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
 using CIPlatformWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.Identity.Client;
 using System.Diagnostics;
 
 namespace CIPlatformWeb.Areas.User.Controllers
@@ -12,7 +14,7 @@ namespace CIPlatformWeb.Areas.User.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IServiceUnit _serviceUnit;
-        private List<CountryVM> countryList = new();
+        /*private List<CountryVM> countryList = new();
         private List<CityVM> cityList = new();
         private List<ThemeVM> themeList = new();
         private List<SkillVM> skillList = new();
@@ -24,13 +26,15 @@ namespace CIPlatformWeb.Areas.User.Controllers
              themeList = new(),
              missionList = new(),
              skillList = new()
-        };
+        };*/
         public HomeController(ILogger<HomeController> logger, IServiceUnit serviceUnit)
         {
-            Console.WriteLine( "Controller Called...." );
             _logger = logger;
             _serviceUnit = serviceUnit;
-            countryList = _serviceUnit.CountryService.GetAllCountry();
+        }
+        public IActionResult Index()
+        {
+            /*countryList = _serviceUnit.CountryService.GetAllCountry();
             cityList = _serviceUnit.CityService.GetAllCities();
             themeList = _serviceUnit.ThemeService.GetAllThemes();
             skillList = _serviceUnit.SkillService.GetAllSkills();
@@ -42,10 +46,8 @@ namespace CIPlatformWeb.Areas.User.Controllers
                 themeList = themeList,
                 skillList = skillList,
                 missionList = missionList
-            };
-        }
-        public IActionResult Index()
-        {
+            };*/
+            var missionLanding = _serviceUnit.MissionService.CreateMissionLanding();
             return View( missionLanding );
         }
 
@@ -63,9 +65,8 @@ namespace CIPlatformWeb.Areas.User.Controllers
 
         #region Ajax Call
         [HttpPost]
-        public IActionResult TestAjax(byte[]? countryList, int[]? cityList, string? searchKeyword, short[]? themeList, short[]? skillList, byte? sortBy)
+        public IActionResult TestAjax(int[]? countryList, int[]? cityList, string? searchKeyword, int[]? themeList, int[]? skillList, byte? sortBy)
         {
-
             FilterModel filterModel = new()
             {
                 CountryList = countryList,
@@ -73,10 +74,15 @@ namespace CIPlatformWeb.Areas.User.Controllers
                 SearchKeyword = searchKeyword,  
                 ThemeList = themeList,
                 SkillList = skillList,
-                SortBy = sortBy
+                SortBy = (SortByMenu)sortBy
             };
-
-            return Ok();
+            try
+            {
+                List<MissionCardVM> filteredMissions = _serviceUnit.MissionService.FilterMissions(filterModel);
+                MissionLandingVM result = _serviceUnit.MissionService.CreateMissionLanding(filteredMissions);
+                return PartialView("_MissionIndexListing", result);
+            }
+            catch (Exception) { return StatusCode(404); }
         }
         #endregion 
 

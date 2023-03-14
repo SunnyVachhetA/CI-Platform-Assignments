@@ -8,11 +8,11 @@ namespace CIPlatform.Services.Service;
 public class MissionService : IMissionService
 {
     private IUnitOfWork unitOfWork;
-
     public MissionService(IUnitOfWork unitOfWork)
     {
         this.unitOfWork = unitOfWork;
     }
+    
 
     //Get all mission card details
     public List<MissionCardVM> GetAllMissionCards()
@@ -53,6 +53,9 @@ public class MissionService : IMissionService
             Rating = mission?.Rating,
             CityId = mission?.CityId,
             CityName = mission?.City?.Name,
+            CountryId = mission.CountryId,
+            SkillId = mission.MissionSkills.Select(skill => skill.SkillId).ToList(),
+            Skills = mission.MissionSkills.Select( skill => skill?.Skill?.Name ).ToList(),
             ThumbnailUrl = GetThumbnailUrl(mission.MissionMedia.FirstOrDefault( media => media.Default ) ),
             MissionMedias = mission.MissionMedia?.Select( media => GetThumbnailUrl( media ) ).ToList(),
             GoalValue = mission.GoalMissions?.FirstOrDefault(msnGoal => msnGoal.GoalValue != 0)?.GoalValue,
@@ -87,4 +90,60 @@ public class MissionService : IMissionService
         var missions = unitOfWork.MissionRepo.FetchRelatedMissionsByTheme( themeId );
         return null!;
     }
+
+    //Method for filtering out mission based on user filter selection
+    public List<MissionCardVM> FilterMissions(FilterModel filterModel)
+    {
+        var result = GetAllMissionCards().AsQueryable();
+
+        FilterService filter = new FilterService( result, filterModel );
+
+        result = filter.FilterCriteria();
+        return result.ToList();
+    }
+
+    public MissionLandingVM CreateMissionLanding( )
+    {
+        ICountryService countryService = new CountryService(unitOfWork);
+        ICityService cityService = new CityService(unitOfWork); 
+        ISkillService skillService = new SkillService(unitOfWork);
+        IThemeService themeService = new ThemeService(unitOfWork);
+        var countryList = countryService.GetAllCountry();
+        var cityList = cityService.GetAllCities();
+        var themeList = themeService.GetAllThemes();
+        var skillList = skillService.GetAllSkills();
+        var missionList = GetAllMissionCards();
+        MissionLandingVM missionLanding = new()
+        {
+            countryList = countryList,
+            cityList = cityList,
+            themeList = themeList,
+            skillList = skillList,
+            missionList = missionList
+        };
+        return missionLanding;
+    }
+
+    public MissionLandingVM CreateMissionLanding(List<MissionCardVM> missionList)
+    {
+        ICountryService countryService = new CountryService(unitOfWork);
+        ICityService cityService = new CityService(unitOfWork);
+        ISkillService skillService = new SkillService(unitOfWork);
+        IThemeService themeService = new ThemeService(unitOfWork);
+        var countryList = countryService.GetAllCountry();
+        var countryIdList = countryList.Select( country => country.CountryId );
+        var cityList = cityService.GetAllCities().Where( city =>  countryIdList.Contains( city.CountryId ) ).ToList();
+        var themeList = themeService.GetAllThemes();
+        var skillList = skillService.GetAllSkills();
+        MissionLandingVM missionLanding = new()
+        {
+            countryList = countryList,
+            cityList = cityList,
+            themeList = themeList,
+            skillList = skillList,
+            missionList = missionList
+        };
+        return missionLanding;
+    }
+
 }

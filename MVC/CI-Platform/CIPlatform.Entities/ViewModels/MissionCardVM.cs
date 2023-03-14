@@ -1,5 +1,4 @@
 ﻿using CIPlatform.Entities.VMConstants;
-using Newtonsoft.Json;
 
 namespace CIPlatform.Entities.ViewModels;
 public class MissionCardVM
@@ -26,11 +25,9 @@ public class MissionCardVM
     public long? GoalAchieved { get; set; }
     public long? NumberOfVolunteer { get; set; }
     public List<string>? MissionMedias { get; set; }
-
+    public byte? CountryId { get; set; }
     public string? Description { get; set; }
     public string? OrganizationDetails { get; set; }
-    public override string ToString()
-    {
-        return JsonConvert.SerializeObject(this);
-    }
+    public List<short>? SkillId { get; set; }
+    public List<string>? Skills { get; set; }
 }
