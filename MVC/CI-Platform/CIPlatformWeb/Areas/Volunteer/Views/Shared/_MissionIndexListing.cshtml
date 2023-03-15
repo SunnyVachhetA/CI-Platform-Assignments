@@ -1,60 +1,14 @@
 ﻿@model MissionLandingVM
 @{
-    Console.WriteLine( "NEw list" );
     var userId = 0L;
     var currentDateTime = DateTimeOffset.Now;
     var user = Context.Session.GetString("userId");
     if (user != null)
         userId = long.Parse( user );
+    var missionCount = ViewBag.MissionCount;
 }
 
-<!-- Mission View Listing Begin -->
-<section class="mt-2 container">
-    @if (Model.missionList?.Count > 0)
-    {
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="font-lg-size text-light-custom">
-                Explore <span class="font-xl-size">@Model.missionList.Count missions</span>
-            </div>
-            <div class="d-flex align-items-center gap-4">
-
-                <select id="sort-options" class="fw-light font-15 cursor-pointer">
-                    <option class="dropdown-item" selected disabled>Sort By</option>
-                    <option class="dropdown-item" value="1">Newest</option>
-                    <option class="dropdown-item" value="2">Oldest</option>
-                    <option class="dropdown-item" value="3">Lowest Available Seats</option>
-                    <option class="dropdown-item" value="4">Highest Available Seats</option>
-                    @if (userId != 0L)
-                    {
-                        <option class="dropdown-item" value="5">My Favourites</option>
-                    }
-                    <option class="dropdown-item" value="6">Registration Deadline</option>
-                </select>
-                <button class="border-0 btn-view d-none d-md-block" id="grid-view">
-                    <img src="./assets/grid.png"
-                     alt="Grid View">
-                </button>
-                <button class="border-0 btn-view d-none d-md-block" id="list-view">
-                    <img src="./assets/list.png"
-                     alt="List View">
-                </button>
-            </div>
-        </div>
-    }
-    else
-    {
-        <!-- No Mission Found Begin -->
-        <section class="border py-4 mt-4 container text-center font-lg-size text-light-custom fw-400">
-            No Mission Found
-            <button class="btn-g-orange font-15 mx-auto">
-                Submit New Mission!
-            </button>
-        </section>
-        <!-- No Mission Found End -->
-    }
-</section>
-<!-- Mission View Listing End -->
-
+<input type = "hidden" id = "mission-count" value="@missionCount"/>
 <!-- Grid View Begin -->
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-xl-4" id="grid-view-msn">
     @foreach(var mission in Model.missionList)

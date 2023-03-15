@@ -1,4 +1,5 @@
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\bin\Debug\net6.0\CIPlatform.Entities.deps.json
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\bin\Debug\net6.0\CIPlatform.Entities.runtimeconfig.json
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\bin\Debug\net6.0\CIPlatform.Entities.dll
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\bin\Debug\net6.0\CIPlatform.Entities.pdb
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\obj\Debug\net6.0\CIPlatform.Entities.csproj.AssemblyReference.cache
@@ -9,6 +10,5 @@ F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\obj\Debug
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\obj\Debug\net6.0\CIPlatform.Entities.dll
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\obj\Debug\net6.0\refint\CIPlatform.Entities.dll
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\obj\Debug\net6.0\CIPlatform.Entities.pdb
-F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\obj\Debug\net6.0\ref\CIPlatform.Entities.dll
-F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\bin\Debug\net6.0\CIPlatform.Entities.runtimeconfig.json
 F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\obj\Debug\net6.0\CIPlatform.Entities.genruntimeconfig.cache
+F:\Project\CI-Platform-Assignments\MVC\CI-Platform\CIPlatform.Entities\obj\Debug\net6.0\ref\CIPlatform.Entities.dll

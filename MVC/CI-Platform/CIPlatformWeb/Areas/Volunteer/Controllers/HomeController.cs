@@ -65,7 +65,8 @@ namespace CIPlatformWeb.Areas.User.Controllers
 
         #region Ajax Call
         [HttpPost]
-        public IActionResult TestAjax(int[]? countryList, int[]? cityList, string? searchKeyword, int[]? themeList, int[]? skillList, byte? sortBy)
+        public IActionResult TestAjax(int[]? countryList, int[]? cityList, string? searchKeyword, int[]? themeList, int[]? skillList, 
+            byte? sortBy, int page)
         {
             FilterModel filterModel = new()
             {
@@ -80,10 +81,26 @@ namespace CIPlatformWeb.Areas.User.Controllers
             {
                 List<MissionCardVM> filteredMissions = _serviceUnit.MissionService.FilterMissions(filterModel);
                 MissionLandingVM result = _serviceUnit.MissionService.CreateMissionLanding(filteredMissions);
+                ViewBag.MissionCount = ( result.missionList == null ) ? 0 : result.missionList?.Count();
+                result.missionList = result.missionList.Skip((page - 1) * 9).Take(9).ToList();
                 return PartialView("_MissionIndexListing", result);
             }
             catch (Exception) { return StatusCode(404); }
         }
+
+        public IActionResult LoadMissionsIndexAjax(int page)
+        {
+            MissionLandingVM missionLanding = new()
+            {
+                missionList = new()
+            };
+            var missionList = _serviceUnit.MissionService.GetAllMissionCards();
+            missionLanding.missionList = missionList;
+            ViewBag.MissionCount = missionLanding.missionList.Count();
+            missionLanding.missionList = missionLanding.missionList.Skip((page - 1) * 9).Take(9).ToList();
+            return PartialView("_MissionIndexListing", missionLanding);
+        }
+
         #endregion 
 
     }

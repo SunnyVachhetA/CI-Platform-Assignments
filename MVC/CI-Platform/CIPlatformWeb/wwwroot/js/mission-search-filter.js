@@ -29,7 +29,6 @@ function addFilterToHtmlList(id, item, type) {
     image.classList.add('cancel-filter');
     image.classList.add( 'cursor-pointer' );
 
-    let structure = item.trim();
     
     li.textContent = item.trim();
     li.append(image);
@@ -120,10 +119,24 @@ searchMission.addEventListener('input', () => {
 
 $('#sort-options').change((e) => {
     sortByOption = $('#sort-options').val();
-
-    console.log('Selected Sort Option: ' + sortByOption);
-
     filterMissionCardAjax();
+});
+
+$(document).ready(() => {
+    $.ajax({
+        type: "GET",
+        url: "Volunteer/Home/LoadMissionsIndexAjax",
+        data: currentPageNumber,    
+        success: function (result) {
+            console.log("Data sent successfully!");
+            $('#partial-mission-listing').html(result);
+            missionDisplay();
+            missionPagination();
+        },
+        error: function (xhr, status, error) {
+            console.log("Error sending data: " + error);
+        }
+    });
 });
 
 function filterMissionCardAjax() {
@@ -134,7 +147,8 @@ function filterMissionCardAjax() {
         searchKeyword: searchText,
         themeList: themeList,
         skillList: skillList,
-        sortBy: sortByOption
+        sortBy: sortByOption,
+        page: currentPageNumber
     };
 
     console.log(filterList);
@@ -146,9 +160,36 @@ function filterMissionCardAjax() {
             console.log("Data sent successfully!");
             console.log(result);
             $('#partial-mission-listing').html(result);
+            missionDisplay();
+            missionPagination();
         },
         error: function (xhr, status, error) {
             console.log("Error sending data: " + error);
         }
     });
+}
+
+
+
+//MissionCount
+const hasMission = document.querySelector('#has-mission');
+const noMission = document.querySelector('#no-mission');
+const msnNumber = document.querySelector('#number-of-mission');
+const displayClass1 = "d-none";
+
+
+
+
+function missionDisplay() {
+    const missionCount = document.querySelector('#mission-count');
+    let count = missionCount.value;
+    if (count > 0) {
+        hasMission.classList.remove(displayClass1);
+        noMission.classList.add(displayClass1);
+        msnNumber.textContent = count;
+    }
+    else {
+        hasMission.classList.add(displayClass1);
+        noMission.classList.remove(displayClass1);
+    }
 }

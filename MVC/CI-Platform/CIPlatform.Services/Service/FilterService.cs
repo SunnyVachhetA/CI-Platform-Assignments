@@ -1,7 +1,5 @@
-﻿using CIPlatform.Entities.DataModels;
-using CIPlatform.Entities.ViewModels;
+﻿using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
-using System.Linq;
 
 namespace CIPlatform.Services.Service;
 internal class FilterService
@@ -22,9 +20,11 @@ internal class FilterService
         missions = FilterByTheme();
         missions = FilterBySkill1();
         missions = FilterBySortByMenu();
+
         return missions;
     }
 
+    private IQueryable<MissionCardVM> CountCheck( IQueryable<MissionCardVM> result) => result.Count() == 0 ? missions : result;
     public IQueryable<MissionCardVM> FilterBySkill1()
     {
         if (filterModel.SkillList.Length == 0) return missions;
@@ -73,19 +73,21 @@ internal class FilterService
 
     internal IQueryable<MissionCardVM> FilterByCity()
     {
+        var filterMissions = missions;
         if (filterModel.CityList != null && filterModel.CityList.Length > 0 && filterModel.CityList!.Any())
         {
-            missions = missions.Where(msn => filterModel.CityList.ToList().Contains((int)msn.CityId!));
+            filterMissions = filterMissions.Where(msn => filterModel.CityList.ToList().Contains((int)msn.CityId!));
         }
-        return missions;
+        return filterMissions;
     }
     internal IQueryable<MissionCardVM> FilterByCountry()
     {
+        var filterMissions = missions;
         if ( filterModel.CountryList != null && filterModel.CountryList.Length > 0 && filterModel.CountryList.Any() )
         {
-            missions = missions.Where( msn => filterModel.CountryList.ToList().Contains((byte)msn.CountryId!)  );
+            filterMissions = filterMissions.Where( msn => filterModel.CountryList.ToList().Contains((byte)msn.CountryId!)  );
         }
-        return missions;
+        return filterMissions;
     }
 
     internal IQueryable<MissionCardVM> SearchBySearchKeyword()
@@ -113,31 +115,29 @@ internal class FilterService
             switch( filterModel.SortBy )
             {
                 case SortByMenu.NEWEST:
-                    missions = missions.OrderBy( msn => msn.StartDate );
+                    missions = missions.OrderBy( msn => msn.StartDate.HasValue ).OrderByDescending( msn => msn.StartDate );
                     break;
 
                 case SortByMenu.OLDEST:
-                    missions = missions.OrderByDescending(msn => msn.StartDate);
+                    missions = missions.OrderByDescending(msn => msn.StartDate.HasValue).OrderBy( msn => msn.StartDate );
                     break;
 
                 case SortByMenu.LOWEST_SEAT_AVAILABLE:
-                    missions = missions.OrderBy( msn => msn.SeatLeft );
+                    missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderByDescending(msn => msn.SeatLeft.HasValue).OrderBy( msn => msn.SeatLeft );
                     break;
 
                 case SortByMenu.HIGHEST_SEAT_AVAILABLE:
-                    missions = missions.OrderByDescending(msn => msn.SeatLeft);
+                    missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderBy( msn => msn.SeatLeft.HasValue ).OrderByDescending( msn => msn.SeatLeft );
                     break;
 
                 case SortByMenu.FAVOURITE:
                     break;
 
                 case SortByMenu.REGISTRATION_DEADLINE:
-                    missions = missions.OrderByDescending(msn => msn.RegistrationDeadline);
+                    missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderBy(msn => msn.RegistrationDeadline.HasValue).OrderByDescending(msn => msn.RegistrationDeadline);
                     break;
             }
         }
-        
-
         return missions;
     }
 }

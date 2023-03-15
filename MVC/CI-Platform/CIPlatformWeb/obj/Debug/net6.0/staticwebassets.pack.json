@@ -473,6 +473,10 @@
       "PackagePath": "staticwebassets\\images\\static\\img2.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\mission-pagination.js",
+      "PackagePath": "staticwebassets\\js\\mission-pagination.js"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\mission-search-filter.js",
       "PackagePath": "staticwebassets\\js\\mission-search-filter.js"
     },

@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Mission Home | Home";
 }
+<main class="index-grid d-grid min-vh-100">
 <header>
     <partial name = "_Navbar" ></partial>
     <hr class ="m-0"/>
@@ -9,24 +10,45 @@
 </header>
 
 <section class="container mt-2 mb-4" id="partial-mission-listing">
-    <partial name="_MissionIndexListing" model="Model"></partial>
+    @*<partial name="_MissionIndexListing" model="Model"></partial>*@
 </section>
 
 
+<!-- Pagination Begin  -->
+<section class="container my-2 my-md-5 d-flex justify-content-center gap-2 text-light-custom c-pagination-item" id="msn-pagination">
+    @*<button class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
+        <img src="./assets/previous.png" alt="Previous Pages">
+    </button>
+    <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent ">
+        <img src="./assets/left.png" alt="Previous">
+    </button>
+    <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent active">
+        1
+    </button>
+    <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
+        <img src="./assets/right-arrow1.png" alt="Next Item">
+    </button>
+    <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
+        <img src="./assets/next.png" alt="Next Pages">
+    </button>*@
+</section>
+<!-- Pagination End  -->
+
 <!-- Footer(New) -->
-<div class="position-absolute w-100 mt-auto">
-    <footer class="border bottom-0">
+
+    <footer class="border">
         <div class="container p-4">
             <a href="#" class="font-xs text-light-custom text-black-1">
                 Privacy Policy
             </a>
         </div>
     </footer>
-</div>
-<!-- Footer(New) Fin -->
 
+<!-- Footer(New) Fin -->
+</main>
 @section Scripts{
     <script src = "~/js/mission-view-toggler.js"></script>
     <script src = "~/js/mission-search-filter.js"></script>
+    <script src="~/js/mission-pagination.js"></script>
 }
 

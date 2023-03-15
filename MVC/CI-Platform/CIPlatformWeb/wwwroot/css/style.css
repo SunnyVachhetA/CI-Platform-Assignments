@@ -21,6 +21,10 @@
     --col-green: #14C506;
 }
 
+.index-grid {
+   grid-template-rows : auto auto auto 0.3fr;
+}
+
 body {
     max-width: 1920px;
     color: var(--col-black);
