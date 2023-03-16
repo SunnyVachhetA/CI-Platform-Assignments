@@ -2,25 +2,27 @@
 const paginationContainer = $('#msn-pagination');
 let prevPage;
 let prevBtn;
-let totalPage;
-let currentPageNumber = 1;
+currentPageNumber = 1;
 
 function missionPagination() {
-    $(paginationContainer).empty();
-    const missionCount = document.querySelector('#mission-count');
+const missionCount = document.querySelector('#mission-count');
     let count = missionCount.value;
-    if ( count <= 9 )
+    if (count <= 9) {
+        $(paginationContainer).empty();
         return;
+    }
 
+    totalPage = Math.ceil(count / 9);
+    $(paginationContainer).empty();
     createLeftButton(createHTMLPageButton());
-    createPageNumberedButton( count );
+    createPageNumberedButton(  );
     createRightButton(createHTMLPageButton());
+    $(`[data-page='${currentPageNumber}'`).addClass('active');
+
 }
 
-function createPageNumberedButton(count)
+function createPageNumberedButton()
 {
-    totalPage = Math.ceil(count / 9);
-
     if (totalPage <= 5)
     {
         for (let i = 1; i <= totalPage; i++)
@@ -36,21 +38,12 @@ function createPageNumberedButton(count)
 }
 
 function onPageNumberButtonClick() {
-    let currentBtn = $(this);
-    if (prevBtn !== undefined) {
-        if (currentBtn == prevBtn) return;
-        $(prevBtn).removeClass('active');
-        $(currentBtn).addClass('active');
+    
+            $(`[data-page='${currentPageNumber}'`).removeClass('active');
         currentPageNumber = $(this).data('page');
-        prevBtn = currentBtn;
-    }
-
-    else {
-        currentPageNumber = $(this).data('page');
-        prevBtn = $(this);
-        $(this).addClass('active');
-    }
+        $(`[data-page='${currentPageNumber}'`).addClass('active');
     filterMissionCardAjax();
+    $(document).scrollTop(0);
 }
 
 function createHTMLPageButton() {

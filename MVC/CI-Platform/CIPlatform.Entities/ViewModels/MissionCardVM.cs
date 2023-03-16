@@ -28,6 +28,9 @@ public class MissionCardVM
     public byte? CountryId { get; set; }
     public string? Description { get; set; }
     public string? OrganizationDetails { get; set; }
-    public List<short>? SkillId { get; set; }
-    public List<string>? Skills { get; set; }
+    public List<short>? SkillId { get; set; } = new();
+    public List<string>? Skills { get; set; } = new();
+    public List<long>? FavrouriteMissionsId { get; set; } = new();
+
+    public List<long>? ApplicationListId { get; set; } = new();
 }

@@ -1,10 +1,11 @@
 ﻿@model MissionLandingVM
 @{
     var userId = 0L;
-    if( Context.Session.GetString("userId") != null)
-        userId = long.Parse("userId");
+    if (Context.Session.GetString("UserId") != null)
+        userId = Convert.ToInt64(Context.Session.GetString("UserId"));
 }
 <!-- Search Section Begin -->
+<input type = "hidden" value="@userId" id = "logged-user-id"/>
 <section class="border border-bottom">
     <div class="container">
         <div class="d-flex flex-wrap flex-column flex-sm-row justify-content-between bg-transparent filter-section gap-4 gap-xl-0">
@@ -43,7 +44,7 @@
                     <ul class="dropdown-menu" id="city-filter">
                         @foreach (var city in Model.cityList)
                         {
-                            <li class="dropdown-item" data-id = "@city.CityId" >
+                            <li class="dropdown-item" data-id = "@city.CityId" data-pid = "@city.CountryId">
                                 @city.Name
                             </li>
                         }

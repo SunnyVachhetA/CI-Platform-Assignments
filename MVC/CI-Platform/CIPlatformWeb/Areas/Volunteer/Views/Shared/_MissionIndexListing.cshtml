@@ -2,9 +2,8 @@
 @{
     var userId = 0L;
     var currentDateTime = DateTimeOffset.Now;
-    var user = Context.Session.GetString("userId");
-    if (user != null)
-        userId = long.Parse( user );
+    if (Context.Session.GetString("UserId") != null)
+        userId = Convert.ToInt64(Context.Session.GetString("UserId"));
     var missionCount = ViewBag.MissionCount;
 }
 
@@ -25,7 +24,9 @@
                         <div class="msn-status-closed">
                             Closed
                         </div>
-                    }else{
+                    }
+                    @if( mission.ApplicationListId.Contains(userId) )
+                    {
                         <div class = "msn-status-applied">
                             Applied
                         </div>
@@ -34,9 +35,18 @@
                         <img src="~/assets/pin.png" alt="Location" class="me-2">
                         @mission.CityName
                     </div>
-                    <div class="position-absolute rounded-pill p-2 msn-favourite cursor-pointer">
+                    @if( userId != 0L && mission.FavrouriteMissionsId.Contains(userId) )
+                    {
+                    <div class="position-absolute rounded-pill p-2 msn-favourite cursor-pointer bg-danger">
                         <a href="#"><img src="~/assets/heart.png" alt="Add Favourite"></a>
-                    </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="position-absolute rounded-pill p-2 msn-favourite cursor-pointer">
+                            <a href="#"><img src="~/assets/heart.png" alt="Add Favourite"></a>
+                        </div>
+                    }
                     <div class="cursor-pointer position-absolute rounded-pill p-2 msn-share">
                         <img src="~/assets/user.png" alt="Share">
                     </div>

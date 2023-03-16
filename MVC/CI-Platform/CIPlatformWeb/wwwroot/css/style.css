@@ -514,9 +514,6 @@ form-subtitle,
     bottom: 6rem;
     transition: var(--transition);
 }
-.msn-favourite-active, .msn-list-favourite-active, .msn-favourite :hover{
-    background-color: lightcoral;
-}
 .msn-list-share {
     background-color: rgba(0, 0, 0, 0.4);
     right: 1rem;

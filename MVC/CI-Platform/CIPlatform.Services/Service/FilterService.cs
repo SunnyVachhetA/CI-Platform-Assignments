@@ -14,12 +14,12 @@ internal class FilterService
 
     internal IQueryable<MissionCardVM> FilterCriteria()
     {
+        missions = FilterBySortByMenu();
         missions = SearchBySearchKeyword();
         missions = FilterByCountry();
         missions = FilterByCity();
         missions = FilterByTheme();
         missions = FilterBySkill1();
-        missions = FilterBySortByMenu();
 
         return missions;
     }
@@ -131,6 +131,13 @@ internal class FilterService
                     break;
 
                 case SortByMenu.FAVOURITE:
+                    if( filterModel.UserId != 0)
+                    {
+                        missions = missions.Where( msn => (msn.FavrouriteMissionsId!.Contains((long)filterModel.UserId!)));
+                    }
+                    break;
+
+                case SortByMenu.RESET:
                     break;
 
                 case SortByMenu.REGISTRATION_DEADLINE:

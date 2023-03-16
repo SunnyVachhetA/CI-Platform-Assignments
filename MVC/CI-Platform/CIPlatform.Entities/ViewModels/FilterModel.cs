@@ -12,5 +12,7 @@ public class FilterModel
 
     public string? SearchKeyword { get; set; } 
 
-    public SortByMenu? SortBy { get; set; } 
+    public SortByMenu? SortBy { get; set; }
+
+    public long? UserId { get; set; }
 }

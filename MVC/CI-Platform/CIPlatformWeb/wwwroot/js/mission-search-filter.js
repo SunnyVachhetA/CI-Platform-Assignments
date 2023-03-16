@@ -7,13 +7,20 @@ const filterOptionArea = document.querySelector('#filter-option-area');
 const userFilterList = document.querySelector('#selected-filter-list'); //Filter option list
 const clearAllFilter = document.querySelector('#clear-all-filter');
 const sortBy = document.querySelector('.btn-sort-by');
-const sortOptions = document.querySelectorAll( '#sort-options' );
+const sortOptions = document.querySelectorAll('#sort-options');
+const loggedUser = document.querySelector('#logged-user-id');
+let userId = 0;
 let searchText = '';
 let sortByOption = 0;
 const countryList = [];
 const cityList = [];
 const themeList = [];
 const skillList = [];
+
+let cities = document.querySelectorAll('#city-filter li');
+
+let totalPage;
+let currentPageNumber = 1;
 
 function addFilterToHtmlList(id, item, type) {
     filterOptionArea.classList.remove('d-none');
@@ -58,23 +65,53 @@ const countryOptions = document.querySelectorAll('#country-filter li');
 
 $(countryOptions).click((evt) => {
     let id = evt.currentTarget.dataset.id;
+    if (countryList.includes(id)) return;
     let country = evt.currentTarget.textContent;
-    if (countryList.indexOf(id) == -1) {
-        addFilterToHtmlList(id,country,"country");
-        countryList.push(id);
-        filterMissionCardAjax();
-    }
+    addFilterToHtmlList(id,country,"country");
+    countryList.push(id);
+    currentPageNumber = 1;
+    hideCityOption();
+    filterMissionCardAjax();
+    
 });
+
+function hideCityOption()
+{
+    cities.forEach(
+        city => {
+            if (countryList.includes(city.dataset.pid)) {
+                city.classList.remove('d-none');
+            }
+            else {
+                city.classList.add('d-none');
+            }
+        }
+    );
+}
+function displayCityOption() {
+    cities.forEach(
+        city => {
+            if (!countryList.includes(city.dataset.pid)) {
+                city.classList.remove('d-none');
+            }
+            else {
+                city.classList.add('d-none');
+            }
+        }
+    );
+}
 
 const cityOptions = cityFilter.querySelectorAll('li');
 $(cityOptions).click((evt) => {
     let id = evt.currentTarget.dataset.id;
     let city = evt.currentTarget.textContent;
-    if (cityList.indexOf(id) == -1) {
-        addFilterToHtmlList(id, city, "city");
-        cityList.push(id);
-        filterMissionCardAjax();
-    }
+    if (cityList.includes(id)) return;
+
+    addFilterToHtmlList(id, city, "city");
+    cityList.push(id);
+    currentPageNumber = 1;
+    filterMissionCardAjax();
+    
 });
 
 const themeOptions = themeFilter.querySelectorAll('li');
@@ -84,6 +121,7 @@ $(themeOptions).click((evt) => {
     if (themeList.indexOf(id) == -1) {
         addFilterToHtmlList(id, theme, "theme");
         themeList.push(id);
+        currentPageNumber = 1;
         filterMissionCardAjax();
     }
 });
@@ -95,6 +133,7 @@ $(skillOptions).click((evt) => {
     if (skillList.indexOf(id) == -1) {
         addFilterToHtmlList(id, skill, "skill");
         skillList.push(id);
+        currentPageNumber = 1;
         filterMissionCardAjax();
     }
 });
@@ -108,7 +147,9 @@ clearAllFilter.addEventListener(
         themeList.splice(0, themeList.length);
         skillList.splice(0, skillList.length);
         userFilterList.innerHTML = '';
-        filterMissionCardAjax();    
+        currentPageNumber = 1;
+        displayCityOption();
+        LoadMissionIndex();    
     }
 );
 
@@ -122,11 +163,11 @@ $('#sort-options').change((e) => {
     filterMissionCardAjax();
 });
 
-$(document).ready(() => {
+function LoadMissionIndex() {
     $.ajax({
         type: "GET",
         url: "Volunteer/Home/LoadMissionsIndexAjax",
-        data: currentPageNumber,    
+        data: currentPageNumber,
         success: function (result) {
             console.log("Data sent successfully!");
             $('#partial-mission-listing').html(result);
@@ -137,10 +178,16 @@ $(document).ready(() => {
             console.log("Error sending data: " + error);
         }
     });
+}
+
+$(document).ready(() => {
+    LoadMissionIndex();
 });
 
 function filterMissionCardAjax() {
 
+    userId = loggedUser.value;
+    console.log(userId);
     const filterList = {
         countryList: countryList,
         cityList: cityList,
@@ -148,17 +195,14 @@ function filterMissionCardAjax() {
         themeList: themeList,
         skillList: skillList,
         sortBy: sortByOption,
-        page: currentPageNumber
+        page: currentPageNumber,
+        userId: userId
     };
-
-    console.log(filterList);
     $.ajax({
         type: "POST",
         url: "Volunteer/Home/TestAjax",
         data: filterList,
         success: function (result) {
-            console.log("Data sent successfully!");
-            console.log(result);
             $('#partial-mission-listing').html(result);
             missionDisplay();
             missionPagination();
@@ -181,6 +225,7 @@ const displayClass1 = "d-none";
 
 
 function missionDisplay() {
+    $(document).scrollTop(0);
     const missionCount = document.querySelector('#mission-count');
     let count = missionCount.value;
     if (count > 0) {

@@ -55,12 +55,14 @@ public class MissionService : IMissionService
             CityName = mission?.City?.Name,
             CountryId = mission.CountryId,
             SkillId = mission.MissionSkills.Select(skill => skill.SkillId).ToList(),
-            Skills = mission.MissionSkills.Select( skill => skill?.Skill?.Name ).ToList(),
-            ThumbnailUrl = GetThumbnailUrl(mission.MissionMedia.FirstOrDefault( media => media.Default ) ),
-            MissionMedias = mission.MissionMedia?.Select( media => GetThumbnailUrl( media ) ).ToList(),
+            Skills = mission.MissionSkills.Select(skill => skill?.Skill?.Name).ToList(),
+            ThumbnailUrl = GetThumbnailUrl(mission.MissionMedia.FirstOrDefault(media => media.Default)),
+            MissionMedias = mission.MissionMedia?.Select(media => GetThumbnailUrl(media)).ToList(),
+            FavrouriteMissionsId = mission.FavouriteMissions?.Select(fav => fav.UserId).ToList(),
             GoalValue = mission.GoalMissions?.FirstOrDefault(msnGoal => msnGoal.GoalValue != 0)?.GoalValue,
             GoalText = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalObjectiveText != null)?.GoalObjectiveText,
-            GoalAchieved = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalAchived != null)?.GoalAchived
+            GoalAchieved = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalAchived != null)?.GoalAchived,
+            ApplicationListId = mission.MissionApplications?.Select( application => (long)application?.UserId ).ToList()
         };
 
         return missionCard;
@@ -95,11 +97,13 @@ public class MissionService : IMissionService
     public List<MissionCardVM> FilterMissions(FilterModel filterModel)
     {
         var result = GetAllMissionCards().AsQueryable() ;
-        if (filterModel.SortBy.HasValue)
+        /*if (filterModel.SortBy.HasValue)
         {
             if (filterModel.SortBy == SortByMenu.RESET)
+            {
                 return result.ToList();
-        }
+            }
+        }*/
         
         FilterService filter = new FilterService(result, filterModel);
 

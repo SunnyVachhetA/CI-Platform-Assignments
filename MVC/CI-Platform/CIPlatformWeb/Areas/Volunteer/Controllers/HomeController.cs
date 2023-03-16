@@ -66,7 +66,7 @@ namespace CIPlatformWeb.Areas.User.Controllers
         #region Ajax Call
         [HttpPost]
         public IActionResult TestAjax(int[]? countryList, int[]? cityList, string? searchKeyword, int[]? themeList, int[]? skillList, 
-            byte? sortBy, int page)
+            byte? sortBy, int page, long? userId)
         {
             FilterModel filterModel = new()
             {
@@ -75,12 +75,13 @@ namespace CIPlatformWeb.Areas.User.Controllers
                 SearchKeyword = searchKeyword,  
                 ThemeList = themeList,
                 SkillList = skillList,
-                SortBy = (SortByMenu)sortBy
+                SortBy = (SortByMenu)sortBy,
+                UserId = userId
             };
             try
             {
                 List<MissionCardVM> filteredMissions = _serviceUnit.MissionService.FilterMissions(filterModel);
-                MissionLandingVM result = _serviceUnit.MissionService.CreateMissionLanding(filteredMissions);
+                var result = _serviceUnit.MissionService.CreateMissionLanding(filteredMissions);
                 ViewBag.MissionCount = ( result.missionList == null ) ? 0 : result.missionList?.Count();
                 result.missionList = result.missionList.Skip((page - 1) * 9).Take(9).ToList();
                 return PartialView("_MissionIndexListing", result);
