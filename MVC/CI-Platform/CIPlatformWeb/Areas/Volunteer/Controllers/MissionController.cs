@@ -17,4 +17,5 @@ public class MissionController : Controller
         var result = _serviceUnit.MissionService.LoadRelatedMissionBasedOnTheme(2);
         return View( missionDetails );
     }
+
 }

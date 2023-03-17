@@ -1,13 +1,7 @@
 ﻿using CIPlatform.DataAccessLayer.Data;
 using CIPlatform.DataAccessLayer.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class Repository<T> : IRepository<T> where T : class

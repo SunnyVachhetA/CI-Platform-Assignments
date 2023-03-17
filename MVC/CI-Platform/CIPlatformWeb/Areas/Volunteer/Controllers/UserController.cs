@@ -213,6 +213,29 @@ public class UserController : Controller
     }
 
     #region AJAX CALLS
-    
+    [HttpGet]
+    [Route("AddMissionToFavourite", Name = "AddFavourite")]
+    public async Task<IActionResult> AddMissionToFavourite(long missionId, long userId, bool isFav)
+    {
+        if (missionId == 0 || userId == 0) return StatusCode(404, "Mission ID or User ID not found!");
+
+        try
+        {
+            if (!isFav)
+            {
+                await _serviceUnit.FavouriteMissionService.AddMissionToUserFavourite(userId, missionId);
+                return StatusCode(201);
+            }
+            else
+            {
+                await _serviceUnit.FavouriteMissionService.RemoveMissionFromUserFavrouite(userId, missionId);
+                return NoContent();
+            }
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "An error occurred while retrieving data.");
+        }
+    }
     #endregion
 }

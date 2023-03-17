@@ -181,13 +181,13 @@ function LoadMissionIndex() {
 }
 
 $(document).ready(() => {
+    userId = loggedUser.value;
     LoadMissionIndex();
 });
 
 function filterMissionCardAjax() {
 
-    userId = loggedUser.value;
-    console.log(userId);
+    
     const filterList = {
         countryList: countryList,
         cityList: cityList,

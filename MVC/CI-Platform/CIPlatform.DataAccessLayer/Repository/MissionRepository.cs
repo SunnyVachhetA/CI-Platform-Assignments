@@ -25,7 +25,8 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
     //Fetching mission details by id
     public Mission FetchMissionDetailsById(long id)
     {
-        var result = _dbContext.Missions
+        var result = dbSet
+                    .Where(mission => mission.MissionId == id)
                     .Include(mission => mission.MissionMedia)
                     .Include(mission => mission.GoalMissions)
                     .Include(mission => mission.MissionApplications)
@@ -34,7 +35,7 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                     .Include(mission => mission.Theme)
                     .Include(mission => mission.City)
                     .Include(mission => mission.Country)
-                    .FirstOrDefault( mission=>mission.MissionId == id );
+                    .FirstOrDefault();
         
         return result!;
     }
@@ -54,9 +55,11 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                     .Include(mission => mission.MissionApplications)
                     .Include(mission => mission.FavouriteMissions)
                     .Include(mission => mission.MissionSkills)
+                        .ThenInclude( ms => ms.Skill )
                     .Include(mission => mission.Theme)
                     .Include(mission => mission.City)
                     .Include(mission => mission.Country);
+       
     }
 
     //Db call for filtering out missions

@@ -213,6 +213,10 @@
       "PackagePath": "staticwebassets\\assets\\grid.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\heart-992.png",
+      "PackagePath": "staticwebassets\\assets\\heart-992.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\heart.png",
       "PackagePath": "staticwebassets\\assets\\heart.png"
     },
@@ -473,6 +477,14 @@
       "PackagePath": "staticwebassets\\images\\static\\img2.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\mission-details-ajax.js",
+      "PackagePath": "staticwebassets\\js\\mission-details-ajax.js"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\mission-page-carousel-tab.js",
+      "PackagePath": "staticwebassets\\js\\mission-page-carousel-tab.js"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\mission-pagination.js",
       "PackagePath": "staticwebassets\\js\\mission-pagination.js"
     },
@@ -487,6 +499,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\sweet-alert-notification.js",
+      "PackagePath": "staticwebassets\\js\\sweet-alert-notification.js"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\lib\\bootstrap\\LICENSE",

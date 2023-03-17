@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CIPlatform.Entities.DataModels;
+﻿namespace CIPlatform.Entities.DataModels;
 
 public partial class FavouriteMission
 {

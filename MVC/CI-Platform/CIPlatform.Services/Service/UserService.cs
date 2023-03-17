@@ -29,6 +29,7 @@ public class UserService: IUserService
         _unitOfWork.Save();
     }
 
+
     public bool IsEmailExists(string email)
     {
         var result = _unitOfWork.UserRepo.GetFirstOrDefault(
@@ -78,4 +79,6 @@ public class UserService: IUserService
 
         return user;
     }
+    
+    
 }

@@ -55,7 +55,7 @@ public class MissionService : IMissionService
             CityName = mission?.City?.Name,
             CountryId = mission.CountryId,
             SkillId = mission.MissionSkills.Select(skill => skill.SkillId).ToList(),
-            Skills = mission.MissionSkills.Select(skill => skill?.Skill?.Name).ToList(),
+            Skills = (List<string>)mission.MissionSkills.Select(skill => skill?.Skill?.Name).ToList(), 
             ThumbnailUrl = GetThumbnailUrl(mission.MissionMedia.FirstOrDefault(media => media.Default)),
             MissionMedias = mission.MissionMedia?.Select(media => GetThumbnailUrl(media)).ToList(),
             FavrouriteMissionsId = mission.FavouriteMissions?.Select(fav => fav.UserId).ToList(),
