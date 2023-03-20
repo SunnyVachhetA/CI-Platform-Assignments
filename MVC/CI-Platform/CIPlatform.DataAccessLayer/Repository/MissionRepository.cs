@@ -2,6 +2,7 @@
 using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -32,6 +33,9 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                     .Include(mission => mission.MissionApplications)
                     .Include(mission => mission.FavouriteMissions)
                     .Include(mission => mission.MissionSkills)
+                            .ThenInclude(ms => ms.Skill)
+                    .Include(mission => mission.MissionRatings)
+                    .Include(mission => mission.MissionDocuments)
                     .Include(mission => mission.Theme)
                     .Include(mission => mission.City)
                     .Include(mission => mission.Country)
@@ -55,7 +59,9 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                     .Include(mission => mission.MissionApplications)
                     .Include(mission => mission.FavouriteMissions)
                     .Include(mission => mission.MissionSkills)
-                        .ThenInclude( ms => ms.Skill )
+                        .ThenInclude(ms => ms.Skill)
+                    .Include( mission => mission.MissionRatings )
+                    .Include( mission => mission.MissionDocuments )
                     .Include(mission => mission.Theme)
                     .Include(mission => mission.City)
                     .Include(mission => mission.Country);
@@ -76,5 +82,14 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
         }
 
         return missions.ToList();
+    }
+
+    public void UpdateMissionRating(long missionId, byte avgRating)
+    {
+        var msnId = new SqlParameter("@missionId", missionId);
+        var ratingParam = new SqlParameter("@rating", avgRating);
+        var updateParam = new SqlParameter("@updatedAt", DateTimeOffset.Now);
+
+        _dbContext.Database.ExecuteSqlRaw("UPDATE mission SET rating = @rating, updated_at = @updatedAt WHERE mission_id = @missionId", msnId, ratingParam, updateParam);
     }
 }

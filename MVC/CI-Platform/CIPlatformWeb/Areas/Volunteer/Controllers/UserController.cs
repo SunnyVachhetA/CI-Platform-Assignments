@@ -218,7 +218,6 @@ public class UserController : Controller
     public async Task<IActionResult> AddMissionToFavourite(long missionId, long userId, bool isFav)
     {
         if (missionId == 0 || userId == 0) return StatusCode(404, "Mission ID or User ID not found!");
-
         try
         {
             if (!isFav)

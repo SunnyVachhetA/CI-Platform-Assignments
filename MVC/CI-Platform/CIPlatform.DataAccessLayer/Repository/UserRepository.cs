@@ -21,7 +21,6 @@ public class UserRepository : Repository<User>, IUserRepository
         var passwordParam = new SqlParameter("@password", password);
 
         _dbContext.Database.ExecuteSqlRaw("UPDATE [user] SET password = @password WHERE email = @email", user, passwordParam);
-        Console.WriteLine("Record updated!!");
     }
 
     public User ValidateUserCredentialRepo(UserLoginVM credential)

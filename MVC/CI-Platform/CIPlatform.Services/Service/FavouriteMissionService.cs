@@ -1,5 +1,4 @@
-﻿using CIPlatform.DataAccessLayer.Repository;
-using CIPlatform.DataAccessLayer.Repository.IRepository;
+﻿using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Services.Service.Interface;
 
 namespace CIPlatform.Services.Service;
@@ -34,6 +33,7 @@ public class FavouriteMissionService : IFavouriteMissionService
         
         if( favMission != null )
             unitOfWork.FavouriteMissionRepo.Remove( favMission );
+        unitOfWork.Save();
 
         return Task.CompletedTask;
     }

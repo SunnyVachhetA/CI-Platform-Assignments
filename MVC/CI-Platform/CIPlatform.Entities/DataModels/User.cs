@@ -45,9 +45,25 @@ public partial class User
 
     public virtual City? City { get; set; }
 
+    public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
+
     public virtual Country? Country { get; set; }
 
     public virtual ICollection<FavouriteMission> FavouriteMissions { get; } = new List<FavouriteMission>();
 
     public virtual ICollection<MissionApplication> MissionApplications { get; } = new List<MissionApplication>();
+
+    public virtual ICollection<MissionInvite> MissionInviteFromUsers { get; } = new List<MissionInvite>();
+
+    public virtual ICollection<MissionInvite> MissionInviteToUsers { get; } = new List<MissionInvite>();
+
+    public virtual ICollection<MissionRating> MissionRatings { get; } = new List<MissionRating>();
+
+    public virtual ICollection<Story> Stories { get; } = new List<Story>();
+
+    public virtual ICollection<StoryInvite> StoryInviteFromUsers { get; } = new List<StoryInvite>();
+
+    public virtual ICollection<StoryInvite> StoryInviteToUsers { get; } = new List<StoryInvite>();
+
+    public virtual ICollection<UserSkill> UserSkills { get; } = new List<UserSkill>();
 }

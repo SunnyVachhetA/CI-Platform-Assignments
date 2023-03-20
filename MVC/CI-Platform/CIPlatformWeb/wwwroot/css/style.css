@@ -681,8 +681,17 @@ form-subtitle,
 .btn-g-orange:hover {
     color: var(--col-orange) !important;
 }
-/* .slider::-webkit-scrollbar { display: none; } 
-  .slider { scrollbar-width: none; } */
+
+.star-rating img {
+    height: 32px;
+    width: 30px;
+    transition: var(--transition);
+}
+#star-rating-box img
+{
+    height: 20px;
+    width: 22px;
+}
 @media screen and (max-width: 576px) {
     #msn-box > div {
         width: 60%;
@@ -692,6 +701,7 @@ form-subtitle,
         max-height: 20rem;
     }
 }
+
 /* Volunteering Mission Page CSS Complete */
 
 

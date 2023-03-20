@@ -55,19 +55,41 @@ public class MissionService : IMissionService
             CityName = mission?.City?.Name,
             CountryId = mission.CountryId,
             SkillId = mission.MissionSkills.Select(skill => skill.SkillId).ToList(),
-            Skills = (List<string>)mission.MissionSkills.Select(skill => skill?.Skill?.Name).ToList(), 
+            Skills = (List<string>)mission.MissionSkills.Select(skill => skill?.Skill?.Name).ToList(),
             ThumbnailUrl = GetThumbnailUrl(mission.MissionMedia.FirstOrDefault(media => media.Default)),
             MissionMedias = mission.MissionMedia?.Select(media => GetThumbnailUrl(media)).ToList(),
             FavrouriteMissionsId = mission.FavouriteMissions?.Select(fav => fav.UserId).ToList(),
             GoalValue = mission.GoalMissions?.FirstOrDefault(msnGoal => msnGoal.GoalValue != 0)?.GoalValue,
             GoalText = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalObjectiveText != null)?.GoalObjectiveText,
             GoalAchieved = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalAchived != null)?.GoalAchived,
-            ApplicationListId = mission.MissionApplications?.Select( application => (long)application?.UserId ).ToList()
+            ApplicationListId = mission.MissionApplications?.Where(application => application.ApprovalStatus == 1).Select(application => (long)application?.UserId).ToList(),
+            MissionRating = MissionRatingService.ConvertMissionToRatingVM(mission),
+            MissionAvailability = SetMissionAvailability(mission.Availability) 
         };
 
         return missionCard;
     }
-   
+
+    private MissionAvailability? SetMissionAvailability(byte? availability)
+    {
+        if (availability == null || availability == 0) return null;
+
+        MissionAvailability? missionAvail = null;
+        switch( availability )
+        {
+            case 1:
+                missionAvail = MissionAvailability.DAILY;
+                break;
+            case 2:
+                missionAvail = MissionAvailability.WEEK_END; break;
+            case 3:
+                missionAvail = MissionAvailability.WEEKLY; break;
+            case 4:
+                missionAvail = MissionAvailability.MONTHLY; break;
+        }
+        return missionAvail;
+    }
+
     private string? GetThumbnailUrl(MissionMedium missionMedia)
     {
         if (missionMedia == null) return null;
@@ -143,4 +165,9 @@ public class MissionService : IMissionService
         return missionLanding;
     }
 
+    public Task UpdateMissionRating(long missionId, byte avgRating)
+    {
+        unitOfWork.MissionRepo.UpdateMissionRating(missionId, avgRating);;
+        return Task.CompletedTask;
+    }
 }

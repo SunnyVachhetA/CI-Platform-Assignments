@@ -1,0 +1,36 @@
+﻿@{
+    var count = ViewBag.VolunteerCount;
+    var rating = ViewBag.AvgRating;
+}
+
+<p class="col-2">Rating</p>
+<div class="col">
+    @if (rating != 0)
+    {
+        for (int i = 1; i <= 5; i++)
+        {
+            if (i <= rating)
+            {
+                <img src="~/assets/selected-star.png" alt="Selected Star">
+            }
+            else
+            {
+                <img src="~/assets/star-empty.png" alt="Empty Star">
+            }
+        }
+    }
+    else
+    {
+        @for (int i = 1; i <= 5; i++)
+        {
+            <img src="~/assets/star-empty.png" alt="Empty Star">
+        }
+    }
+    @if( count > 0 )
+    {
+        <span class="ps-2 font-xs text-brown">
+            (by @count volunteer(s))
+        </span>
+    }
+
+</div>

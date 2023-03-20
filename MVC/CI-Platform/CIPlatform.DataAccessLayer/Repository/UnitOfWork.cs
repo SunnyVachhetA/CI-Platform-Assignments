@@ -24,6 +24,10 @@ public class UnitOfWork : IUnitOfWork
 
     public IMissionSkillRepository MissionSkillRepo { get; private set; }
 
+    public IMissionRatingRepository MissionRatingRepo { get; private set; }
+
+    public ICommentRepository CommentRepo { get; private set; }
+
     public UnitOfWork(CIDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -39,6 +43,8 @@ public class UnitOfWork : IUnitOfWork
         GoalMissionRepo = new GoalMissionRepository(_dbContext);
         MissionMediaRepo = new MissionMediaRepository(_dbContext);
         MissionSkillRepo = new MissionSkillRepository(_dbContext);
+        MissionRatingRepo = new MissionRatingRepository(_dbContext);
+        CommentRepo = new CommentRepository(_dbContext);
     }
 
     public void Save()

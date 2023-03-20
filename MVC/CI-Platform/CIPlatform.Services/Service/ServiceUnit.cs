@@ -10,9 +10,7 @@ public class ServiceUnit: IServiceUnit
     public IPasswordResetService PasswordResetService { get; private set; }
 	public ICountryService CountryService { get; private set; }
 	public ICityService CityService { get; private set; }
-
     public ISkillService SkillService { get; private set; }
-
     public IThemeService ThemeService { get; private set; }
 
     public IMissionApplicationService MissionApplicationService { get; private set; }
@@ -27,6 +25,9 @@ public class ServiceUnit: IServiceUnit
 
     public IMissionSkillService MissionSkillService { get; private set; }
 
+    public IMissionRatingService MissionRatingService {  get; private set; }
+
+    public ICommentService CommentService { get; set; }
     public ServiceUnit(IUnitOfWork unitOfWork)
 	{
 		_unitOfWork= unitOfWork;
@@ -42,5 +43,7 @@ public class ServiceUnit: IServiceUnit
         GoalMissionService = new GoalMissionService(_unitOfWork);
         MissionMediaService = new MissionMediaService(_unitOfWork);
         MissionSkillService = new MissionSkillService(_unitOfWork);
+        MissionRatingService = new MissionRatingService(_unitOfWork);
+        CommentService = new CommentService(_unitOfWork);
 	}
 }

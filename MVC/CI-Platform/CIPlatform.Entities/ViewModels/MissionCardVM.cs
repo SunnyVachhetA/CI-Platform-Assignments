@@ -1,11 +1,12 @@
-﻿using CIPlatform.Entities.VMConstants;
+﻿using CIPlatform.Entities.DataModels;
+using CIPlatform.Entities.VMConstants;
 
 namespace CIPlatform.Entities.ViewModels;
 public class MissionCardVM
 {
     public long MissionId { get; set; }
     public short? ThemeId { get; set; }
-    public string? ThemeName { get; set; }  
+    public string? ThemeName { get; set; }
     public string? Title { get; set; }
     public string? ShortDescription { get; set; }
     public DateTimeOffset? StartDate { get; set; }
@@ -31,6 +32,7 @@ public class MissionCardVM
     public List<short>? SkillId { get; set; } = new();
     public List<string>? Skills { get; set; } = new();
     public List<long>? FavrouriteMissionsId { get; set; } = new();
-
-    public List<long>? ApplicationListId { get; set; } = new();
+    public List<long> ApplicationListId { get; set; } = new();
+    public List<MissionRatingVM> MissionRating { get; set; } = new();
+    public MissionAvailability? MissionAvailability { get; set; }
 }
