@@ -25,6 +25,13 @@ public class Repository<T> : IRepository<T> where T : class
         return query.ToList();
     }
 
+    public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter)
+    {
+
+        IQueryable<T> query = dbSet.Where(filter);
+        return query;
+    }
+
     public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
     {
         IQueryable<T> query = dbSet.Where(filter);

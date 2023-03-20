@@ -1,0 +1,212 @@
+﻿@model List<MissionCardVM>
+@{
+    var size = Model?.LongCount();
+    var currentDateTime = DateTimeOffset.Now;
+    var userId = 0L;
+    if (Context.Session.GetString("UserId") != null)
+        userId = long.Parse(Context.Session.GetString("UserId"));
+}
+<div class = "py-4 font-xxl text-light-custom text-black-1 text-center">
+    Related Missions
+</div>
+
+@if( size == null || size == 0)
+{
+    <button class="my-3 btn-g-orange mx-auto">No Related Mission Found Based On Same Theme!</button>
+}
+else
+{
+    <!-- Grid View Begin -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-xl-4" id="grid-view-msn">
+        @foreach (var mission in Model!)
+        {
+            <!-- Upcoming Mission Listing Begin -->
+            <div class="col">
+                <article class="card h-100 flex-nowrap">
+                    <div class="position-relative">
+                        <img src='@mission.ThumbnailUrl'
+                     alt="Mission Image" class="w-100 h-90">
+
+                        @if (mission.RegistrationDeadline < currentDateTime || mission.EndDate < currentDateTime || mission.GoalAchieved >= mission.GoalValue)
+                        {
+                            <div class="msn-status-closed">
+                                Closed
+                            </div>
+                        }
+                        @if (mission.ApplicationListId.Contains(userId))
+                        {
+                            <div class="msn-status-applied">
+                                Applied
+                            </div>
+                        }
+                        <div class="position-absolute msn-location p-2 rounded-pill font-xs text-white text-light-custom">
+                            <img src="~/assets/pin.png" alt="Location" class="me-2">
+                            @mission.CityName
+                        </div>
+                        @if (userId != 0L && mission.FavrouriteMissionsId.Contains(userId))
+                        {
+                            <div class="position-absolute rounded-pill p-2 msn-favourite cursor-pointer bg-danger">
+                                <a href="#"><img src="~/assets/heart.png" alt="Add Favourite"></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="position-absolute rounded-pill p-2 msn-favourite cursor-pointer">
+                                <a href="#"><img src="~/assets/heart.png" alt="Add Favourite"></a>
+                            </div>
+                        }
+                        <div class="cursor-pointer position-absolute rounded-pill p-2 msn-share">
+                            <img src="~/assets/user.png" alt="Share">
+                        </div>
+                        <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            @mission.ThemeName
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex flex-column mt-n1 mb-3">
+                        <h3 class="mt-0 px-4">
+                            @mission.Title
+                        </h3>
+                        @if (mission.Status == MissionStatus.ONGOING)
+                        {
+                            <p class="mission-desc-ellips px-4">
+                                @mission.ShortDescription
+                            </p>
+                        }
+                        else
+                        {
+                            <p class="px-4">
+                                @mission.ShortDescription
+                            </p>
+                        }
+                        <div class="d-flex align-items-center justify-content-between px-4 mb-3">
+                            @mission.OrganizationName
+                            @if (mission.Rating != null || mission.Rating != 0)
+                            {
+                                <div>
+                                    @{
+                                        var ratingCount = mission.Rating;
+                                    }
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        @if (ratingCount >= i)
+                                        {
+                                            <img src="~/assets/selected-star.png" alt="Selected star" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/assets/star.png" alt="Empty star" />
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                        @if (mission.Status == MissionStatus.ONGOING)
+                        {
+                            <div class="p-2 border mt-4 text-center">
+                                @if (mission.MissionType == MissionTypeEnum.TIME)
+                                {
+                                    <div class="registration-date position-relative px-2 align-text-top text-light-custom p-2 mb-n1 mx-content mx-auto">
+                                        @if (mission.StartDate != null && mission.EndDate != null)
+                                        {
+                                            <p class="mb-0">From @mission.StartDate?.ToString("d") until @mission.EndDate?.ToString("d") </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="mb-0">Ongoing opportunity</p>
+                                        }
+                                    </div>
+                                    <div class="d-flex justify-content-around align-items-center">
+                                        <div class="d-flex align-items-center gap-2">
+
+                                            @if (mission.TotalSeat != null && mission.TotalSeat.Value != 0)
+                                            {
+                                                <img src="~/assets/Seats-left.png" alt="Seats Left">
+                                                <div class="text-start">
+                                                    <p class="p-0 m-0 font-md">@mission.SeatLeft</p>
+                                                    <p class="p-0 m-0 text-light-custom font-xs">Seats Left</p>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <img src="~/assets/Already-volunteered.png" alt="Already volunteered">
+                                                <div class="text-start">
+                                                    <p class="p-0 m-0 font-md">@mission.NumberOfVolunteer</p>
+                                                    <p class="p-0 m-0 text-light-custom font-xs">Already Registered</p>
+                                                </div>
+                                            }
+                                        </div>
+                                        @if (mission.RegistrationDeadline != null)
+                                        {
+                                            <div class="d-flex align-items-center gap-2">
+                                                <img src="~/assets/deadline.png" alt="Deadline">
+                                                <div class="text-start">
+                                                    <p class="p-0 m-0 font-md">
+                                                        @mission.RegistrationDeadline?.ToString("d")
+                                                    </p>
+                                                    <p class="p-0 m-0 font-xs text-brown">Deadline</p>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="registration-date position-relative px-2 align-text-top text-light-custom p-2 mb-n1 mx-content mx-auto">
+                                        @mission.GoalText
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-around gap-4">
+                                        @if (mission.TotalSeat != null || mission.TotalSeat != 0)
+                                        {
+                                            <div class="d-flex gap-2 align-items-center flex-shrink-0 ">
+                                                <img src="~/assets/Seats-left.png" alt="Seats Left">
+                                                <div class="text-start">
+                                                    <p class="p-0 m-0 font-md">@mission.SeatLeft</p>
+                                                    <p class="p-0 m-0 text-light-custom font-xs">Seats Left</p>
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="d-flex align-items-center flex-grow-1 gap-2 p-2">
+                                            @{
+                                                var progressWidth = (mission.GoalAchieved / (double)mission.GoalValue) * 100;
+                                            }
+                                            <img src="~/assets/achieved.png" alt="Achievement Progress">
+                                            <div class="text-start w-75">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-orange" role="progressbar" aria-valuenow='@mission.GoalAchieved'
+                                         style="width: @progressWidth.ToString()%"
+                                         aria-valuemin="0" aria-valuemax="@mission.GoalValue"></div>
+                                                </div>
+                                                <p class="p-0 m-0 text-light-custom font-xs">@mission.GoalAchieved achieved</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                    </div>
+                    @if (mission.Status == MissionStatus.ONGOING && userId != 0L)
+                    {
+                        <a class="my-2 my-md-3 mx-auto btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
+                            Apply
+                            <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="mt-auto mb-3 mx-auto btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
+                            View Details
+                            <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                        </a>
+                    }
+                </article>
+            </div>
+            <!-- Upcoming Mission Listing End -->
+        }
+
+        <!-- Mission Complete card End -->
+    </div>
+    <!-- Grid View End -->
+}

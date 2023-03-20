@@ -16,6 +16,8 @@
     {
         loggedUserRating = (byte)Model?.MissionRating.FirstOrDefault( missionRating => missionRating.UserId == userId )?.Rating;
     }
+
+    var themeId = Model.ThemeId;
 }
 <header>  
 <partial name="_Navbar"></partial>
@@ -29,6 +31,7 @@
     @Html.HiddenFor(model => isFavourite, new { id = "is-favourite" })
     @Html.HiddenFor(model => loggedUserAppliedForMission, new { id = "isLoggedUserVolunteer" })
     @Html.HiddenFor(model => loggedUserRating, new { id="logged-user-rating" })
+    @Html.HiddenFor(model => themeId, new { id="theme-id" })
     <!-- Mission Front Section Begin -->
     <section class="container d-flex flex-column flex-lg-row">
         <div class="d-flex flex-column gap-2 my-auto flex-basis flex-grow-0">
@@ -363,6 +366,7 @@
                         <!-- Comment Tab Content Fin -->
                     </div>
                     <!-- Tab section end -->
+
                     <!-- Infomration and recent volunteers begin -->
                     <div class = "col-12 col-lg-5">
                         <!-- Information Box  -->
@@ -481,6 +485,10 @@
     <!-- Mission Details Section End  -->
     <hr>
 
+    @*Related Mission Section*@
+    <section class = "container mb-4" id="related-missions-section">
+
+    </section>
 
     <partial name="_Footer"></partial>
 </main>

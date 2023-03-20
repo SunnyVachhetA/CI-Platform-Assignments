@@ -4,7 +4,6 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class MissionRepository : Repository<Mission>, IMissionRepository
@@ -43,14 +42,6 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
         
         return result!;
     }
-
-    public List<Mission> FetchRelatedMissionsByTheme(int? themeId)
-    {
-        var missions = FetchMissionInformation();
-        var result = missions.Where(mission => mission.ThemeId == themeId)?.ToList();
-        return result!;
-    }
-
     public IQueryable<Mission> FetchMissionInformation()
     {
         return _dbContext.Missions
@@ -67,6 +58,7 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                     .Include(mission => mission.Country);
        
     }
+    
 
     //Db call for filtering out missions
     public List<Mission> LoadFilteredMissions(FilterModel filterModel)

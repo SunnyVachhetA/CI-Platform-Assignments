@@ -14,7 +14,6 @@ public class MissionController : Controller
     public IActionResult Index( long id )
     {
         MissionCardVM missionDetails = _serviceUnit.MissionService.LoadMissionDetails( id );
-        var result = _serviceUnit.MissionService.LoadRelatedMissionBasedOnTheme(2);
         return View( missionDetails );
     }
 
@@ -33,7 +32,7 @@ public class MissionController : Controller
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error Occured: " + e.Message);
+            Console.WriteLine("Error Occured2: " + e.Message);
             Console.WriteLine( e.StackTrace );
             return StatusCode(500);
         }
@@ -61,7 +60,7 @@ public class MissionController : Controller
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error Occured: " + e.Message);
+            Console.WriteLine("Error Occured3: " + e.Message);
             Console.WriteLine(e.StackTrace);
             return StatusCode(500);
         }
@@ -70,19 +69,31 @@ public class MissionController : Controller
     [HttpGet]
     public async Task<IActionResult> MissionRating(long missionId)
     {
-        try
-        {
+        
             (long volunteerCount, byte avgRating) result = await _serviceUnit.MissionRatingService.GetAverageMissionRating(missionId);
             ViewBag.VolunteerCount = result.volunteerCount;
             ViewBag.AvgRating = result.avgRating;
             return PartialView("_Rating");
+        
+        
+    }
+
+    [HttpGet]
+    public IActionResult RelatedMissionByTheme(long missionId, short themeId)
+    {
+        try
+        {
+            var result = _serviceUnit.MissionService.LoadRelatedMissionBasedOnTheme(themeId, missionId).ToList();
+        
+            result = result.Take(3).ToList();
+            return PartialView("_RelatedMissions", result);
         }
         catch(Exception e)
         {
-            Console.WriteLine("Error Occured: " + e.Message);
+            Console.WriteLine("Error Occured1: " + e.Message);
             Console.WriteLine(e.StackTrace);
-            return StatusCode(500);
+            return StatusCode(500, e.Message);
         }
     }
-    
+
 }

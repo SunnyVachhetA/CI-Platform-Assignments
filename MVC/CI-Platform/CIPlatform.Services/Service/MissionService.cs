@@ -30,13 +30,13 @@ public class MissionService : IMissionService
         return missionList;
     }
 
-    public MissionCardVM ConvertMissionToMissionCardVM(Mission mission)
+    public static MissionCardVM ConvertMissionToMissionCardVM(Mission mission)
     {
         MissionCardVM missionCard = new()
         {
             MissionId = mission.MissionId,
             ThemeId = mission.ThemeId,
-            ThemeName = mission.Theme.Title,
+            ThemeName = mission.Theme?.Title,
             Title = mission.Title,
             ShortDescription = mission.ShortDescription,
             Description = mission.Description,
@@ -70,7 +70,7 @@ public class MissionService : IMissionService
         return missionCard;
     }
 
-    private MissionAvailability? SetMissionAvailability(byte? availability)
+    private static MissionAvailability? SetMissionAvailability(byte? availability)
     {
         if (availability == null || availability == 0) return null;
 
@@ -90,7 +90,7 @@ public class MissionService : IMissionService
         return missionAvail;
     }
 
-    private string? GetThumbnailUrl(MissionMedium missionMedia)
+    private static string? GetThumbnailUrl(MissionMedium missionMedia)
     {
         if (missionMedia == null) return null;
 
@@ -107,12 +107,6 @@ public class MissionService : IMissionService
         var mission = unitOfWork.MissionRepo.FetchMissionDetailsById(id);
         MissionCardVM missionVM = ConvertMissionToMissionCardVM( mission );
         return missionVM; 
-    }
-
-    public List<MissionCardVM> LoadRelatedMissionBasedOnTheme(int? themeId)
-    {
-        var missions = unitOfWork.MissionRepo.FetchRelatedMissionsByTheme( themeId );
-        return null!;
     }
 
     //Method for filtering out mission based on user filter selection
@@ -169,5 +163,20 @@ public class MissionService : IMissionService
     {
         unitOfWork.MissionRepo.UpdateMissionRating(missionId, avgRating);;
         return Task.CompletedTask;
+    }
+
+    //Load related mission based on theme
+    public List<MissionCardVM> LoadRelatedMissionBasedOnTheme(short themeId, long missionId)
+    {
+        var missions =  unitOfWork.MissionRepo?.FetchMissionInformation()?
+            .Where( mission => ( mission.ThemeId == themeId && mission.MissionId != missionId) ).ToList();
+
+        List<MissionCardVM> result = new();
+        
+        foreach(var msn in missions)
+        {
+            result.Add( ConvertMissionToMissionCardVM(msn) );
+        }
+        return result;
     }
 }

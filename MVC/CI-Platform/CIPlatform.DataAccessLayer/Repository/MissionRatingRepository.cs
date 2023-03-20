@@ -16,10 +16,16 @@ public class MissionRatingRepository : Repository<MissionRating>, IMissionRating
         var query = dbSet;
 
         var volunteerCountQuery = FilterByMissionId(query, missionId);
-        var avgRating = await volunteerCountQuery.AverageAsync( missionRating => missionRating.Rating );
+        (long count, byte avgRating) result = (0, 0);
 
-        var count = await volunteerCountQuery.LongCountAsync();
-        return (count, (byte)Math.Round (avgRating));
+        if (volunteerCountQuery.Any())
+        {
+            var avgRating = await volunteerCountQuery.AverageAsync(missionRating => missionRating.Rating);
+            var count = await volunteerCountQuery.LongCountAsync();
+            result.count = count;
+            result.avgRating = (byte)Math.Round(avgRating);
+        }
+        return result;
     }
 
     private IQueryable<MissionRating> FilterByMissionId( IQueryable<MissionRating> query, long missionId )

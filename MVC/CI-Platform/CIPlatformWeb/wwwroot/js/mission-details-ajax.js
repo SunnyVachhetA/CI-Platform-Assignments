@@ -14,8 +14,10 @@ $(document).ready(
         loggedUserRating = $('#logged-user-rating').val();
         starClickFlag = (loggedUserRating != 0) ? true : false;
         toggleBtnFavourite();
-
         loadMissionRatingAjax();
+        let themeId = $('#theme-id').val();
+        console.log("ThemeId: " + themeId);
+        loadRelatedMissionsAjax(themeId);
     }
 );
 
@@ -25,7 +27,10 @@ function loadMissionRatingAjax() {
         type: 'GET',
         data: { missionId },
         url: '/Volunteer/Mission/MissionRating',
-        success: function (result) { $('#star-rating-box').html(result); },
+        success: function (result) {
+            console.log("Mission Rating{Get}: " + result);
+            $('#star-rating-box').html(result);
+        },
         error: ajaxErrorSweetAlert
     });
 }
@@ -194,6 +199,18 @@ function updateMissionRatingAjax(rating) {
             starClickFlag = true;
             starToggleSource(rating - 1);
             $('#star-rating-box').html(result);
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadRelatedMissionsAjax( themeId ) {
+    $.ajax({
+        type: 'GET',
+        url: '/Volunteer/Mission/RelatedMissionByTheme',
+        data: { missionId, themeId },
+        success: function (result) {
+            $('#related-missions-section').html(result);
         },
         error: ajaxErrorSweetAlert
     });
