@@ -29,9 +29,8 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            Console.WriteLine("U Password >>>>>>>>>> " + credential.Password);
             UserRegistrationVM user = _serviceUnit.UserService.ValidateUserCredential(credential);
-    
+ 
             if (user != null)
             {
                 CreateUserLoginSession(user);
@@ -49,7 +48,7 @@ public class UserController : Controller
     {
         HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
         HttpContext.Session.SetString("UserId", user.UserId.ToString()!);
-        HttpContext.Session.SetString("UserAvatar", "/images/static/");
+        HttpContext.Session.SetString("UserAvatar", user.Avatar!);
     }
 
     [Route("ForgotPassword")]

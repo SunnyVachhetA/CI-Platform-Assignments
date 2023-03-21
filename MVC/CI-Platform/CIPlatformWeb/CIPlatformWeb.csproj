@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Volunteer\Views\Mission\_CommentView.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,6 +27,18 @@
   <ItemGroup>
     <ProjectReference Include="..\CIPlatform.Entities\CIPlatform.Entities.csproj" />
     <ProjectReference Include="..\CIPlatform.Services\CIPlatform.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Volunteer\Views\Mission\_CommentView.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Volunteer\Views\Mission\_CommentView.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Volunteer\Views\Shared\_CommentView.cshtml" />
   </ItemGroup>
 
 </Project>

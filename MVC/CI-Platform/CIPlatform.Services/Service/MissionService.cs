@@ -64,10 +64,42 @@ public class MissionService : IMissionService
             GoalAchieved = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalAchived != null)?.GoalAchived,
             ApplicationListId = mission.MissionApplications?.Where(application => application.ApprovalStatus == 1).Select(application => (long)application?.UserId).ToList(),
             MissionRating = MissionRatingService.ConvertMissionToRatingVM(mission),
-            MissionAvailability = SetMissionAvailability(mission.Availability) 
+            MissionAvailability = SetMissionAvailability(mission.Availability),
+            CommentList = mission.Comments?.Select(comment => comment.UserId).ToList(),
+            RecentVolunteers = GetRecentVolunteers(mission)
         };
 
         return missionCard;
+    }
+
+    private static List<RecentVolunteersVM> GetRecentVolunteers(Mission mission)
+    {
+        List<RecentVolunteersVM> volunteerList = new();
+        var result = GetApprovedMissionApplication(mission);
+        if (result.LongCount() > 0)
+        {
+            result = result.OrderByDescending(missionApplication => missionApplication.CreatedAt);
+
+            volunteerList = result.Select( missionApplication => 
+                                            new RecentVolunteersVM  { 
+                                                UserId = missionApplication.UserId,
+                                                Avatar = missionApplication.User.Avatar?? string.Empty,
+                                                UserName = missionApplication.User.FirstName + " " + missionApplication.User.LastName
+                                            }
+                                        ).ToList();
+        }
+        return volunteerList;
+    }
+
+    private static IEnumerable<MissionApplication> GetApprovedMissionApplication( Mission mission )
+    {
+        if (mission.MissionApplications.Any())
+        {
+            var result = mission.MissionApplications
+                            .Where(missionApplication => missionApplication.ApprovalStatus == 1);
+            return result;
+        }
+        return new List<MissionApplication>().AsEnumerable();
     }
 
     private static MissionAvailability? SetMissionAvailability(byte? availability)

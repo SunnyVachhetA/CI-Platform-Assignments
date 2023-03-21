@@ -74,7 +74,8 @@ public class UserService: IUserService
             LastName = result.LastName,
             Email = result.Email,
             PhoneNumber = result.PhoneNumber,
-            Password = result.Password
+            Password = result.Password,
+            Avatar = result.Avatar
         };
 
         return user;

@@ -1,5 +1,10 @@
 ﻿@{
     var UserName = Context.Session.GetString("UserName");
+    var profileImage = Context.Session.GetString("UserAvatar");
+
+    var userId = 0L;
+    if (Context.Session.GetString("UserId") != null)
+        userId = long.Parse(Context.Session.GetString("UserId")!);
 }
 
 <nav class="navbar-home container d-flex gap-2 gap-md-5 navbar-light">
@@ -25,7 +30,7 @@
             <div class="dropdown">
                 <a class="dropdown-toggle medium-text " href="#" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
-                    <img src="~/assets/user-img.png" alt="Profile Image" class="nav-profile-picture">
+                    <img src="@profileImage" alt="Profile Image" class="nav-profile-picture">
                     <span class="d-none d-sm-inline">@UserName</span>
                     <img src="~/assets/drop-down.png" class="ms-2" alt="Options">
                 </a>

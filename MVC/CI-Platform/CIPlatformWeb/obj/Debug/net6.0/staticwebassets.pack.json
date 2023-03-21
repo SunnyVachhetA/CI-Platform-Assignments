@@ -445,6 +445,18 @@
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\documents\\CI Platform - DB.xlsx",
+      "PackagePath": "staticwebassets\\documents\\CI Platform - DB.xlsx"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\documents\\lorem-ipsum.docx",
+      "PackagePath": "staticwebassets\\documents\\lorem-ipsum.docx"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\documents\\lorem-pdf.pdf",
+      "PackagePath": "staticwebassets\\documents\\lorem-pdf.pdf"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
@@ -467,6 +479,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\Plantation-and-Afforestation-programme-1.png",
       "PackagePath": "staticwebassets\\images\\static\\Plantation-and-Afforestation-programme-1.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\anon-profile.png",
+      "PackagePath": "staticwebassets\\images\\static\\anon-profile.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\image.png",

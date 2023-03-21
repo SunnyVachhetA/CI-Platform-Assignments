@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.DataAccessLayer.Data;
-
 public partial class CIDbContext : DbContext
 {
     public CIDbContext()
@@ -176,6 +175,9 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.ApprovalStatus)
                 .HasDefaultValueSql("((0))")
                 .HasColumnName("approval_status");
+            entity.Property(e => e.CommentText)
+                .HasColumnType("text")
+                .HasColumnName("comment_text");
             entity.Property(e => e.CreatedAt).HasColumnName("created_at");
             entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");

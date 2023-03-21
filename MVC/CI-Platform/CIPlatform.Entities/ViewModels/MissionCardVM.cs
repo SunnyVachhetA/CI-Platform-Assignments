@@ -35,4 +35,7 @@ public class MissionCardVM
     public List<long> ApplicationListId { get; set; } = new();
     public List<MissionRatingVM> MissionRating { get; set; } = new();
     public MissionAvailability? MissionAvailability { get; set; }
+    public List<long>? CommentList { get; set; } = new();
+
+    public List<RecentVolunteersVM> RecentVolunteers { get; set; } = new();
 }

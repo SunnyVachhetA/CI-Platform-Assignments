@@ -1,6 +1,8 @@
 ﻿using CIPlatform.Entities.ViewModels;
 using CIPlatform.Services.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Bcpg;
+
 namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 [Area("Volunteer")]
 public class MissionController : Controller
@@ -13,7 +15,12 @@ public class MissionController : Controller
     
     public IActionResult Index( long id )
     {
+        int page = 1;
         MissionCardVM missionDetails = _serviceUnit.MissionService.LoadMissionDetails( id );
+
+        ViewBag.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
+
+        missionDetails.RecentVolunteers = missionDetails.RecentVolunteers.Skip((page - 1) * 2).Take(2).ToList();
         return View( missionDetails );
     }
 
@@ -95,5 +102,29 @@ public class MissionController : Controller
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpGet]
+    public async Task<IActionResult> MissionComments(long missionId, long userId, bool isCommentExists) //Load mission comments
+    {
+        var result = await _serviceUnit.CommentService.GetAllComments( missionId, userId, isCommentExists );
+        return PartialView("_CommentView", result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> MissionComments( long userId, long missionId, string commentText )
+    {
+        CommentVM comment = new()
+        {
+            UserId = userId,
+            MissionId = missionId,
+            Comment = commentText
+        };
+
+        await _serviceUnit.CommentService.AddMissionComment( comment );
+
+        var result = await _serviceUnit.CommentService.GetAllComments(missionId, userId, true);
+        return PartialView("_CommentView", result);
+    }
+
 
 }

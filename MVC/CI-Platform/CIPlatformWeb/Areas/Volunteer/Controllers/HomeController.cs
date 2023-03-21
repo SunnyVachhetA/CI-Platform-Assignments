@@ -83,7 +83,7 @@ namespace CIPlatformWeb.Areas.User.Controllers
                 List<MissionCardVM> filteredMissions = _serviceUnit.MissionService.FilterMissions(filterModel);
                 var result = _serviceUnit.MissionService.CreateMissionLanding(filteredMissions);
                 ViewBag.MissionCount = ( result.missionList == null ) ? 0 : result.missionList?.Count();
-                result.missionList = result.missionList.Skip((page - 1) * 9).Take(9).ToList();
+                result.missionList = result.missionList?.Skip((page - 1) * 9).Take(9).ToList();
                 return PartialView("_MissionIndexListing", result);
             }
             catch (Exception) { return StatusCode(404); }

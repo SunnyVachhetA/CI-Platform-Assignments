@@ -37,4 +37,6 @@ public class UserRegistrationVM
     public string ConfirmPassword { get; set; } = null!;
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
+
+    public string? Avatar { get; set; }
 }

@@ -18,6 +18,12 @@
     }
 
     var themeId = Model.ThemeId;
+
+    var isCommentExists = false;
+    if ( userId != 0L && (bool)Model.CommentList?.Any(id => id == userId)!)
+    {
+        isCommentExists = true;
+    }
 }
 <header>  
 <partial name="_Navbar"></partial>
@@ -32,6 +38,7 @@
     @Html.HiddenFor(model => loggedUserAppliedForMission, new { id = "isLoggedUserVolunteer" })
     @Html.HiddenFor(model => loggedUserRating, new { id="logged-user-rating" })
     @Html.HiddenFor(model => themeId, new { id="theme-id" })
+    @Html.HiddenFor( model => isCommentExists, new { id="isCommentExists" } )
     <!-- Mission Front Section Begin -->
     <section class="container d-flex flex-column flex-lg-row">
         <div class="d-flex flex-column gap-2 my-auto flex-basis flex-grow-0">
@@ -295,72 +302,12 @@
                     
                         <!-- Comment Tab Content -->
                         <div class="tab-content overflow-auto mt-4 d-none p-1" id = "tab-comments-content">
-                            <textarea class="form-control font-xs" id="textAreaExample1" rows="4" placeholder="Enter your comments"></textarea>      
-                            <button class = "my-2 mx-auto btn-g-orange">
-                                Post Comment
+                            <textarea class="form-control font-xs" id="comment-text" rows="4" placeholder="Enter your comments"></textarea>
+                            <span class="font-15 text-danger d-none" id="err-comment"></span>
+                            <button class="my-2 mx-auto btn-g-orange" type="submit" id="btn-comment-post">
+                                    Post Comment
                             </button>
-
-                            <div class = "bg-light mt-4 container d-flex flex-column gap-4 comment-box py-4">
-                                <div class = "bg-white d-flex p-3 pb-0 gap-3">
-                                    <img src="~/assets/volunteer7.png" alt="User Image" class = "rounded-pill comment-usr-img">
-                                    <div class = "">
-                                        <p class = "text-black-1 mb-0">John Doe</p>
-                                        <span class = "text-light-custom font-13">
-                                            DateTimeOffset
-                                        </span>
-                                        <p class = "font-xs text-black-1 pt-2">
-                                            Nice mission great Opportunity for people
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class = "bg-white d-flex p-3 pb-0 gap-3">
-                                    <img src="~/assets/volunteer7.png" alt="User Image" class = "rounded-pill comment-usr-img">
-                                    <div class = "">
-                                        <p class = "text-black-1 mb-0">John Doe</p>
-                                        <span class = "text-light-custom font-13">
-                                            DateTimeOffset
-                                        </span>
-                                        <p class = "font-xs text-black-1 pt-2">
-                                            Nice mission great Opportunity for people
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class = "bg-white d-flex p-3 pb-0 gap-3">
-                                    <img src="~/assets/volunteer7.png" alt="User Image" class = "rounded-pill comment-usr-img">
-                                    <div class = "">
-                                        <p class = "text-black-1 mb-0">John Doe</p>
-                                        <span class = "text-light-custom font-13">
-                                            DateTimeOffset
-                                        </span>
-                                        <p class = "font-xs text-black-1 pt-2">
-                                            Nice mission great Opportunity for people
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class = "bg-white d-flex p-3 gap-3 pb-0 ">
-                                    <img src="~/assets/volunteer7.png" alt="User Image" class = "rounded-pill comment-usr-img">
-                                    <div class = "">
-                                        <p class = "text-black-1 mb-0">John Doe</p>
-                                        <span class = "text-light-custom font-13">
-                                            DateTimeOffset
-                                        </span>
-                                        <p class = "font-xs text-black-1 pt-2">
-                                            Nice mission great Opportunity for people
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class = "bg-white d-flex p-3 gap-3 pb-0">
-                                    <img src="~/assets/volunteer7.png" alt="User Image" class = "rounded-pill comment-usr-img">
-                                    <div class = "">
-                                        <p class = "text-black-1 mb-0">John Doe</p>
-                                        <span class = "text-light-custom font-13">
-                                            DateTimeOffset
-                                        </span>
-                                        <p class = "font-xs text-black-1 pt-2">
-                                            Nice mission great Opportunity for people
-                                        </p>
-                                    </div>
-                                </div>
+                            <div class="bg-light mt-4 container d-flex flex-column gap-4 comment-box py-4" id="msn-comment">
                             </div>
                         </div>
                         <!-- Comment Tab Content Fin -->
@@ -419,61 +366,8 @@
                         <!-- Infomration Box Fin -->
 
                         <!-- Recent Volunteers -->
-                        <div class = "border mt-4 font-15 p-4 pb-0">
-                            <div class = "border-bottom mb-2">
-                                <div class = "border-bottom-1 font-22 
-                                mx-content pe-3 pb-3">
-                                    Recent Volunteers
-                                </div>
-                            </div>
-                            <div class = "d-flex flex-wrap small-light-text p-2 justify-content-around gap-5 gap-lg-5 ">
-                                <div class = "text-center">
-                                    <img src="~/assets/volunteer1.png" alt="Volunteer Image" class = "volunteer-img rounded-pill">
-                                    <span class = "d-block">Andrew Johnson</span>
-                                </div>
-                                <div class = "text-center">
-                                    <img src="~/assets/volunteer1.png" alt="Volunteer Image" class = "volunteer-img rounded-pill">
-                                    <span class = "d-block">Andrew Johnson</span>
-                                </div>
-                                <div class = "text-center">
-                                    <img src="~/assets/volunteer1.png" alt="Volunteer Image" class = "volunteer-img rounded-pill">
-                                    <span class = "d-block">Andrew Johnson</span>
-                                </div>
-                                <div class = "text-center">
-                                    <img src="~/assets/volunteer1.png" alt="Volunteer Image" class = "volunteer-img rounded-pill">
-                                    <span class = "d-block">Andrew Johnson</span>
-                                </div>
-                                <div class = "text-center">
-                                    <img src="~/assets/volunteer1.png" alt="Volunteer Image" class = "volunteer-img rounded-pill">
-                                    <span class = "d-block">Andrew Johnson</span>
-                                </div>
-                                <div class = "text-center">
-                                    <img src="~/assets/volunteer1.png" alt="Volunteer Image" class = "volunteer-img rounded-pill">
-                                    <span class = "d-block">Andrew Johnson</span>
-                                </div>
-                                <div class = "text-center">
-                                    <img src="~/assets/volunteer1.png" alt="Volunteer Image" class = "volunteer-img rounded-pill">
-                                    <span class = "d-block">Andrew Johnson</span>
-                                </div>
-                                <div class = "text-center">
-                                    <img src="~/assets/volunteer1.png" alt="Volunteer Image" class = "volunteer-img rounded-pill">
-                                    <span class = "d-block">Andrew Johnson</span>
-                                </div>
-                            </div>
-                        
-                            <!-- Recent volunteer pagination -->
-                            <div class = "position-relative d-flex bottom-0 ms-n4 border-top me-n4">
-                                <button class="cursor-pointer p-2 p-lg-4 d-flex align-items-center bg-transparent border" id = "btn-vl-prev">
-                                    <img src="~/assets/left.png" alt="Previous">
-                                </button>
-                                <div class = "my-auto mx-auto text-light-custom text-black-1 font-xs">
-                                    1 - 9 of of 25 Recent Volunteers
-                                </div>
-                                <button class="cursor-pointer p-2 p-lg-4 d-flex align-items-center bg-transparent border" id = "btn-vl-next">
-                                    <img src="~/assets/right-arrow1.png" alt="Previous">
-                                </button>
-                            </div>
-                            <!-- Recent Volunteer Pagination -->
+                        <div class = "border mt-4 font-15 p-4 pb-0" id="msn-recent-volunteers">
+                            <partial name="_RecentVolunteers" model ="@Model.RecentVolunteers"></partial>
                         </div>
                         <!-- Recent Volunteers Fin -->
                 
@@ -484,6 +378,7 @@
             </section>
     <!-- Mission Details Section End  -->
     <hr>
+
 
     @*Related Mission Section*@
     <section class = "container mb-4" id="related-missions-section">

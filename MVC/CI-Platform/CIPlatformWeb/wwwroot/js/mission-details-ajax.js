@@ -7,6 +7,14 @@ const btnFavourite = document.querySelector('#btn-add-to-favourite');
 let isLoggedUserVolunteer = $('#isLoggedUserVolunteer').val();
 let loggedUserRating = 0;
 let starClickFlag = false;
+const btnPostComment = document.querySelector('#btn-comment-post');
+const commentBox = document.querySelector('#comment-text');
+const commentErr = document.querySelector('#err-comment');
+let isCommentExists = $('#isCommentExists').val() === 'True' ? true : false;
+
+let currentVolunteerPage = 1;
+let totalVolunteersCount = $('#total-volunteer-count').val();
+
 $(document).ready(
     () =>
     {
@@ -16,10 +24,22 @@ $(document).ready(
         toggleBtnFavourite();
         loadMissionRatingAjax();
         let themeId = $('#theme-id').val();
-        console.log("ThemeId: " + themeId);
+        loadMissionCommentsAjax();
         loadRelatedMissionsAjax(themeId);
     }
 );
+function loadMissionCommentsAjax() {
+    console.log(isCommentExists);
+    $.ajax({
+        type: 'GET',
+        data: { missionId, userId, isCommentExists},
+        url: '/Volunteer/Mission/MissionComments',
+        success: function (result) {
+            $('#msn-comment').html(result);
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
 
 function loadMissionRatingAjax() {
     console.log( missionId );
@@ -28,7 +48,6 @@ function loadMissionRatingAjax() {
         data: { missionId },
         url: '/Volunteer/Mission/MissionRating',
         success: function (result) {
-            console.log("Mission Rating{Get}: " + result);
             $('#star-rating-box').html(result);
         },
         error: ajaxErrorSweetAlert
@@ -115,7 +134,6 @@ stars.forEach((star, starIndex1) => {
             }
         }
     );
-
     //click
     star.addEventListener(
         'click',
@@ -215,4 +233,73 @@ function loadRelatedMissionsAjax( themeId ) {
         error: ajaxErrorSweetAlert
     });
 }
+
+//Comment Form
+(btnPostComment).addEventListener('click', handleCommentPost);
+
+function handleCommentPost() {
+
+    if (userId == 0) {
+        loginRequiredSweetAlert(loginPageLink);
+        return;
+    }
+    if (isLoggedUserVolunteer === 'False') {
+        title = 'Volunteer Registration Required';
+        subTitle = 'You need to register as volunteer to comment!';
+        displayActionMessageSweetAlert(title, subTitle, 'info');
+        return;
+    }
+
+    let comment = commentBox.value;
+    if (comment === null || comment.trim() === '' || comment.length <= 8) {
+        commentErr.classList.remove('d-none');
+        commentErr.textContent = 'Comment should be more than 8 character!';
+        return;
+    }
+    commentErr.classList.add('d-none');
+
+    addMissionCommentAjax( comment.trim() );
+}
+
+function addMissionCommentAjax(commentText) {
+    $.ajax({
+        type: 'POST',
+        url: '/Volunteer/Mission/MissionComments',
+        data: {
+            userId, missionId, commentText
+        },
+        success: function (result) {
+            $('#msn-comment').html(result);
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+//Volunteer Pagination
+$('#btn-vl-prev').on
+(
+        'click',
+        () =>
+        {
+            if (currentVolunteerPage == 1) return;
+            currentVolunteerPage++;
+            handleVolunteerPaginationAjax();
+        }
+);
+
+$('#btn-vl-next').on
+(
+    'click',
+    () =>
+    {
+        if(  )
+        handleVolunteerPaginationAjax();
+    }
+);
+
+function handleVolunteerPaginationAjax()
+{
+
+}
+
 

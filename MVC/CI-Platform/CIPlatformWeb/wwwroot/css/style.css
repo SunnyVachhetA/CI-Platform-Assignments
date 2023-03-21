@@ -587,6 +587,13 @@ form-subtitle,
 
 
 /* Volunteering Mission Page CSS Start */
+.text-info-message
+{
+    border-radius: 10px;
+    border: 1px solid var(--col-gray);
+    background-color: var(--col-orange);
+    color: white;
+}
 .active-fav {
     border-radius: 1.5625rem;
     border: 2px solid red !important;

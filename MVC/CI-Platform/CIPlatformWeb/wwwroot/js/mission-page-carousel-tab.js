@@ -60,7 +60,7 @@ function removeActive(tab1, tab2) {
 //Tab Interaction JS Complete
 
 //Scroll 
-const slider = document.querySelector('.slider');
+/*const slider = document.querySelector('.slider');
 const scrollPrev = document.querySelector('#scroll-prev');
 const scrollNext = document.querySelector('#scroll-next');
 
@@ -82,5 +82,5 @@ scrollNext.addEventListener(
         const scrollValue = scrollWidth + slider.scrollLeft;
         slider.scroll(scrollValue, 0);
     }
-);
+);*/
 //Scroll Fin

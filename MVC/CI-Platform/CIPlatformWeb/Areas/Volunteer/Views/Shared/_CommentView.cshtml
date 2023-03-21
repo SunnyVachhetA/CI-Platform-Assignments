@@ -1,0 +1,29 @@
+﻿@model IEnumerable<CommentVM>
+@{
+    var isListEmpty = Model.LongCount() == 0;
+}
+ 
+
+    @if( isListEmpty )
+    {
+        <p class="text-info-message p-2 mx-content mx-auto">There are no comments at the moment</p>
+    }
+    else
+    {
+        foreach(var userComment in Model)
+        {
+            <div class="bg-white d-flex p-3 pb-0 gap-3">
+        <img src="@userComment.Avatar" alt="User Image" class="rounded-pill comment-usr-img">
+        <div class="">
+            <p class="text-black-1 mb-0">@userComment.UserName</p>
+            <span class="text-light-custom font-13">
+                        @userComment.CreatedAt.ToString("dddd, MMMM d, yyyy h:mm tt")
+            </span>
+            <p class="font-xs text-black-1 pt-2">
+                @userComment.Comment
+            </p>
+        </div>
+    </div>
+        }
+    }
+
