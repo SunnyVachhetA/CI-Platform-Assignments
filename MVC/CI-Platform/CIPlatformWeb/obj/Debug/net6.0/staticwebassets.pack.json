@@ -485,6 +485,10 @@
       "PackagePath": "staticwebassets\\images\\static\\anon-profile.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\check-mark.png",
+      "PackagePath": "staticwebassets\\images\\static\\check-mark.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\image.png",
       "PackagePath": "staticwebassets\\images\\static\\image.png"
     },

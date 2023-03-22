@@ -27,7 +27,9 @@ public class ServiceUnit: IServiceUnit
 
     public IMissionRatingService MissionRatingService {  get; private set; }
 
-    public ICommentService CommentService { get; set; }
+    public ICommentService CommentService { get; private set; }
+
+    public IMissionInviteService MissionInviteService { get; private set; }
     public ServiceUnit(IUnitOfWork unitOfWork)
 	{
 		_unitOfWork= unitOfWork;
@@ -45,5 +47,6 @@ public class ServiceUnit: IServiceUnit
         MissionSkillService = new MissionSkillService(_unitOfWork);
         MissionRatingService = new MissionRatingService(_unitOfWork);
         CommentService = new CommentService(_unitOfWork);
+        MissionInviteService = new MissionInviteService(_unitOfWork);
 	}
 }

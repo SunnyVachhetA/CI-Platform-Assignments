@@ -1,7 +1,6 @@
 ﻿using CIPlatform.Entities.ViewModels;
 using CIPlatform.Services.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Bcpg;
 
 namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 [Area("Volunteer")]
@@ -15,12 +14,10 @@ public class MissionController : Controller
     
     public IActionResult Index( long id )
     {
-        int page = 1;
         MissionCardVM missionDetails = _serviceUnit.MissionService.LoadMissionDetails( id );
 
         ViewBag.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
 
-        missionDetails.RecentVolunteers = missionDetails.RecentVolunteers.Skip((page - 1) * 2).Take(2).ToList();
         return View( missionDetails );
     }
 
@@ -126,5 +123,25 @@ public class MissionController : Controller
         return PartialView("_CommentView", result);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> RecentVolunteers(long missionId, int page)
+    {
+        try
+        {
+            List<RecentVolunteersVM> recentVolunteers = new();
+            recentVolunteers = await _serviceUnit.MissionApplicationService.FetchRecentVolunteers(missionId);
 
+            if( recentVolunteers.LongCount() != 0 )
+            {
+                recentVolunteers = recentVolunteers.Skip((page - 1) * 2).Take(2).ToList();
+            }
+            return PartialView("_RecentVolunteers", recentVolunteers);
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine("Error while fetching recent volunteers: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
 }

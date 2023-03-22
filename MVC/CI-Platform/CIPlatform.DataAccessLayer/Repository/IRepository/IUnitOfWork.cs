@@ -15,5 +15,7 @@ public interface IUnitOfWork
     IMissionSkillRepository MissionSkillRepo { get; }
     IMissionRatingRepository MissionRatingRepo { get; }
     ICommentRepository CommentRepo { get; }
+
+    public IMissionInviteRepository MissionInviteRepo { get; }
     void Save();
 }

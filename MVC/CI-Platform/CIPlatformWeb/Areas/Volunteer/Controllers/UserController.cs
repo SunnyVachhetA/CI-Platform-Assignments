@@ -1,4 +1,5 @@
-﻿using CIPlatform.Entities.ViewModels;
+﻿using CIPlatform.Entities.DataModels;
+using CIPlatform.Entities.ViewModels;
 using CIPlatform.Services.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -157,20 +158,22 @@ public class UserController : Controller
         if (ModelState.IsValid)
         {
             _serviceUnit.UserService.Add(user);
-            CreateUserLoginSession(user);
-            return RedirectToAction("Index", "Home");
+            //CreateUserLoginSession(user);
+            return RedirectToAction("Login");
         }
         else return View(user);
     }
 
     [Route("Logout", Name = "Logout")]
+    [HttpGet]
     public ActionResult Logout()
     {
         HttpContext.Session.Clear();
         HttpContext.Session.Remove("UserName");
         HttpContext.Session.Remove("UserId");
         HttpContext.Session.Remove("Avatar");
-        return RedirectToAction("Index", "Home");
+        TempData["logout-success"] = "You have been successfully logged out";
+        return Json(new { redirectToUrl = Url.Action("Index", "Home") });
     }
 
     public PasswordResetVM GenerateTokenObject(string email)
@@ -185,7 +188,6 @@ public class UserController : Controller
         };
         return obj;
     }
-
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -234,6 +236,22 @@ public class UserController : Controller
         {
             return StatusCode(500, "An error occurred while retrieving data.");
         }
+    }
+    
+    [HttpGet]
+    [Route("MissionUsersInvite", Name = "GetMissionUsersInvite")]
+    public IActionResult MissionUsersInvite( long userId, long missionId )
+    {
+        IEnumerable<UserMissionInviteVM> inviteList = Enumerable.Empty<UserMissionInviteVM>();
+
+        var result = _serviceUnit.UserService.FetchAllUsers(true)?.Where( user => user.UserId != userId )!;
+
+        if(result.Any())
+        {
+            inviteList = _serviceUnit.MissionInviteService.fetchUserMissionInvites( result, userId, missionId );
+        }
+
+        return PartialView("_RecommendMission", inviteList);
     }
     #endregion
 }

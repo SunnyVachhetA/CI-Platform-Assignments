@@ -1,7 +1,11 @@
 ﻿@model MissionLandingVM
 @{
     ViewData["Title"] = "Mission Home | Home";
+    var isLoggedOut = false;
+
+    isLoggedOut = TempData["logout-success"] != null;
 }
+@Html.HiddenFor(model => isLoggedOut, new { id = "is-logged-out" })
 <main class="index-grid d-grid min-vh-100">
 <header>
     <partial name = "_Navbar" ></partial>
@@ -40,5 +44,6 @@
     <script src = "~/js/mission-view-toggler.js"></script>
     <script src = "~/js/mission-search-filter.js"></script>
     <script src="~/js/mission-pagination.js"></script>
+    <script src="~/js/site.js"></script>
 }
 

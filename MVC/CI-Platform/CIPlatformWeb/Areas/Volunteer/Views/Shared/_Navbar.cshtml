@@ -4,7 +4,7 @@
 
     var userId = 0L;
     if (Context.Session.GetString("UserId") != null)
-        userId = long.Parse(Context.Session.GetString("UserId")!);
+        userId = Convert.ToInt64(Context.Session.GetString("UserId")!);
 }
 
 <nav class="navbar-home container d-flex gap-2 gap-md-5 navbar-light">
@@ -37,7 +37,7 @@
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Profile</a></li>
                     <li><a class="dropdown-item" href="#">Favourites</a></li>
-                    <li><a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a></li>
+                    <li><a class="dropdown-item" id="user-logout">Logout</a></li>
                 </ul>
             </div>
         }else
@@ -52,3 +52,5 @@
         }
     </div>
 </nav>
+
+   

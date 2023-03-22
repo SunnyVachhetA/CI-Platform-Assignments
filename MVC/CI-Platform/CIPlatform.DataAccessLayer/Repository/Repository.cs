@@ -25,10 +25,10 @@ public class Repository<T> : IRepository<T> where T : class
         return query.ToList();
     }
 
-    public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter)
+    public IEnumerable<T> GetAll(Func<T, bool> filter)
     {
 
-        IQueryable<T> query = dbSet.Where(filter);
+        var query = dbSet.Where(filter);
         return query;
     }
 

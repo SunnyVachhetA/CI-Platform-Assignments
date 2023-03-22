@@ -1,0 +1,38 @@
+﻿@model IEnumerable<UserMissionInviteVM>
+<div class="modal" tabindex="-1" id = "recommendModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Recommend Mission To Co-Worker</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @foreach(var user in Model)
+                {
+                    @if( user.IsInvited )
+                    {
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" src="~/images/static/check-mark.png" disabled>
+                            <label class="form-check-label">
+                                @user.UserName
+                            </label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" value="@user.ToUserId" name="recommend-list">
+                            <label class="form-check-label">
+                                @user.UserName
+                            </label>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger rounded-pill py-2 px-4" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn-g-orange" id="btn-recommend">Recommend</button>
+            </div>
+        </div>
+    </div>
+</div>

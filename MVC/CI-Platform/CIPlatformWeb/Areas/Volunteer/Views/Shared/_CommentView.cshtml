@@ -1,12 +1,13 @@
 ﻿@model IEnumerable<CommentVM>
 @{
     var isListEmpty = Model.LongCount() == 0;
+    Console.WriteLine(isListEmpty);
 }
  
 
     @if( isListEmpty )
     {
-        <p class="text-info-message p-2 mx-content mx-auto">There are no comments at the moment</p>
+        <p class="text-info-message p-2 mx-content mx-auto mb-0">There are no comments at the moment</p>
     }
     else
     {

@@ -13,7 +13,8 @@ public interface IServiceUnit
     IGoalMissionService GoalMissionService { get; }
     IMissionMediaService MissionMediaService { get; }
     IMissionSkillService MissionSkillService { get; }
-
     IMissionRatingService MissionRatingService { get; }
+
+    public IMissionInviteService MissionInviteService { get; }
     ICommentService CommentService { get; }
 }

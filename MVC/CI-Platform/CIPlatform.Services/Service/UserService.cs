@@ -22,13 +22,9 @@ public class UserService: IUserService
             PhoneNumber = user.PhoneNumber,
             Password = user.Password
         };
-        Console.WriteLine(user);
-
-        Console.WriteLine(obj.UserId);
         _unitOfWork.UserRepo.Add(obj);
         _unitOfWork.Save();
     }
-
 
     public bool IsEmailExists(string email)
     {
@@ -39,6 +35,21 @@ public class UserService: IUserService
         return (result != null);
     }
 
+    
+    public static UserRegistrationVM ConvertToRegistrationVM(User result)
+    {
+        UserRegistrationVM user = new()
+        {
+            UserId = result.UserId,
+            FirstName = result.FirstName,
+            LastName = result.LastName,
+            Email = result.Email,
+            PhoneNumber = result.PhoneNumber,
+            Avatar = result.Avatar,
+            Status = result.Status ?? false
+        };
+        return user;
+    }
     public UserRegistrationVM UpdateUserPassword(string? email, string password)
     {
         
@@ -48,15 +59,7 @@ public class UserService: IUserService
                 user => user.Email == email
             );
 
-        UserRegistrationVM user = new()
-        {
-            UserId = result.UserId,
-            FirstName = result.FirstName,
-            LastName = result.LastName,
-            Email = result.Email,
-            PhoneNumber = result.PhoneNumber,
-            Password = result.Password
-        };
+        var user = ConvertToRegistrationVM(result);
 
         return user;
     }
@@ -80,6 +83,28 @@ public class UserService: IUserService
 
         return user;
     }
-    
-    
+
+    //Method to get all users
+    // isActive = True => Fetch only active users otherwise all
+    public IEnumerable<UserRegistrationVM> FetchAllUsers(bool isActiveFlag)
+    {
+        IEnumerable<User> result;
+        IEnumerable<UserRegistrationVM> users = Enumerable.Empty<UserRegistrationVM>();
+
+        if(isActiveFlag)
+        {
+            result = _unitOfWork.UserRepo.GetAll(ActiveUserFilter);
+        }
+        else
+        {
+            result = _unitOfWork.UserRepo.GetAll();
+        }
+        if(result.Any())
+        {
+            users = result.Select( user => ConvertToRegistrationVM(user) );
+        }
+        return users;
+    }
+
+    private Func<User, bool> ActiveUserFilter = (user) => user.Status ?? false;
 }

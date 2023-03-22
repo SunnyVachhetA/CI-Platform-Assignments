@@ -207,9 +207,7 @@ function filterMissionCardAjax() {
             missionDisplay();
             missionPagination();
         },
-        error: function (xhr, status, error) {
-            console.log("Error sending data: " + error);
-        }
+        error: ajaxErrorSweetAlert
     });
 }
 
@@ -220,9 +218,6 @@ const hasMission = document.querySelector('#has-mission');
 const noMission = document.querySelector('#no-mission');
 const msnNumber = document.querySelector('#number-of-mission');
 const displayClass1 = "d-none";
-
-
-
 
 function missionDisplay() {
     $(document).scrollTop(0);
@@ -238,3 +233,5 @@ function missionDisplay() {
         noMission.classList.remove(displayClass1);
     }
 }
+
+

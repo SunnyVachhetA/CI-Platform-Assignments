@@ -24,12 +24,17 @@
     {
         isCommentExists = true;
     }
+
+    var totalVolunteers = ViewBag.TotalVolunteers;
+    var volunteerCount = Model.RecentVolunteers.LongCount();
 }
 <header>  
 <partial name="_Navbar"></partial>
 <hr class="m-0" />
 </header>
 <main>
+    <div id="recommend-msn-modal">
+    </div>
     <input type ="hidden" value="@Model.MissionId" id="msn-details-id"/>
     <input type = "hidden" value="@userId" id = "logged-user-id" />
     <input type = "hidden" value='@Url.Action("Login", "User")' id = "login-page-link"/>
@@ -39,6 +44,7 @@
     @Html.HiddenFor(model => loggedUserRating, new { id="logged-user-rating" })
     @Html.HiddenFor(model => themeId, new { id="theme-id" })
     @Html.HiddenFor( model => isCommentExists, new { id="isCommentExists" } )
+    @Html.HiddenFor(model => totalVolunteers, new { id = "total-volunteer-count" })
     <!-- Mission Front Section Begin -->
     <section class="container d-flex flex-column flex-lg-row">
         <div class="d-flex flex-column gap-2 my-auto flex-basis flex-grow-0">
@@ -169,10 +175,15 @@
                     <img src="~/assets/heart1.png" alt="Favourite">
                     Add to Favourite
                 </button>
-                <button class="flex-basis btn-share p-2 d-flex align-items-center justify-content-center text-brown gap-3 cursor-pointer font-xs">
+                
+                <button 
+                    class="flex-basis btn-share p-2 d-flex align-items-center justify-content-center text-brown gap-3 cursor-pointer font-xs"
+                        data-bs-target="#recommendModal"
+                    id ="msn-recommend">
                     <img src="~/assets/add1.png" alt="Recommend">
                     Recommend to a Co-Worker
                 </button>
+                
             </div>
             <!-- Star Rating Begin -->
             <div class="border-top mt-2 w-100 text-center">
@@ -367,8 +378,42 @@
 
                         <!-- Recent Volunteers -->
                         <div class = "border mt-4 font-15 p-4 pb-0" id="msn-recent-volunteers">
-                            <partial name="_RecentVolunteers" model ="@Model.RecentVolunteers"></partial>
+                    <div class="border-bottom mb-2">
+                        <div class="border-bottom-1 font-22 mx-content pe-3 pb-3">
+                            Recent Volunteers
                         </div>
+                    </div>
+                    <div class="d-flex flex-wrap small-light-text p-2 justify-content-around gap-5 gap-lg-5 " id="vl-list">
+                        @{
+                            var vlNumber = 0;
+                        }
+                        @foreach (var volunteer in Model.RecentVolunteers)
+                        {
+                            <div class="text-center" data-vlNumber = "@vlNumber">
+                                <img src="@volunteer.Avatar" alt="Volunteer Image" class="volunteer-img rounded-pill">
+                                <span class="d-block">@volunteer.UserName?.Trim()</span>
+                            </div>
+                            vlNumber++;
+                        }
+                    </div>
+
+                    <!-- Recent volunteer pagination -->
+                    <div class="position-relative d-flex bottom-0 ms-n4 border-top me-n4" id="vl-pagination">
+                        <button class="cursor-pointer p-2 p-lg-4 d-flex align-items-center bg-transparent border" id="btn-vl-prev">
+                            <img src="~/assets/left.png" alt="Previous">
+                        </button>
+                        <div class="my-auto mx-auto text-light-custom text-black-1 font-xs" id="recent-volunteers-count">
+                        </div>
+                        <button class="cursor-pointer p-2 p-lg-4 d-flex align-items-center bg-transparent border" id="btn-vl-next">
+                            <img src="~/assets/right-arrow1.png" alt="Previous">
+                        </button>
+                    </div>
+                    <!-- Recent Volunteer Pagination -->
+
+                    <p class="text-info-message p-2 mx-content mx-auto mb-0 d-none" id="no-recent-vl">There are no volunteers at the moment</p>
+
+                        </div>
+
                         <!-- Recent Volunteers Fin -->
                 
                     </div>
@@ -391,4 +436,8 @@
 {
     <script src="~/js/mission-page-carousel-tab.js"></script>
     <script src="~/js/mission-details-ajax.js"></script>
+    <script src="~/js/site.js"></script>
+    <script>
+        
+    </script>
 }

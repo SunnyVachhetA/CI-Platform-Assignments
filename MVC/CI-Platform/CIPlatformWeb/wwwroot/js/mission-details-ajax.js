@@ -14,6 +14,13 @@ let isCommentExists = $('#isCommentExists').val() === 'True' ? true : false;
 
 let currentVolunteerPage = 1;
 let totalVolunteersCount = $('#total-volunteer-count').val();
+let displayVolunteerCount = 2;
+const totalVlPage = Math.ceil(totalVolunteersCount/2);
+if (totalVolunteersCount === undefined || totalVolunteersCount == 0) {
+    $('#no-recent-vl').removeClass('d-none');
+    $('#vl-list').addClass('d-none');
+    $('#vl-pagination').addClass('d-none');
+}
 
 $(document).ready(
     () =>
@@ -26,6 +33,7 @@ $(document).ready(
         let themeId = $('#theme-id').val();
         loadMissionCommentsAjax();
         loadRelatedMissionsAjax(themeId);
+        loadRecentVolunteers();
     }
 );
 function loadMissionCommentsAjax() {
@@ -250,6 +258,12 @@ function handleCommentPost() {
         return;
     }
 
+    if (isCommentExists) {
+        let title = 'Already commented!';
+        let subTitle = 'Your comment is pending for review. Please wait for approval!';
+        displayActionMessageSweetAlert(title, subTitle, 'info');
+        return;
+    }
     let comment = commentBox.value;
     if (comment === null || comment.trim() === '' || comment.length <= 8) {
         commentErr.classList.remove('d-none');
@@ -269,6 +283,9 @@ function addMissionCommentAjax(commentText) {
             userId, missionId, commentText
         },
         success: function (result) {
+            let title = 'Comment sent for approval';
+            let subTitle = 'Admin will approve your comment after review.';
+            displayActionMessageSweetAlert(title, subTitle, 'success');
             $('#msn-comment').html(result);
         },
         error: ajaxErrorSweetAlert
@@ -281,9 +298,10 @@ $('#btn-vl-prev').on
         'click',
         () =>
         {
+            console.log("Total Page: " + totalVlPage);
             if (currentVolunteerPage == 1) return;
-            currentVolunteerPage++;
-            handleVolunteerPaginationAjax();
+            currentVolunteerPage--;
+            loadRecentVolunteers();
         }
 );
 
@@ -292,14 +310,93 @@ $('#btn-vl-next').on
     'click',
     () =>
     {
-        if(  )
-        handleVolunteerPaginationAjax();
+        console.log("Total Page: " + totalVlPage);
+        if (currentVolunteerPage == totalVlPage) return;
+        currentVolunteerPage++;
+        loadRecentVolunteers();
     }
 );
 
-function handleVolunteerPaginationAjax()
-{
+function loadRecentVolunteers() {
 
+    if (totalVlPage == 0) { $().show(); }
+
+    let low = (currentVolunteerPage - 1) * displayVolunteerCount;
+    let high = currentVolunteerPage * displayVolunteerCount;
+    let count = 0;
+    $.each($('[data-vlNumber]'), (index, item) => {
+        let vlNumber = $(item).data('vlnumber');
+       
+        if (vlNumber >= low && vlNumber < high) {
+            count++;
+            $(item).show();
+        }
+        else {
+            $(item).hide();
+        }
+    });
+    $('#recent-volunteers-count').text(`${low + 1} - ${low+count} Volunteers of ${totalVolunteersCount}`);
 }
+
+/*function handleVolunteerPaginationAjax()
+{
+    $.ajax({
+        type: 'GET',
+        url: '/Volunteer/Mission/RecentVolunteers',
+        data:
+        {
+            missionId: missionId,
+            page: currentVolunteerPage
+        },
+        success: function (result) {
+            $('#msn-recent-volunteers').html(result);
+        },
+        error: ajaxErrorSweetAlert
+    });
+}*/
+
+//Recommend to co-worker
+
+$('#msn-recommend').on
+(
+    'click',
+    () =>
+    {
+        if (userId == 0) {
+            loginRequiredSweetAlert(loginPageLink);
+            return;
+        }
+        handleRecommendToCoWorkerAjax();
+    }
+);
+
+function handleRecommendToCoWorkerAjax() {
+    console.log("Handle Recommend called!");
+    $.ajax({
+        type: 'GET',
+        url: '/Volunteer/User/MissionUsersInvite',
+        data: { userId, missionId },
+        contentType: "application/json; charset=utf-8",
+        success: function (result) {
+            $('#recommend-msn-modal').html(result);
+            $('#recommendModal').modal('show');
+            modalEventListener();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function modalEventListener() {
+            let recommendList = [];
+        $('#btn-recommend').on('click',
+            () => {
+                alert('clicked');
+                $("input:checkbox[name='recommend-list']:checked").each(function () {
+                    recommendList.push($(this).val());
+                });
+                alert(recommendList);
+            });
+}
+
 
 

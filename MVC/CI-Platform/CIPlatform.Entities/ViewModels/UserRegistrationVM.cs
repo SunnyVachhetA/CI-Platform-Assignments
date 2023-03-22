@@ -38,5 +38,7 @@ public class UserRegistrationVM
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 
-    public string? Avatar { get; set; }
+    public string Avatar { get; set; } = @"\images\static\anon-profile.png";
+
+    public bool Status { get; set; } = false;
 }
