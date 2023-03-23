@@ -1,0 +1,89 @@
+﻿<main>
+    <header>
+        <partial name="_Navbar"></partial>
+        <hr class="m-0" />
+    </header>
+    <section class="container my-4">
+        <h1 class="font-40 text-black-1 text-light-custom">
+            Share Your Story
+        </h1>
+
+        <div class="mt-4">
+            <form action="#" method="post" class="story-form d-flex flex-column gap-4" enctype="multipart/form-data">
+                <div class="row g-4">
+                    <div class="form-group col-12 col-md-6">
+                        <label for="MissionTitle">Mission Name</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Select Mission Name</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        <label for="StoryTitle">StoryTitle</label>
+                        <input type="text" class="form-control" id="StoryTitle" placeholder="Enter story title">
+                    </div>
+                </div>
+                <!-- Text Editor -->
+                <div class="form-group">
+                    <label for="description">My Story</label>
+                    <textarea id="story-description"></textarea>
+                </div>
+                <!-- Text Editor Fin -->
+
+                <div class="form-group">
+                    <label for="videoUrl">Enter Video URL</label>
+                    <input type="text" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <p class="text-light-custom">Upload Your Photos</p>
+
+                    <div class="form-control-file d-flex justify-content-center align-items-center p-4 cursor-pointer" id="upload-area">
+                        <img src="~/assets/drag-and-drop.png" alt="Drag and drop" for="file-upload">
+                        <input type="file" multiple id="file-upload" onchange="handleFiles(this.files)" accept=".png, .jpg, .jpeg" hidden>
+                    </div>
+
+
+
+                    <!-- Uploaded files  -->
+                    <div class="mt-2 uploaded-files">
+                        <ul class="list-unstyled d-flex flex-wrap gap-4 gap-md-4 justify-content-md-start" id="file-list">
+                            <li class="list">
+                                <div class="position-relative">
+                                    <img src="~/assets/Animal-welfare-&-save-birds-campaign-1.png" alt="uploaded file" class="upload-img">
+                                    <button class="btn-cancel">
+                                        <img src="~/assets/cross.png" alt="Cancel">
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Uploaded Files Fin -->
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button class="btn-g-gray">
+                        Cancel
+                    </button>
+                    <div class="d-flex gap-2">
+                        <button class="btn-g-orange">
+                            Save
+                        </button>
+                        <button class="btn-g-orange">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <partial name="_Footer"></partial>
+</main>
+@section Scripts{
+    <script src="~/js/rich-editor-tiny.js"></script>
+    <script src="~/js/share-story.js"></script>
+    <script src="~/js/site.js"></script>
+}

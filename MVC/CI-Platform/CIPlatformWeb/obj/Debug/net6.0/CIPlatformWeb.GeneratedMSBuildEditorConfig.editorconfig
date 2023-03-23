@@ -72,6 +72,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfU2VhcmNoU2VjdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Story/ShareStory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFN0b3J5XFNoYXJlU3RvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Story/StoryListing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFN0b3J5XFN0b3J5TGlzdGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcRm9yZ290UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

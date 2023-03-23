@@ -6,11 +6,11 @@
     if (Context.Session.GetString("UserId") != null)
         userId = Convert.ToInt64(Context.Session.GetString("UserId")!);
 }
-
+@Html.HiddenFor(model => userId, new{ id = "logged-user-id" })
 <nav class="navbar-home container d-flex gap-2 gap-md-5 navbar-light">
     <a asp-action ="Index" asp-controller="Home"><img src="~/assets/logo.png" alt="Logo" /></a>
     <div class="d-flex gap-2 gap-sm-5 align-items-center">
-        <a class="medium-text cursor-pointer">Stories</a>
+        <a class="medium-text cursor-pointer" asp-controller ="Story" asp-action="Index">Stories</a>
         <div class="dropdown">
             <a class="dropdown-toggle medium-text d-none d-sm-block" href="#" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">

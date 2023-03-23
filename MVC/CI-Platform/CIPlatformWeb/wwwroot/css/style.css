@@ -695,6 +695,8 @@ form-subtitle,
 
 .btn-g-orange:hover, .btn-g-white:hover {
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--col-orange);
+    color: var(--col-orange);
 }
 .btn-g-orange:hover {
     color: var(--col-orange) !important;
@@ -793,8 +795,14 @@ form-subtitle,
     color: var(--col-secondary-brown);
     padding: 0.5rem 1rem;
     background-color: white;
+    transition: var(--transition);
 }
 
+.btn-g-gray:hover {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid black;
+    color: black;
+}
 .story-img-card:before {
     content: '';
     display: block;

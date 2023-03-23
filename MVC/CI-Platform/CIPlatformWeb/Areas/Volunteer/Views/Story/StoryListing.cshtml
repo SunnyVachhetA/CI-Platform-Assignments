@@ -1,0 +1,334 @@
+﻿@{
+    var userId = 0L;
+    if (Context.Session.GetString("UserId") != null)
+        userId = Convert.ToInt64(Context.Session.GetString("UserId")!);
+    var shareStoryUrl = Url.Action( "ShareStory", "Story", new { userId = userId } );
+}
+<input type="hidden" id ="share-story-url" value="@shareStoryUrl"/>
+<main>
+    <header>
+        <partial name="_Navbar"></partial>
+        <hr class="m-0" />
+        <!-- Story Hero -->
+        <section class="bg-hero-story mt-4 mt-md-0 d-flex flex-column text-center align-items-center justify-content-center flex-nowrap">
+            <p class="text-white story-hero-text d-none d-md-block mx-5">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa sed architecto, amet odio doloremque voluptatum
+                consectetur natus quos ipsam! Recusandae illo accusamus minus vitae nemo?
+            </p>
+            <a id="btn-share-story">
+                <button class="btn-g-white mt-4 mx-content mx-auto font-md">
+                Share Your Story
+                <img src="~/assets/right-arrow2.png" alt="Right Arrow">
+                </button>
+            </a>
+        </section>
+        <!-- Story Hero Fin  -->
+    </header>
+
+    <!-- Story Listing Section -->
+    <section class="container my-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-xl-4">
+
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative story-img-card">
+                        <img src="~/assets/img1.png" alt="Story Thumbnail" class="w-100 h-90">
+                        <button class="btn-g-white d-block position-absolute btn-story-center d-none">
+                            View Details
+                            <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                        </button>
+                        <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Customer Support
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            10 User and customer engagement strategies for 2019
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class="px-4 mt-auto mb-4">
+                        <img src="~/assets/volunteer5.png" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                    <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                        View Details
+                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                    </button>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative story-img-card">
+                        <img src="~/assets/img1.png" alt="Story Thumbnail" class="w-100 h-90">
+                        <button class="btn-g-white position-absolute btn-story-center d-none">
+                            View Details
+                            <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                        </button>
+                        <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Customer Support
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            10 User and customer engagement strategies for 2019
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class="px-4 mt-auto mb-4">
+                        <img src="~/assets/volunteer5.png" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                    <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                        View Details
+                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                    </button>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative story-img-card">
+                        <img src="~/assets/img1.png" alt="Story Thumbnail" class="w-100 h-90">
+                        <button class="btn-g-white position-absolute btn-story-center d-none">
+                            View Details
+                            <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                        </button>
+                        <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Customer Support
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            10 User and customer engagement strategies for 2019
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class="px-4 mt-auto mb-4">
+                        <img src="~/assets/volunteer5.png" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                    <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                        View Details
+                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                    </button>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative story-img-card">
+                        <img src="~/assets/img1.png" alt="Story Thumbnail" class="w-100 h-90">
+                        <button class="btn-g-white position-absolute btn-story-center d-none">
+                            View Details
+                            <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                        </button>
+                        <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Customer Support
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            10 User and customer engagement strategies for 2019
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class="px-4 mt-auto mb-4">
+                        <img src="~/assets/volunteer5.png" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                    <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                        View Details
+                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                    </button>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative story-img-card">
+                        <img src="~/assets/img1.png" alt="Story Thumbnail" class="w-100 h-90">
+                        <button class="btn-g-white position-absolute btn-story-center d-none">
+                            View Details
+                            <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                        </button>
+                        <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Customer Support
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            10 User and customer engagement strategies for 2019
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class="px-4 mt-auto mb-4">
+                        <img src="~/assets/volunteer5.png" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                    <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                        View Details
+                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                    </button>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative story-img-card">
+                        <img src="~/assets/img1.png" alt="Story Thumbnail" class="w-100 h-90">
+                        <button class="btn-g-white position-absolute btn-story-center d-none">
+                            View Details
+                            <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                        </button>
+                        <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Customer Support
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            10 User and customer engagement strategies for 2019
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class="px-4 mt-auto mb-4">
+                        <img src="~/assets/volunteer5.png" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                    <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                        View Details
+                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                    </button>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative story-img-card">
+                        <img src="~/assets/img1.png" alt="Story Thumbnail" class="w-100 h-90">
+                        <button class="btn-g-white position-absolute btn-story-center d-none">
+                            View Details
+                            <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                        </button>
+                        <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Customer Support
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            10 User and customer engagement strategies for 2019
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class="px-4 mt-auto mb-4">
+                        <img src="~/assets/volunteer5.png" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                    <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                        View Details
+                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                    </button>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative story-img-card">
+                        <img src="~/assets/img1.png" alt="Story Thumbnail" class="w-100 h-90">
+                        <button class="btn-g-white position-absolute btn-story-center d-none">
+                            View Details
+                            <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                        </button>
+                        <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Customer Support
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            10 User and customer engagement strategies for 2019
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class="px-4 mt-auto mb-4">
+                        <img src="~/assets/volunteer5.png" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                    <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                        View Details
+                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                    </button>
+                </article>
+            </div>
+            <div class="col">
+                <article class="card h-100 shadow-sm flex-nowrap">
+                    <div class="position-relative story-img-card">
+                        <img src="~/assets/img1.png" alt="Story Thumbnail" class="w-100 h-90">
+                        <button class="btn-g-white position-absolute btn-story-center d-none">
+                            View Details
+                            <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                        </button>
+                        <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                            Customer Support
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mt-n1 pb-4">
+                        <h3 class="mt-0 px-4">
+                            10 User and customer engagement strategies for 2019
+                        </h3>
+                        <p class="mission-desc-ellips px-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eligendi et fuga animi sit ab
+                            beatae error debitis inventore quasi exercitationem esse porro, incidunt aliquid ut! Nihil
+                            placeat id explicabo.
+                        </p>
+                    </div>
+                    <div class="px-4 mt-auto mb-4">
+                        <img src="~/assets/volunteer5.png" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                        Andrew Johnson
+                    </div>
+                    <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                        View Details
+                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                    </button>
+                </article>
+            </div>
+
+
+        </div>
+    </section>
+    <!-- Story Listing Fin -->
+</main>
+
+
+<partial name = "_Footer"></partial>
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+    <script src="~/js/story-listing.js"></script>
+}
+

@@ -133,6 +133,10 @@
       "PackagePath": "staticwebassets\\assets\\add1.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\arrow-8-24.png",
+      "PackagePath": "staticwebassets\\assets\\arrow-8-24.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\arrow.png",
       "PackagePath": "staticwebassets\\assets\\arrow.png"
     },
@@ -521,8 +525,20 @@
       "PackagePath": "staticwebassets\\js\\mission-view-toggler.js"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\rich-editor-tiny.js",
+      "PackagePath": "staticwebassets\\js\\rich-editor-tiny.js"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\share-story.js",
+      "PackagePath": "staticwebassets\\js\\share-story.js"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\story-listing.js",
+      "PackagePath": "staticwebassets\\js\\story-listing.js"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\sweet-alert-notification.js",
