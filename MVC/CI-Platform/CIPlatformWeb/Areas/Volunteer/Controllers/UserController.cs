@@ -2,6 +2,7 @@
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Services.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 
 namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 
@@ -35,6 +36,7 @@ public class UserController : Controller
             if (user != null)
             {
                 CreateUserLoginSession(user);
+                TempData["login-success"] = "Successfully logged in as " + user.FirstName + " " + user.LastName;
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -158,8 +160,10 @@ public class UserController : Controller
         if (ModelState.IsValid)
         {
             _serviceUnit.UserService.Add(user);
-            //CreateUserLoginSession(user);
-            return RedirectToAction("Login");
+            UserRegistrationVM registeredUser = _serviceUnit.UserService.ValidateUserCredential( new UserLoginVM {  Email = user.Email, Password = user.Password } );
+            CreateUserLoginSession(registeredUser);
+            TempData["registratoin-success"] = "You have successfully registered.";
+            return RedirectToAction("Index", "Home");
         }
         else return View(user);
     }
@@ -172,7 +176,7 @@ public class UserController : Controller
         HttpContext.Session.Remove("UserName");
         HttpContext.Session.Remove("UserId");
         HttpContext.Session.Remove("Avatar");
-        TempData["logout-success"] = "You have been successfully logged out";
+        TempData["logout-success"] = "You have been successfully logged out.";
         return Json(new { redirectToUrl = Url.Action("Index", "Home") });
     }
 
@@ -252,6 +256,27 @@ public class UserController : Controller
         }
 
         return PartialView("_RecommendMission", inviteList);
+    }
+
+    [HttpPost]
+    [Route("SendMissionInvites", Name = "SendMissionInvites")]
+    public async Task<IActionResult> SendMissionInvites(long userId, long missionId, long[] recommendList)
+    {
+        try
+        {
+            var userEmailList = await _serviceUnit.MissionInviteService.SaveMissionInviteFromUser(userId, missionId, recommendList);
+            var senderUserName =  await _serviceUnit.UserService.GetUserName( userId );
+
+            string missionInviteLink = Url.Action("Index", "Mission", new { id = missionId })?? string.Empty;
+            _serviceUnit.UserService.SendUserMissionInviteService( userEmailList, senderUserName, missionInviteLink, _emailService);
+            return StatusCode(201);
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine("Error occured while send mission invites: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
     }
     #endregion
 }

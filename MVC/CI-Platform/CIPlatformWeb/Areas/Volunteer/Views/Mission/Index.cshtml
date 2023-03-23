@@ -27,6 +27,8 @@
 
     var totalVolunteers = ViewBag.TotalVolunteers;
     var volunteerCount = Model.RecentVolunteers.LongCount();
+
+    var mediaCount = Model.MissionMedias?.LongCount();
 }
 <header>  
 <partial name="_Navbar"></partial>
@@ -45,27 +47,19 @@
     @Html.HiddenFor(model => themeId, new { id="theme-id" })
     @Html.HiddenFor( model => isCommentExists, new { id="isCommentExists" } )
     @Html.HiddenFor(model => totalVolunteers, new { id = "total-volunteer-count" })
+    @Html.HiddenFor( model => mediaCount, new { id="msn-media-count" })
     <!-- Mission Front Section Begin -->
     <section class="container d-flex flex-column flex-lg-row">
-        <div class="d-flex flex-column gap-2 my-auto flex-basis flex-grow-0">
-            <img src="@Model.ThumbnailUrl" alt="Mission Thumbnail" id="mission-hero-img" class="h-100">
-            @if( Model.MissionMedias?.Count > 1 )
-            {
-            <div class="position-relative">
+        <div class="d-flex flex-column gap-2 flex-basis">
+            <img src="@Model.ThumbnailUrl" alt="Mission Thumbnail" id="mission-hero-img" class="h-70">
+            
+            <div class="position-relative" id="msn-media-carousel">
                 <div class="overflow-auto d-flex gap-1 w-100 slider">
                     <div class="cursor-pointer position-absolute py-5 px-1 opacity-5" id="scroll-prev">
                         <img src="~/assets/left1.png" alt="Previous">
                     </div>
-                    @*<img src="~/assets/img2.png" alt="Mission Image" class="msn-img-sm">
-                    <img src="~/assets/img33.png" alt="Mission Image" class="msn-img-sm">
-                    <img src="~/assets/img22.png" alt="Mission Image" class="msn-img-sm">
-                    <img src="~/assets/Grow-Trees-On-the-path-to-environment-sustainability-2.png" alt="Mission Image" class="msn-img-sm">
-                    <img src="~/assets/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" alt="Mission Image" class="msn-img-sm">
-                    <img src="~/assets/Animal-welfare-&-save-birds-campaign-1.png" alt="Mission Image" class="msn-img-sm">
-                    <img src="~/assets/Nourish-the-Children-in--African-country-1.png" alt="Mission Image" class="msn-img-sm">
-                    <img src="~/assets/Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png" alt="Mission Image" class="msn-img-sm">*@
-
-                    @foreach(var media in Model.MissionMedias)
+                    
+                    @foreach(var media in Model.MissionMedias!)
                     {
                         <img src="@media" alt="Mission Image" class="msn-img-sm">
                     }
@@ -75,9 +69,9 @@
                     </div>
                 </div>
             </div>
-            }
+            
         </div>
-        <div class="d-flex flex-column gap-2 gap-xl-3 p-2 p-lg-4 my-auto flex-basis">
+        <div class="d-flex flex-column gap-4 gap-lg-3 p-2 p-lg-4 my-auto flex-basis">
             <div class="">
                 <h1 class="font-xxl text-light-custom">
                     @Model.Title
@@ -233,7 +227,7 @@
                         <p class="m-0 text-light-custom font-xs">Date</p>
                         @if (Model.StartDate != null && Model.EndDate != null && Model.StartDate < DateTimeOffset.Now)
                         {
-                            <p class="m-0">@Model.StartDate?.ToString("d") until @Model.EndDate?.ToString("d")</p>
+                            <p class="m-0">@Model.StartDate?.ToString("d") to @Model.EndDate?.ToString("d")</p>
                         }
                         else
                         {
@@ -250,11 +244,25 @@
                 </div>
             </div>
             <!-- Mission Information End  -->
-
-            <button class="my-2 my-md-3 mx-auto btn-g-orange">
-                Apply Now
-                <img src="~/assets/right-arrow.png" alt="Right Arrow">
-            </button>
+            @if (userId != 0 && Model.ApplicationListId.Any(application => application == userId))
+            {
+                <button class="bg-orange my-2 my-md-3 mx-auto rounded-pill cursor-pointer">
+                    View Timesheet
+                </button>
+            }
+            else if( Model.Status == MissionStatus.FINISHED )
+            {
+                <p class="my-2 my-md-3 mx-auto bg-danger px-4 py-2 rounded-pill">
+                    Mission Closed
+                </p>   
+            }
+            else
+            {
+                <button class="my-2 my-md-3 mx-auto btn-g-orange">
+                    Apply Now
+                    <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                </button>
+            }
         </div>
     </section>
     <!-- Mission Front Section End  -->
@@ -289,19 +297,22 @@
                                 Documents
                             </h3>
                             <div class = "d-flex gap-3 py-3 flex-wrap">
-                                <button class = "cursor-pointer font-15 px-4 py-2 d-flex align-items-center gap-2 pdf-file">
-                                    <img src="~/assets/pdf.png" alt="PDF">
-                                    lorem-impsum.pdf
-                                </button>
-                                <button class = "cursor-pointer font-15 px-4 py-2 d-flex align-items-center gap-2 xl-file">
-                                    <img src="~/assets/pdf.png" alt="DOC">
-                                    docfile.doc
-                                </button>
-                                <button class = "cursor-pointer font-15 px-4 py-2 d-flex align-items-center gap-2 xl-file">
-                                    <img src="~/assets/pdf.png" alt="XLS">
-                                    excel.xls
-                                </button>
-                            </div>
+                            @if ( Model.MissionDocuments.LongCount() > 0 )
+                            {
+                                @foreach (var document in Model.MissionDocuments) 
+                                {   
+                                    <a href="@document.DocumentPath" target="_blank">
+                                        <button class = "cursor-pointer font-15 px-4 py-2 d-flex align-items-center gap-2 doc-file">
+                                        @document.Title
+                                        </button>
+                                    </a>
+                                }
+                            }
+                            else
+                            {
+                                <p class="text-info-message p-2 mx-content mx-auto mb-0">No attached document for this mission!</p>
+                            }
+                    </div>
                         </div>
                         <!-- Mission Tab Content Fin -->
                     
@@ -410,7 +421,7 @@
                     </div>
                     <!-- Recent Volunteer Pagination -->
 
-                    <p class="text-info-message p-2 mx-content mx-auto mb-0 d-none" id="no-recent-vl">There are no volunteers at the moment</p>
+                    <p class="text-info-message p-2 mx-content mx-auto d-none my-4" id="no-recent-vl">There are no volunteers at the moment</p>
 
                         </div>
 
@@ -437,7 +448,4 @@
     <script src="~/js/mission-page-carousel-tab.js"></script>
     <script src="~/js/mission-details-ajax.js"></script>
     <script src="~/js/site.js"></script>
-    <script>
-        
-    </script>
 }

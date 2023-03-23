@@ -3,6 +3,7 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using System.Xml.XPath;
 
 namespace CIPlatform.Services.Service;
 public class MissionService : IMissionService
@@ -66,10 +67,34 @@ public class MissionService : IMissionService
             MissionRating = MissionRatingService.ConvertMissionToRatingVM(mission),
             MissionAvailability = SetMissionAvailability(mission.Availability),
             CommentList = mission.Comments?.Select(comment => comment.UserId).ToList(),
-            RecentVolunteers = GetRecentVolunteers(mission)
+            RecentVolunteers = GetRecentVolunteers(mission),
+            MissionDocuments = GetMissionDocuments( mission.MissionDocuments )
         };
 
         return missionCard;
+    }
+
+    private static List<MissionDocumentVM> GetMissionDocuments(ICollection<MissionDocument> missionDocuments)
+    {
+        IEnumerable<MissionDocumentVM> result = missionDocuments
+                    .Select
+                    (
+                        document =>
+                            new MissionDocumentVM
+                            {
+                                DocumentId = document.MissionDocumentId,
+                                DocumentPath = GetDocumentPath( document ),
+                                Title = $"{document.DocumentName}.{document.DocumentType}"
+                            }
+                    );
+        return result.ToList();
+    }
+
+    private static string GetDocumentPath(MissionDocument document)
+    {
+        string path = $"{document.DocumentPath}{document.DocumentName}.{document.DocumentType}";
+
+        return path;
     }
 
     private static List<RecentVolunteersVM> GetRecentVolunteers(Mission mission)

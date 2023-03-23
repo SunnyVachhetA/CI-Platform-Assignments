@@ -8,9 +8,9 @@
 }
 
 <nav class="navbar-home container d-flex gap-2 gap-md-5 navbar-light">
-    <img src="~/assets/logo.png" alt="Logo" />
+    <a asp-action ="Index" asp-controller="Home"><img src="~/assets/logo.png" alt="Logo" /></a>
     <div class="d-flex gap-2 gap-sm-5 align-items-center">
-        <a class="medium-text ">Stories</a>
+        <a class="medium-text cursor-pointer">Stories</a>
         <div class="dropdown">
             <a class="dropdown-toggle medium-text d-none d-sm-block" href="#" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">
@@ -52,5 +52,5 @@
         }
     </div>
 </nav>
-
+<partial name ="_FormMessage"></partial>
    

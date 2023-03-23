@@ -15,6 +15,12 @@ public class UserRepository : Repository<User>, IUserRepository
         _dbContext = db;
     }
 
+    public IEnumerable<User> FetchUserInformationWithMissionInvite()
+    {
+        var query = dbSet
+                    .Include(user => user.MissionInviteFromUsers);
+        return query;
+    }
     public void UpdatePassword(string? email, string password)
     {
         var user = new SqlParameter("@email", email);

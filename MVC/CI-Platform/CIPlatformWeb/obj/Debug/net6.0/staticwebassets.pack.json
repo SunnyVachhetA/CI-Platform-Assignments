@@ -445,8 +445,8 @@
       "PackagePath": "staticwebassets\\css\\style.css"
     },
     {
-      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\documents\\CI Platform - DB.xlsx",
-      "PackagePath": "staticwebassets\\documents\\CI Platform - DB.xlsx"
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\documents\\DB.xlsx",
+      "PackagePath": "staticwebassets\\documents\\DB.xlsx"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\documents\\lorem-ipsum.docx",
@@ -487,6 +487,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\check-mark.png",
       "PackagePath": "staticwebassets\\images\\static\\check-mark.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\check-mark1.png",
+      "PackagePath": "staticwebassets\\images\\static\\check-mark1.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\image.png",

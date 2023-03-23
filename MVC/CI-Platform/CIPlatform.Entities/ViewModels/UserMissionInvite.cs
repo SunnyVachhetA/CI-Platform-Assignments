@@ -13,4 +13,6 @@ public class UserMissionInviteVM
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
     public long MissionId { get; set; }
+
+    public string FromUserName { get; set; } = string.Empty;
 }

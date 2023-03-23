@@ -76,7 +76,6 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                 missions = missions.Where( msn =>  msn.Theme.Title!.Contains(filterModel.SearchKeyword)  );
             }
         }
-
         return missions.ToList();
     }
 

@@ -7,4 +7,9 @@ public class MissionInviteRepository: Repository<MissionInvite>, IMissionInviteR
     public MissionInviteRepository(CIDbContext dbContext) : base(dbContext)
     {
     }
+
+    public void AddUserMissionInvitesFromUser(MissionInvite[] userMissionInvites)
+    {
+        dbSet.AddRange(userMissionInvites);
+    }
 }

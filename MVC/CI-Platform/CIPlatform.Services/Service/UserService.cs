@@ -7,10 +7,12 @@ namespace CIPlatform.Services.Service;
 public class UserService: IUserService
 {
     private readonly IUnitOfWork _unitOfWork;
-	public UserService( IUnitOfWork unitOfWork )
+
+	public UserService( IUnitOfWork unitOfWork)
 	{
 		_unitOfWork = unitOfWork;
 	}
+
     public void Add(UserRegistrationVM user)
     {
         Console.WriteLine("Converting VM = DM");
@@ -20,7 +22,8 @@ public class UserService: IUserService
             LastName = user.LastName,
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
-            Password = user.Password
+            Password = user.Password,
+            Avatar = user.Avatar
         };
         _unitOfWork.UserRepo.Add(obj);
         _unitOfWork.Save();
@@ -107,4 +110,40 @@ public class UserService: IUserService
     }
 
     private Func<User, bool> ActiveUserFilter = (user) => user.Status ?? false;
+
+
+    public Task<string> GetUserName(long userId)
+    {
+        var user = _unitOfWork.UserRepo.GetFirstOrDefault( user => user.UserId == userId );
+
+        return Task.Run( () => user.FirstName + " " + user.LastName ); 
+    }
+
+    public async void SendUserMissionInviteService(IEnumerable<string> userEmailList, string senderUserName, string missionInviteLink, IEmailService _emailService)
+    {
+        var inviteMessage = CreateMissionInviteMessage( senderUserName, missionInviteLink );
+        var subject = "Mission Invitation From Co-Worker";
+        foreach( var email in userEmailList )
+        {
+            _emailService.EmailSend( email, subject, inviteMessage);
+        }
+    }
+
+    private string CreateMissionInviteMessage( string senderUserName, string missionInviteLink )
+    {
+        string message = 
+            @$"
+                <div class='text-center'>
+                <h2>You got mission invite from your co-worker { senderUserName }</h2>
+
+                <h4>Check Out Mission Details By Clicking Below Button</h4>
+
+                <hr>
+                
+                <a href = '{missionInviteLink}'> <button class='btn-g-orange'>Mission Information</button> </a>
+                </div>
+            ";
+
+        return message;
+    }
 }

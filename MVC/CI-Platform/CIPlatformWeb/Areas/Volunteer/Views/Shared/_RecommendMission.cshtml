@@ -11,8 +11,9 @@
                 {
                     @if( user.IsInvited )
                     {
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" src="~/images/static/check-mark.png" disabled>
+                        <div class="mb-2">
+                            <img src="~/images/static/check-mark1.png" style="height: 16px; width: 16px;">
+                            <img src="@user.Avatar" alt="userAvatar" class="rec-usr-img">
                             <label class="form-check-label">
                                 @user.UserName
                             </label>
@@ -22,6 +23,7 @@
                     {
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" value="@user.ToUserId" name="recommend-list">
+                            <img src="@user.Avatar" alt="userAvatar" class="rec-usr-img">
                             <label class="form-check-label">
                                 @user.UserName
                             </label>

@@ -386,16 +386,42 @@ function handleRecommendToCoWorkerAjax() {
     });
 }
 
-function modalEventListener() {
+function modalEventListener()
+{
             let recommendList = [];
-        $('#btn-recommend').on('click',
+            $('#btn-recommend').on('click',
             () => {
-                alert('clicked');
+                let count = $("input:checkbox[name='recommend-list']:checked").length;
+
+                if (count == 0) {
+                    let title = 'No co-worker selected';
+                    let subTitle = 'You need to select at least one co-worker!';
+                    displayActionMessageSweetAlert(title, subTitle, 'info');
+                    return;
+                }
+
                 $("input:checkbox[name='recommend-list']:checked").each(function () {
                     recommendList.push($(this).val());
                 });
-                alert(recommendList);
+
+                handleUserRecommendAjax(recommendList);
             });
+}
+
+function handleUserRecommendAjax(recommendList) {
+    $('#recommendModal').modal('hide');
+    $.ajax({
+        type: 'POST',
+        data: {  userId, missionId, recommendList },
+        url: '/Volunteer/User/SendMissionInvites',
+        success:
+        function (result) 
+        {
+            let subTitle = 'Mission invites sent to co-workers.';
+            successMessageSweetAlert(subTitle);
+        },
+        error: ajaxErrorSweetAlert
+    });
 }
 
 

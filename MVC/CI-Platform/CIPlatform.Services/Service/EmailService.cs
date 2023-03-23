@@ -8,7 +8,6 @@ public class EmailService : IEmailService
     public void EmailSend(string email, string subject, string htmlMessage)
     {
 
-        Console.WriteLine("Inside send email >>>>>>>>>>>>>");
         var emailToSend = new MimeMessage();
         emailToSend.From.Add(MailboxAddress.Parse("tatvatestemail@gmail.com"));
         emailToSend.To.Add(MailboxAddress.Parse(email));
@@ -33,10 +32,10 @@ public class EmailService : IEmailService
         string message = $@"
                             <h2>Welcome Back,</h2>
                             Click below button to reset account's password!<br>
+                            <hr/>
                             <a href='{href}'><button>Reset Your Password</button></a>  
                           ";
 
-        Console.WriteLine("Forgot Password Message: " + message);
         EmailSend(toEmail, subject, message);
     }
 }

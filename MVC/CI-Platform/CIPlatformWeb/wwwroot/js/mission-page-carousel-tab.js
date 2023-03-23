@@ -10,6 +10,15 @@ const tabCommentsContent = document.querySelector('#tab-comments-content');
 const displayNone = "d-none";
 const activeClass = "active";
 
+const mediaCount = $('#msn-media-count').val();
+console.log("media-count: " + mediaCount);
+if (mediaCount == 1) {
+    $('#msn-media-carousel').hide();
+}
+else if (mediaCount <= 3) {
+    $('#scroll-prev').hide();
+    $('#scroll-next').hide();
+}
 msnTab.addEventListener(
     'click',
     () => {
@@ -60,7 +69,7 @@ function removeActive(tab1, tab2) {
 //Tab Interaction JS Complete
 
 //Scroll 
-/*const slider = document.querySelector('.slider');
+const slider = document.querySelector('.slider');
 const scrollPrev = document.querySelector('#scroll-prev');
 const scrollNext = document.querySelector('#scroll-next');
 
@@ -82,5 +91,5 @@ scrollNext.addEventListener(
         const scrollValue = scrollWidth + slider.scrollLeft;
         slider.scroll(scrollValue, 0);
     }
-);*/
+);
 //Scroll Fin

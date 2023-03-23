@@ -12,6 +12,7 @@ internal class MissionInviteService: IMissionInviteService
     {
         _unitOfWork = unitOfWork;
     }
+    
 
     public static UserMissionInviteVM ConvertUserViewModelToMissionInviteVM( UserRegistrationVM user, long userId, bool IsInvited, long missionId)
     {
@@ -36,18 +37,7 @@ internal class MissionInviteService: IMissionInviteService
         List<UserMissionInviteVM> inviteList = new();
         if( inviteListOfUser.Any() ) //When user have already invited some co-worker
         {
-            inviteList = (List<UserMissionInviteVM>)result
-                        .Select
-                        (
-                            user =>
-                            {
-                                if (inviteListOfUser.Any(invite => invite.ToUserId == user.UserId))
-                                    inviteList.Add ( ConvertUserViewModelToMissionInviteVM(user, userId, true, missionId));
-                                else
-                                    inviteList.Add (ConvertUserViewModelToMissionInviteVM(user, userId, false, missionId));
-                                return inviteList;
-                            }
-                        );
+            inviteList = FetchMissionInviteesWithOthers(result.ToList(), inviteListOfUser, missionId, userId);
         }
         else //Inviting first time
         {
@@ -56,4 +46,73 @@ internal class MissionInviteService: IMissionInviteService
 
         return inviteList;
     }
+
+    public Task<IEnumerable<string>> SaveMissionInviteFromUser(long userId, long missionId, long[] userList)
+    {
+        MissionInvite[] userMissionInvites = new MissionInvite[userList.Length];
+
+        var userInviteList = FetchUserList(userList);
+
+        userMissionInvites = userInviteList
+                            .Select
+                            (
+                                user => ConvertUserToMissionInvite( user, userId, missionId )
+                            ) .ToArray();
+
+        _unitOfWork.MissionInviteRepo.AddUserMissionInvitesFromUser( userMissionInvites ); //Add range
+        _unitOfWork.Save();
+        return Task.Run( () => GetInviteesEmailList( userMissionInvites ) );
+    }
+
+    private IEnumerable<string> GetInviteesEmailList(MissionInvite[] userMissionInvites)
+    {
+        var userEmailList = userMissionInvites.Select( invite => invite.ToUser.Email.ToLower() );
+        return userEmailList;
+    }
+
+    public static MissionInvite ConvertUserToMissionInvite( User user, long userId, long missionId)
+    {
+        return new MissionInvite()
+        {
+            MissionId = missionId,
+            FromUserId = userId,
+            ToUserId = user.UserId,
+            CreatedAt = DateTimeOffset.Now
+        };
+    }
+    public IEnumerable<User> FetchUserList(long[] userList)
+    {
+        var result = _unitOfWork.UserRepo
+            .FetchUserInformationWithMissionInvite()
+            .Where( user => userList.Any( id =>  user.UserId == id) )
+            .OrderBy( user => user.FirstName );
+
+        return result;
+    }
+
+    public List<UserMissionInviteVM> FetchMissionInviteesWithOthers(IEnumerable<UserRegistrationVM> result, IEnumerable<MissionInvite> invites, long missionId, long userId)
+    {
+        List<UserMissionInviteVM> list = new();
+
+        foreach(var user in result)
+        {
+            if (invites.Any(invite => invite.ToUserId == user.UserId))
+                list.Add ( ConvertUserViewModelToMissionInviteVM(user, userId, true, missionId) );
+            else
+                list.Add ( ConvertUserViewModelToMissionInviteVM(user, userId, false, missionId));
+        }
+        return list;
+    }
 }
+
+
+/*public static UserMissionInviteVM ConvertUserToInviteVM(User user, long userId)
+    {
+        return new UserMissionInviteVM()
+        {
+            Avatar = user.Avatar ?? string.Empty,
+            UserName = user.FirstName,
+            FromUserId = userId,
+            ToUserId = user.UserId
+        };
+    }*/

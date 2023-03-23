@@ -585,13 +585,12 @@ form-subtitle,
         font-size: 18px;
     }
 }
-
+.msn-card-img {
+    height: 240px;
+}
 /* Landing Page CSS Complete */
-
-
 /* Volunteering Mission Page CSS Start */
-.text-info-message
-{
+.text-info-message {
     border-radius: 10px;
     border: 1px solid var(--col-gray);
     background-color: var(--col-orange);
@@ -613,6 +612,8 @@ form-subtitle,
 
     .btn-favourite:hover, .btn-share:hover {
         color: black !important;
+        border: 1px solid var(--col-blue);
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
     }
 
 .msn-box-info {
@@ -640,17 +641,24 @@ form-subtitle,
         border-bottom: 0.2rem solid var(--col-black);
     }
 
-.pdf-file, .doc-file, .xl-file {
+.doc-file {
     border-radius: 1.4375rem;
     background-color: var(--col-white);
     border: 1px solid var(--col-brown);
     transition: var(--transition);
 }
 
-    .pdf-file:hover, .doc-file:hover, .xl-file:hover {
+    .doc-file:hover {
         border: 1px solid var(--col-blue);
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
     }
 
+@media screen and (max-width: 992px)
+{
+    #mission-hero-img {
+        height: auto !important;
+    }
+}
 .comma-list li {
     display: inline;
 }
@@ -712,6 +720,10 @@ form-subtitle,
     }
 }
 
+.rec-usr-img{
+    height: 30px;
+    width: 30px;
+}
 /* Volunteering Mission Page CSS Complete */
 
 

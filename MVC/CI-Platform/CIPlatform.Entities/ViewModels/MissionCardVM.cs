@@ -38,4 +38,6 @@ public class MissionCardVM
     public List<long>? CommentList { get; set; } = new();
 
     public List<RecentVolunteersVM> RecentVolunteers { get; set; } = new();
+
+    public List<MissionDocumentVM> MissionDocuments { get; set; } = new();
 }
