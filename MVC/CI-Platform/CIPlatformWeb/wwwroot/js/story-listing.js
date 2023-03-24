@@ -19,8 +19,22 @@ storyCards.forEach
 
 $('#btn-share-story').on('click',
     () => {
-        console.log('hello');
-        loginRequiredSweetAlert();
+        if (userId == 0) {
+            loginRequiredSweetAlert();
+            return;
+        }
+
+        handleShareStoryAjax();
     });
+
+function handleShareStoryAjax() {
+    $.ajax({
+        type: 'GET',
+        url: '/Volunteer/Story/AddStoryPage',
+        data: { userId },
+        success: function () { },
+        error: ajaxErrorSweetAlert
+        });
+}
 
 //Share Story Button Complete

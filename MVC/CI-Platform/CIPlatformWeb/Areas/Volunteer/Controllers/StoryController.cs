@@ -14,4 +14,10 @@ public class StoryController : Controller
     {
         return View();
     }
+
+    [HttpGet]
+    public IActionResult AddStoryPage(long userId)
+    {
+        return NoContent();        
+    }
 }

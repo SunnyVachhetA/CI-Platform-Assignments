@@ -15,6 +15,7 @@ public interface IServiceUnit
     IMissionSkillService MissionSkillService { get; }
     IMissionRatingService MissionRatingService { get; }
 
-    public IMissionInviteService MissionInviteService { get; }
+    IMissionInviteService MissionInviteService { get; }
     ICommentService CommentService { get; }
+
 }

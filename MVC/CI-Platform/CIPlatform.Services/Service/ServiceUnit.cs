@@ -30,6 +30,7 @@ public class ServiceUnit: IServiceUnit
     public ICommentService CommentService { get; private set; }
 
     public IMissionInviteService MissionInviteService { get; private set; }
+
     public ServiceUnit(IUnitOfWork unitOfWork)
 	{
 		_unitOfWork= unitOfWork;

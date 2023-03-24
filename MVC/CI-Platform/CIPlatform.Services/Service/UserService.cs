@@ -15,14 +15,14 @@ public class UserService: IUserService
 
     public void Add(UserRegistrationVM user)
     {
-        Console.WriteLine("Converting VM = DM");
+        string encryptedPassword = EncryptionService.EncryptAES(user.Password);
         User obj = new User()
         {
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
-            Password = user.Password,
+            Password = encryptedPassword,
             Avatar = user.Avatar
         };
         _unitOfWork.UserRepo.Add(obj);
@@ -56,6 +56,7 @@ public class UserService: IUserService
     public UserRegistrationVM UpdateUserPassword(string? email, string password)
     {
         
+        password = EncryptionService.EncryptAES(password);
         _unitOfWork.UserRepo.UpdatePassword(email, password);
 
         var result = _unitOfWork.UserRepo.GetFirstOrDefault(
@@ -69,9 +70,10 @@ public class UserService: IUserService
 
     public UserRegistrationVM ValidateUserCredential(UserLoginVM credential)
     {
+        credential.Password = DecryptionService.DecryptAES(credential.Password);
         User? result = _unitOfWork.UserRepo.ValidateUserCredentialRepo( credential );
 
-        if (result == null) return null;
+        if (result == null) return null!;
 
         UserRegistrationVM user = new UserRegistrationVM()
         {
@@ -81,7 +83,7 @@ public class UserService: IUserService
             Email = result.Email,
             PhoneNumber = result.PhoneNumber,
             Password = result.Password,
-            Avatar = result.Avatar
+            Avatar = result.Avatar!
         };
 
         return user;
