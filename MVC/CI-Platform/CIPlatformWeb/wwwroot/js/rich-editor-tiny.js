@@ -1,6 +1,6 @@
 ﻿tinymce.init({
 
-    selector: 'textarea#story-description',
+    selector: 'textarea#description',
      plugins: [
 
         'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',

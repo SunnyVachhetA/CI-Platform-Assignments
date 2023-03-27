@@ -28,6 +28,7 @@ const addDom = (imgSrc, fileIndex) => {
         e.preventDefault();
         validUploadFiles.splice(fileIndex, 1);
         button.parentElement.parentElement.remove();
+        fileErrorOutput();
     });
 
     // append the image and button elements to the div element
@@ -70,6 +71,7 @@ function handleFiles(files) {
                 addDom(evt.target.result, fileIndex);
                 validUploadFiles.push(file);
                 fileIndex++;
+                fileErrorOutput();
             }
             reader.readAsDataURL(file);
         }
@@ -94,11 +96,41 @@ $('#btn-share-story').on('click',
 
 const storyForm = document.querySelector('#story-form');
 
+let action = '';
+
+const btnSave = document.querySelector('#btn-save');
+const btnSubmit = document.querySelector('#btn-submit');
+
+btnSave.addEventListener('click', () => action = 'draft');
+btnSubmit.addEventListener('click', () => action = 'share');
+
+
 storyForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    let text = $('#story-description').val().trim();
+    let isFormValid = true;
+    let text = tinymce.get('description').getContent().trim();
+    if (text === undefined || text === '' || text.length <= 50) {
+        $('#err-story-desc').show();
+        $('#err-story-desc').text('Story should have more than 50 characters!');
+        isFormValid = false;        
+    }
 
-    if (text === undefined || text === '')
-        return false;
-    return true;
+    if (validUploadFiles.length == 0) {
+        $('#err-story-media').show();
+        $('#err-story-media').text('Upload at least 1 image!');
+        isFormValid = false;
+    }
+    $('#story-action').val(e.submitter.getAttribute("value"))
+    if (isFormValid) storyForm.submit();
 });
+
+function fileErrorOutput() {
+    if (validUploadFiles.length == 0) {
+
+        $('#err-story-media').show();
+        $('#err-story-media').text('Upload at least 1 image!');
+    }
+    else {
+        $('#err-story-media').hide();
+    }
+}

@@ -17,5 +17,7 @@ public interface IServiceUnit
 
     IMissionInviteService MissionInviteService { get; }
     ICommentService CommentService { get; }
+    IStoryService StoryService { get; }
 
+    IStoryMediaService StoryMediaService { get; }
 }

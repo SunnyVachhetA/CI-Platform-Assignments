@@ -1,16 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CIPlatform.Entities.VMConstants;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace CIPlatform.Entities.ViewModels;
 public class AddStoryVM
 {
     public long StoryId { get; set; }
-    
+
+    public long UserId { get; set; }
+
     [Display(Name = "Story Title")]
-    [Required]
+    [Required(ErrorMessage = "Story title is required!")]
     [MinLength(15, ErrorMessage = "Story title should have minimum 15 character!")]
     public string Title { get; set; } = string.Empty;
 
-    [Required]
+    [Required(ErrorMessage = "Mission title is required!")]
     [Display(Name = "Mission Title")]
     public long MissionID { get; set; }
 
@@ -21,6 +25,11 @@ public class AddStoryVM
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 
     [Display(Name = "Enter Video URL")]
+    [Url]
     public string? VideoUrl { get; set; }
-    public List<string> Images { get; set; } = new();
+    
+    [Required(ErrorMessage = "Minimum one media is required!")]
+    public List<IFormFile> StoryMedia { get; set; } = new();
+
+    public UserStoryStatus StoryStatus { get; set; } = UserStoryStatus.PENDING;
 }

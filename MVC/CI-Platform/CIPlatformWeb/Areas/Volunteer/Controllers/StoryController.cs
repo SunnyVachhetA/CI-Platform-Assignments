@@ -41,8 +41,20 @@ public class StoryController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddStory(AddStoryVM addStory)
+    public IActionResult AddStory(AddStoryVM addStory, string storyAction)
     {
-        return View();
+        if(ModelState.IsValid)
+        {
+            if (storyAction.Equals("share",StringComparison.OrdinalIgnoreCase))
+            {
+               
+            }
+            return RedirectToAction("Index");
+        }
+        else
+        {
+            ModelState.AddModelError("Error", "Something Went Wrong!");
+            return RedirectToAction("AddStory", "Story", new { userId = addStory.UserId });
+        }
     }
 }
