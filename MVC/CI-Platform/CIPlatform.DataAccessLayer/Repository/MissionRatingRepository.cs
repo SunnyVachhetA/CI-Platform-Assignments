@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 namespace CIPlatform.DataAccessLayer.Repository;
 public class MissionRatingRepository : Repository<MissionRating>, IMissionRatingRepository
 {
+    private CIDbContext _dbContext;
     public MissionRatingRepository(CIDbContext dbContext) : base(dbContext)
     {
+        _dbContext = dbContext;
     }
 
     public async Task<(long count, byte rating)> CalculateAverageMissionRating(long missionId)
@@ -34,7 +36,6 @@ public class MissionRatingRepository : Repository<MissionRating>, IMissionRating
     }
     public void UpdateUserMissionRating(MissionRating missionRating)
     {
-        var query = dbSet;
-        dbSet.Update( missionRating );
+        _dbContext.MissionRatings.Update(missionRating);
     }
 }

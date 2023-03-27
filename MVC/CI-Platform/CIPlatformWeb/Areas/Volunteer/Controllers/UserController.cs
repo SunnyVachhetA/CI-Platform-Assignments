@@ -243,7 +243,7 @@ public class UserController : Controller
     }
     
     [HttpGet]
-    [Route("MissionUsersInvite", Name = "GetMissionUsersInvite")]
+    [Route("MissionUsersInvite", Name = "GetMissionUsersInvite")] 
     public IActionResult MissionUsersInvite( long userId, long missionId )
     {
         IEnumerable<UserMissionInviteVM> inviteList = Enumerable.Empty<UserMissionInviteVM>();

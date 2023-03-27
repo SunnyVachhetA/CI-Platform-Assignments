@@ -20,9 +20,21 @@ public class MissionApplicationRepository : Repository<MissionApplication>, IMis
             .Include( application => application.User );
     }
 
+    private IQueryable<MissionApplication> FetchMissionApplicationWithMissionInformation()
+    {
+        return _dbContext
+            .MissionApplications
+            .Include( application => application.Mission );
+    }
     public IQueryable<MissionApplication> FetchRecentVolunteersInformation(long missionId)
     {
         var query = FetchMissionApplicationInformation()?.Where( application => application.MissionId == missionId );
         return query!;
+    }
+
+    public IEnumerable<MissionApplication> FetchSingleUserMissions(Func<MissionApplication, bool> filter)
+    {
+        var result = FetchMissionApplicationWithMissionInformation().Where( filter );
+        return result;
     }
 }

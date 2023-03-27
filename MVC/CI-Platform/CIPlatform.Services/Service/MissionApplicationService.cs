@@ -42,4 +42,21 @@ public class MissionApplicationService : IMissionApplicationService
             UserName = application.User.FirstName + " " + application.User.LastName
         };
     }
+
+    //Fetches missions where users participated as volunteer
+    public SingleUserMissionsVM GetSingleUserMission(long userId)
+    {
+        Func<MissionApplication, bool> filter = (application) => application.UserId == userId;
+        var userMissionList = unitOfWork.MissionApplicationRepo.FetchSingleUserMissions( filter );
+
+        SingleUserMissionsVM userMission = new();
+
+        if (userMissionList.Any())
+        {
+            userMission.MissionId = userMissionList.Select(missions => missions.MissionId).ToList();
+            userMission.MissionTitle = userMissionList.Select(missions => missions.Mission.Title!).ToList();
+        }
+
+        return userMission;
+    }
 }

@@ -1,5 +1,7 @@
 ﻿
 let loggedUserId = $('#logged-user-id').val();
+
+const userLoginPageLink = $('#user-login-page-link').val();
 $(document).ready(() => {
 
     let isLoggedOut1 = $('#is-logged-out').val() === 'True' ? true : false;

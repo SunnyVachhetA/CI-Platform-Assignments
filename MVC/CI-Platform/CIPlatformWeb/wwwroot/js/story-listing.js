@@ -16,25 +16,19 @@ storyCards.forEach
 
 
 //For Share Story Button
-
+let addStoryPageUrl = $('#add-story-page-url').val();
 $('#btn-share-story').on('click',
     () => {
-        if (userId == 0) {
-            loginRequiredSweetAlert();
+        if (loggedUserId === undefined || loggedUserId == 0) {
+            loginRequiredSweetAlert(userLoginPageLink);
             return;
         }
-
-        handleShareStoryAjax();
+        
+        handleRedirectToAddStoryPage();
     });
 
-function handleShareStoryAjax() {
-    $.ajax({
-        type: 'GET',
-        url: '/Volunteer/Story/AddStoryPage',
-        data: { userId },
-        success: function () { },
-        error: ajaxErrorSweetAlert
-        });
+function handleRedirectToAddStoryPage()
+{
+    window.location.href = addStoryPageUrl;
 }
-
 //Share Story Button Complete

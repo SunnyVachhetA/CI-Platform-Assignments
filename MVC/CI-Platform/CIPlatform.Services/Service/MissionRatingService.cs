@@ -58,7 +58,7 @@ public class MissionRatingService : IMissionRatingService
         var missionRating = _unitOfWork.MissionRatingRepo.GetFirstOrDefault
             (
             (missionRating) =>
-                ( missionRating.UserId == ratingVm.UserId && missionRating.MissionId == ratingVm.UserId )
+                ( missionRating.UserId == ratingVm.UserId && missionRating.MissionId == ratingVm.MissionId )
             );
 
         if (missionRating == null) { throw new NullReferenceException("Mission Rating Search Null Reference"); }

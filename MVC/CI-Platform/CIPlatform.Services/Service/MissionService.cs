@@ -3,7 +3,6 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
-using System.Xml.XPath;
 
 namespace CIPlatform.Services.Service;
 public class MissionService : IMissionService
@@ -236,4 +235,5 @@ public class MissionService : IMissionService
         }
         return result;
     }
+
 }

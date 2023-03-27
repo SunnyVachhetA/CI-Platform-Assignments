@@ -1,10 +1,13 @@
 ﻿@{
     var userId = 0L;
+    var addStoryPageUrl = string.Empty;
     if (Context.Session.GetString("UserId") != null)
+    {
         userId = Convert.ToInt64(Context.Session.GetString("UserId")!);
-    var shareStoryUrl = Url.Action( "ShareStory", "Story", new { userId = userId } );
+        addStoryPageUrl = Url.Action("AddStory", "Story", new { userId = userId });
+    }
 }
-<input type="hidden" id ="share-story-url" value="@shareStoryUrl"/>
+<input type="hidden" id="add-story-page-url" value="@addStoryPageUrl" />
 <main>
     <header>
         <partial name="_Navbar"></partial>
