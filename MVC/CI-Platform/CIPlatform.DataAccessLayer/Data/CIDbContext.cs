@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.DataAccessLayer.Data;
+
 public partial class CIDbContext : DbContext
 {
     public CIDbContext()
@@ -18,8 +19,6 @@ public partial class CIDbContext : DbContext
     public virtual DbSet<Banner> Banners { get; set; }
 
     public virtual DbSet<City> Cities { get; set; }
-
-    public virtual DbSet<CmsPage> CmsPages { get; set; }
 
     public virtual DbSet<Comment> Comments { get; set; }
 
@@ -139,32 +138,6 @@ public partial class CIDbContext : DbContext
                 .HasForeignKey(d => d.CountryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_city_country");
-        });
-
-        modelBuilder.Entity<CmsPage>(entity =>
-        {
-            entity.ToTable("cms_page");
-
-            entity.Property(e => e.CmsPageId).HasColumnName("cms_page_id");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnName("created_at");
-            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
-            entity.Property(e => e.Description)
-                .HasColumnType("text")
-                .HasColumnName("description");
-            entity.Property(e => e.Slug)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("slug");
-            entity.Property(e => e.Status)
-                .HasDefaultValueSql("((1))")
-                .HasColumnName("status");
-            entity.Property(e => e.Title)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("title");
-            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<Comment>(entity =>
@@ -554,6 +527,10 @@ public partial class CIDbContext : DbContext
                 .HasColumnName("title");
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.VideoUrl)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("video_url");
 
             entity.HasOne(d => d.Mission).WithMany(p => p.Stories)
                 .HasForeignKey(d => d.MissionId)

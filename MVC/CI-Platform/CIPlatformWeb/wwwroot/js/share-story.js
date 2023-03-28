@@ -112,7 +112,7 @@ storyForm.addEventListener('submit', (e) => {
         $('#err-story-media').text('Upload at least 1 image!');
         isFormValid = false;
     }
-    $('#story-action').val(e.submitter.getAttribute("value"))
+    $('#story-action').val(e.submitter.getAttribute("value"));
     if (isFormValid) {
         fileUpload.files = new FileListItems(validUploadFiles);
         console.log(fileUpload.files);

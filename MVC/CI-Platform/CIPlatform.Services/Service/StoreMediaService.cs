@@ -1,5 +1,7 @@
 ﻿using CIPlatform.Entities.ViewModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CIPlatform.Services.Service;
 public class StoreMediaService
@@ -32,5 +34,21 @@ public class StoreMediaService
             }
         }
         return filePath;
+    }
+
+    internal static List<IFormFile> FetchMediaFromRootPath(List<MediaVM> mediaList, string wwwRootPath)
+    {
+        string path = mediaList[0].Path;
+        var directory = path[1..^1];
+
+        var formFiles = new List<IFormFile>();
+
+        foreach (var file in mediaList)
+        {
+            var mediaPath = Path.Combine(wwwRootPath, directory, $"{file.Name}{file.Type}");
+            var stream = new FileStream(mediaPath, FileMode.Open);
+            formFiles.Add(new FormFile(stream, 0, stream.Length, null, file.Name));
+        }
+        return formFiles;
     }
 }

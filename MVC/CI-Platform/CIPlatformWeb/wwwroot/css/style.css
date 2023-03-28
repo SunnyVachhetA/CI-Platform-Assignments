@@ -56,6 +56,10 @@ body {
     color: var(--col-secondary-brown) !important;
 }
 
+.story-card-img {
+    height: 230px;
+}
+
 .bg-orange {
     background-color: var(--col-orange) !important;
 }

@@ -17,7 +17,10 @@ public class StoryController : Controller
     }
     public IActionResult Index()
     {
-        return View("StoryListing");
+        IEnumerable< ShareStoryVM > storyList = new List<ShareStoryVM>();
+        storyList = _serviceUnit.StoryService.FetchAllUserStories();
+
+        return View("StoryListing", storyList);
     }
 
     public IActionResult ShareStory()
@@ -40,7 +43,16 @@ public class StoryController : Controller
             });
 
         ViewBag.UserMissionList = missionList;
+        AddStoryVM userDraft = _serviceUnit.StoryService.FetchUserStoryDraft(userId, _webHostEnvironment.WebRootPath);
+        if (userDraft != null)  EditStory(userDraft, missionList);
         return View();
+    }
+
+    [HttpGet]
+    private IActionResult EditStory(AddStoryVM userDraft, List<SingleUserMissionListVM> missionList)
+    {
+        ViewBag.UserMissionList = missionList;
+        return View( userDraft );
     }
 
     [HttpPost]

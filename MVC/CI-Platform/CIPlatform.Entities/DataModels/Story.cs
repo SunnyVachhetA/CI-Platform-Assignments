@@ -1,4 +1,7 @@
-﻿namespace CIPlatform.Entities.DataModels;
+﻿using System;
+using System.Collections.Generic;
+
+namespace CIPlatform.Entities.DataModels;
 
 public partial class Story
 {
@@ -21,6 +24,8 @@ public partial class Story
     public DateTimeOffset? UpdatedAt { get; set; }
 
     public DateTimeOffset? DeletedAt { get; set; }
+
+    public string? VideoUrl { get; set; }
 
     public virtual Mission Mission { get; set; } = null!;
 
