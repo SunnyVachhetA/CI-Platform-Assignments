@@ -9,13 +9,15 @@ public interface IUnitOfWork
     IThemeRepository ThemeRepo { get; }
     IMissionRepository MissionRepo { get; }
     IFavouriteMissionRepository FavouriteMissionRepo { get; }
-    IMissionApplicationRepository MissionApplicationRepo { get; }   
+    IMissionApplicationRepository MissionApplicationRepo { get; }
     IGoalMissionRepository GoalMissionRepo { get; }
     IMissionMediaRepository MissionMediaRepo { get; }
     IMissionSkillRepository MissionSkillRepo { get; }
     IMissionRatingRepository MissionRatingRepo { get; }
     ICommentRepository CommentRepo { get; }
 
-    public IMissionInviteRepository MissionInviteRepo { get; }
+    IMissionInviteRepository MissionInviteRepo { get; }
+    IStoryRepository StoryRepo { get; } 
+    IStoryMediaRepository StoryMediaRepo { get; }
     void Save();
 }

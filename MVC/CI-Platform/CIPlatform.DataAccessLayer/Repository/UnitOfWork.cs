@@ -11,13 +11,9 @@ public class UnitOfWork : IUnitOfWork
     public ICityRepository CityRepo { get; private set; }
     public ISkillRepository SkillRepo { get; private set; }
     public IThemeRepository ThemeRepo { get; private set; }
-
     public IMissionRepository MissionRepo { get; private set; }
-
     public IFavouriteMissionRepository FavouriteMissionRepo { get; private set; }
-
     public IMissionApplicationRepository MissionApplicationRepo { get; private set; }
-
     public IGoalMissionRepository GoalMissionRepo { get; private set; }
 
     public IMissionMediaRepository MissionMediaRepo { get; private set; }
@@ -29,6 +25,11 @@ public class UnitOfWork : IUnitOfWork
     public ICommentRepository CommentRepo { get; private set; }
 
     public IMissionInviteRepository MissionInviteRepo { get; private set; }
+
+    public IStoryRepository StoryRepo { get; private set; }
+
+    public IStoryMediaRepository StoryMediaRepo { get; private set; }
+
     public UnitOfWork(CIDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -47,6 +48,8 @@ public class UnitOfWork : IUnitOfWork
         MissionRatingRepo = new MissionRatingRepository(_dbContext);
         CommentRepo = new CommentRepository(_dbContext);
         MissionInviteRepo = new MissionInviteRepository(_dbContext);
+        StoryRepo = new StoryRepository(_dbContext);
+        StoryMediaRepo= new StoryMediaRepository(_dbContext);
     }
 
     public void Save()

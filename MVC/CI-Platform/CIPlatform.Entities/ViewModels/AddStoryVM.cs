@@ -20,16 +20,15 @@ public class AddStoryVM
 
     [Display(Name = "My Story")]
     [Required]
-    [MinLength(50, ErrorMessage = "My story should have contain mimimum 50 characters!")]
+    [MinLength(30, ErrorMessage = "My story should have contain minimum 30 characters!")]
     public string Description { get; set; } = string.Empty;
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 
     [Display(Name = "Enter Video URL")]
     [Url]
     public string? VideoUrl { get; set; }
-    
+  
     [Required(ErrorMessage = "Minimum one media is required!")]
     public List<IFormFile> StoryMedia { get; set; } = new();
-
     public UserStoryStatus StoryStatus { get; set; } = UserStoryStatus.PENDING;
 }

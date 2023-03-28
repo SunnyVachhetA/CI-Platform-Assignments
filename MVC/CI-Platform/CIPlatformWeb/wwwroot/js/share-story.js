@@ -77,6 +77,7 @@ function handleFiles(files) {
         }
     }
 }
+
 //Script for file upload complete
 
 
@@ -96,22 +97,13 @@ $('#btn-share-story').on('click',
 
 const storyForm = document.querySelector('#story-form');
 
-let action = '';
-
-const btnSave = document.querySelector('#btn-save');
-const btnSubmit = document.querySelector('#btn-submit');
-
-btnSave.addEventListener('click', () => action = 'draft');
-btnSubmit.addEventListener('click', () => action = 'share');
-
-
 storyForm.addEventListener('submit', (e) => {
     e.preventDefault();
     let isFormValid = true;
     let text = tinymce.get('description').getContent().trim();
-    if (text === undefined || text === '' || text.length <= 50) {
+    if (text === undefined || text === '' || text.length <= 30) {
         $('#err-story-desc').show();
-        $('#err-story-desc').text('Story should have more than 50 characters!');
+        $('#err-story-desc').text('Story should have more than 30 characters!');
         isFormValid = false;        
     }
 
@@ -121,8 +113,19 @@ storyForm.addEventListener('submit', (e) => {
         isFormValid = false;
     }
     $('#story-action').val(e.submitter.getAttribute("value"))
-    if (isFormValid) storyForm.submit();
+    if (isFormValid) {
+        fileUpload.files = new FileListItems(validUploadFiles);
+        console.log(fileUpload.files);
+        storyForm.submit();
+    }
 });
+
+//Stackoverflow code
+function FileListItems(files) {
+    var b = new ClipboardEvent("").clipboardData || new DataTransfer()
+    for (var i = 0, len = files.length; i < len; i++) b.items.add(files[i])
+    return b.files
+}
 
 function fileErrorOutput() {
     if (validUploadFiles.length == 0) {

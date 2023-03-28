@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,11 @@ namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 public class StoryController : Controller
 {
     private readonly IServiceUnit _serviceUnit;
-    public StoryController(IServiceUnit serviceUnit)
+    private readonly IWebHostEnvironment _webHostEnvironment;
+    public StoryController(IServiceUnit serviceUnit, IWebHostEnvironment webHostEnvironment)
     {
-        _serviceUnit= serviceUnit;
+        _serviceUnit = serviceUnit;
+        _webHostEnvironment = webHostEnvironment;   
     }
     public IActionResult Index()
     {
@@ -47,7 +50,21 @@ public class StoryController : Controller
         {
             if (storyAction.Equals("share",StringComparison.OrdinalIgnoreCase))
             {
-               
+                addStory.StoryStatus = UserStoryStatus.PENDING;
+            }
+            else
+            {
+                addStory.StoryStatus = UserStoryStatus.DRAFT;
+            }
+            
+            _serviceUnit.StoryService.AddUserStory( addStory );
+
+            long storyID = _serviceUnit.StoryService.FetchStoryByUserAndMissionID( addStory.UserId, addStory.MissionID );
+
+            if (storyID != 0)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                _serviceUnit.StoryMediaService.AddStoryMediaToUserStory(storyID, addStory.StoryMedia, wwwRootPath);
             }
             return RedirectToAction("Index");
         }
