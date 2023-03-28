@@ -137,3 +137,37 @@ function fileErrorOutput() {
         $('#err-story-media').hide();
     }
 }
+
+
+//For story edit
+
+$(document).ready
+(
+    () =>
+    {
+        let storyMode = $('#story-mode').val();
+        if (storyMode === undefined || storyMode !== '') {
+            handleFilePreloadStory();
+        }
+    }
+);
+
+
+let preloadedImagePathList = [];
+function handleFilePreloadStory()
+{
+    let preloadedMedia = $("[data-storymedia]");
+
+    $.each(preloadedMedia, (_, item) =>
+    {
+        let path = $(item).data('storymedia');
+        preloadedImagePathList.push(path);
+    });
+
+    for (var i = 0; i < preloadedImagePathList.length; i++) {
+        var file = new File([], [preloadedImagePathList[i]]);
+
+        // Add the new file object to the array
+        files.push(file);
+    }
+}

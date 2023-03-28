@@ -5,8 +5,13 @@
     var userId = 0L;
     if (Context.Session.GetString("UserId") != null)
         userId = Convert.ToInt64(Context.Session.GetString("UserId")!);
+
+    var count = Model.Images.Count;
+
+    var storyMode = "edit";
 }
 <main>
+    @Html.HiddenFor(model => storyMode, new { id = "story-mode" })
     <header>
         <partial name="_Navbar"></partial>
         <hr class="m-0" />
@@ -52,24 +57,25 @@
                     <div class="form-control-file d-flex justify-content-center align-items-center p-4 cursor-pointer" id="upload-area">
                         <img src="~/assets/drag-and-drop.png" alt="Drag and drop" for="file-upload">
                         <input type="file" asp-for = "StoryMedia" multiple id="file-upload" onchange="handleFiles(this.files)" accept=".png, .jpg, .jpeg" hidden>
-                        
-                        @foreach(var media in Model.StoryMedia)
-                        {
-                            <input type="hidden" data-path=""/>
-                        }
                     </div>
-                        <span asp-validation-for="StoryMedia" id="err-story-media" class="text-danger font-15"></span>
-
-
+                    <span asp-validation-for="StoryMedia" id="err-story-media" class="text-danger font-15"></span>
 
                     <!-- Uploaded files  -->
                     <div class="mt-2 uploaded-files">
                         <ul class="list-unstyled d-flex flex-wrap gap-4 gap-md-4 justify-content-md-start" id="file-list">
-                         
                         </ul>
                     </div>
                     <!-- Uploaded Files Fin -->
                 </div>
+
+                @{
+                    var index = 0; 
+                }
+                @foreach(var image in Model.Images)
+                {
+                    <input type="hidden" data-storymedia="@image.Path@image.Name@image.Type" data-path="@image.Path" data-media='@image.Name@image.Type' data-index="@index"/>
+                    index++;
+                }
 
                 <input type="hidden" name="storyAction" id="story-action"/>
                 <input type="hidden" asp-for="UserId" name="UserId" value="@userId"/>
@@ -99,4 +105,5 @@
     <script src="~/js/rich-editor-tiny.js"></script>
     <script src="~/js/share-story.js"></script>
     <script src="~/js/site.js"></script>
+    
 }

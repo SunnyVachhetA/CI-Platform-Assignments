@@ -16,7 +16,7 @@ public class StoryService : IStoryService
     }
 
     //Adding user story based on story status 0 - Draft; 1 - Pending
-    public void AddUserStory(AddStoryVM addStory)
+    public long AddUserStory(AddStoryVM addStory)
     {
         Story story = new()
         {
@@ -29,6 +29,7 @@ public class StoryService : IStoryService
         };
         _unitOfWork.StoryRepo.Add( story );
         _unitOfWork.Save();
+        return story.StoryId;
     }
 
 
@@ -104,7 +105,8 @@ public class StoryService : IStoryService
         AddStoryVM storyVM = new()
         {
             StoryId = story.StoryId,
-            StoryMedia = ConvertMediaPathToImageMedia(story.StoryMedia, wwwRootPath),
+            //StoryMedia = ConvertMediaPathToImageMedia(story.StoryMedia, wwwRootPath),
+            Images = GetStoryMediaVM(story.StoryMedia),
             StoryStatus = UserStoryStatus.DRAFT,
             UserId = story.UserId,
             Title = story.Title?? string.Empty,
@@ -114,6 +116,27 @@ public class StoryService : IStoryService
         };
 
         return storyVM;
+    }
+
+    private List<MediaVM> GetStoryMediaVM(ICollection<StoryMedium> storyMedia)
+    {
+        if (!storyMedia.Any()) return new List< MediaVM >();
+
+        List<MediaVM> mediaList = new();
+
+        mediaList = storyMedia
+                    .Select
+                    (
+                        media =>
+                            new MediaVM()
+                            {
+                                Name = media.MediaName!,
+                                Type = media.MediaType!,
+                                Path = media.MediaPath!
+                            }
+                    ).ToList();
+
+        return mediaList;
     }
 
     private List<IFormFile> ConvertMediaPathToImageMedia(ICollection<StoryMedium> storyMedia, string wwwRootPath)

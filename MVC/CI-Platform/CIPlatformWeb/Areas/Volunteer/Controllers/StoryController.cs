@@ -44,15 +44,8 @@ public class StoryController : Controller
 
         ViewBag.UserMissionList = missionList;
         AddStoryVM userDraft = _serviceUnit.StoryService.FetchUserStoryDraft(userId, _webHostEnvironment.WebRootPath);
-        if (userDraft != null)  EditStory(userDraft, missionList);
-        return View();
-    }
-
-    [HttpGet]
-    private IActionResult EditStory(AddStoryVM userDraft, List<SingleUserMissionListVM> missionList)
-    {
-        ViewBag.UserMissionList = missionList;
-        return View( userDraft );
+        if (userDraft != null)  return View("EditStory", userDraft);
+        else return View();
     }
 
     [HttpPost]
@@ -69,9 +62,9 @@ public class StoryController : Controller
                 addStory.StoryStatus = UserStoryStatus.DRAFT;
             }
             
-            _serviceUnit.StoryService.AddUserStory( addStory );
+            long storyID = _serviceUnit.StoryService.AddUserStory( addStory );
 
-            long storyID = _serviceUnit.StoryService.FetchStoryByUserAndMissionID( addStory.UserId, addStory.MissionID );
+            //long storyID = _serviceUnit.StoryService.FetchStoryByUserAndMissionID( addStory.UserId, addStory.MissionID );
 
             if (storyID != 0)
             {

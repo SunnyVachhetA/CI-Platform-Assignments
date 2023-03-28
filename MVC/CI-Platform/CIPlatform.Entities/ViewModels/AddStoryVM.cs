@@ -1,4 +1,5 @@
-﻿using CIPlatform.Entities.VMConstants;
+﻿using CIPlatform.Entities.DataModels;
+using CIPlatform.Entities.VMConstants;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
@@ -31,4 +32,6 @@ public class AddStoryVM
     [Required(ErrorMessage = "Minimum one media is required!")]
     public List<IFormFile> StoryMedia { get; set; } = new();
     public UserStoryStatus StoryStatus { get; set; } = UserStoryStatus.PENDING;
+
+    public List<MediaVM> Images { get; set; } = new();
 }
