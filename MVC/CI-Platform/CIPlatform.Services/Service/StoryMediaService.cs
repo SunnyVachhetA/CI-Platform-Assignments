@@ -44,4 +44,29 @@ public class StoryMediaService : IStoryMediaService
 
         return storyMedium;
     }
+
+    public void DeleteStoryMedia(long storyId, string file)
+    {
+        string fileName = file.Split(".")[0];
+
+        var entity = _unitOfWork.StoryMediaRepo.GetFirstOrDefault( media => media.StoryId == storyId && media.MediaName!.Equals(fileName) );
+
+        _unitOfWork.StoryMediaRepo.Remove( entity );
+
+        _unitOfWork.Save();
+    }
+
+    public void DeleteAllStoryMedia(long storyId)
+    {
+        var storyMediaList = _unitOfWork
+                                                    .StoryMediaRepo
+                                                    .GetAll
+                                                     (
+                                                         media => media.StoryId == storyId
+                                                     );
+        _unitOfWork.StoryMediaRepo.RemoveRange(storyMediaList);
+        _unitOfWork.Save();
+    }
+
+    
 }

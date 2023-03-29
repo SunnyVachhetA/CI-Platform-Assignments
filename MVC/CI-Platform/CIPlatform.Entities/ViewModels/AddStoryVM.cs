@@ -31,7 +31,12 @@ public class AddStoryVM
   
     [Required(ErrorMessage = "Minimum one media is required!")]
     public List<IFormFile> StoryMedia { get; set; } = new();
-    public UserStoryStatus StoryStatus { get; set; } = UserStoryStatus.PENDING;
+    public UserStoryStatus StoryStatus { get; set; } = UserStoryStatus.DRAFT;
 
     public List<MediaVM> Images { get; set; } = new();
+
+    [Display(Name="Short Description")]
+    [Required]
+    [MinLength(20, ErrorMessage = "Minimum 20 characters required!")]
+    public string ShortDescription { get; set; } = string.Empty;
 }

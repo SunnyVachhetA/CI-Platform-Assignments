@@ -1,6 +1,7 @@
 ﻿using CIPlatform.DataAccessLayer.Data;
 using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
+using CIPlatform.Entities.VMConstants;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.DataAccessLayer.Repository;
@@ -68,5 +69,17 @@ public class StoryRepository : Repository<Story>, IStoryRepository
             return query.First();
         else
             return null!;
+    }
+
+    public void UpdateUserStoryStatus(Story entity, UserStoryStatus pending)
+    {
+        entity.Status = (byte)pending;
+
+        dbSet.Update(entity);
+    }
+
+    public void UpdateUserStory(Story entity)
+    {
+        dbSet.Update(entity);
     }
 }

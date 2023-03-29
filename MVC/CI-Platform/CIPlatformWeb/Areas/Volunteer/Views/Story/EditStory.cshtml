@@ -1,17 +1,15 @@
 ﻿@model AddStoryVM
 @{
-    var userMissionList = ViewBag.UserMissionList;
-
+    
     var userId = 0L;
     if (Context.Session.GetString("UserId") != null)
         userId = Convert.ToInt64(Context.Session.GetString("UserId")!);
-
-    var count = Model.Images.Count;
-
     var storyMode = "edit";
+    var storyListingPageUrl = Url.Action("Index", "Story");
 }
 <main>
     @Html.HiddenFor(model => storyMode, new { id = "story-mode" })
+    @Html.HiddenFor(model => storyListingPageUrl, new {id="story-listing-page-url"})
     <header>
         <partial name="_Navbar"></partial>
         <hr class="m-0" />
@@ -22,12 +20,12 @@
         </h1>
 
         <div class="mt-4">
-            <form method="POST" asp-action="AddStory" class="story-form d-flex flex-column gap-4" enctype="multipart/form-data" id="story-form">
+            <form method="POST" asp-action="EditStory" class="story-form d-flex flex-column gap-4" enctype="multipart/form-data" id="story-form">
                 <div class="row g-4">
                     <div class="form-group col-12 col-md-6">
                         <label asp-for="@Model.MissionID"></label>
                         <select class="form-select" asp-for = "MissionID" asp-items="@(new SelectList(@ViewBag.userMissionList,"MissionId", "Title"))">
-                        <option value="" selected disabled>Select Mission</option>
+                            <option value="" selected disabled>Select Mission</option>
                         </select>
                         <span asp-validation-for="@Model.MissionID" class="font-15 text-danger"></span>
                     </div>
@@ -37,6 +35,14 @@
                         <span asp-validation-for="@Model.Title" class="text-danger font-15"></span>
                     </div>
                 </div>
+                
+                <div class="form-group">
+                    <label asp-for="ShortDescription"></label>
+                    <input type="text" class="form-control" asp-for="ShortDescription">
+                    <span asp-validation-for="ShortDescription" class="text-danger font-15"></span>
+                </div>
+
+
                 <!-- Text Editor -->
                 <div class="form-group">
                     <label asp-for="@Model.Description"></label>
@@ -68,19 +74,20 @@
                     <!-- Uploaded Files Fin -->
                 </div>
 
-                @{
-                    var index = 0; 
-                }
+                
                 @foreach(var image in Model.Images)
                 {
-                    <input type="hidden" data-storymedia="@image.Path@image.Name@image.Type" data-path="@image.Path" data-media='@image.Name@image.Type' data-index="@index"/>
-                    index++;
+                    <input type="hidden" data-storymedia="@image.Path@image.Name@image.Type" value='@image.Name@image.Type' name="preloadedMediaList" />
+                   
                 }
 
                 <input type="hidden" name="storyAction" id="story-action"/>
                 <input type="hidden" asp-for="UserId" name="UserId" value="@userId"/>
+                <input type="hidden" asp-for = "StoryId" value="@Model.StoryId" id ="user-story-id"/>
+                
+      
                 <div class="d-flex justify-content-between">
-                    <button class="btn-g-gray">
+                    <button class="btn-g-gray" id="btn-story-cancel">
                         Cancel
                     </button>
                     <div class="d-flex gap-2">

@@ -25,6 +25,8 @@ public class StoryService : IStoryService
             Title = addStory.Title,
             Description = addStory.Description,
             Status = (byte?)addStory.StoryStatus,
+            ShortDescription = addStory.ShortDescription,
+            VideoUrl = addStory.VideoUrl,
             CreatedAt = addStory.CreatedAt
         };
         _unitOfWork.StoryRepo.Add( story );
@@ -71,6 +73,7 @@ public class StoryService : IStoryService
             MissionId = story.MissionId,    
             StoryTitle = story.Title!,
             ThemeName = story.Mission?.Theme?.Title ?? string.Empty,
+            ShortDescription = story.ShortDescription!,
             Description = story.Description!,
             StoryThumbnail = GetStoryThumbnail( story.StoryMedia ),
             UserAvatar = story.User.Avatar ?? string.Empty,
@@ -108,6 +111,7 @@ public class StoryService : IStoryService
             //StoryMedia = ConvertMediaPathToImageMedia(story.StoryMedia, wwwRootPath),
             Images = GetStoryMediaVM(story.StoryMedia),
             StoryStatus = UserStoryStatus.DRAFT,
+            ShortDescription = story.ShortDescription!,
             UserId = story.UserId,
             Title = story.Title?? string.Empty,
             MissionID = story.MissionId,
@@ -156,5 +160,46 @@ public class StoryService : IStoryService
                                     ).ToList(); 
         var result = StoreMediaService.FetchMediaFromRootPath( mediaList, wwwRootPath );
         return result;
+    }
+
+    public void UpdateUserStoryStatus(long storyId, UserStoryStatus pending)
+    {
+        var entity = _unitOfWork.StoryRepo.GetFirstOrDefault( story => story.StoryId == storyId );
+        
+        if ( entity != null )
+        {
+            _unitOfWork.StoryRepo.UpdateUserStoryStatus( entity, pending );
+        }
+        _unitOfWork.Save();
+    }
+
+    public void DeleteStory(long storyId)
+    {
+        var entity = 
+            _unitOfWork
+            .StoryRepo
+            .GetFirstOrDefault( story => story.StoryId == storyId );
+
+        _unitOfWork.StoryRepo.Remove(entity);
+        _unitOfWork.Save();
+    }
+
+    public void UpdateUserStory(AddStoryVM editStory)
+    {
+        var entity =
+            _unitOfWork
+                .StoryRepo
+                .GetFirstOrDefault( story => story.StoryId == editStory.StoryId );
+
+        entity.MissionId = editStory.MissionID;
+        entity.Title = editStory.Title;
+        entity.ShortDescription = editStory.ShortDescription;
+        entity.UpdatedAt = DateTimeOffset.Now;
+        entity.VideoUrl = editStory.VideoUrl;
+        entity.Status = (byte)editStory.StoryStatus;
+        entity.Description = editStory.Description;
+
+        _unitOfWork.StoryRepo.UpdateUserStory(entity);
+        _unitOfWork.Save();
     }
 }

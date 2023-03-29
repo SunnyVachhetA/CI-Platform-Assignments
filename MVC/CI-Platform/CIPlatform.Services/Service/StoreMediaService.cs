@@ -1,7 +1,6 @@
 ﻿using CIPlatform.Entities.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CIPlatform.Services.Service;
 public class StoreMediaService
@@ -16,7 +15,7 @@ public class StoreMediaService
             foreach(var file in files)
             {
                 string fileName = Guid.NewGuid().ToString();
-                string extension = Path.GetExtension(file.FileName);
+                string extension = Path.GetExtension(file.FileName);    
 
                 using (var fileStream = new FileStream(Path.Combine(uploadDir, fileName + extension), FileMode.Create) )
                 {

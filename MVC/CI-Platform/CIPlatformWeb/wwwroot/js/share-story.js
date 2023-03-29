@@ -3,7 +3,7 @@ const fileUpload = document.querySelector('#file-upload');
 const fileList = document.querySelector('#file-list');
 const uploadArea = document.querySelector('#upload-area');
 var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.png)$/;
-const validUploadFiles = [];
+let validUploadFiles = [];
 let fileIndex = 0;
 const addDom = (imgSrc, fileIndex) => {
     const template = document.createElement("li");
@@ -57,6 +57,7 @@ function handleDrop(e) {
 }
 fileUpload.addEventListener('change', handleFiles(fileUpload.files));
 function handleFiles(files) {
+    console.log(files);
     if (files[0]) {
         let len = files.length;
         for (let i = 0; i < len; i++) {
@@ -79,19 +80,6 @@ function handleFiles(files) {
 }
 
 //Script for file upload complete
-
-
-//For Share Story Button
-
-$('#btn-share-story').on('click',
-    () => {
-        if (loggedUserId == 0) {
-
-        }
-    });
-
-
-//Share Story Button Complete
 
 //Form fields validation
 
@@ -120,6 +108,25 @@ storyForm.addEventListener('submit', (e) => {
     }
 });
 
+/*$('#btn-submit').click((e) => {
+    e.preventDefault();
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to change content of story!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'orange',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Submit',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $('#btn-submit').trigger('click');
+            successMessageSweetAlert( 'Your story sent to admin for approval' );
+        }
+    })
+});*/
+
 //Stackoverflow code
 function FileListItems(files) {
     var b = new ClipboardEvent("").clipboardData || new DataTransfer()
@@ -139,8 +146,9 @@ function fileErrorOutput() {
 }
 
 
-//For story edit
+//For story edit loading selected media
 
+let storyListingPage = '';
 $(document).ready
 (
     () =>
@@ -149,25 +157,119 @@ $(document).ready
         if (storyMode === undefined || storyMode !== '') {
             handleFilePreloadStory();
         }
+
+        storyListingPage = $('#story-listing-page-url').val();
     }
 );
 
 
 let preloadedImagePathList = [];
+let preloadedMedia = [];
 function handleFilePreloadStory()
 {
     let preloadedMedia = $("[data-storymedia]");
+    let promises = [];
 
-    $.each(preloadedMedia, (_, item) =>
-    {
+    $.each(preloadedMedia, (_, item) => {
         let path = $(item).data('storymedia');
         preloadedImagePathList.push(path);
     });
 
-    for (var i = 0; i < preloadedImagePathList.length; i++) {
-        var file = new File([], [preloadedImagePathList[i]]);
+    console.log(preloadedImagePathList);
 
-        // Add the new file object to the array
-        files.push(file);
+    for (var i = 0; i < preloadedImagePathList.length; i++) {
+        let path = preloadedImagePathList[i];
+        let promise = fetch(path)
+            .then(response => response.arrayBuffer())
+            .then(buffer => {
+                return new File([buffer], path);
+            })
+            .catch(error => {
+                console.error('Failed to load file:', path, error);
+            });
+        promises.push(promise);
     }
+
+    Promise.all(promises)
+        .then(files => {
+            console.log('All files loaded:', files);
+            validUploadFiles = files;
+            renderMediaOnHTML(files);
+        })
+        .catch(error => {
+            console.error('Error loading files:', error);
+        });
+}
+
+function renderMediaOnHTML(files) {
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+        let url = URL.createObjectURL(file);
+        let image = new Image();
+        image.onload = function () {
+            URL.revokeObjectURL(url);
+        };
+
+        addDom( url, fileIndex );
+    }
+}
+
+//Story cancel button
+let storyId = 0;
+const redirectToStoryListing = () => window.location.href = storyListingPage;
+$('#btn-story-cancel').click(
+    () =>
+    {
+        storyId = $('#user-story-id').val();
+        console.log(storyId);
+        if (storyId === undefined || storyId == 0) {
+            handleStoryCancel();
+            return;
+        }
+        else
+        {
+            handleUserStoryDraftCancel();
+        }
+    }
+);
+
+function handleStoryCancel() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'orange',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Back To Story Listing',
+    }).then((result) => {
+        if (result.isConfirmed) { 
+            redirectToStoryListing();
+        }
+    })
+}
+
+function handleUserStoryDraftCancel()
+{
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'orange',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Delete Story',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/Volunteer/Story/RemoveStory',
+                data: { storyId },
+                success: function (result) {
+                    redirectToStoryListing();
+                },
+                error: ajaxErrorSweetAlert
+            });
+        }
+    })
 }

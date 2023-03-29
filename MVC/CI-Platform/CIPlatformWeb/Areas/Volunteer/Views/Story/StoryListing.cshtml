@@ -7,8 +7,11 @@
         userId = Convert.ToInt64(Context.Session.GetString("UserId")!);
         addStoryPageUrl = Url.Action("AddStory", "Story", new { userId = userId });
     }
+    var totalStoryCount = Model.LongCount();
+    var index = 0;
 }
 <input type="hidden" id="add-story-page-url" value="@addStoryPageUrl" />
+@Html.HiddenFor(model => totalStoryCount, new { id = "total-story-count" })
 <main class="index-grid">
     <header>
         <partial name="_Navbar"></partial>
@@ -34,38 +37,39 @@
         @if ( Model.Any() )
         {
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-xl-4">
-                @foreach(var story in Model)
+                @foreach (var story in Model)
                 {
-                    <div class="col">
-                    <article class="card h-100 shadow-sm flex-nowrap">
-                        <div class="position-relative story-img-card">
-                            <img src="@story.StoryThumbnail" alt="Story Thumbnail" class="w-100 story-card-img">
-                            <button class="btn-g-white d-block position-absolute btn-story-center d-none">
-                                View Details
-                                <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
-                            </button>
-                            <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
-                                @story.ThemeName
+                    <div class="col" data-storynumber="@index">
+                        <article class="card h-100 shadow-sm flex-nowrap">
+                            <div class="position-relative story-img-card">
+                                <img src="@story.StoryThumbnail" alt="Story Thumbnail" class="w-100 story-card-img">
+                                <button class="btn-g-white d-block position-absolute btn-story-center d-none">
+                                    View Details
+                                    <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                                </button>
+                                <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                                    @story.ThemeName
+                                </div>
                             </div>
-                        </div>
-                        <div class="d-flex flex-column mt-n1 pb-4">
-                            <h3 class="mt-0 px-4">
-                                @story.StoryTitle
-                            </h3>
-                            <p class="mission-desc-ellips px-4">
-                                @story.Description
-                            </p>
-                        </div>
-                        <div class="px-4 mt-auto mb-4">
-                            <img src="@story.UserAvatar" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
-                            @story.UserName
-                        </div>
-                        <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
-                            View Details
-                            <img src="~/assets/right-arrow.png" alt="Right Arrow">
-                        </button>
-                    </article>
-                </div>
+                            <div class="d-flex flex-column mt-n1 pb-4">
+                                <h3 class="mt-0 px-4">
+                                    @story.StoryTitle
+                                </h3>
+                                <p class="mission-desc-ellips px-4">
+                                    @story.Description
+                                </p>
+                            </div>
+                            <div class="px-4 mt-auto mb-4">
+                                <img src="@story.UserAvatar" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                                @story.UserName
+                            </div>
+                            <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                                View Details
+                                <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                            </button>
+                        </article>
+                    </div>
+                    index++;
                 }
             </div>
         }
@@ -80,7 +84,7 @@
 </main>
 
 <!-- Pagination Begin  -->
-<section class="container my-2 my-md-5 d-flex justify-content-center gap-2 text-light-custom c-pagination-item">
+<section class="container my-2 my-md-5 d-flex justify-content-center gap-2 text-light-custom c-pagination-item" id="pagination-container">
     @*<button class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
         <img src="~/assets/previous.png" alt="Previous Pages">
     </button>
@@ -89,18 +93,6 @@
     </button>
     <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent active">
         1
-    </button>
-    <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
-        2
-    </button>
-    <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
-        3
-    </button>
-    <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
-        4
-    </button>
-    <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
-        5
     </button>
     <button class="btn p-2 px-3 d-flex align-items-center border bg-transparent">
         <img src="~/assets/right-arrow1.png" alt="Next Item">

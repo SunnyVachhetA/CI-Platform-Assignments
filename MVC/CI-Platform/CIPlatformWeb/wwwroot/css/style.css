@@ -7,7 +7,7 @@
     margin: 0;
     font-family: "Noto Sans",sans-serif;
 }
-
+html { scroll-behavior: smooth; }
 :root {
     --col-white: #f8863400;
     --col-blue: #2b64b1;

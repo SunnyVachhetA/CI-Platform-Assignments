@@ -518,6 +518,10 @@ public partial class CIDbContext : DbContext
                 .HasColumnName("description");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.PublishedAt).HasColumnName("published_at");
+            entity.Property(e => e.ShortDescription)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("short_description");
             entity.Property(e => e.Status)
                 .HasDefaultValueSql("((0))")
                 .HasColumnName("status");

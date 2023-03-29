@@ -47,4 +47,9 @@ public class Repository<T> : IRepository<T> where T : class
     {
         dbSet.AddRange(list);
     }
+
+    public void RemoveRange(IEnumerable<T> list)
+    {
+        dbSet.RemoveRange(list);
+    }
 }
