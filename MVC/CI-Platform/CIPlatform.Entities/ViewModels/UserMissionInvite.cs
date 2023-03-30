@@ -1,5 +1,5 @@
 ﻿namespace CIPlatform.Entities.ViewModels;
-public class UserMissionInviteVM
+public class UserInviteVm
 {
     public long FromUserId { get; set; }
     public long ToUserId { get; set; }

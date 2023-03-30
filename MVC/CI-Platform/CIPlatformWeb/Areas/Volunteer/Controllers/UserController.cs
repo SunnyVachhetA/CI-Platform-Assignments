@@ -246,7 +246,7 @@ public class UserController : Controller
     [Route("MissionUsersInvite", Name = "GetMissionUsersInvite")] 
     public IActionResult MissionUsersInvite( long userId, long missionId )
     {
-        IEnumerable<UserMissionInviteVM> inviteList = Enumerable.Empty<UserMissionInviteVM>();
+        IEnumerable<UserInviteVm> inviteList = Enumerable.Empty<UserInviteVm>();
 
         var result = _serviceUnit.UserService.FetchAllUsers(true)?.Where( user => user.UserId != userId )!;
 

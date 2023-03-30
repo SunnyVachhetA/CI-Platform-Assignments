@@ -164,8 +164,8 @@ public class StoryController : Controller
     public IActionResult Story(long id)
     {
         ShareStoryVM storyVm = _serviceUnit.StoryService.LoadStoryDetails(id);
-        _serviceUnit.StoryService.UpdateStoryView(storyVm.StoryId, storyVm.StoryViews);
         storyVm.StoryViews++;
+        _serviceUnit.StoryService.UpdateStoryView(storyVm.StoryId, storyVm.StoryViews);
         return View(storyVm);
     }
 
@@ -187,7 +187,11 @@ public class StoryController : Controller
     //Story Invite
     public IActionResult StoryUsersInvite(long userId, long storyId)
     {
-        return PartialView("_RecommendMission");
+        IEnumerable<UserInviteVm> userInvites = 
+            _serviceUnit
+                .StoryInviteService
+                .LoadAllUsersInviteList(userId, storyId);
+        return PartialView("_RecommendMission", userInvites);
     }
 
 }

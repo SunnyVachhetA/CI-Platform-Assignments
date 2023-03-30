@@ -227,6 +227,6 @@ public class StoryService : IStoryService
 
     public void UpdateStoryView(long storyId, long storyViews)
     {
-        _unitOfWork.StoryRepo.UpdateStoryView(storyId,++storyViews);
+        _unitOfWork.StoryRepo.UpdateStoryView(storyId,storyViews);
     }
 }

@@ -19,5 +19,7 @@ public interface IUnitOfWork
     IMissionInviteRepository MissionInviteRepo { get; }
     IStoryRepository StoryRepo { get; } 
     IStoryMediaRepository StoryMediaRepo { get; }
+
+    IStoryInviteRepository StoryInviteRepo { get; }
     void Save();
 }

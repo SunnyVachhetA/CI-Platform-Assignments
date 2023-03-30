@@ -14,9 +14,9 @@ internal class MissionInviteService: IMissionInviteService
     }
     
 
-    public static UserMissionInviteVM ConvertUserViewModelToMissionInviteVM( UserRegistrationVM user, long userId, bool IsInvited, long missionId)
+    public static UserInviteVm ConvertUserViewModelToMissionInviteVM( UserRegistrationVM user, long userId, bool IsInvited, long missionId)
     {
-        UserMissionInviteVM invite = new()
+        UserInviteVm invite = new()
         {
             FromUserId = userId,
             ToUserId = (long)user.UserId!,
@@ -30,11 +30,11 @@ internal class MissionInviteService: IMissionInviteService
         return invite;
     }
 
-    public IEnumerable<UserMissionInviteVM> fetchUserMissionInvites(IEnumerable<UserRegistrationVM> result, long userId, long missionId)
+    public IEnumerable<UserInviteVm> fetchUserMissionInvites(IEnumerable<UserRegistrationVM> result, long userId, long missionId)
     {
         Func<MissionInvite, bool> filter = (invite) =>  ( invite.FromUserId == userId && invite.MissionId == missionId); 
         var inviteListOfUser = _unitOfWork.MissionInviteRepo.GetAll( filter );
-        List<UserMissionInviteVM> inviteList = new();
+        List<UserInviteVm> inviteList = new();
         if( inviteListOfUser.Any() ) //When user have already invited some co-worker
         {
             inviteList = FetchMissionInviteesWithOthers(result.ToList(), inviteListOfUser, missionId, userId);
@@ -90,9 +90,9 @@ internal class MissionInviteService: IMissionInviteService
         return result;
     }
 
-    public List<UserMissionInviteVM> FetchMissionInviteesWithOthers(IEnumerable<UserRegistrationVM> result, IEnumerable<MissionInvite> invites, long missionId, long userId)
+    public List<UserInviteVm> FetchMissionInviteesWithOthers(IEnumerable<UserRegistrationVM> result, IEnumerable<MissionInvite> invites, long missionId, long userId)
     {
-        List<UserMissionInviteVM> list = new();
+        List<UserInviteVm> list = new();
 
         foreach(var user in result)
         {
@@ -106,9 +106,9 @@ internal class MissionInviteService: IMissionInviteService
 }
 
 
-/*public static UserMissionInviteVM ConvertUserToInviteVM(User user, long userId)
+/*public static UserInviteVm ConvertUserToInviteVM(User user, long userId)
     {
-        return new UserMissionInviteVM()
+        return new UserInviteVm()
         {
             Avatar = user.Avatar ?? string.Empty,
             UserName = user.FirstName,
