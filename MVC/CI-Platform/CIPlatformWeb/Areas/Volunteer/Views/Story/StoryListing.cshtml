@@ -9,9 +9,12 @@
     }
     var totalStoryCount = Model.LongCount();
     var index = 0;
+
+    var storySubmitRequest = TempData["story-submit"];
 }
 <input type="hidden" id="add-story-page-url" value="@addStoryPageUrl" />
 @Html.HiddenFor(model => totalStoryCount, new { id = "total-story-count" })
+@Html.HiddenFor(model => storySubmitRequest, new { id = "story-submit-request" })
 <main class="index-grid">
     <header>
         <partial name="_Navbar"></partial>
@@ -43,10 +46,10 @@
                         <article class="card h-100 shadow-sm flex-nowrap">
                             <div class="position-relative story-img-card">
                                 <img src="@story.StoryThumbnail" alt="Story Thumbnail" class="w-100 story-card-img">
-                                <button class="btn-g-white d-block position-absolute btn-story-center d-none">
+                                <a asp-controller="Story" asp-action="Story" asp-route-id="@story.StoryId" class="btn-g-white d-block position-absolute btn-story-center d-none">
                                     View Details
                                     <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
-                                </button>
+                                </a>
                                 <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
                                     @story.ThemeName
                                 </div>
@@ -56,7 +59,7 @@
                                     @story.StoryTitle
                                 </h3>
                                 <p class="mission-desc-ellips px-4">
-                                    @story.Description
+                                    @story.ShortDescription
                                 </p>
                             </div>
                             <div class="px-4 mt-auto mb-4">

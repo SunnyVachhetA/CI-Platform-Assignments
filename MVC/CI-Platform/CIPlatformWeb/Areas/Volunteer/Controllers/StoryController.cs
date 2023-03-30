@@ -65,14 +65,7 @@ public class StoryController : Controller
     {
         if(ModelState.IsValid)
         {
-            if (storyAction.Equals("share",StringComparison.OrdinalIgnoreCase))
-            {
-                addStory.StoryStatus = UserStoryStatus.PENDING;
-            }
-            else
-            {
-                addStory.StoryStatus = UserStoryStatus.DRAFT;
-            }
+            addStory.StoryStatus = storyAction.Equals("share",StringComparison.OrdinalIgnoreCase) ? UserStoryStatus.PENDING : UserStoryStatus.DRAFT;
             
             long storyID = _serviceUnit.StoryService.AddUserStory( addStory );
 
@@ -83,6 +76,8 @@ public class StoryController : Controller
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 _serviceUnit.StoryMediaService.AddStoryMediaToUserStory(storyID, addStory.StoryMedia, wwwRootPath);
             }
+
+            if (addStory.StoryStatus == UserStoryStatus.PENDING) TempData["story-submit"] = "Story sent to admin for approval!";
             return RedirectToAction("Index");
         }
         else
@@ -98,49 +93,43 @@ public class StoryController : Controller
     {
         try
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return RedirectToAction("EditStory", editStory);
+            
+            editStory.StoryStatus = storyAction.Equals("share", StringComparison.OrdinalIgnoreCase) ? UserStoryStatus.PENDING : UserStoryStatus.DRAFT;
+
+            _serviceUnit.StoryService.UpdateUserStory(editStory);
+
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+            string directoryPath = @$"{wwwRootPath}\images\story\";
+
+            foreach(var file in preloadedMediaList)
             {
-                if (storyAction.Equals("share", StringComparison.OrdinalIgnoreCase))
+                bool isExists = editStory.StoryMedia.Any( media => ConvertMediaName(media.FileName) == file);
+                if (!isExists) 
                 {
-                    editStory.StoryStatus = UserStoryStatus.PENDING;
-                    //_serviceUnit.StoryService.UpdateUserStoryStatus( editStory.StoryId, UserStoryStatus.PENDING );
-                }
-                else
-                {
-                    editStory.StoryStatus = UserStoryStatus.DRAFT;
-                }
-
-                _serviceUnit.StoryService.UpdateUserStory(editStory);
-
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-
-                string directoryPath = @$"{wwwRootPath}\images\story\";
-
-                foreach(var file in preloadedMediaList)
-                {
-                    bool isExists = editStory.StoryMedia.Any( media => ConvertMediaName(media.FileName) == file);
-                    if (!isExists) 
-                    {
-                        DeleteFileFromWebRoot( Path.Combine(directoryPath, file) );
-                        _serviceUnit.StoryMediaService.DeleteStoryMedia(editStory.StoryId, file);
-                    }
-                }
-
-                List<IFormFile> formFiles= new();
-
-                foreach( var file in editStory.StoryMedia )
-                {
-                    string fileName = ConvertMediaName(file.FileName);
-
-                    if (!preloadedMediaList.Contains(fileName))
-                        formFiles.Add(file);
-                }
-
-                if(formFiles.Any())
-                {
-                    _serviceUnit.StoryMediaService.AddStoryMediaToUserStory(editStory.StoryId, formFiles, wwwRootPath);
+                    DeleteFileFromWebRoot( Path.Combine(directoryPath, file) );
+                    _serviceUnit.StoryMediaService.DeleteStoryMedia(editStory.StoryId, file);
                 }
             }
+
+            List<IFormFile> formFiles= new();
+
+            foreach( var file in editStory.StoryMedia )
+            {
+                string fileName = ConvertMediaName(file.FileName);
+
+                if (!preloadedMediaList.Contains(fileName))
+                    formFiles.Add(file);
+            }
+
+            if(formFiles.Any())
+            {
+                _serviceUnit.StoryMediaService.AddStoryMediaToUserStory(editStory.StoryId, formFiles, wwwRootPath);
+            }
+
+            if (editStory.StoryStatus == UserStoryStatus.PENDING)
+                TempData["story-submit"] = "Story sent to admin for approval!";
             return RedirectToAction("Index");
         }
         catch (Exception e)
@@ -170,6 +159,16 @@ public class StoryController : Controller
         }
     }
 
+
+    [HttpGet]
+    public IActionResult Story(long id)
+    {
+        ShareStoryVM storyVm = _serviceUnit.StoryService.LoadStoryDetails(id);
+        _serviceUnit.StoryService.UpdateStoryView(storyVm.StoryId, storyVm.StoryViews);
+        storyVm.StoryViews++;
+        return View(storyVm);
+    }
+
     private void DeleteFileFromWebRoot(string filePath)
     {
         if(System.IO.File.Exists(filePath))
@@ -184,4 +183,11 @@ public class StoryController : Controller
             return fileName.Split("\\")[^1];
         return fileName;
     }
+
+    //Story Invite
+    public IActionResult StoryUsersInvite(long userId, long storyId)
+    {
+        return PartialView("_RecommendMission");
+    }
+
 }

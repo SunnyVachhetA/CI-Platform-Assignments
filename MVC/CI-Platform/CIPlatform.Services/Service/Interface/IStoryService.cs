@@ -11,4 +11,6 @@ public interface IStoryService
     void UpdateUserStoryStatus(long storyId, UserStoryStatus pending);
     void DeleteStory(long storyId);
     void UpdateUserStory(AddStoryVM editStory);
+    ShareStoryVM LoadStoryDetails(long id);
+    void UpdateStoryView(long storyId, long storyVmStoryViews);
 }

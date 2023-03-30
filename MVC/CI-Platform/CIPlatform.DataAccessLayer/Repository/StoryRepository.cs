@@ -2,13 +2,16 @@
 using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.VMConstants;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class StoryRepository : Repository<Story>, IStoryRepository
 {
+    private readonly CIDbContext _dbContext;
     public StoryRepository(CIDbContext dbContext) : base(dbContext)
     {
+        _dbContext = dbContext; 
     }
     
     /// <summary>
@@ -81,5 +84,22 @@ public class StoryRepository : Repository<Story>, IStoryRepository
     public void UpdateUserStory(Story entity)
     {
         dbSet.Update(entity);
+    }
+
+    public Story GetStoryDetails(Func<Story, bool> filter)
+    {
+        var query = StoryWithMissionAndUserInformation()
+            // ReSharper disable once PossibleUnintendedQueryableAsEnumerable
+                                .Where(filter)
+                                .FirstOrDefault();
+        return query!;
+    }
+
+    public void UpdateStoryView(long storyId, long storyView)
+    {
+        var storyViewParam = new SqlParameter("@storyView", storyView);
+        var storyIdParam = new SqlParameter("@storyId", storyId);
+
+        _dbContext.Database.ExecuteSqlRaw("UPDATE story SET story_view = @storyView WHERE story_id = @storyId", storyViewParam, storyIdParam);
     }
 }

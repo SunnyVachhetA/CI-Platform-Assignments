@@ -10,4 +10,6 @@ public interface IStoryRepository : IRepository<Story>
     Story GetUserStoryDraft(Func<Story, bool> filter);
     void UpdateUserStoryStatus(Story entity, UserStoryStatus pending);
     void UpdateUserStory(Story entity);
+    Story GetStoryDetails(Func<Story, bool> filter);
+    void UpdateStoryView(long storyId, long storyViews);
 }

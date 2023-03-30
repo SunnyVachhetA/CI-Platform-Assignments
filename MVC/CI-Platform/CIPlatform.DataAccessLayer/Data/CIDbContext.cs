@@ -525,6 +525,7 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.Status)
                 .HasDefaultValueSql("((0))")
                 .HasColumnName("status");
+            entity.Property(e => e.StoryView).HasColumnName("story_view");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .IsUnicode(false)

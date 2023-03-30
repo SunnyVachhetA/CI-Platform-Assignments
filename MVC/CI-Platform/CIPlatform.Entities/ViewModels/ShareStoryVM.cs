@@ -15,4 +15,9 @@ public class ShareStoryVM
     public string StoryThumbnail { get; set; } = string.Empty;
     public UserStoryStatus StoryStatus { get; set; } = UserStoryStatus.DRAFT;
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
+    public long StoryViews { get; set; }
+    public string? WhyIVolunteer { get; set; }
+    public string? UserProfile { get; set; }
+    public string? VideoUrl { get; set; }
+    public List<string> MediaList { get; set; } = new();
 }

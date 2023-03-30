@@ -37,6 +37,7 @@ public class AddStoryVM
 
     [Display(Name="Short Description")]
     [Required]
+    [MaxLength(255, ErrorMessage = "Only 255 characters are allowed!")]
     [MinLength(20, ErrorMessage = "Minimum 20 characters required!")]
     public string ShortDescription { get; set; } = string.Empty;
 }

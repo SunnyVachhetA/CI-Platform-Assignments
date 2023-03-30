@@ -11,7 +11,6 @@ const displayNone = "d-none";
 const activeClass = "active";
 
 const mediaCount = $('#msn-media-count').val();
-console.log("media-count: " + mediaCount);
 if (mediaCount == 1) {
     $('#msn-media-carousel').hide();
 }

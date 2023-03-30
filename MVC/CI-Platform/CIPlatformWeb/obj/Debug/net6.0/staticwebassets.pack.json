@@ -541,8 +541,16 @@
       "PackagePath": "staticwebassets\\images\\story\\863fc221-f1e1-4d18-9d4b-bbf95865cf7b.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\8c880ebc-0a0e-4f2a-a871-25d7540a9fdc.png",
+      "PackagePath": "staticwebassets\\images\\story\\8c880ebc-0a0e-4f2a-a871-25d7540a9fdc.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\95804278-2828-4d0c-9812-f858067c022c.png",
       "PackagePath": "staticwebassets\\images\\story\\95804278-2828-4d0c-9812-f858067c022c.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\9835d0a5-92d3-4d23-b956-e67d63c7753b.png",
+      "PackagePath": "staticwebassets\\images\\story\\9835d0a5-92d3-4d23-b956-e67d63c7753b.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\9da771e3-bded-44fa-b97f-229071cc7027.png",
@@ -589,6 +597,10 @@
       "PackagePath": "staticwebassets\\images\\story\\e9bc690e-ec21-4173-8a15-6b1141da1185.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\f7952ec9-905b-456c-82f7-8961e25b3af4.png",
+      "PackagePath": "staticwebassets\\images\\story\\f7952ec9-905b-456c-82f7-8961e25b3af4.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\mission-details-ajax.js",
       "PackagePath": "staticwebassets\\js\\mission-details-ajax.js"
     },
@@ -623,6 +635,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\story-listing.js",
       "PackagePath": "staticwebassets\\js\\story-listing.js"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\story.js",
+      "PackagePath": "staticwebassets\\js\\story.js"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\sweet-alert-notification.js",

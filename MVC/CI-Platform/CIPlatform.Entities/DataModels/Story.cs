@@ -29,6 +29,8 @@ public partial class Story
 
     public string? ShortDescription { get; set; }
 
+    public long? StoryView { get; set; }
+
     public virtual Mission Mission { get; set; } = null!;
 
     public virtual ICollection<StoryInvite> StoryInvites { get; } = new List<StoryInvite>();

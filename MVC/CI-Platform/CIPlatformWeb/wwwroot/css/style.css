@@ -148,7 +148,7 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.msn-img-sm {
+.msn-img-sm, .story-img-sm {
     cursor: pointer;
     height: 7.5rem;
     width: 10.9375rem;
@@ -264,9 +264,11 @@ a {
     /* height: 48px;
       width: 401px; */
     background-color: var(--col-white);
+    transition: var(--transition);
 }
 
     .btn-login:hover {
+        color: white;
         background-color: var(--col-orange);
     }
 
@@ -659,7 +661,7 @@ form-subtitle,
 
 @media screen and (max-width: 992px)
 {
-    #mission-hero-img {
+    #mission-hero-img, #story-hero-img {
         height: auto !important;
     }
 }
@@ -852,3 +854,26 @@ form-subtitle,
 }
 
 /* Story Listing Page CSS End */
+
+
+
+/* Story details page css start */
+.story-volunteer {
+    width: 100px;
+}
+
+.story-view {
+    background: transparent;
+    border: 1px solid var(--col-brown);
+    padding: 0.3rem 1rem;
+    border-radius: 1.1875rem;
+    color: var(--col-secondary-brown);
+}
+
+.horizontal-line {
+    height: 2px;
+    background-color: var(--col-brown);
+}
+
+/* Story details page css end */
+#story-hero-img { max-height: 450px; }

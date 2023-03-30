@@ -78,10 +78,24 @@ public class StoryService : IStoryService
             StoryThumbnail = GetStoryThumbnail( story.StoryMedia ),
             UserAvatar = story.User.Avatar ?? string.Empty,
             UserName = story.User.FirstName + " " + story.User.LastName,
+            StoryViews = story.StoryView?? 0,
+            WhyIVolunteer = story.User.WhyIVolunteer,
+            UserProfile = story.User.ProfileText,
+            MediaList = ConvertImageMediaToPath(story.StoryMedia),
+            VideoUrl = story.VideoUrl
         };
 
         return shareStory;
     }
+
+    private List<string> ConvertImageMediaToPath(ICollection<StoryMedium> storyMedia)
+    {
+        return 
+            storyMedia
+            .Select( (story) => $"{story.MediaPath}{story.MediaName}{story.MediaType}" )
+            .ToList();
+    }
+
     private string GetStoryThumbnail(ICollection<StoryMedium> storyMedia)
     {
         StoryMedium? media = storyMedia.FirstOrDefault();    
@@ -118,7 +132,7 @@ public class StoryService : IStoryService
             Description = story.Description?? string.Empty,
             VideoUrl = story.VideoUrl?? string.Empty
         };
-
+        
         return storyVM;
     }
 
@@ -201,5 +215,18 @@ public class StoryService : IStoryService
 
         _unitOfWork.StoryRepo.UpdateUserStory(entity);
         _unitOfWork.Save();
+    }
+
+    public ShareStoryVM LoadStoryDetails(long id)
+    {
+        Func<Story, bool> filter = (story) => story.StoryId == id;
+        Story story = _unitOfWork.StoryRepo.GetStoryDetails(filter);
+        var storyVm = ConvertStoryModelToShareStoryVM(story);
+        return storyVm;
+    }
+
+    public void UpdateStoryView(long storyId, long storyViews)
+    {
+        _unitOfWork.StoryRepo.UpdateStoryView(storyId,++storyViews);
     }
 }
