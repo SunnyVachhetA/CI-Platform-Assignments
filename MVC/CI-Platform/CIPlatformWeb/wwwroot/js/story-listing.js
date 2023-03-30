@@ -69,6 +69,7 @@ function handleDisplayStoryCard() {
         }
     });
     $(document).scrollTop(0);
+    $(`[data-page='${currentPageNumber}'`).addClass('active');
 }
 
 function createHTMLPageButton() {
@@ -83,6 +84,7 @@ function createLeftButton(btnLeft) {
     paginationContainer.append(btnLeft);
     $(btnLeft).click(() => {
         if (currentPageNumber == 1) return;
+        $(`[data-page='${currentPageNumber}'`).removeClass('active');
         currentPageNumber--;
         handleDisplayStoryCard();
     });
@@ -116,6 +118,7 @@ function createRightButton(btnRight) {
     paginationContainer.append(btnRight);
     $(btnRight).click(() => {
         if (currentPageNumber == totalPage) return;
+        $(`[data-page='${currentPageNumber}'`).removeClass('active');
         currentPageNumber++;
         handleDisplayStoryCard();
     });
