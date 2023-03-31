@@ -41,7 +41,7 @@ $('#btn-story-recommend').click
     () =>
     {
         if (loggedUserId == 0) {
-            loginRequiredSweetAlert(loginPageLink);
+            loginRequiredSweetAlert(userLoginPageLink);
             return;
         }
 
@@ -82,13 +82,24 @@ function modalEventListener() {
             $("input:checkbox[name='recommend-list']:checked").each(function () {
                 recommendList.push($(this).val());
             });
-
+            console.log(recommendList);
             handleUserRecommendAjax(recommendList);
         });
 }
 
 function handleUserRecommendAjax(recommendList) {
-    alert("here");
+    $('#recommendModal').modal('hide');
+    displayActionMessageSweetAlert('Story Recommended!', 'Recommendation email will be sent to your co-worker.', 'info');
+    let storyId = $('#story-id').val();
+    $.ajax
+        ({
+            type: 'POST',
+            url: '/Volunteer/Story/StoryUsersInvite',
+            data: { userId: loggedUserId, userName: loggedUserName, storyId: storyId, recommendList: recommendList },
+            success: function (result) {
+            },
+            error: function () { }
+        });
 }
 
 //Recommend to Co-Worker

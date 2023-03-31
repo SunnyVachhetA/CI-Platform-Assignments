@@ -89,6 +89,17 @@ public class UserService: IUserService
         return user;
     }
 
+    public async Task<IEnumerable<string>> GetUserEmailList(long[] userId)
+    {
+        Func<User, bool> filter = user => userId.Any(id => user.UserId == id);
+        IEnumerable<string> userEmailList =
+            await 
+                _unitOfWork
+                .UserRepo
+                .GetUserEmailList( filter );
+        return userEmailList;
+    }
+
     //Method to get all users
     // isActive = True => Fetch only active users otherwise all
     public IEnumerable<UserRegistrationVM> FetchAllUsers(bool isActiveFlag)

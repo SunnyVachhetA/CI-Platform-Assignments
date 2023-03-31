@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ShareStoryVM>
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model IEnumerable<ShareStoryVM>
 @{
     var userId = 0L;
     var addStoryPageUrl = string.Empty;
@@ -11,9 +12,12 @@
     var index = 0;
 
     var storySubmitRequest = TempData["story-submit"];
+
+    var missionError = TempData["MissionError"];
 }
 <input type="hidden" id="add-story-page-url" value="@addStoryPageUrl" />
 @Html.HiddenFor(model => totalStoryCount, new { id = "total-story-count" })
+@Html.HiddenFor(model => missionError, new { id = "mission-error" })
 @Html.HiddenFor(model => storySubmitRequest, new { id = "story-submit-request" })
 <main class="index-grid">
     <header>
@@ -42,36 +46,36 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-xl-4">
                 @foreach (var story in Model)
                 {
-                    <div class="col" data-storynumber="@index">
-                        <article class="card h-100 shadow-sm flex-nowrap">
-                            <div class="position-relative story-img-card">
-                                <img src="@story.StoryThumbnail" alt="Story Thumbnail" class="w-100 story-card-img">
-                                <a asp-controller="Story" asp-action="Story" asp-route-id="@story.StoryId" class="btn-g-white d-block position-absolute btn-story-center d-none">
-                                    View Details
-                                    <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
-                                </a>
-                                <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
-                                    @story.ThemeName
+                        <div class="col" data-storynumber="@index">
+                            <article class="card h-100 shadow-sm flex-nowrap">
+                                <div class="position-relative story-img-card">
+                                    <img src="@story.StoryThumbnail" alt="Story Thumbnail" class="w-100 story-card-img">
+                                    <a asp-controller="Story" asp-action="Story" asp-route-id="@story.StoryId" class="btn-g-white d-block position-absolute btn-story-center d-none">
+                                        View Details
+                                        <img src="~/assets/arrow-8-24.png" alt="Right Arrow">
+                                    </a>
+                                    <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
+                                        @story.ThemeName
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="d-flex flex-column mt-n1 pb-4">
-                                <h3 class="mt-0 px-4">
-                                    @story.StoryTitle
-                                </h3>
-                                <p class="mission-desc-ellips px-4">
-                                    @story.ShortDescription
-                                </p>
-                            </div>
-                            <div class="px-4 mt-auto mb-4">
-                                <img src="@story.UserAvatar" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
-                                @story.UserName
-                            </div>
-                            <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
-                                View Details
-                                <img src="~/assets/right-arrow.png" alt="Right Arrow">
-                            </button>
-                        </article>
-                    </div>
+                                <div class="d-flex flex-column mt-n1 pb-4">
+                                    <h3 class="mt-0 px-4">
+                                        @story.StoryTitle
+                                    </h3>
+                                    <p class="mission-desc-ellips px-4">
+                                        @story.ShortDescription
+                                    </p>
+                                </div>
+                                <div class="px-4 mt-auto mb-4">
+                                    <img src="@story.UserAvatar" alt="Volunteer Image" class="rounded-pill comment-usr-img me-2">
+                                    @story.UserName
+                                </div>
+                                <button class="btn-g-orange mx-auto mt-auto mb-4 btn-story-details">
+                                    View Details
+                                    <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                                </button>
+                            </article>
+                        </div>
                     index++;
                 }
             </div>

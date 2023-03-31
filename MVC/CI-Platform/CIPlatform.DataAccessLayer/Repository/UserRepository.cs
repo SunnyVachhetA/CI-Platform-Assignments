@@ -42,4 +42,12 @@ public class UserRepository : Repository<User>, IUserRepository
         return result;
     }
 
+    public Task<IEnumerable<string>> GetUserEmailList(Func<User, bool> filter)
+    {
+          return Task.Run(  () =>     
+              dbSet
+              .Where(filter)?
+              .Select(user => user.Email.ToLower())
+          )!;
+    }
 }

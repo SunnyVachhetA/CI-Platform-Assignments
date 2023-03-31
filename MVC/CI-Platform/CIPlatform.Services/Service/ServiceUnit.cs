@@ -36,7 +36,7 @@ public class ServiceUnit: IServiceUnit
     public IStoryMediaService StoryMediaService { get; private set; }
     public IStoryInviteService StoryInviteService { get; }
 
-    public ServiceUnit(IUnitOfWork unitOfWork)
+    public ServiceUnit(IUnitOfWork unitOfWork, IEmailService emailService)
 	{
 		_unitOfWork= unitOfWork;
 		UserService = new UserService(_unitOfWork);
@@ -56,6 +56,6 @@ public class ServiceUnit: IServiceUnit
         MissionInviteService = new MissionInviteService(_unitOfWork);
         StoryService = new StoryService(_unitOfWork);
         StoryMediaService = new StoryMediaService(_unitOfWork);
-        StoryInviteService = new StoryInviteService(_unitOfWork);
+        StoryInviteService = new StoryInviteService(_unitOfWork, emailService);
     }
 }

@@ -52,4 +52,11 @@ public class Repository<T> : IRepository<T> where T : class
     {
         dbSet.RemoveRange(list);
     }
+
+    public async Task AddRangeAsync(IEnumerable<T> list)
+    {
+        await 
+            dbSet
+            .AddRangeAsync(list);
+    }
 }

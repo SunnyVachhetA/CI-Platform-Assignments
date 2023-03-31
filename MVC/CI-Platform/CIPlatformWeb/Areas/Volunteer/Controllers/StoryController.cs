@@ -14,12 +14,14 @@ public class StoryController : Controller
         _serviceUnit = serviceUnit;
         _webHostEnvironment = webHostEnvironment;   
     }
-    public IActionResult Index(bool? missionError)
+    public IActionResult Index()
     {
         IEnumerable< ShareStoryVM > storyList = new List<ShareStoryVM>();
         storyList = _serviceUnit.StoryService.FetchAllUserStories();
 
-        ViewBag.MissionError = missionError ?? false;
+        //ViewBag.MissionError = missionError ?? false;
+
+        //TempData["MissionError"] = missionError ?? false;
 
         return View("StoryListing", storyList);
     }
@@ -34,7 +36,11 @@ public class StoryController : Controller
     {
         SingleUserMissionsVM userMissions = _serviceUnit.MissionApplicationService.GetSingleUserMission(userId);
 
-        if (!userMissions.MissionId.Any()) return RedirectToAction("Index", new { missionError = true });
+        if (!userMissions.MissionId.Any())
+        {
+            TempData["MissionError"] = true;
+            return RedirectToAction("Index");
+        }
 
         List<SingleUserMissionListVM> missionList = new();
 
@@ -184,7 +190,9 @@ public class StoryController : Controller
         return fileName;
     }
 
+
     //Story Invite
+    [HttpGet]
     public IActionResult StoryUsersInvite(long userId, long storyId)
     {
         IEnumerable<UserInviteVm> userInvites = 
@@ -192,6 +200,33 @@ public class StoryController : Controller
                 .StoryInviteService
                 .LoadAllUsersInviteList(userId, storyId);
         return PartialView("_RecommendMission", userInvites);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> StoryUsersInvite( long userId, string userName, long storyId, long[] recommendList )
+    {
+        try
+        {
+            _serviceUnit.StoryInviteService.SaveUserInvite( userId, storyId, recommendList );
+            IEnumerable<string> userEmailList = 
+                await _serviceUnit
+                .UserService
+                .GetUserEmailList(recommendList);
+
+            string storyInviteLink = Url.Action("Story", "Story", new { id = storyId }, "https")?? string.Empty;
+
+            _serviceUnit
+                .StoryInviteService
+                .SendStoryInviteToUsers( userEmailList, storyInviteLink, userName );
+
+            return StatusCode(201);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error during StoryUsersInvite[POST]: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
     }
 
 }

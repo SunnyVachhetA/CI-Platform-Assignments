@@ -1,4 +1,10 @@
 ﻿
+const missionError = $('#mission-error').val();
+
+if (missionError !== undefined && missionError !== '' && missionError === 'True')
+    displayActionMessageSweetAlert('Not Registered As Volunteer', 'You have to volunteer in mission to share story!', 'error');
+
+
 const storySubmitRequest = $('#story-submit-request').val();
 
 if (storySubmitRequest !== undefined && storySubmitRequest !== '')
@@ -51,10 +57,11 @@ const totalPage = Math.ceil(totalStoryCount / storyPerPage);
 let currentPageSet = 1;
 const totalPageSet = Math.ceil(totalPage / pageNumberDisplay);
 
-createPaginationButton();
-handleDisplayStoryCard();
-
-if (totalPageSet > 1) handleButtonDisplayPagination();
+$(document).ready(() => {
+    createPaginationButton();
+    handleDisplayStoryCard();
+    if (totalPageSet > 1) handleButtonDisplayPagination();
+});
 
 function createPaginationButton() {
     if (totalStoryCount <= storyPerPage)

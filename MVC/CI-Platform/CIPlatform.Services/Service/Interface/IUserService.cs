@@ -10,4 +10,5 @@ public interface IUserService
     void SendUserMissionInviteService(IEnumerable<string> userEmailList, string senderUserName, string missionInviteLink, IEmailService _emailService);
     UserRegistrationVM UpdateUserPassword(string? email, string password);
     UserRegistrationVM ValidateUserCredential(UserLoginVM credential);
+    Task<IEnumerable<string>> GetUserEmailList(long[] userId);
 }

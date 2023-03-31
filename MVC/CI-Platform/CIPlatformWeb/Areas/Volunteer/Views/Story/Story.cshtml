@@ -84,11 +84,12 @@
     </section>
     <!-- Story Detail Front Fin -->
     <!-- Story details description begin -->
-    <section class="container mt-3 mt-md-5">
-        <div class="font-lg-size text-black-1 position-relative pb-2">
-            @Model.StoryTitle
+    <section class="container mt-3 mt-md-5 mb-2 mb-md-4">
+        <div class="border-bottom">
+            <div class="font-lg-size text-black-1 pb-2 border-bottom-1 mx-content">
+                @Model.StoryTitle
+            </div>
         </div>
-        <div class="horizontal-line"></div>
         <div class="mt-4 mt-xxl-5 fw-light text-black-1">
             @Html.Raw(Model.Description)
         </div>

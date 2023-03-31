@@ -8,4 +8,5 @@ public interface IUserRepository : IRepository<User>
     IEnumerable<User> FetchUserInformationWithMissionInvite();
 
     User ValidateUserCredentialRepo(UserLoginVM credential);
+    Task<IEnumerable<string>> GetUserEmailList(Func<User, bool> filter);
 }

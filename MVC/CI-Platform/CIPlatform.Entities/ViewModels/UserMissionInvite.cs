@@ -13,6 +13,6 @@ public class UserInviteVm
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
     public long MissionId { get; set; }
-
+    public long StoryId { get; set; }
     public string FromUserName { get; set; } = string.Empty;
 }

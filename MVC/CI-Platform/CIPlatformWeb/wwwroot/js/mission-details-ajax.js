@@ -15,7 +15,7 @@ let isCommentExists = $('#isCommentExists').val() === 'True' ? true : false;
 let currentVolunteerPage = 1;
 let totalVolunteersCount = $('#total-volunteer-count').val();
 let displayVolunteerCount = 2;
-const totalVlPage = Math.ceil(totalVolunteersCount/2);
+const totalVlPage = Math.ceil(totalVolunteersCount / displayVolunteerCount);
 if (totalVolunteersCount === undefined || totalVolunteersCount == 0) {
     $('#no-recent-vl').removeClass('d-none');
     $('#vl-list').addClass('d-none');
