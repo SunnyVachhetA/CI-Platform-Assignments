@@ -1,6 +1,7 @@
 ﻿using CIPlatform.Entities.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using static System.IO.File;
 
 namespace CIPlatform.Services.Service;
 public class StoreMediaService
@@ -35,7 +36,7 @@ public class StoreMediaService
         return filePath;
     }
 
-    internal static List<IFormFile> FetchMediaFromRootPath(List<MediaVM> mediaList, string wwwRootPath)
+    public static List<IFormFile> FetchMediaFromRootPath(List<MediaVM> mediaList, string wwwRootPath)
     {
         string path = mediaList[0].Path;
         var directory = path[1..^1];
@@ -49,5 +50,34 @@ public class StoreMediaService
             formFiles.Add(new FormFile(stream, 0, stream.Length, null, file.Name));
         }
         return formFiles;
+    }
+
+    public static MediaVM storeMediaToWwwRoot(string wwwRoot, string path, IFormFile file)
+    {
+        var uploadDir = Path.Combine(wwwRoot, path);
+
+        string fileName = Guid.NewGuid().ToString();
+        string extension = Path.GetExtension(file.FileName);
+
+        using (var fileStream = new FileStream(Path.Combine(uploadDir, fileName + extension), FileMode.Create))
+        {
+            file.CopyTo(fileStream);
+        }
+
+        MediaVM media = new()
+        {
+            Type = extension,
+            Name = fileName,
+            Path = $@"\{path}"
+        };
+        return media;
+    }
+
+    public static void DeleteFileFromWebRoot(string filePath)
+    {
+        if (Exists(filePath))
+        {
+            Delete(filePath);
+        }
     }
 }

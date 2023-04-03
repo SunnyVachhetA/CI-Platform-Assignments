@@ -50,4 +50,29 @@ public class UserRepository : Repository<User>, IUserRepository
               .Select(user => user.Email.ToLower())
           )!;
     }
+
+    private IEnumerable<User> FetchUserDetails( Func<User, bool> filter)
+    {
+        var query =
+            dbSet
+                .Include(user => user.UserSkills)
+                    .ThenInclude(skill => skill.Skill)
+                .Where(filter);
+        return query;
+    }
+    public User FetchUserProfile(Func<User, bool> filter)
+    {
+        var user = FetchUserDetails(filter)?.FirstOrDefault() ?? null!;
+
+        return user;
+    }
+
+    public void UpdateUserAvatar(string filePath, long userId)
+    {
+        var avatarParam = new SqlParameter("@avatar", filePath);
+        var userIdParam = new SqlParameter("@userId", userId);
+
+        _dbContext.Database.ExecuteSqlRaw("UPDATE [user] SET avatar = @avatar WHERE user_id = @userId", avatarParam, userIdParam);
+
+    }
 }

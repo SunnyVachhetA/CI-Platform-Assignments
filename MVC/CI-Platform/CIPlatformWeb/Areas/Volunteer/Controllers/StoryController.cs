@@ -175,7 +175,7 @@ public class StoryController : Controller
         return View(storyVm);
     }
 
-    private void DeleteFileFromWebRoot(string filePath)
+    public static void DeleteFileFromWebRoot(string filePath)
     {
         if(System.IO.File.Exists(filePath))
         {

@@ -7,20 +7,20 @@ $(document).ready(() => {
 
     let isLoggedOut1 = $('#is-logged-out').val() === 'True' ? true : false;
 
-    if (isLoggedOut1) {
+    /*if (isLoggedOut1) {
         successMessageSweetAlert("You have been successfully logged out");
-    }
+    }*/
 
     let isRegistered1 = $('#is-registered').val() === 'True' ? true : false;
-    if (isRegistered1) {
+    /*if (isRegistered1) {
         successMessageSweetAlert("You have been successfully registered.");
-    }
+    }*/
 
     let loginSuccessMessage = $('#successful-login').val();
 
-    if (loginSuccessMessage !== undefined && loginSuccessMessage !== '') {
+    /*if (loginSuccessMessage !== undefined && loginSuccessMessage !== '') {
         successMessageSweetAlert(loginSuccessMessage);
-    }
+    }*/
 });
 
 //Logout Ajax

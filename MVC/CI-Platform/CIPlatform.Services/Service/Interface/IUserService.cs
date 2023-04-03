@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entities.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace CIPlatform.Services.Service.Interface;
 public interface IUserService
@@ -11,4 +12,7 @@ public interface IUserService
     UserRegistrationVM UpdateUserPassword(string? email, string password);
     UserRegistrationVM ValidateUserCredential(UserLoginVM credential);
     Task<IEnumerable<string>> GetUserEmailList(long[] userId);
+    UserProfileVM LoadUserProfile(long id);
+    bool CheckOldCredentialAndUpdate(ChangePasswordVM passwordVm);
+    void UpdateUserAvatar(IFormFile file, string wwwRoot, long userId);
 }

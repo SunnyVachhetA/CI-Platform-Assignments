@@ -921,11 +921,17 @@ form-subtitle,
     box-shadow: none !important;
 }
 
-#usr-skill-add, #usr-skill-remove {
-    height: 15px;
-    width: 15px;
-    cursor: pointer;
+.edit-profile #form-edit-profile .form-control,
+.edit-profile #form-edit-profile .form-select,
+.user-modal-form .form-control {
+    color: var(--col-black);
 }
+
+    #usr-skill-add, #usr-skill-remove {
+        height: 15px;
+        width: 15px;
+        cursor: pointer;
+    }
 
 .skill-list ul li {
     padding: 0.1rem 0 0.1rem 1rem;

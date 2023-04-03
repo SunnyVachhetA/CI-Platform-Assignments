@@ -1,7 +1,9 @@
 ﻿using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using Microsoft.AspNetCore.Http;
 
 namespace CIPlatform.Services.Service;
 public class UserService: IUserService
@@ -100,6 +102,7 @@ public class UserService: IUserService
         return userEmailList;
     }
 
+
     //Method to get all users
     // isActive = True => Fetch only active users otherwise all
     public IEnumerable<UserRegistrationVM> FetchAllUsers(bool isActiveFlag)
@@ -158,5 +161,83 @@ public class UserService: IUserService
             ";
 
         return message;
+    }
+    
+    public UserProfileVM LoadUserProfile(long id)
+    {
+        Func<User, bool> filter = user => ( user.UserId == id && (user.Status?? true) );
+        User user = _unitOfWork.UserRepo.FetchUserProfile( filter );
+        if (user == null) return null!;
+
+        UserProfileVM userProfile = ConvertUserToUserProfileVM( user );
+        return userProfile;
+    }
+
+    public bool CheckOldCredentialAndUpdate(ChangePasswordVM passwordVm)
+    {
+        string encodedPassword = EncryptionService.EncryptAES( passwordVm.OldPassword );
+
+        User user =
+            _unitOfWork
+                .UserRepo
+                .GetFirstOrDefault(user => (user.UserId == passwordVm.UserId && user.Password == encodedPassword));
+
+        if (user == null) return false;
+
+        user.Password = EncryptionService.EncryptAES( passwordVm.NewPassword );
+
+        _unitOfWork.Save();
+        return true;
+    }
+
+    public void UpdateUserAvatar(IFormFile file, string wwwRoot, long userId)
+    {
+        MediaVM media = StoreMediaService.storeMediaToWwwRoot( wwwRoot, @"images\user", file );
+
+        _unitOfWork.UserRepo.UpdateUserAvatar( $"{media.Path}{media.Name}{media.Type}", userId );
+    }
+
+    private UserProfileVM ConvertUserToUserProfileVM(User user)
+    {
+        UserProfileVM userProfileVm = new()
+        {
+            UserId = user.UserId,
+            Avatar = user.Avatar?? string.Empty,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            EmployeeId = user.EmployeeId,
+            Title = user.Title,
+            Department = user.Department,
+            MyProfile = user.ProfileText?? string.Empty,
+            WhyIVolunteer = user.WhyIVolunteer,
+            CountryId = user.CountryId?? 0,
+            CityId = user.CityId?? 0,
+            Availability = (MissionAvailability) (user.Availability?? 0),
+            LinkedInUrl = user.LinkedInUrl,
+            UserSkills = ConvertToUserSkill(user.UserSkills)
+        };
+        return userProfileVm;
+    }
+
+    private List<UserSkillVM> ConvertToUserSkill(ICollection<UserSkill> userSkills)
+    {
+        List<UserSkillVM> userSkillList = new();
+
+        if (!userSkills.Any()) return userSkillList;
+
+        userSkillList =
+            userSkills
+                .Select
+                (
+                    skill => new UserSkillVM()
+                    {
+                        UserSkillId = skill.UserSkillId,
+                        UserId = skill.UserId,
+                        SkillId = skill.SkillId,
+                        Name = skill.Skill.Name
+                    }
+                ).ToList();
+
+        return userSkillList;
     }
 }

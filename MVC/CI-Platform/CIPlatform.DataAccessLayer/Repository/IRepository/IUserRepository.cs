@@ -9,4 +9,6 @@ public interface IUserRepository : IRepository<User>
 
     User ValidateUserCredentialRepo(UserLoginVM credential);
     Task<IEnumerable<string>> GetUserEmailList(Func<User, bool> filter);
+    User FetchUserProfile(Func<User, bool> filter);
+    void UpdateUserAvatar(string filePath, long userId);
 }

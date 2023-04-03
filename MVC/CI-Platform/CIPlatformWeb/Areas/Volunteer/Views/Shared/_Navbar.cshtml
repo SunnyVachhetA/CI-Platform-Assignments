@@ -43,8 +43,8 @@
                     <img src="~/assets/drop-down.png" class="ms-2" alt="Options">
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Favourites</a></li>
+                    <li><a class="dropdown-item" asp-area = "Volunteer" asp-controller="User" asp-action="Index" asp-route-id="@userId">Profile</a></li>
+                    <li><a class="dropdown-item" >Favourites</a></li>
                     <li><a class="dropdown-item" id="user-logout">Logout</a></li>
                 </ul>
             </div>

@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entities.ViewModels;
+using CIPlatform.Services.Service;
 using CIPlatform.Services.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,18 +11,61 @@ public class UserController : Controller
 {
     private readonly IServiceUnit _serviceUnit;
     private readonly IEmailService _emailService;
-    public UserController(IServiceUnit serviceUnit, IEmailService emailService)
+    private readonly IWebHostEnvironment _webHostEnvironment;
+    public UserController(IServiceUnit serviceUnit, IEmailService emailService, IWebHostEnvironment webHostEnvironment)
     {
         _serviceUnit = serviceUnit;
         _emailService = emailService;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     [Route("UserProfile", Name = "UserProfile")]
-    public IActionResult Index(long userId)
+    public IActionResult Index(long id)
     {
+        try
+        {
+            var countryList = _serviceUnit.CountryService.GetAllCountry()?? new List<CountryVM>();
+            var cityList = _serviceUnit.CityService.GetAllCities()?? new List<CityVM>();
+            var skillList = _serviceUnit.SkillService.GetAllSkills() ?? new List<SkillVM>();
+            UserProfileVM userProfile = _serviceUnit.UserService.LoadUserProfile(id) ?? throw new ArgumentNullException("_serviceUnit.UserService.LoadUserProfile(id)");
+            
+            userProfile.CityList = cityList;
+            userProfile.CountryList = countryList;
+            userProfile.AllSkills = skillList;
+            return View("UserProfile", userProfile);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error during loading user profile: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return NotFound();
+        }
+    }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Route("EditUserProfile", Name = "EditUserProfile")]
+    public IActionResult EditUserProfile(UserProfileVM userProfile)
+    {
+        return Index(1);
+    }
 
-        return View("UserProfile");
+    [HttpPatch]
+    [Route("ChangePassword", Name = "ChangePassword")]
+    public IActionResult ChangePassword(ChangePasswordVM passwordVm)
+    {
+        try
+        {
+            bool isPasswordValid = _serviceUnit.UserService.CheckOldCredentialAndUpdate(passwordVm);
+
+            return isPasswordValid ? Ok() : NoContent();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Exception during change password: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
     }
 
     [Route("Login", Name = "Login")]
@@ -288,9 +332,31 @@ public class UserController : Controller
     //To update user avatar
     [HttpPatch]
     [Route("UserAvatar", Name = "UserAvatar")]
-    public IActionResult UserAvatar(IFormFile file)
+    public IActionResult UserAvatar(IFormFile file, string avatar, long userId)
     {
-        return View("UserProfile");
+        try
+        {
+            if (file == null) return BadRequest();
+            string fileName = file.FileName;
+            string prevFileName = avatar.Split("\\")[^1];
+
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+            string directoryPath = $@"{wwwRootPath}\images\user\";
+            if (!fileName.Equals(prevFileName))
+            {
+                StoreMediaService.DeleteFileFromWebRoot( Path.Combine(directoryPath, fileName) );
+            }
+
+            _serviceUnit.UserService.UpdateUserAvatar( file, wwwRootPath, userId );
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error during profile picture upload: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
     }
     #endregion
 }
