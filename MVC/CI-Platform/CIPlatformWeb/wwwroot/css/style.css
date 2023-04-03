@@ -875,5 +875,67 @@ form-subtitle,
     background-color: var(--col-brown);
 }
 
-/* Story details page css end */
 #story-hero-img { max-height: 450px; }
+/* Story details page css end */
+
+/* Edit User Profile css start*/
+.edit-profile .user-profile {
+    height: 315px;
+    width: 330px;
+}
+
+.user-profile #usr-profile-img {
+    height: 200px;
+    width: 200px;
+}
+
+@media screen and (max-width: 576px) {
+    .edit-profile .user-profile {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.custom-border-bottom {
+    width: max-content;
+    border-bottom: 2px solid var(--col-secondary-brown);
+}
+
+.edit-profile #form-edit-profile .form-label {
+    margin-bottom: 0.3rem !important;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--col-black);
+}
+
+.edit-profile #form-edit-profile .form-control::placeholder {
+    font-size: 14px !important;
+    color: var(--col-secondary-brown);
+}
+
+.edit-profile #form-edit-profile .form-control:focus,
+.edit-profile #form-edit-profile .form-select:focus,
+.user-modal-form .form-control:focus {
+    border-radius: 3px !important;
+    border-color: #2b64b1 !important;
+    box-shadow: none !important;
+}
+
+#usr-skill-add, #usr-skill-remove {
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+}
+
+.skill-list ul li {
+    padding: 0.1rem 0 0.1rem 1rem;
+    cursor: pointer;
+}
+
+.skill-list ul li:hover, .skill-list ul li.active {
+    background-color: var(--col-brown);
+}
+
+/* .modal-title { font-weight: 500; } */
+/* Edit User Profile css end*/
+

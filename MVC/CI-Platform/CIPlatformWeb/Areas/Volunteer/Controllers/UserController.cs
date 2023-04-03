@@ -1,8 +1,6 @@
-﻿using CIPlatform.Entities.DataModels;
-using CIPlatform.Entities.ViewModels;
+﻿using CIPlatform.Entities.ViewModels;
 using CIPlatform.Services.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 
 namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 
@@ -16,6 +14,14 @@ public class UserController : Controller
     {
         _serviceUnit = serviceUnit;
         _emailService = emailService;
+    }
+
+    [Route("UserProfile", Name = "UserProfile")]
+    public IActionResult Index(long userId)
+    {
+
+
+        return View("UserProfile");
     }
 
     [Route("Login", Name = "Login")]
@@ -277,6 +283,14 @@ public class UserController : Controller
             Console.WriteLine(e.StackTrace);
             return StatusCode(500);
         }
+    }
+
+    //To update user avatar
+    [HttpPatch]
+    [Route("UserAvatar", Name = "UserAvatar")]
+    public IActionResult UserAvatar(IFormFile file)
+    {
+        return View("UserProfile");
     }
     #endregion
 }

@@ -645,6 +645,10 @@
       "PackagePath": "staticwebassets\\js\\sweet-alert-notification.js"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\user-edit-profile.js",
+      "PackagePath": "staticwebassets\\js\\user-edit-profile.js"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },

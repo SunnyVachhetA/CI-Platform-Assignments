@@ -218,8 +218,9 @@ function renderMediaOnHTML(files) {
 let storyId = 0;
 const redirectToStoryListing = () => window.location.href = storyListingPage;
 $('#btn-story-cancel').click(
-    () =>
+    (e) =>
     {
+        e.preventDefault();
         storyId = $('#user-story-id').val();
         console.log(storyId);
         if (storyId === undefined || storyId == 0) {

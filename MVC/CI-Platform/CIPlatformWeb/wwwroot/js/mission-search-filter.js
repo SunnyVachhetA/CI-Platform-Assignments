@@ -169,10 +169,10 @@ function LoadMissionIndex() {
         url: "Volunteer/Home/LoadMissionsIndexAjax",
         data: currentPageNumber,
         success: function (result) {
-            console.log("Data sent successfully!");
             $('#partial-mission-listing').html(result);
             missionDisplay();
             missionPagination();
+            addToFavouriteHandler();
         },
         error: function (xhr, status, error) {
             console.log("Error sending data: " + error);

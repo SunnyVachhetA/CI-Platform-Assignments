@@ -37,14 +37,14 @@
                     </div>
                     @if( userId != 0L && mission.FavrouriteMissionsId.Contains(userId) )
                     {
-                    <div class="position-absolute rounded-pill p-2 msn-favourite cursor-pointer bg-danger">
-                        <a href="#"><img src="~/assets/heart.png" alt="Add Favourite"></a>
-                        </div>
+                    <div class="position-absolute rounded-pill p-2 msn-favourite cursor-pointer bg-danger" data-missionid="@mission.MissionId">
+                        <img src="~/assets/heart.png" alt="Add Favourite">
+                     </div>
                     }
                     else
                     {
-                        <div class="position-absolute rounded-pill p-2 msn-favourite cursor-pointer">
-                            <a href="#"><img src="~/assets/heart.png" alt="Add Favourite"></a>
+                        <div class="position-absolute rounded-pill p-2 msn-favourite cursor-pointer" data-missionid="@mission.MissionId">
+                            <img src="~/assets/heart.png" alt="Add Favourite">
                         </div>
                     }
                     <div class="cursor-pointer position-absolute rounded-pill p-2 msn-share">
@@ -228,10 +228,19 @@
                     <img src="./assets/pin.png" alt="Location" class="me-2">
                     @mission.CityName
                 </div>
-
-                <div class="cursor-pointer position-absolute rounded-pill p-2 msn-list-favourite">
-                    <a href="#"><img src="./assets/heart.png" alt="Add Favourite"></a>
-                </div>
+                
+                @if (userId != 0L && mission.FavrouriteMissionsId.Contains(userId))
+                {
+                    <div class="cursor-pointer position-absolute rounded-pill p-2 msn-list-favourite bg-danger" data-missionid="@mission.MissionId">
+                        <img src="./assets/heart.png" alt="Add Favourite">
+                    </div>
+                }
+                else
+                {
+                        <div class="cursor-pointer position-absolute rounded-pill p-2 msn-list-favourite" data-missionid="@mission.MissionId">
+                        <img src="./assets/heart.png" alt="Add Favourite">
+                    </div>
+                }
 
                 <div class="cursor-pointer position-absolute rounded-pill p-2 msn-list-share">
                     <img src="./assets/user.png" alt="Add Favourite">

@@ -102,7 +102,6 @@ function addMissionToFavouritesAjax()
         success: function (result, status, jqXHR) {
             let message = '';
             if (jqXHR.status === 201) {
-                console.log('Created');
                 isFav = 'True';
                 message = 'Mission added to your favourites..';
             }
