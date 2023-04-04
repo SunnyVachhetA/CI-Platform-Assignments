@@ -22,4 +22,6 @@ public interface IServiceUnit
     IStoryMediaService StoryMediaService { get; }
 
     IStoryInviteService StoryInviteService { get; }
+
+    IUserSkillService UserSkillService { get; }
 }

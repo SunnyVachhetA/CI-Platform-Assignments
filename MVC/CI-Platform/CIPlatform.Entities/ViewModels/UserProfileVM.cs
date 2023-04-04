@@ -39,10 +39,15 @@ public class UserProfileVM
     [Display(Name = "City*")]
     public int CityId { get; set; }
 
+    [Required(ErrorMessage = "Please select your availability!")]
     public MissionAvailability? Availability { get; set; }
 
     [Display(Name="LinkedIn")]
     public string? LinkedInUrl { get; set; }
+
+    [Display(Name="Phone Number")]
+    [RegularExpression("^[0-9]{10}$", ErrorMessage = "Phone number should contains only numbers!")]
+    public string? PhoneNumber { get; set; }
 
     public List<SkillVM> AllSkills { get; set; } = new();
 

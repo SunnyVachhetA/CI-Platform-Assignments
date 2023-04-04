@@ -197,6 +197,30 @@ public class UserService: IUserService
         _unitOfWork.UserRepo.UpdateUserAvatar( $"{media.Path}{media.Name}{media.Type}", userId );
     }
 
+    public void UpdateUserDetails(UserProfileVM userProfile)
+    {
+        var user = _unitOfWork.UserRepo.GetFirstOrDefault( user => user.UserId == userProfile.UserId );
+
+        if (user == null) return;
+
+        user.FirstName = userProfile.FirstName;
+        user.LastName = userProfile.LastName;
+        user.Department = userProfile.Department;
+        user.EmployeeId = userProfile.EmployeeId;
+        user.Title = userProfile.Title;
+        user.ProfileText = userProfile.MyProfile;
+        user.WhyIVolunteer = userProfile.WhyIVolunteer;
+        user.CityId = userProfile.CityId;
+        user.CountryId = userProfile.CountryId;
+        user.Availability = (byte?)userProfile.Availability;
+        user.LinkedInUrl = userProfile.LinkedInUrl;
+        user.UpdatedAt = DateTimeOffset.Now;
+        user.PhoneNumber = userProfile.PhoneNumber?? user.PhoneNumber;
+
+        _unitOfWork.Save();
+    }
+    
+
     private UserProfileVM ConvertUserToUserProfileVM(User user)
     {
         UserProfileVM userProfileVm = new()
@@ -214,7 +238,8 @@ public class UserService: IUserService
             CityId = user.CityId?? 0,
             Availability = (MissionAvailability) (user.Availability?? 0),
             LinkedInUrl = user.LinkedInUrl,
-            UserSkills = ConvertToUserSkill(user.UserSkills)
+            UserSkills = ConvertToUserSkill(user.UserSkills),
+            PhoneNumber = user.PhoneNumber
         };
         return userProfileVm;
     }

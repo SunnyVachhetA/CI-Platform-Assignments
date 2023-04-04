@@ -75,4 +75,5 @@ public class UserRepository : Repository<User>, IUserRepository
         _dbContext.Database.ExecuteSqlRaw("UPDATE [user] SET avatar = @avatar WHERE user_id = @userId", avatarParam, userIdParam);
 
     }
+
 }

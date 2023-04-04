@@ -15,4 +15,5 @@ public interface IUserService
     UserProfileVM LoadUserProfile(long id);
     bool CheckOldCredentialAndUpdate(ChangePasswordVM passwordVm);
     void UpdateUserAvatar(IFormFile file, string wwwRoot, long userId);
+    void UpdateUserDetails(UserProfileVM userProfile);
 }

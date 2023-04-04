@@ -10,6 +10,8 @@ imgUpload.addEventListener
             profileImg.src = URL.createObjectURL(file);
 
             handleProfileImageUpload(file);
+
+            $('#user-avatar').val(profileImg.src);
         }
     );
 
@@ -31,8 +33,6 @@ function handleProfileImageUpload(file) {
         error: ajaxErrorSweetAlert
     });
 }
-
-
 
 $('#country-menu option').click
     (
@@ -73,8 +73,6 @@ function handleChangePassword(event)
     let NewPassword = $('#changePasswordVm_NewPassword').val();
     let ConfirmPassword = $('#changePasswordVm_ConfirmPassword').val();
 
-    
-    alert(UserId);
     if (NewPassword != ConfirmPassword) {
         return;    
     }
@@ -90,6 +88,9 @@ function handleChangePassword(event)
             console.log(jqXHR.status);
             if (jqXHR.status == 200) {
                 $('#changePasswordModal').modal('hide');
+                $('#changePasswordVm_OldPassword').val('');
+                $('#changePasswordVm_NewPassword').val('');
+                $('#changePasswordVm_ConfirmPassword').val('');
                 displayActionMessageSweetAlert('Password Changed', 'Password Changed Successfully!', 'success');
             }
             else {
@@ -102,7 +103,7 @@ function handleChangePassword(event)
 
 }
 
-$('#changePasswordVm_ConfirmPassword').keydown
+$('#changePasswordVm_ConfirmPassword').change
     (
         () =>
         {
@@ -119,4 +120,124 @@ $('#changePasswordVm_ConfirmPassword').keydown
             }
         }
 );
+
+
+//Add Skill Modal
+
+const userSkillMap = new Map();
+const userSkillList = [];
+let currentSelectedSkill = {};
+//For add/remove skill
+$('#user-skill li').each(function () {
+    const skillid = $(this).attr('data-skillid');
+    userSkillList.push(skillid);
+    userSkillMap.set(skillid, $(this).text());
+});
+handleAllSkillActive();
+function handleAllSkillActive() {
+    $('#all-skill li').each(function () {
+        const skillid = $(this).attr('data-skillid');
+        if (userSkillMap.has(skillid)) {
+            $(this).addClass('active');
+        }
+        else {
+            $(this).removeClass('active');
+        }
+    });
+}
+
+let prevSkill;
+$('#all-skill li').each
+    (
+        (_, item) => {
+            $(item).click
+                (
+                    () => {
+                        const skillid = $(item).attr('data-skillid');
+
+                        if (!$.isEmptyObject(prevSkill) && prevSkill.attr('data-skillid') !== skillid && !userSkillMap.has(prevSkill.attr('data-skillid'))) {
+                            prevSkill.removeClass('active');
+                        }
+                        prevSkill = $(item);
+
+                        if (!userSkillMap.has(skillid)) {
+                            $(item).addClass('active');
+                            currentSelectedSkill.skillid = skillid;
+                            currentSelectedSkill.skill = $(item).text();
+                            currentSelectedSkill.from = 'allskill';
+                        }
+
+                    }
+                );
+        }
+    );
+
+$('#usr-skill-add').click
+    (
+        () => {
+            if (Object.keys(currentSelectedSkill).length !== 0 && !userSkillMap.has(currentSelectedSkill.skillid)) {
+                if (currentSelectedSkill.from == 'allskill') {
+                    let skillLi = $("<li>").text(currentSelectedSkill.skill).attr('data-skillid', currentSelectedSkill.skillid);
+                    skillLi.click(selectFromUserSkill);
+                    $('#user-skill').append(skillLi);
+                    userSkillMap.set(currentSelectedSkill.skillid, currentSelectedSkill.skill);
+                }
+            }
+        }
+    );
+
+
+let selectedRemoveSkill;
+$('#user-skill li').each
+    (
+        (_, item) => {
+            $(item).click
+                (
+                    selectFromUserSkill
+                );
+        }
+    );
+
+function selectFromUserSkill(event) {
+    event.preventDefault();
+    $('#user-skill li').removeClass('active');
+    $(this).addClass('active');
+    selectedRemoveSkill = $(this);
+}
+
+$('#usr-skill-remove').click
+    (
+        () => {
+            if (selectedRemoveSkill !== undefined && !$.isEmptyObject(selectedRemoveSkill)) {
+                const skillid = $(selectedRemoveSkill).attr('data-skillid');
+                userSkillMap.delete(skillid);
+                selectedRemoveSkill.remove();
+                console.log(userSkillMap);
+                handleAllSkillActive();
+            }
+        }
+    );
+
+$('#btn-skill-save').click(displayUserProfileSkills);
+function displayUserProfileSkills() {
+    $('#user-profile-skill').empty();
+
+    for (const [skillid, skill] of userSkillMap) {
+        
+        let li = $("<li>").text(skill).attr('data-skillid', skillid);
+        let inputElement = $('<input>', {
+            type: 'hidden',
+            value: skillid,
+            name: 'finalSkillList'
+        });
+        $('#user-profile-skill').append(li);
+        $('#user-profile-skill').append(inputElement);
+    }
+    if (userSkillMap.size === 0) {
+        var div = $('<div>').addClass('ps-3 py-2 fw-light font-xs text-danger').attr('id', 'no-skill').text('No skill added!');
+        $('#user-profile-skill').append(div);
+    }
+    
+    $('#addSkillModal').modal('hide');
+}
 

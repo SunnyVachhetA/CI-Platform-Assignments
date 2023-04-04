@@ -938,10 +938,15 @@ form-subtitle,
     cursor: pointer;
 }
 
-.skill-list ul li:hover, .skill-list ul li.active {
+.skill-list ul li:hover {
+    background-color: silver;
+}
+
+.skill-list ul li.active {
     background-color: var(--col-brown);
 }
 
+#addSkillModal > div { max-width: 900px !important; }
 /* .modal-title { font-weight: 500; } */
 /* Edit User Profile css end*/
 

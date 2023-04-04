@@ -45,9 +45,18 @@ public class UserController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("EditUserProfile", Name = "EditUserProfile")]
-    public IActionResult EditUserProfile(UserProfileVM userProfile)
+    public IActionResult EditUserProfile(UserProfileVM userProfile, List<short> preloadedSkillList, List<short> finalSkillList)
     {
-        return Index(1);
+        if (!ModelState.IsValid)
+        {
+            TempData["edit-profile-fail"] = "Provide valid information!";
+            return RedirectToAction("UserProfile", userProfile);
+        }
+
+        _serviceUnit.UserService.UpdateUserDetails(userProfile);
+        _serviceUnit.UserSkillService.UpdateUserSkills( userProfile.UserId, preloadedSkillList, finalSkillList );
+        TempData["edit-profile-success"] = "Your changes have been saved!";
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpPatch]
@@ -345,7 +354,7 @@ public class UserController : Controller
             string directoryPath = $@"{wwwRootPath}\images\user\";
             if (!fileName.Equals(prevFileName))
             {
-                StoreMediaService.DeleteFileFromWebRoot( Path.Combine(directoryPath, fileName) );
+                StoreMediaService.DeleteFileFromWebRoot( Path.Combine(directoryPath, prevFileName) );
             }
 
             _serviceUnit.UserService.UpdateUserAvatar( file, wwwRootPath, userId );

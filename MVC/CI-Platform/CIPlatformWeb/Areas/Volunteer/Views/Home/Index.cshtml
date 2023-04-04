@@ -6,9 +6,13 @@
     isLoggedOut = TempData["logout-success"] != null;
 
     var isRegister = TempData["registratoin-success"] != null;
+
+    var updateProfile = TempData["edit-profile-success"];
+    TempData.Remove("edit-profile-success");
 }
 @Html.HiddenFor(model => isLoggedOut, new { id = "is-logged-out" })
 @Html.HiddenFor(model => isRegister, new { id = "is-registered" })
+@Html.HiddenFor(model => updateProfile, new { id = "update-profile-success" })
 <main class="index-grid d-grid min-vh-100">
 <header>
     <partial name = "_Navbar" ></partial>
@@ -34,5 +38,13 @@
     <script src = "~/js/mission-view-toggler.js"></script>
     <script src = "~/js/mission-search-filter.js"></script>
     <script src="~/js/mission-pagination.js"></script>
+    <script>
+
+        var updateSuccess = $('#update-profile-success').val();
+        
+        if(updateSuccess !== undefined && updateSuccess !== '')
+            displayActionMessageSweetAlert('Profile Updated', 'You changes has been saved!', 'success');
+
+    </script>
 }
 

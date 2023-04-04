@@ -68,7 +68,7 @@ public class StoreMediaService
         {
             Type = extension,
             Name = fileName,
-            Path = $@"\{path}"
+            Path = $@"\{path}\"
         };
         return media;
     }

@@ -21,5 +21,7 @@ public interface IUnitOfWork
     IStoryMediaRepository StoryMediaRepo { get; }
 
     IStoryInviteRepository StoryInviteRepo { get; }
+
+    IUserSkillRepository UserSkillRepo { get; }
     void Save();
 }
