@@ -54,3 +54,21 @@ function handleUserLogoutAjax() {
         error: ajaxErrorSweetAlert
     });
 }
+
+//Handling contact us form
+$('#btn-contact-us').click
+    (
+        () => {
+            $.ajax({
+                type: 'GET',
+                url: '/Volunteer/User/ContactUs',
+                success: function (result) {
+                    console.log(result);
+                    $('#partial-contact-form').html(result);
+                    $('#contactUsFormModal').modal('show');
+                },
+                error: ajaxErrorSweetAlert
+            });
+
+        }
+    );

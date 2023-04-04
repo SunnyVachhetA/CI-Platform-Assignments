@@ -629,6 +629,10 @@
       "PackagePath": "staticwebassets\\images\\user\\a66e5dc4-0f2a-4d97-b9a1-bd824c9926fb.jpg"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\e4de3c52-05b5-4c56-b858-b6f25c77c143.jpg",
+      "PackagePath": "staticwebassets\\images\\user\\e4de3c52-05b5-4c56-b858-b6f25c77c143.jpg"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\mission-details-ajax.js",
       "PackagePath": "staticwebassets\\js\\mission-details-ajax.js"
     },

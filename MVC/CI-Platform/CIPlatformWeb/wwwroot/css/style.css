@@ -21,6 +21,7 @@ html { scroll-behavior: smooth; }
     --col-green: #14C506;
 }
 
+a:hover { color: var(--col-orange); }
 .index-grid {
    grid-template-rows : auto auto auto 0.3fr;
 }

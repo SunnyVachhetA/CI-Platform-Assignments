@@ -367,5 +367,14 @@ public class UserController : Controller
             return StatusCode(500);
         }
     }
+
+    [HttpGet]
+    [Route("ContactUs", Name="ContactUs")]
+    public IActionResult ContactUs()
+    {
+        ContactUsVM contactUsVm = new();
+        contactUsVm.Message = "This is message";
+        return PartialView("_ContactUs", contactUsVm);
+    }
     #endregion
 }
