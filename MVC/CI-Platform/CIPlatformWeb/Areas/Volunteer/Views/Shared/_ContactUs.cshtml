@@ -1,4 +1,5 @@
 ﻿@model ContactUsVM
+
 <!-- Contact Us Form Modal Begin -->
 <div class="modal" tabindex="-1" id="contactUsFormModal">
     <div class="modal-dialog modal-dialog-centered">
@@ -7,7 +8,7 @@
                 <h5 class="modal-title font-22 text-black-1">Contact Us</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" class="user-modal-form" id="contact-form">
+            <form class="user-modal-form" id="contact-form" >
                 <div class="modal-body d-flex flex-column gap-3">
                     <input type ="hidden" asp-for="UserId"/>
                     <div>
@@ -16,26 +17,28 @@
                     </div>
                     <div>
                         <label class="form-label" asp-for="Email"></label>
-                        <input class="form-control" value="@Model.Email" disabled>
+                        <input asp-for="Email" class="form-control" value="@Model.Email" disabled>
                     </div>
                     <div>
                         <label class="form-label" asp-for="Subject"></label>
-                        <input asp-for ="Subject" class="form-control">
+                        <input asp-for ="Subject" class="form-control" placeholder="Enter Your Subject">
                         <span class="font-xs text-danger" asp-validation-for="Subject"></span>
                     </div>
                     <div>
                         <label asp-for="Message" class="form-label"></label>
-                        <textarea class="form-control" asp-for="Message" rows="3"></textarea>
+                        <textarea class="form-control" asp-for="Message" rows="3" placeholder="Enter Your Message"></textarea>
                         <span class="font-xs text-danger" asp-validation-for="Message"></span>
                     </div>
 
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn-g-gray" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-g-orange" type="submit">Save</button>
+                    <button type="submit" class="btn-g-orange" type="submit">Send</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!-- Contact Us Form Modal finish -->
+
+<partial name="_ValidationScriptsPartial" />

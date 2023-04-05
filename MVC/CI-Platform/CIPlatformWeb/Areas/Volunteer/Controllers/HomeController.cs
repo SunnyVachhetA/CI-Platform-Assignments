@@ -14,19 +14,7 @@ namespace CIPlatformWeb.Areas.User.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IServiceUnit _serviceUnit;
-        /*private List<CountryVM> countryList = new();
-        private List<CityVM> cityList = new();
-        private List<ThemeVM> themeList = new();
-        private List<SkillVM> skillList = new();
-        public List<MissionCardVM> missionList = new();
-        private MissionLandingVM missionLanding = new()
-        {
-             countryList = new(),
-             cityList = new(),
-             themeList = new(),
-             missionList = new(),
-             skillList = new()
-        };*/
+        
         public HomeController(ILogger<HomeController> logger, IServiceUnit serviceUnit)
         {
             _logger = logger;
@@ -53,7 +41,6 @@ namespace CIPlatformWeb.Areas.User.Controllers
 
         public IActionResult Privacy()
         {
-            Console.WriteLine(  );
             return View();
         }
 

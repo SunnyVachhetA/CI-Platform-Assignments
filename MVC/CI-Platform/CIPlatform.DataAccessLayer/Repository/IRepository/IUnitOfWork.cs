@@ -23,5 +23,7 @@ public interface IUnitOfWork
     IStoryInviteRepository StoryInviteRepo { get; }
 
     IUserSkillRepository UserSkillRepo { get; }
+
+    IContactUsRepository ContactUsRepo { get; }
     void Save();
 }

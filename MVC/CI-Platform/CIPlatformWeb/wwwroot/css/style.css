@@ -909,7 +909,7 @@ form-subtitle,
     color: var(--col-black);
 }
 
-.edit-profile #form-edit-profile .form-control::placeholder {
+.edit-profile #form-edit-profile .form-control::placeholder, #user-modal-form .form-control::placeholder {
     font-size: 14px !important;
     color: var(--col-secondary-brown);
 }
@@ -951,3 +951,43 @@ form-subtitle,
 /* .modal-title { font-weight: 500; } */
 /* Edit User Profile css end*/
 
+/* Privacy policy page css begin */
+.policy-links .link img {
+    height: 11px;
+}
+
+.policy-links .link {
+    color: var(--col-secondary-brown);
+    font-size: 14px;
+    font-weight: 300;
+    transition: var(--transition);
+}
+
+.policy-links .link:active, .policy-links .active {
+    font-weight: 400;
+    color: var(--col-black-text) !important;
+}
+
+.font-black {
+    color: var(--col-black-text) !important;
+}
+
+.policy-md-text {
+    font-size: 15px;
+    color: var(--col-black);
+    font-weight: 300;
+}
+
+ol {
+    counter-reset: item
+}
+
+li {
+    display: block
+}
+
+li:before {
+    content: counters(item, ".") " ";
+    counter-increment: item
+}
+/* Privacy policy page css end */

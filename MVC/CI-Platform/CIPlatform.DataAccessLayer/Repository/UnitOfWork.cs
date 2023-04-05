@@ -33,6 +33,8 @@ public class UnitOfWork : IUnitOfWork
     public IStoryInviteRepository StoryInviteRepo { get; }
 
     public IUserSkillRepository UserSkillRepo { get; private set; }
+    
+    public IContactUsRepository ContactUsRepo { get; private set; }
     public UnitOfWork(CIDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -55,6 +57,7 @@ public class UnitOfWork : IUnitOfWork
         StoryMediaRepo= new StoryMediaRepository(_dbContext);
         StoryInviteRepo = new StoryInviteRepository(_dbContext);
         UserSkillRepo = new UserSkillRepository(_dbContext);
+        ContactUsRepo = new ContactUsRepository(_dbContext);
     }
 
     public void Save()

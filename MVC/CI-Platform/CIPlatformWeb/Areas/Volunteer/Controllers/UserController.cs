@@ -110,7 +110,8 @@ public class UserController : Controller
     {
         HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
         HttpContext.Session.SetString("UserId", user.UserId.ToString()!);
-        HttpContext.Session.SetString("UserAvatar", user.Avatar!);
+        HttpContext.Session.SetString("UserAvatar", user.Avatar);
+        HttpContext.Session.SetString("UserEmail", user.Email);
     }
 
     [Route("ForgotPassword")]
@@ -370,11 +371,32 @@ public class UserController : Controller
 
     [HttpGet]
     [Route("ContactUs", Name="ContactUs")]
-    public IActionResult ContactUs()
+    public IActionResult ContactUs( long userId, string userName, string userEmail )
     {
-        ContactUsVM contactUsVm = new();
-        contactUsVm.Message = "This is message";
+        ContactUsVM contactUsVm = new()
+        {
+            UserId = userId,
+            UserName = userName,
+            Email = userEmail
+        };
         return PartialView("_ContactUs", contactUsVm);
+    }
+
+    [HttpPost]
+    [Route("ContactUsPost", Name = "ContactUsPost")]
+    public IActionResult ContactUsPost(long UserId, string Subject, string Message)
+    {
+        try
+        {
+            _serviceUnit.ContactUsService.AddContactMessage(UserId, Subject, Message);
+            return StatusCode(201);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error occured during contact us post: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
     }
     #endregion
 }

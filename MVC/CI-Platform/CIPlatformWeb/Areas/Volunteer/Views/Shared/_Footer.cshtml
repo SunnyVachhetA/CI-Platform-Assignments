@@ -1,8 +1,10 @@
 ﻿<!-- Footer(New) -->
-
+@{
+    var userName = Context.Session.GetString("UserName");
+}
 <footer class="border">
     <div class="container p-4">
-        <a href="#" class="font-xs text-light-custom text-black-1">
+        <a asp-controller="Home" asp-action="Privacy" class="font-xs text-light-custom text-black-1">
             Privacy Policy
         </a>
         <a class="font-xs fw-light text-black-1 ms-4 cursor-pointer" id="btn-contact-us"> Contact Us </a>
@@ -10,4 +12,5 @@
 </footer>
 <div id="partial-contact-form">
 </div>
+
 <!-- Footer(New) Fin -->
