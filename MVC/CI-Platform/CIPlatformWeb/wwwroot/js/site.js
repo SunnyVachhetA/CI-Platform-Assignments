@@ -89,7 +89,6 @@ function registerContactUsSubmit()
 
 function handleContactUsFormSubmit(event) {
     event.preventDefault();
-    console.log($('#contact-form').serialize());
     $('#contact-form').valid();
 
     if ($('#contact-form').valid()) {

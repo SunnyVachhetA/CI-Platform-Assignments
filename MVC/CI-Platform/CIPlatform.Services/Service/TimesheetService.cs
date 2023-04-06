@@ -17,6 +17,12 @@ public class TimesheetService: ITimesheetService
     {
         return timesheet => timesheet.UserId == id;
     }
+
+    private Func<Timesheet, bool> FilterUserTimesheet(long id, bool checkFor)
+    {
+        return timesheet => timesheet.UserId == id && timesheet.Mission.MissionType == checkFor;
+    }
+
     public List<VolunteerTimesheetVM> LoadUserTimesheet(long id)
     {
         Func<Timesheet, bool> filter = FilterUserTimesheet(id);
@@ -35,7 +41,6 @@ public class TimesheetService: ITimesheetService
         return list;
     }
 
-
     public static VolunteerTimesheetVM ConvertTimesheetToVolunteerTimesheetVM(Timesheet timesheet)
     {
         VolunteerTimesheetVM timesheetVM = new()
@@ -52,5 +57,44 @@ public class TimesheetService: ITimesheetService
         };
 
         return timesheetVM;
+    }
+
+
+
+    public void SaveUserVolunteerHours(VolunteerHourVM volunteerHour)
+    {
+        var timesheetEntry = ConvertVolunteerHourVMToTimesheetModel(volunteerHour);
+        _unitOfWork.TimesheetRepo.Add(timesheetEntry);
+        _unitOfWork.Save();
+    }
+
+    public IEnumerable<VolunteerTimesheetVM> LoadUserTimesheet(long userId, MissionTypeEnum missionType)
+    {
+        bool checkFor = missionType != MissionTypeEnum.GOAL;
+        var timesheet = _unitOfWork.TimesheetRepo.GetUserTimesheet(FilterUserTimesheet(userId, checkFor));
+
+        IEnumerable<VolunteerTimesheetVM> timesheetEntry = new List<VolunteerTimesheetVM>();
+
+        if (timesheet.Any())
+        {
+            timesheetEntry =
+                timesheet
+                    .Select(ConvertTimesheetToVolunteerTimesheetVM);
+        }            
+        return timesheetEntry;
+    }
+
+    private Timesheet ConvertVolunteerHourVMToTimesheetModel(VolunteerHourVM volunteerHour)
+    {
+        Timesheet timesheet = new()
+        {
+            UserId = volunteerHour.UserId,
+            MissionId = volunteerHour.MissionId,
+            Notes = volunteerHour.Message,
+            Time = new TimeSpan(volunteerHour.Hours?? 0, volunteerHour.Minutes?? 0, 00),
+            DateVolunteered = volunteerHour.Date,
+            CreatedAt = DateTimeOffset.Now
+        };
+        return timesheet;
     }
 }

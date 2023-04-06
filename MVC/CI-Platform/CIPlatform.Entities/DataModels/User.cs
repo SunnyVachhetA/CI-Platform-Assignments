@@ -49,7 +49,7 @@ public partial class User
 
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
 
-    public virtual ICollection<ContactUs> ContactUs { get; } = new List<ContactUs>();
+    public virtual IEnumerable<ContactUs>? ContactUs { get; } = new List<ContactUs>();
 
     public virtual Country? Country { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service;
 using CIPlatform.Services.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -411,9 +412,14 @@ public class UserController : Controller
 
     [HttpGet]
     [Route("AddHourModal", Name = "AddHourModal")]
-    public IActionResult AddHourModal()
+    public IActionResult AddHourModal(long userId)
     {
-        return PartialView("_AddVolunteerHourModal");
+        var missionList = _serviceUnit.MissionApplicationService.LoadUserApprovedMissions(userId);
+        VolunteerHourVM volunteerHourVM = new()
+        {
+            MissionList = missionList
+        };
+        return PartialView("_AddVolunteerHourModal", volunteerHourVM);
     }
 
     [HttpGet]
@@ -421,5 +427,16 @@ public class UserController : Controller
     public IActionResult AddGoalModal()
     {
         return PartialView("_AddVolunteerGoalModal");
+    }
+
+    [HttpPost]
+    [Route("AddVolunteerHours", Name = "AddVolunteerHours")]
+    public IActionResult AddVolunteerHours(VolunteerHourVM volunteerHour)
+    {
+
+        _serviceUnit.TimesheetService.SaveUserVolunteerHours(volunteerHour);
+        IEnumerable<VolunteerTimesheetVM> timesheet = _serviceUnit.TimesheetService
+            .LoadUserTimesheet(volunteerHour.UserId, MissionTypeEnum.GOAL);
+        return PartialView("_VolunteerHoursList", timesheet);
     }
 }

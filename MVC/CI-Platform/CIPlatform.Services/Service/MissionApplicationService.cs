@@ -1,6 +1,7 @@
 ﻿using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
 
 namespace CIPlatform.Services.Service;
@@ -42,7 +43,7 @@ public class MissionApplicationService : IMissionApplicationService
             UserName = application.User.FirstName + " " + application.User.LastName
         };
     }
-
+    
     //Fetches missions where users participated as volunteer
     public SingleUserMissionsVM GetSingleUserMission(long userId)
     {
@@ -58,5 +59,26 @@ public class MissionApplicationService : IMissionApplicationService
         }
 
         return userMission;
+    }
+ 
+
+    public IEnumerable<SingleMissionVM> LoadUserApprovedMissions(long id)
+    {
+        Func<MissionApplication, bool> filter = (application) => application.UserId == id && application.ApprovalStatus == 1;
+        var missionList =
+            unitOfWork.MissionApplicationRepo.FetchSingleUserMissions(filter);
+
+        IEnumerable<SingleMissionVM> userMissionList = new List<SingleMissionVM>();
+        if (!missionList.Any()) return userMissionList;
+
+        userMissionList =
+            missionList
+                .Select( application => new SingleMissionVM()
+                {
+                    MissionId = application.MissionId,
+                    Title = application.Mission.Title?? string.Empty,
+                    MissionType = application.Mission.MissionType ? MissionTypeEnum.TIME : MissionTypeEnum.GOAL
+                });
+        return userMissionList;
     }
 }

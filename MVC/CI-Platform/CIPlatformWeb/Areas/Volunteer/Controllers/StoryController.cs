@@ -42,11 +42,11 @@ public class StoryController : Controller
             return RedirectToAction("Index");
         }
 
-        List<SingleUserMissionListVM> missionList = new();
+        List<SingleMissionVM> missionList = new();
 
         int size = userMissions.MissionTitle.Count();
         for (int i = 0; i < size; i++)
-            missionList.Add( new SingleUserMissionListVM()
+            missionList.Add( new SingleMissionVM()
             {
                 MissionId = userMissions.MissionId[i],
                 Title = userMissions.MissionTitle[i]

@@ -5,4 +5,5 @@ public interface IMissionApplicationService
 {
     Task<List<RecentVolunteersVM>> FetchRecentVolunteers(long missionId);
     SingleUserMissionsVM GetSingleUserMission(long userId);
+    IEnumerable<SingleMissionVM> LoadUserApprovedMissions(long id);
 }

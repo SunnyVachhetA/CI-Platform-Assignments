@@ -643,9 +643,7 @@ public partial class CIDbContext : DbContext
         {
             entity.ToTable("timesheet");
 
-            entity.Property(e => e.TimesheetId)
-                .ValueGeneratedNever()
-                .HasColumnName("timesheet_id");
+            entity.Property(e => e.TimesheetId).HasColumnName("timesheet_id");
             entity.Property(e => e.Action).HasColumnName("action");
             entity.Property(e => e.CreatedAt).HasColumnName("created_at");
             entity.Property(e => e.DateVolunteered).HasColumnName("date_volunteered");

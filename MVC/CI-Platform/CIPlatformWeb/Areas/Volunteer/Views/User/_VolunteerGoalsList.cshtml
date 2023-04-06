@@ -18,28 +18,21 @@
                 <th>Mission</th>
                 <th>Date</th>
                 <th>Action</th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Plantation Programme</td>
-                <td>22/02/2022</td>
-                <td>0</td>
-                <td class="d-flex gap-4 vl-timesheet-action">
-                    <img src="~/assets/editing.png" alt="Edit">
-                    <img src="~/assets/delete.png" alt="Delete">
-                </td>
-            </tr>
-            <tr>
-                <td>Plantation Programme</td>
-                <td>22/02/2022</td>
-                <td>0</td>
-                <td class="d-flex gap-4 vl-timesheet-action">
-                    <img src="~/assets/editing.png" alt="Edit">
-                    <img src="~/assets/delete.png" alt="Delete">
-                </td>
-            </tr>
+            @foreach (var entry in Model)
+            {
+                <tr>
+                    <td>@entry.MissionTitle</td>
+                    <td>@entry.Date.ToString("d")</td>
+                    <td>@entry.Action</td>
+                    <td class="d-flex gap-4 vl-timesheet-action">
+                       <img src="~/assets/editing.png" data-timesheetid="@entry.TimesheetId" alt="Edit">
+                       <img src="~/assets/delete.png" data-timesheetid="@entry.TimesheetId" alt="Delete">
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     }

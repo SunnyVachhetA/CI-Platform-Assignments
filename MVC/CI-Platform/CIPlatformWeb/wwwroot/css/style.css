@@ -1000,6 +1000,8 @@ form-subtitle,
 
 .vl-timesheet-hour, .vl-timesheet-goal {
     border: 1px solid var(--col-brown);
+    height: 400px;
+    overflow: auto;
 }
 
 #addVolunteerHourModal > div, #addVolunteerGoalModal > div {

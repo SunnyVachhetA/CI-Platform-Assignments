@@ -3,7 +3,12 @@
     var goalList = Model.Where( timesheet => timesheet.MissionType == MissionTypeEnum.GOAL).ToList();
     var timeList = Model.Where(timesheet => timesheet.MissionType == MissionTypeEnum.TIME).ToList();
 
+    var goalMissionCount = Model.Where(msn => msn.MissionType == MissionTypeEnum.GOAL);
+    var timeMissionCount = Model.Where( msn => msn.MissionType == MissionTypeEnum.TIME );
 }
+
+@Html.HiddenFor(model => goalMissionCount, new { id="goal-msn-count" })
+@Html.HiddenFor(model => timeMissionCount, new { id="time-msn-count" })
 <main class="h-100 timesheet-grid">
     <header>
         <partial name="_Navbar" />
@@ -14,15 +19,16 @@
         <h1 class="font-black fw-light">Volunteering Timesheet</h1>
         <div class="d-flex flex-column flex-lg-row vl-timesheet gap-4 mt-4">
             <div class="vl-timesheet-hour px-3 py-4 flex-basis" id = "vol-timesheet-hour">
-                <partial name="_VolunteerHoursList" model="timeList"/>
+                <partial name="_VolunteerHoursList" model="@timeList"/>
             </div>
             <div class="vl-timesheet-goal px-3 py-4 flex-basis" id="vol-timesheet-goal">
-                <partial name="_VolunteerGoalsList" model = "goalList"/>
+                <partial name="_VolunteerGoalsList" model = "@goalList"/>
             </div>
         </div>
     </section>
     
-    <div id="partial-modal-container"></div>
+    <div id="partial-modal-container">
+    </div>
 
     <partial name="_Footer" />
 </main>

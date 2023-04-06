@@ -1,4 +1,5 @@
-﻿<!-- Add Volunteer Goal Modal Begin -->
+﻿@model VolunteerGoalVM
+<!-- Add Volunteer Goal Modal Begin -->
 <div class="modal" tabindex="-1" id="addVolunteerGoalModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -6,26 +7,36 @@
                 <h5 class="modal-title font-22 text-black-1">Please input below Volunteering Goal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id = "" class="user-modal-form">
+            <form id = "form-add-goal" class="user-modal-form">
                 <div class="modal-body d-flex flex-column gap-3">
                     <div>
-                        <label class="form-label" for="">Mission</label>
-                        <select class="form-select">
+                        <label class="form-label" asp-for="MissionId"></label>
+                        <select class="form-select" asp-for="MissionId">
                             <option value="" selected disabled>Select Mission</option>
+                            @foreach (var mission in Model.MissionList)
+                            {
+                                @if (mission.MissionType == MissionTypeEnum.GOAL)
+                                {
+                                    <option value="@mission.MissionId">@mission.Title</option>
+                                }
+                            }
                         </select>
+                        <span class="text-danger font-xs" asp-validation-for="MissionId"></span>
                     </div>
                     <div>
-                        <label class="form-label" for="">Date Volunteered</label>
-                        <input type="text" onfocus="(this.type='date')" class="form-control" placeholder="Date Volunteered">
+                        <label class="form-label" asp-for="Date"></label>
+                        <input onfocus="(this.type='date')" asp-for="Date" class="form-control" placeholder="Date Volunteered">
+                        <span class="text-danger font-xs" asp-validation-for="Date"></span>
                     </div>
                     <div>
-                        <label class="form-label" for="">Actions</label>
-                        <input type="number" class="form-control" placeholder="Enter Actions">
+                        <label class="form-label" asp-for="Action"></label>
+                        <input type="number" class="form-control" asp-for="Action" placeholder="Enter Actions">
+                        <span class="text-danger font-xs" asp-validation-for="Action"></span>
                     </div>
                     <div>
-                        <label for="" class="form-label">Message</label>
-                        <textarea class="form-control" rows="4" placeholder="Enter Your Message"></textarea>
-                        <span class="font-xs text-danger"></span>
+                        <label asp-for="Message" class="form-label"></label>
+                        <textarea class="form-control" rows="4" asp-for="Message" placeholder="Enter Your Message"></textarea>
+                        <span class="font-xs text-danger" asp-validation-for="Message"></span>
                     </div>
 
                 </div>
