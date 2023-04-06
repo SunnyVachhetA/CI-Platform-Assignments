@@ -26,4 +26,6 @@ public interface IServiceUnit
     IUserSkillService UserSkillService { get; }
 
     IContactUsService ContactUsService { get; } 
+
+    ITimesheetService TimesheetService { get; }
 }

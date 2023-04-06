@@ -977,17 +977,48 @@ form-subtitle,
     color: var(--col-black);
     font-weight: 300;
 }
-
-ol {
-    counter-reset: item
-}
-
-li {
-    display: block
-}
-
-li:before {
-    content: counters(item, ".") " ";
-    counter-increment: item
-}
 /* Privacy policy page css end */
+
+/* Timesheet CSS begin */
+.vl-timesheet .vl-timesheet-action img {
+    height: 19px;
+    width: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.vl-timesheet .vl-timesheet-action img:hover {
+    height: 21px;
+}
+
+
+@media screen and (min-width: 576px) {
+    .vl-timesheet-action {
+        justify-content: end;
+    }
+}
+
+.vl-timesheet-hour, .vl-timesheet-goal {
+    border: 1px solid var(--col-brown);
+}
+
+#addVolunteerHourModal > div, #addVolunteerGoalModal > div {
+    max-width: 50.875rem !important;
+}
+
+@media screen and (min-width: 1500px) {
+    #addVolunteerHourModal > div, #addVolunteerGoalModal > div {
+        max-width: 71.875rem !important;
+    }
+}
+
+.vl-timesheet-hour table tr th, .vl-timesheet-goal table tr th {
+    color: var(--col-black);
+}
+
+.vl-timesheet-hour table tr td, .vl-timesheet-goal table tr td {
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--col-black);
+}
+/* Timesheet CSS fin */

@@ -56,6 +56,8 @@ public partial class CIDbContext : DbContext
 
     public virtual DbSet<StoryMedium> StoryMedia { get; set; }
 
+    public virtual DbSet<Timesheet> Timesheets { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserSkill> UserSkills { get; set; }
@@ -635,6 +637,38 @@ public partial class CIDbContext : DbContext
                 .HasForeignKey(d => d.StoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_story_media_story");
+        });
+
+        modelBuilder.Entity<Timesheet>(entity =>
+        {
+            entity.ToTable("timesheet");
+
+            entity.Property(e => e.TimesheetId)
+                .ValueGeneratedNever()
+                .HasColumnName("timesheet_id");
+            entity.Property(e => e.Action).HasColumnName("action");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.DateVolunteered).HasColumnName("date_volunteered");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
+            entity.Property(e => e.Notes)
+                .HasColumnType("text")
+                .HasColumnName("notes");
+            entity.Property(e => e.Status)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("status");
+            entity.Property(e => e.Time).HasColumnName("time");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Mission).WithMany(p => p.Timesheets)
+                .HasForeignKey(d => d.MissionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_timesheet_mission");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Timesheets)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_timesheet_user");
         });
 
         modelBuilder.Entity<User>(entity =>

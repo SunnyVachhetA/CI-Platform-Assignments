@@ -169,12 +169,24 @@
       "PackagePath": "staticwebassets\\assets\\checked.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\chevron-compact-right.svg",
+      "PackagePath": "staticwebassets\\assets\\chevron-compact-right.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\chevron-right.png",
+      "PackagePath": "staticwebassets\\assets\\chevron-right.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\cross.png",
       "PackagePath": "staticwebassets\\assets\\cross.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\deadline.png",
       "PackagePath": "staticwebassets\\assets\\deadline.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\delete.png",
+      "PackagePath": "staticwebassets\\assets\\delete.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\doc.png",
@@ -191,6 +203,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\drop-down.png",
       "PackagePath": "staticwebassets\\assets\\drop-down.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\editing.png",
+      "PackagePath": "staticwebassets\\assets\\editing.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\eye.png",
@@ -679,6 +695,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\user-edit-profile.js",
       "PackagePath": "staticwebassets\\js\\user-edit-profile.js"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\volunteer-timesheet.js",
+      "PackagePath": "staticwebassets\\js\\volunteer-timesheet.js"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\lib\\bootstrap\\LICENSE",

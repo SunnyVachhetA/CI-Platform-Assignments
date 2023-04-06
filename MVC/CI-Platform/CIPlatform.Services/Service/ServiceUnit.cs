@@ -39,6 +39,8 @@ public class ServiceUnit: IServiceUnit
     public IUserSkillService UserSkillService { get; private set; }
 
     public IContactUsService ContactUsService { get; private set; }
+    public ITimesheetService TimesheetService { get; private set; }
+
     public ServiceUnit(IUnitOfWork unitOfWork, IEmailService emailService)
 	{
 		_unitOfWork= unitOfWork;
@@ -62,5 +64,6 @@ public class ServiceUnit: IServiceUnit
         StoryInviteService = new StoryInviteService(_unitOfWork, emailService);
         UserSkillService = new UserSkillService(_unitOfWork);
         ContactUsService = new ContactUsService(_unitOfWork);
+        TimesheetService = new TimesheetService(_unitOfWork);
     }
 }

@@ -1,0 +1,41 @@
+﻿<!-- Add Volunteer Goal Modal Begin -->
+<div class="modal" tabindex="-1" id="addVolunteerGoalModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title font-22 text-black-1">Please input below Volunteering Goal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id = "" class="user-modal-form">
+                <div class="modal-body d-flex flex-column gap-3">
+                    <div>
+                        <label class="form-label" for="">Mission</label>
+                        <select class="form-select">
+                            <option value="" selected disabled>Select Mission</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="">Date Volunteered</label>
+                        <input type="text" onfocus="(this.type='date')" class="form-control" placeholder="Date Volunteered">
+                    </div>
+                    <div>
+                        <label class="form-label" for="">Actions</label>
+                        <input type="number" class="form-control" placeholder="Enter Actions">
+                    </div>
+                    <div>
+                        <label for="" class="form-label">Message</label>
+                        <textarea class="form-control" rows="4" placeholder="Enter Your Message"></textarea>
+                        <span class="font-xs text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-g-gray" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn-g-orange">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Volunteer Goal modal finish -->
+<partial name="_ValidationScriptsPartial"/>

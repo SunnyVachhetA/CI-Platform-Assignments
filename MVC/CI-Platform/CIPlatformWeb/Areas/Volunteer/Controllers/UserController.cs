@@ -399,4 +399,27 @@ public class UserController : Controller
         }
     }
     #endregion
+
+    [HttpGet]
+    [Route("VolunteerTimesheet", Name="Timesheet")]
+    public IActionResult VolunteerTimesheet(long id)
+    {
+        List<VolunteerTimesheetVM> timesheetList =
+            _serviceUnit.TimesheetService.LoadUserTimesheet(id);
+        return View( timesheetList );
+    }
+
+    [HttpGet]
+    [Route("AddHourModal", Name = "AddHourModal")]
+    public IActionResult AddHourModal()
+    {
+        return PartialView("_AddVolunteerHourModal");
+    }
+
+    [HttpGet]
+    [Route("AddGoalModal", Name = "AddGoalModal")]
+    public IActionResult AddGoalModal()
+    {
+        return PartialView("_AddVolunteerGoalModal");
+    }
 }

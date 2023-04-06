@@ -25,5 +25,7 @@ public interface IUnitOfWork
     IUserSkillRepository UserSkillRepo { get; }
 
     IContactUsRepository ContactUsRepo { get; }
+
+    ITimesheetRepository TimesheetRepo { get; }
     void Save();
 }
