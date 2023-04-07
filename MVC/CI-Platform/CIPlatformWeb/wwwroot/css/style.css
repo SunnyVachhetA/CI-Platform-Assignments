@@ -1004,12 +1004,12 @@ form-subtitle,
     overflow: auto;
 }
 
-#addVolunteerHourModal > div, #addVolunteerGoalModal > div {
+#addVolunteerHourModal > div, #addVolunteerGoalModal > div, #editVolunteerHourModal > div, #editVolunteerGoalModal > div {
     max-width: 50.875rem !important;
 }
 
 @media screen and (min-width: 1500px) {
-    #addVolunteerHourModal > div, #addVolunteerGoalModal > div {
+    #addVolunteerHourModal > div, #addVolunteerGoalModal > div, #editVolunteerHourModal > div, #editVolunteerGoalModal > div {
         max-width: 71.875rem !important;
     }
 }
@@ -1022,5 +1022,14 @@ form-subtitle,
     font-weight: 300;
     font-size: 14px;
     color: var(--col-black);
+}
+#vol-timesheet-goal .text-info-message, #vol-timesheet-time .text-info-message {
+    margin-top: 130px !important;
+}
+
+@media screen and (max-width: 576px) {
+    #vol-timesheet-goal .text-info-message, #vol-timesheet-time .text-info-message {
+        margin-top: 50px !important;
+    }
 }
 /* Timesheet CSS fin */

@@ -84,6 +84,7 @@ public class TimesheetService: ITimesheetService
         return timesheetEntry;
     }
 
+
     private Timesheet ConvertVolunteerHourVMToTimesheetModel(VolunteerHourVM volunteerHour)
     {
         Timesheet timesheet = new()
@@ -96,5 +97,100 @@ public class TimesheetService: ITimesheetService
             CreatedAt = DateTimeOffset.Now
         };
         return timesheet;
+    }
+    public void SaveUserVolunteerGoals(VolunteerGoalVM vlGoal)
+    {
+        Timesheet timesheetEntry = ConvertVolunteerGoalVMToTimesheetModel(vlGoal);
+        _unitOfWork.TimesheetRepo.Add( timesheetEntry );
+        _unitOfWork.Save();
+    }
+    
+    public VolunteerHourVM LoadUserTimesheetEntry(long timesheetId, MissionTypeEnum missionType)
+    {
+        Timesheet timesheet = FetchTimesheetById(timesheetId);
+        if (timesheet == null) return null!;
+        return ConvertTimesheetModelToHourVM(timesheet);
+    }
+
+    public void UpdateUserTimesheetEntry(VolunteerHourVM vm)
+    {
+        var timesheet = FetchTimesheetById(vm.TimesheetId);
+
+        timesheet.MissionId = vm.MissionId;
+        timesheet.DateVolunteered = vm.Date;
+        timesheet.Time = new TimeSpan( vm.Hours?? 0, vm.Minutes ?? 0, 0 );
+        timesheet.Notes = vm.Message;
+        _unitOfWork.Save();
+    }
+
+
+    private Timesheet FetchTimesheetById(long id) => 
+        _unitOfWork.TimesheetRepo.GetFirstOrDefault(entry => entry.TimesheetId == id);
+    public VolunteerGoalVM LoadUserGoalEntry(long timesheetId)
+    {
+        var timesheet = FetchTimesheetById(timesheetId);
+        if (timesheet == null) return null!;
+
+        return ConvertTimesheetModelToGoalVM(timesheet);
+    }
+
+    public void UpdateUserTimesheetEntry(VolunteerGoalVM vm)
+    {
+        var timesheetEntry = FetchTimesheetById( vm.TimesheetId );
+
+        timesheetEntry.MissionId = vm.MissionId;
+        timesheetEntry.Action = vm.Action;
+        timesheetEntry.DateVolunteered = vm.Date;
+        timesheetEntry.Notes = vm.Message;
+        _unitOfWork.Save();
+    }
+
+    public void DeleteUserTimesheetEntry(long timesheetId)
+    {
+        _unitOfWork.TimesheetRepo.DeleteTimesheetEntry(timesheetId);
+    }
+
+
+    private static Timesheet ConvertVolunteerGoalVMToTimesheetModel(VolunteerGoalVM vlGoal)
+    {
+        Timesheet timesheet = new()
+        {
+            UserId = vlGoal.UserId,
+            MissionId = vlGoal.MissionId,
+            Notes = vlGoal.Message,
+            DateVolunteered = vlGoal.Date,
+            CreatedAt = DateTimeOffset.Now,
+            Action = vlGoal.Action
+        };
+        return timesheet;
+    }
+
+    private static VolunteerHourVM ConvertTimesheetModelToHourVM(Timesheet timesheet)
+    {
+        VolunteerHourVM vm = new()
+        {
+            TimesheetId = timesheet.TimesheetId,
+            UserId = timesheet.UserId,
+            MissionId = timesheet.MissionId,
+            Hours = timesheet.Time?.Hours,
+            Minutes = timesheet.Time?.Minutes,
+            Message = timesheet.Notes ?? string.Empty,
+            Date = (DateTimeOffset)timesheet.DateVolunteered!,
+        };
+        return vm;
+    }
+
+    private static VolunteerGoalVM ConvertTimesheetModelToGoalVM(Timesheet timesheet)
+    {
+        VolunteerGoalVM vm = new()
+        {
+            TimesheetId = timesheet.TimesheetId,
+            UserId = timesheet.UserId,
+            MissionId = timesheet.MissionId,
+            Action = timesheet.Action,
+            Date = (DateTimeOffset)timesheet.DateVolunteered!,
+            Message = timesheet.Notes?? string.Empty
+        };
+        return vm;
     }
 }

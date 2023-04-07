@@ -28,11 +28,14 @@
                 <tr>
                     <td>@entry.MissionTitle</td>
                     <td>@entry.Date.ToString("d")</td>
-                    <td>@entry.Time?.Hours</td>
-                    <td>@entry.Time?.Minutes</td>
+                    <td>@entry.Time?.Hours.ToString()h</td>
+                    <td>@entry.Time?.Minutes.ToString()min</td>
                     <td class="d-flex gap-4 vl-timesheet-action">
-                        <img src="~/assets/editing.png" data-timesheetid="@entry.TimesheetId" alt="Edit">
-                        <img src="~/assets/delete.png" data-timesheetid="@entry.TimesheetId" alt="Delete">
+                        @if ( entry.Status == ApprovalStatus.PENDING )
+                        {
+                            <img src="~/assets/editing.png" data-type="time" data-timesheetid="@entry.TimesheetId" class="edit-hour-entry" alt="Edit">
+                            <img src="~/assets/delete.png" data-type="time" data-timesheetid="@entry.TimesheetId" class="delete-hour-entry" alt="Delete">
+                        }
                     </td>
                 </tr>
             }

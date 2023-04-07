@@ -1,4 +1,4 @@
-﻿@model List<VolunteerTimesheetVM>
+﻿@model IEnumerable<VolunteerTimesheetVM>
 <div class="d-flex align-items-center justify-content-between">
     <p class="mb-0 text-black-1">Volunteering Goals</p>
     <button class="btn-g-orange gap-1 px-2 py-0 pe-3" id="btnAddVolunteerGoal">
@@ -9,9 +9,10 @@
         Add
     </button>
 </div>
-<div class="table-responsive mt-3">
-    @if (Model.Any())
-    {
+@if (Model.Any())
+{
+    <div class="table-responsive mt-3">
+    
         <table class="table table-borderless">
             <thead>
             <tr>
@@ -28,16 +29,20 @@
                     <td>@entry.Date.ToString("d")</td>
                     <td>@entry.Action</td>
                     <td class="d-flex gap-4 vl-timesheet-action">
-                       <img src="~/assets/editing.png" data-timesheetid="@entry.TimesheetId" alt="Edit">
-                       <img src="~/assets/delete.png" data-timesheetid="@entry.TimesheetId" alt="Delete">
+                        @if (entry.Status == ApprovalStatus.PENDING)
+                        {
+                            <img src="~/assets/editing.png" data-type="goal" data-timesheetid="@entry.TimesheetId" class="edit-goal-entry" alt="Edit">
+                            <img src="~/assets/delete.png" data-type="goal" data-timesheetid="@entry.TimesheetId"  class="delete-goal-entry" alt="Delete">
+                        }
                     </td>
                 </tr>
             }
             </tbody>
         </table>
-    }
-    else
-    {
-        <p class="text-info-message p-2 mx-content mt-2 mx-auto mb-0">There are no contribution at the moment.</p>
-    }
-</div>
+    
+    </div>
+}
+else
+{
+    <p class="text-info-message p-2 mx-content my-auto mx-auto mb-0">There are no contribution at the moment.</p>
+}

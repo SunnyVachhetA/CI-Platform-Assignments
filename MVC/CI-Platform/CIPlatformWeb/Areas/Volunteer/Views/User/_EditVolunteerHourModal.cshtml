@@ -1,0 +1,62 @@
+﻿@model VolunteerHourVM
+<!-- Add Volunteer Hours Modal Begin -->
+<div class="modal" tabindex="-1" id="editVolunteerHourModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title font-22 text-black-1">Please input below Volunteering Hours</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id= "form-edit-hour" class="user-modal-form">
+                <div class="modal-body d-flex flex-column gap-3">
+                    <input type="hidden" asp-for="UserId"/>
+                    <input type="hidden" asp-for="TimesheetId"/>
+                    <div>
+                        <label class="form-label" asp-for="MissionId"></label>
+                        <select class="form-select" asp-for="MissionId">
+                            <option value="" selected disabled>Select Mission</option>
+                            @foreach (var mission in Model.MissionList)
+                            {
+                                @if (mission.MissionType != MissionTypeEnum.GOAL)
+                                {
+                                    <option value="@mission.MissionId">@mission.Title</option>
+                                }
+                            }
+                        </select>
+                        <span class="text-danger font-xs" asp-validation-for="MissionId"></span>
+                    </div>
+                    <div>
+                        <label class="form-label" asp-for="Date"></label>
+                        <input id="myInput" onfocus="(this.type='date')" asp-for="Date" class="form-control" placeholder="Date Volunteered">
+                        <span class="text-danger font-xs" asp-validation-for="Date"></span>
+                    </div>
+                    <div class="row gx-3">
+                        <div class="col-6">
+                            <label class="form-label" asp-for="Hours"></label>
+                            <input type="number" class="form-control" asp-for="Hours" placeholder="Enter Spent Hours">
+                            <span class="font-xs text-danger" asp-validation-for="Hours"></span>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label" asp-for="Minutes"></label>
+                            <input type="number" asp-for="Minutes" class="form-control" placeholder="Enter Spent Minutes">
+                            <span class="font-xs text-danger" asp-validation-for="Minutes"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <label asp-for="Message" class="form-label"></label>
+                        <textarea class="form-control" rows="4" asp-for="Message" placeholder="Enter Your Message"></textarea>
+                        <span class="font-xs text-danger" asp-validation-for="Message"></span>
+                    </div>
+
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-g-gray" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn-g-orange">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Volunteer Hours modal finish -->
+
+                        <partial name="_ValidationScriptsPartial"/>

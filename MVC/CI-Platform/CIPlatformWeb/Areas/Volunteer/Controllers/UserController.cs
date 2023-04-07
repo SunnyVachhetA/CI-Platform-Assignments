@@ -13,6 +13,7 @@ public class UserController : Controller
     private readonly IServiceUnit _serviceUnit;
     private readonly IEmailService _emailService;
     private readonly IWebHostEnvironment _webHostEnvironment;
+
     public UserController(IServiceUnit serviceUnit, IEmailService emailService, IWebHostEnvironment webHostEnvironment)
     {
         _serviceUnit = serviceUnit;
@@ -25,11 +26,12 @@ public class UserController : Controller
     {
         try
         {
-            var countryList = _serviceUnit.CountryService.GetAllCountry()?? new List<CountryVM>();
-            var cityList = _serviceUnit.CityService.GetAllCities()?? new List<CityVM>();
+            var countryList = _serviceUnit.CountryService.GetAllCountry() ?? new List<CountryVM>();
+            var cityList = _serviceUnit.CityService.GetAllCities() ?? new List<CityVM>();
             var skillList = _serviceUnit.SkillService.GetAllSkills() ?? new List<SkillVM>();
-            UserProfileVM userProfile = _serviceUnit.UserService.LoadUserProfile(id) ?? throw new ArgumentNullException("_serviceUnit.UserService.LoadUserProfile(id)");
-            
+            UserProfileVM userProfile = _serviceUnit.UserService.LoadUserProfile(id) ??
+                                        throw new ArgumentNullException("_serviceUnit.UserService.LoadUserProfile(id)");
+
             userProfile.CityList = cityList;
             userProfile.CountryList = countryList;
             userProfile.AllSkills = skillList;
@@ -46,7 +48,8 @@ public class UserController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("EditUserProfile", Name = "EditUserProfile")]
-    public IActionResult EditUserProfile(UserProfileVM userProfile, List<short> preloadedSkillList, List<short> finalSkillList)
+    public IActionResult EditUserProfile(UserProfileVM userProfile, List<short> preloadedSkillList,
+        List<short> finalSkillList)
     {
         if (!ModelState.IsValid)
         {
@@ -55,7 +58,7 @@ public class UserController : Controller
         }
 
         _serviceUnit.UserService.UpdateUserDetails(userProfile);
-        _serviceUnit.UserSkillService.UpdateUserSkills( userProfile.UserId, preloadedSkillList, finalSkillList );
+        _serviceUnit.UserSkillService.UpdateUserSkills(userProfile.UserId, preloadedSkillList, finalSkillList);
         TempData["edit-profile-success"] = "Your changes have been saved!";
         return RedirectToAction("Index", "Home");
     }
@@ -92,7 +95,7 @@ public class UserController : Controller
         if (ModelState.IsValid)
         {
             UserRegistrationVM user = _serviceUnit.UserService.ValidateUserCredential(credential);
- 
+
             if (user != null)
             {
                 CreateUserLoginSession(user);
@@ -104,6 +107,7 @@ public class UserController : Controller
                 ModelState.AddModelError("PasswordError", "Invalid Email ID or Password!");
             }
         }
+
         return View();
     }
 
@@ -116,7 +120,7 @@ public class UserController : Controller
     }
 
     [Route("ForgotPassword")]
-    public IActionResult ForgotPassword()   
+    public IActionResult ForgotPassword()
     {
         return View();
     }
@@ -131,14 +135,15 @@ public class UserController : Controller
             ModelState.AddModelError("EmailError", "Please enter valid email address!");
             return View();
         }
-        
+
         bool tokenExists = _serviceUnit.PasswordResetService.IsTokenExists(email);
-        if( tokenExists )
+        if (tokenExists)
         {
             ModelState.AddModelError("multiRequestError", "Please check your email box for reset password link!");
             TempData["multiRequestError"] = "Please wait 30 minutes for new reset password link!";
             return RedirectToAction("ForgotPassword");
         }
+
         bool result = _serviceUnit.UserService.IsEmailExists(email);
         if (result)
         {
@@ -149,15 +154,16 @@ public class UserController : Controller
                 TempData["TokenMessage"] = "Reset password link is sent to your email address!";
                 return RedirectToAction("Login", "User");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return StatusCode(404); //Not found
             }
         }
-        else 
+        else
         {
             ModelState.AddModelError("EmailError", "Given email address account does not exsits!!");
         }
+
         return RedirectToAction("ForgotPassword");
     }
 
@@ -194,11 +200,12 @@ public class UserController : Controller
                 _serviceUnit.PasswordResetService.DeleteResetPasswordToken(reset.Email);
                 return RedirectToAction("Login");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return NotFound();
             }
         }
+
         return View(reset);
     }
 
@@ -218,10 +225,13 @@ public class UserController : Controller
         {
             ModelState.AddModelError("Email", "Given Email ID is Already Registered!");
         }
+
         if (ModelState.IsValid)
         {
             _serviceUnit.UserService.Add(user);
-            UserRegistrationVM registeredUser = _serviceUnit.UserService.ValidateUserCredential( new UserLoginVM {  Email = user.Email, Password = user.Password } );
+            UserRegistrationVM registeredUser =
+                _serviceUnit.UserService.ValidateUserCredential(new UserLoginVM
+                    { Email = user.Email, Password = user.Password });
             CreateUserLoginSession(registeredUser);
             TempData["registratoin-success"] = "You have successfully registered.";
             return RedirectToAction("Index", "Home");
@@ -259,7 +269,10 @@ public class UserController : Controller
     [Route("ForgotPasswordV1", Name = "ForgotPasswordPostV1")]
     public IActionResult ForgotPasswordV1(string email)
     {
-        if (email == null || !ModelState.IsValid) { return NotFound(); }
+        if (email == null || !ModelState.IsValid)
+        {
+            return NotFound();
+        }
 
         TokenStatus tokenStatus = _serviceUnit.PasswordResetService.GetTokenStatus(email);
 
@@ -279,6 +292,7 @@ public class UserController : Controller
     }
 
     #region AJAX CALLS
+
     [HttpGet]
     [Route("AddMissionToFavourite", Name = "AddFavourite")]
     public async Task<IActionResult> AddMissionToFavourite(long missionId, long userId, bool isFav)
@@ -302,18 +316,18 @@ public class UserController : Controller
             return StatusCode(500, "An error occurred while retrieving data.");
         }
     }
-    
+
     [HttpGet]
-    [Route("MissionUsersInvite", Name = "GetMissionUsersInvite")] 
-    public IActionResult MissionUsersInvite( long userId, long missionId )
+    [Route("MissionUsersInvite", Name = "GetMissionUsersInvite")]
+    public IActionResult MissionUsersInvite(long userId, long missionId)
     {
         IEnumerable<UserInviteVm> inviteList = Enumerable.Empty<UserInviteVm>();
 
-        var result = _serviceUnit.UserService.FetchAllUsers(true)?.Where( user => user.UserId != userId )!;
+        var result = _serviceUnit.UserService.FetchAllUsers(true)?.Where(user => user.UserId != userId)!;
 
-        if(result.Any())
+        if (result.Any())
         {
-            inviteList = _serviceUnit.MissionInviteService.fetchUserMissionInvites( result, userId, missionId );
+            inviteList = _serviceUnit.MissionInviteService.fetchUserMissionInvites(result, userId, missionId);
         }
 
         return PartialView("_RecommendMission", inviteList);
@@ -325,14 +339,16 @@ public class UserController : Controller
     {
         try
         {
-            var userEmailList = await _serviceUnit.MissionInviteService.SaveMissionInviteFromUser(userId, missionId, recommendList);
-            var senderUserName =  await _serviceUnit.UserService.GetUserName( userId );
+            var userEmailList =
+                await _serviceUnit.MissionInviteService.SaveMissionInviteFromUser(userId, missionId, recommendList);
+            var senderUserName = await _serviceUnit.UserService.GetUserName(userId);
 
-            string missionInviteLink = Url.Action("Index", "Mission", new { id = missionId }, "https")?? string.Empty;
-            _serviceUnit.UserService.SendUserMissionInviteService( userEmailList, senderUserName, missionInviteLink, _emailService);
+            string missionInviteLink = Url.Action("Index", "Mission", new { id = missionId }, "https") ?? string.Empty;
+            _serviceUnit.UserService.SendUserMissionInviteService(userEmailList, senderUserName, missionInviteLink,
+                _emailService);
             return StatusCode(201);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine("Error occured while send mission invites: " + e.Message);
             Console.WriteLine(e.StackTrace);
@@ -356,10 +372,10 @@ public class UserController : Controller
             string directoryPath = $@"{wwwRootPath}\images\user\";
             if (!fileName.Equals(prevFileName))
             {
-                StoreMediaService.DeleteFileFromWebRoot( Path.Combine(directoryPath, prevFileName) );
+                StoreMediaService.DeleteFileFromWebRoot(Path.Combine(directoryPath, prevFileName));
             }
 
-            _serviceUnit.UserService.UpdateUserAvatar( file, wwwRootPath, userId );
+            _serviceUnit.UserService.UpdateUserAvatar(file, wwwRootPath, userId);
             return Ok();
         }
         catch (Exception e)
@@ -371,8 +387,8 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    [Route("ContactUs", Name="ContactUs")]
-    public IActionResult ContactUs( long userId, string userName, string userEmail )
+    [Route("ContactUs", Name = "ContactUs")]
+    public IActionResult ContactUs(long userId, string userName, string userEmail)
     {
         ContactUsVM contactUsVm = new()
         {
@@ -399,15 +415,16 @@ public class UserController : Controller
             return StatusCode(500);
         }
     }
+
     #endregion
 
     [HttpGet]
-    [Route("VolunteerTimesheet", Name="Timesheet")]
+    [Route("VolunteerTimesheet", Name = "Timesheet")]
     public IActionResult VolunteerTimesheet(long id)
     {
         List<VolunteerTimesheetVM> timesheetList =
             _serviceUnit.TimesheetService.LoadUserTimesheet(id);
-        return View( timesheetList );
+        return View(timesheetList);
     }
 
     [HttpGet]
@@ -424,19 +441,116 @@ public class UserController : Controller
 
     [HttpGet]
     [Route("AddGoalModal", Name = "AddGoalModal")]
-    public IActionResult AddGoalModal()
+    public IActionResult AddGoalModal(long userId)
     {
-        return PartialView("_AddVolunteerGoalModal");
+        var missionList = _serviceUnit.MissionApplicationService.LoadUserApprovedMissions(userId);
+        VolunteerGoalVM volunteerGoalVM = new()
+        {
+            MissionList = missionList
+        };
+        return PartialView("_AddVolunteerGoalModal", volunteerGoalVM);
     }
 
     [HttpPost]
     [Route("AddVolunteerHours", Name = "AddVolunteerHours")]
     public IActionResult AddVolunteerHours(VolunteerHourVM volunteerHour)
     {
-
         _serviceUnit.TimesheetService.SaveUserVolunteerHours(volunteerHour);
         IEnumerable<VolunteerTimesheetVM> timesheet = _serviceUnit.TimesheetService
-            .LoadUserTimesheet(volunteerHour.UserId, MissionTypeEnum.GOAL);
+            .LoadUserTimesheet(volunteerHour.UserId, MissionTypeEnum.TIME);
         return PartialView("_VolunteerHoursList", timesheet);
     }
+
+    [HttpPost]
+    [Route("AddVolunteerGoals", Name = "AddVolunteerGoals")]
+    public IActionResult AddVolunteerGoals(VolunteerGoalVM vlGoal)
+    {
+        try
+        {
+            if (ModelState.IsValid)
+            {
+                _serviceUnit.TimesheetService.SaveUserVolunteerGoals(vlGoal);
+                var timesheetList =
+                    _serviceUnit.TimesheetService.LoadUserTimesheet(vlGoal.UserId, MissionTypeEnum.GOAL);
+                return PartialView("_VolunteerGoalsList", timesheetList);
+            }
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while saving volunteer goals: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
+    [HttpGet]
+    [Route("EditVolunteerHour", Name = "EditVolunteerHour")]
+    public IActionResult EditVolunteerHour(long timesheetId, long userId)
+    {
+        VolunteerHourVM vm = _serviceUnit.TimesheetService.LoadUserTimesheetEntry(timesheetId, MissionTypeEnum.TIME)?? new VolunteerHourVM();
+        var missionList = _serviceUnit.MissionApplicationService.LoadUserApprovedMissions(userId);
+        vm.MissionList = missionList;
+        return PartialView("_EditVolunteerHourModal", vm);
+    }
+
+    [HttpPut]
+    [Route("EditVolunteerHourPut", Name = "EditVolunteerHourPut")]
+    public IActionResult EditVolunteerHour(VolunteerHourVM vm)
+    {
+        if (ModelState.IsValid)
+        {
+            _serviceUnit.TimesheetService.UpdateUserTimesheetEntry( vm );
+        }
+        var timesheetList = _serviceUnit.TimesheetService.LoadUserTimesheet(vm.UserId, MissionTypeEnum.TIME);
+        return PartialView("_VolunteerHoursList", timesheetList);
+    }
+
+    [HttpGet]
+    [Route("EditVolunteerGoal", Name = "EditVolunteerGoal")]
+    public IActionResult EditVolunteerGoal(long timesheetId, long userId)
+    {
+        VolunteerGoalVM vm = _serviceUnit.TimesheetService.LoadUserGoalEntry(timesheetId);
+        var missionList = _serviceUnit.MissionApplicationService.LoadUserApprovedMissions(userId);
+        vm.MissionList = missionList;
+        return PartialView("_EditVolunteerGoalModal", vm);
+    }
+
+    [HttpPut]
+    [Route("EditVolunteerGoalPut", Name = "EditVolunteerGoalPut")]
+    public IActionResult EditVolunteerGoal(VolunteerGoalVM vm)
+    {
+        if (!ModelState.IsValid) return NoContent();
+        _serviceUnit.TimesheetService.UpdateUserTimesheetEntry(vm);
+        var timesheetList = _serviceUnit.TimesheetService.LoadUserTimesheet(vm.UserId, MissionTypeEnum.GOAL);
+        return PartialView("_VolunteerGoalsList", timesheetList);
+    }
+
+    [HttpDelete]
+    [Route("DeleteTimesheetEntry")]
+    public IActionResult DeleteVolunteerEntry(long userId, long timesheetId, string type)
+    {
+        try
+        {
+            _serviceUnit.TimesheetService.DeleteUserTimesheetEntry(timesheetId);
+            IEnumerable<VolunteerTimesheetVM> timesheetList = new List<VolunteerTimesheetVM>();
+            if (type.Equals("goal"))
+            {
+                timesheetList = _serviceUnit.TimesheetService.LoadUserTimesheet(userId, MissionTypeEnum.GOAL);
+                return PartialView("_VolunteerGoalsList", timesheetList);
+            }
+            else
+            {
+                timesheetList = _serviceUnit.TimesheetService.LoadUserTimesheet(userId, MissionTypeEnum.TIME);
+                return PartialView("_VolunteerHoursList", timesheetList);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while deleting timesheet hour entry: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+    
 }

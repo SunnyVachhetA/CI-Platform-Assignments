@@ -15,7 +15,7 @@ public class VolunteerGoalVM
     public DateTimeOffset Date { get; set; }
 
     [Required(ErrorMessage = "Please enter action!")]
-    public long Action { get; set; }
+    public int? Action { get; set; }
 
     [Required(ErrorMessage = "Please enter message regarding volunteer work!")]
     public string Message { get; set; }

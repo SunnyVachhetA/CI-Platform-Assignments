@@ -7,7 +7,8 @@
                 <h5 class="modal-title font-22 text-black-1">Please input below Volunteering Goal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id = "form-add-goal" class="user-modal-form">
+            <form id="form-add-goal" class="user-modal-form">
+                <input type="hidden" asp-for="UserId">
                 <div class="modal-body d-flex flex-column gap-3">
                     <div>
                         <label class="form-label" asp-for="MissionId"></label>
