@@ -141,6 +141,14 @@
       "PackagePath": "staticwebassets\\assets\\arrow.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\banner-empty.svg",
+      "PackagePath": "staticwebassets\\assets\\banner-empty.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\banner-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\banner-fill.svg"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\bell-big.png",
       "PackagePath": "staticwebassets\\assets\\bell-big.png"
     },
@@ -163,6 +171,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\cancel1.png",
       "PackagePath": "staticwebassets\\assets\\cancel1.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\check-mark.svg",
+      "PackagePath": "staticwebassets\\assets\\check-mark.svg"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\checked.png",
@@ -209,6 +221,22 @@
       "PackagePath": "staticwebassets\\assets\\editing.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\empty-page.svg",
+      "PackagePath": "staticwebassets\\assets\\empty-page.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\empty-skill.png",
+      "PackagePath": "staticwebassets\\assets\\empty-skill.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\empty-target.png",
+      "PackagePath": "staticwebassets\\assets\\empty-target.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\empty-user.png",
+      "PackagePath": "staticwebassets\\assets\\empty-user.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\eye.png",
       "PackagePath": "staticwebassets\\assets\\eye.png"
     },
@@ -219,6 +247,18 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\filter.png",
       "PackagePath": "staticwebassets\\assets\\filter.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\folder-empty.svg",
+      "PackagePath": "staticwebassets\\assets\\folder-empty.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\folder-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\folder-fill.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\folder.png",
+      "PackagePath": "staticwebassets\\assets\\folder.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\gift.png",
@@ -333,6 +373,10 @@
       "PackagePath": "staticwebassets\\assets\\organization.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\page.png",
+      "PackagePath": "staticwebassets\\assets\\page.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\pdf.png",
       "PackagePath": "staticwebassets\\assets\\pdf.png"
     },
@@ -347,6 +391,14 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\previous.png",
       "PackagePath": "staticwebassets\\assets\\previous.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\red-close.png",
+      "PackagePath": "staticwebassets\\assets\\red-close.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\restore.svg",
+      "PackagePath": "staticwebassets\\assets\\restore.svg"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\right-arrow.png",
@@ -389,12 +441,48 @@
       "PackagePath": "staticwebassets\\assets\\star.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\story-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\story-fill.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\tale.png",
+      "PackagePath": "staticwebassets\\assets\\tale.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\target-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\target-fill.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\theme-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\theme-fill.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\themes.png",
+      "PackagePath": "staticwebassets\\assets\\themes.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\tools-empty.svg",
+      "PackagePath": "staticwebassets\\assets\\tools-empty.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\tools-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\tools-fill.svg"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\twitter.png",
       "PackagePath": "staticwebassets\\assets\\twitter.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\up.png",
       "PackagePath": "staticwebassets\\assets\\up.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\user-empty.svg",
+      "PackagePath": "staticwebassets\\assets\\user-empty.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\user-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\user-fill.svg"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\user-img-large.png",
@@ -451,6 +539,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\web.png",
       "PackagePath": "staticwebassets\\assets\\web.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\x-circle.svg",
+      "PackagePath": "staticwebassets\\assets\\x-circle.svg"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\xlsx.png",
@@ -637,8 +729,8 @@
       "PackagePath": "staticwebassets\\images\\story\\f7952ec9-905b-456c-82f7-8961e25b3af4.png"
     },
     {
-      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\08d628c6-13c5-4dd1-ab41-a32440601ff2.jpg",
-      "PackagePath": "staticwebassets\\images\\user\\08d628c6-13c5-4dd1-ab41-a32440601ff2.jpg"
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\3173336c-170e-4310-be11-7cd6092ff398.jpg",
+      "PackagePath": "staticwebassets\\images\\user\\3173336c-170e-4310-be11-7cd6092ff398.jpg"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\a66e5dc4-0f2a-4d97-b9a1-bd824c9926fb.jpg",
@@ -647,6 +739,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\e4de3c52-05b5-4c56-b858-b6f25c77c143.jpg",
       "PackagePath": "staticwebassets\\images\\user\\e4de3c52-05b5-4c56-b858-b6f25c77c143.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\admin-page.js",
+      "PackagePath": "staticwebassets\\js\\admin-page.js"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\mission-details-ajax.js",

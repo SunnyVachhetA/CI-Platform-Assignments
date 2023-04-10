@@ -34,6 +34,14 @@
                             <img src="~/assets/editing.png" data-type="goal" data-timesheetid="@entry.TimesheetId" class="edit-goal-entry" alt="Edit">
                             <img src="~/assets/delete.png" data-type="goal" data-timesheetid="@entry.TimesheetId"  class="delete-goal-entry" alt="Delete">
                         }
+                        else if (entry.Status == ApprovalStatus.APPROVED)
+                        {
+                            <img src="~/images/static/check-mark1.png" alt="Approved"/>
+                        }
+                        else
+                        {
+                            <img src="~/assets/red-close.png" alert="Declined"/>
+                        }
                     </td>
                 </tr>
             }

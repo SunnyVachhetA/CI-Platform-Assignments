@@ -7,7 +7,11 @@
     margin: 0;
     font-family: "Noto Sans",sans-serif;
 }
-html { scroll-behavior: smooth; }
+
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --col-white: #f8863400;
     --col-blue: #2b64b1;
@@ -17,13 +21,17 @@ html { scroll-behavior: smooth; }
     --col-black-text: #333333;
     --col-brown: #E8E8E8;
     --col-secondary-brown: #757575;
-    --transition: all 0.6s ease;
+    --transition: all 0.3s ease;
     --col-green: #14C506;
+    --col-tile: #F8F9FC;
 }
 
-a:hover { color: var(--col-orange); }
+a:hover {
+    color: var(--col-orange) !important;
+}
+
 .index-grid {
-   grid-template-rows : auto auto auto 0.3fr;
+    grid-template-rows: auto auto auto 0.3fr;
 }
 
 body {
@@ -46,13 +54,15 @@ body {
 .me-n4 {
     margin-right: -1.5rem;
 }
+
 .cursor-pointer {
     cursor: pointer;
 }
-.msn-detail-progress
-{
+
+.msn-detail-progress {
     width: 150%;
 }
+
 .text-brown {
     color: var(--col-secondary-brown) !important;
 }
@@ -96,9 +106,11 @@ body {
 .font-13 {
     font-size: 13px;
 }
+
 .font-10 {
     font-size: 10px;
 }
+
 .font-xs {
     font-size: 14px;
 }
@@ -183,6 +195,7 @@ a {
 .left-0 {
     left: 0;
 }
+
 .z-index-n {
     z-index: 0;
 }
@@ -190,6 +203,7 @@ a {
 .z-index-pos {
     z-index: 1000;
 }
+
 .btn-g-orange, .btn-g-white {
     background-color: var(--col-white);
     cursor: pointer;
@@ -247,16 +261,18 @@ a {
     font-size: 14px !important;
 }
 
-@media (min-width: 1400px){
+@media (min-width: 1400px) {
     #reg-form .input-label, #reg-form .custom-input {
         font-size: 17px;
     }
 }
-@media (max-width: 992px){
+
+@media (max-width: 992px) {
     #reg-form .input-label, #reg-form .custom-input {
         font-size: 1rem;
     }
 }
+
 .btn-login {
     border-radius: 24px;
     border: 2px solid var(--col-orange);
@@ -264,13 +280,13 @@ a {
     font-size: 17px;
     /* height: 48px;
       width: 401px; */
-    background-color: var(--col-white);
     transition: var(--transition);
+    background-color: var(--col-white);
 }
 
     .btn-login:hover {
-        color: white;
         background-color: var(--col-orange);
+        color: white;
     }
 
 .login-help-text,
@@ -315,6 +331,7 @@ form-subtitle,
     .bg-hero-login {
         width: 70vw;
     }
+
     .right-section {
         width: 30vw;
     }
@@ -327,11 +344,12 @@ form-subtitle,
 }
 
 @media (min-width: 768px) and (max-width: 999px) {
-   
+
     .carousel-item img {
         height: 50vh;
         width: 100%;
     }
+
     .hero-title {
         font-size: 22px;
     }
@@ -347,11 +365,12 @@ form-subtitle,
 }
 
 @media (max-width: 576px) {
-   
+
     .carousel-item img {
         height: 50vh;
         width: 100%;
     }
+
     .hero-title {
         font-size: 25px;
     }
@@ -524,6 +543,7 @@ form-subtitle,
     bottom: 6rem;
     transition: var(--transition);
 }
+
 .msn-list-share {
     background-color: rgba(0, 0, 0, 0.4);
     right: 1rem;
@@ -592,6 +612,7 @@ form-subtitle,
         font-size: 18px;
     }
 }
+
 .msn-card-img {
     height: 240px;
 }
@@ -603,6 +624,7 @@ form-subtitle,
     background-color: var(--col-orange);
     color: white;
 }
+
 .active-fav {
     border-radius: 1.5625rem;
     border: 2px solid red !important;
@@ -660,12 +682,12 @@ form-subtitle,
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
     }
 
-@media screen and (max-width: 992px)
-{
-    #mission-hero-img, #story-hero-img {
+@media screen and (max-width: 992px) {
+    #mission-hero-img {
         height: auto !important;
     }
 }
+
 .comma-list li {
     display: inline;
 }
@@ -701,10 +723,11 @@ form-subtitle,
 }
 
 .btn-g-orange:hover, .btn-g-white:hover {
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
     border: 1px solid var(--col-orange);
     color: var(--col-orange);
 }
+
 .btn-g-orange:hover {
     color: var(--col-orange) !important;
 }
@@ -714,11 +737,12 @@ form-subtitle,
     width: 30px;
     transition: var(--transition);
 }
-#star-rating-box img
-{
+
+#star-rating-box img {
     height: 20px;
     width: 22px;
 }
+
 @media screen and (max-width: 576px) {
     #msn-box > div {
         width: 60%;
@@ -729,7 +753,7 @@ form-subtitle,
     }
 }
 
-.rec-usr-img{
+.rec-usr-img {
     height: 30px;
     width: 30px;
 }
@@ -753,10 +777,12 @@ form-subtitle,
 .story-hero-text {
     max-width: 60rem;
 }
-#sort-options{
+
+#sort-options {
     padding: 0.325rem !important;
     border: 1px solid var(--col-brown);
 }
+
 .story-form .custom-input, .form-select > option {
     width: min(420px, 100%);
     height: min(38px, 100%);
@@ -805,11 +831,12 @@ form-subtitle,
     transition: var(--transition);
 }
 
-.btn-g-gray:hover {
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-    border: 1px solid black;
-    color: black;
-}
+    .btn-g-gray:hover {
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        border: 1px solid black;
+        color: black;
+    }
+
 .story-img-card:before {
     content: '';
     display: block;
@@ -858,6 +885,7 @@ form-subtitle,
 
 
 
+
 /* Story details page css start */
 .story-volunteer {
     width: 100px;
@@ -866,7 +894,7 @@ form-subtitle,
 .story-view {
     background: transparent;
     border: 1px solid var(--col-brown);
-    padding: 0.3rem 1rem;
+    padding: 0.5rem 1rem;
     border-radius: 1.1875rem;
     color: var(--col-secondary-brown);
 }
@@ -876,8 +904,8 @@ form-subtitle,
     background-color: var(--col-brown);
 }
 
-#story-hero-img { max-height: 450px; }
 /* Story details page css end */
+
 
 /* Edit User Profile css start*/
 .edit-profile .user-profile {
@@ -902,54 +930,49 @@ form-subtitle,
     border-bottom: 2px solid var(--col-secondary-brown);
 }
 
-.edit-profile #form-edit-profile .form-label {
+.edit-profile #form-edit-profile .form-label, #contact-form .form-label {
     margin-bottom: 0.3rem !important;
     font-size: 15px;
     font-weight: 300;
     color: var(--col-black);
 }
 
-.edit-profile #form-edit-profile .form-control::placeholder, #user-modal-form .form-control::placeholder {
+.edit-profile #form-edit-profile .form-control::placeholder, #contact-form .form-control::placeholder {
     font-size: 14px !important;
     color: var(--col-secondary-brown);
 }
 
 .edit-profile #form-edit-profile .form-control:focus,
 .edit-profile #form-edit-profile .form-select:focus,
-.user-modal-form .form-control:focus {
+.user-modal-form .form-control:focus,
+#contact-form .form-control:focus {
     border-radius: 3px !important;
     border-color: #2b64b1 !important;
     box-shadow: none !important;
 }
 
-.edit-profile #form-edit-profile .form-control,
-.edit-profile #form-edit-profile .form-select,
-.user-modal-form .form-control {
-    color: var(--col-black);
+#usr-skill-add, #usr-skill-remove {
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
 }
-
-    #usr-skill-add, #usr-skill-remove {
-        height: 15px;
-        width: 15px;
-        cursor: pointer;
-    }
 
 .skill-list ul li {
     padding: 0.1rem 0 0.1rem 1rem;
     cursor: pointer;
 }
 
-.skill-list ul li:hover {
-    background-color: silver;
-}
+    .skill-list ul li:hover {
+        background-color: silver;
+    }
 
-.skill-list ul li.active {
-    background-color: var(--col-brown);
-}
+    .skill-list ul li.active {
+        background-color: var(--col-brown);
+    }
 
-#addSkillModal > div { max-width: 900px !important; }
 /* .modal-title { font-weight: 500; } */
 /* Edit User Profile css end*/
+
 
 /* Privacy policy page css begin */
 .policy-links .link img {
@@ -963,10 +986,10 @@ form-subtitle,
     transition: var(--transition);
 }
 
-.policy-links .link:active, .policy-links .active {
-    font-weight: 400;
-    color: var(--col-black-text) !important;
-}
+    .policy-links .link:active, .policy-links .active {
+        font-weight: 400;
+        color: var(--col-black-text) !important;
+    }
 
 .font-black {
     color: var(--col-black-text) !important;
@@ -987,9 +1010,9 @@ form-subtitle,
     transition: var(--transition);
 }
 
-.vl-timesheet .vl-timesheet-action img:hover {
-    height: 21px;
-}
+    .vl-timesheet .vl-timesheet-action img:hover {
+        height: 21px;
+    }
 
 
 @media screen and (min-width: 576px) {
@@ -1000,16 +1023,14 @@ form-subtitle,
 
 .vl-timesheet-hour, .vl-timesheet-goal {
     border: 1px solid var(--col-brown);
-    height: 400px;
-    overflow: auto;
 }
 
-#addVolunteerHourModal > div, #addVolunteerGoalModal > div, #editVolunteerHourModal > div, #editVolunteerGoalModal > div {
+#addVolunteerHourModal > div, #addVolunteerGoalModal > div {
     max-width: 50.875rem !important;
 }
 
 @media screen and (min-width: 1500px) {
-    #addVolunteerHourModal > div, #addVolunteerGoalModal > div, #editVolunteerHourModal > div, #editVolunteerGoalModal > div {
+    #addVolunteerHourModal > div, #addVolunteerGoalModal > div {
         max-width: 71.875rem !important;
     }
 }
@@ -1023,13 +1044,138 @@ form-subtitle,
     font-size: 14px;
     color: var(--col-black);
 }
-#vol-timesheet-goal .text-info-message, #vol-timesheet-time .text-info-message {
-    margin-top: 130px !important;
+/* Timesheet CSS fin */
+
+
+/* Admin home css start */
+.sidebar {
+    background-color: var(--col-orange);
+    width: 350px;
+    z-index: 10;
+    height: 100vh;
+    transition: var(--transition);
 }
 
-@media screen and (max-width: 576px) {
-    #vol-timesheet-goal .text-info-message, #vol-timesheet-time .text-info-message {
-        margin-top: 50px !important;
+@media screen and (min-width: 992px) {
+    .sidebar {
+        display: block !important;
+        /* position: fixed !important; */
+    }
+
+    #sidebar-close {
+        display: none;
+    }
+
+    #btn-sidebar-hamburger {
+        display: none;
     }
 }
-/* Timesheet CSS fin */
+
+@media screen and (max-width: 992px) {
+    .sidebar {
+        position: fixed;
+        display: none;
+    }
+
+    #btn-sidebar-hamburger {
+        display: block;
+    }
+
+    .font-30 {
+        font-size: 22px;
+    }
+}
+
+.sidebar .admin-menu > div {
+    display: flex;
+    gap: 1.4rem;
+    color: white;
+    padding-left: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.sidebar.show {
+    display: block;
+    position: fixed;
+}
+
+.sidebar.hide {
+    display: none;
+}
+
+.admin-menu .active {
+    background-color: white;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    color: var(--col-orange) !important;
+    border-radius: 5px;
+}
+
+
+@media screen and (min-width: 1500px) {
+    .sidebar .admin-menu > div {
+        font-size: 18px;
+    }
+}
+
+.font-30 {
+    font-size: 1.875rem;
+}
+
+.admin-table .table > :not(caption) > * > * {
+    padding-left: 1rem !important;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.admin-table thead tr th {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+@media screen and (max-width: 1500px) {
+    .font-22 {
+        font-size: 18px;
+    }
+}
+
+.text-green {
+    color: var(--col-green) !important;
+}
+
+.admin-table tbody tr td {
+    transition: var(--transition);
+    font-weight: 400;
+}
+/* .admin-table tbody tr td img:hover { height: 20px; } */
+.admin-table tbody tr td {
+    color: var(--col-black-text);
+}
+
+.admin-table thead {
+    background-color: var(--col-tile) !important;
+}
+
+.btn-story-view {
+    border: 1px solid var(--col-orange);
+    color: var(--col-orange);
+    border-radius: 13px;
+}
+
+.admin-search-container {
+    max-width: 20rem;
+}
+
+#usr-search:focus {
+    border-bottom: 1px solid black !important;
+    box-shadow: none !important;
+}
+
+.admin-menu > div:hover {
+    border: 1px solid white;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+/* Admin home css fin */

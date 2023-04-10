@@ -203,6 +203,7 @@ public class MissionService : IMissionService
             skillList = skillList,
             //missionList = missionList
         };
+        
         return missionLanding;
     }
 

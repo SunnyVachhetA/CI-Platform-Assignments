@@ -51,7 +51,9 @@ public class UserService: IUserService
             Email = result.Email,
             PhoneNumber = result.PhoneNumber,
             Avatar = result.Avatar,
-            Status = result.Status ?? false
+            Status = result.Status ?? false,
+            EmployeeID = result.EmployeeId,
+            Department = result.Department
         };
         return user;
     }

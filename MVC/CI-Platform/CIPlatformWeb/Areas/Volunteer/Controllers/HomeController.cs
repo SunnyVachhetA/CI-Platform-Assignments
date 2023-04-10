@@ -22,19 +22,6 @@ namespace CIPlatformWeb.Areas.User.Controllers
         }
         public IActionResult Index()
         {
-            /*countryList = _serviceUnit.CountryService.GetAllCountry();
-            cityList = _serviceUnit.CityService.GetAllCities();
-            themeList = _serviceUnit.ThemeService.GetAllThemes();
-            skillList = _serviceUnit.SkillService.GetAllSkills();
-            missionList = _serviceUnit.MissionService.GetAllMissionCards();
-            missionLanding = new()
-            {
-                countryList = countryList,
-                cityList = cityList,
-                themeList = themeList,
-                skillList = skillList,
-                missionList = missionList
-            };*/
             var missionLanding = _serviceUnit.MissionService.CreateMissionLanding();
             return View( missionLanding );
         }

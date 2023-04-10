@@ -41,4 +41,7 @@ public class UserRegistrationVM
     public string Avatar { get; set; } = @"\images\static\anon-profile.png";
 
     public bool Status { get; set; } = false;
+
+    public string? EmployeeID { get; set; }
+    public string? Department { get; set; }
 }

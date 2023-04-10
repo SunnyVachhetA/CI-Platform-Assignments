@@ -1,6 +1,7 @@
 ﻿tinymce.init({
 
     selector: 'textarea#description',
+    menubar: false,
      plugins: [
 
         'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
@@ -11,8 +12,8 @@
 
     ],
 
-    toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
+    toolbar: 'undo redo | bold italic strikethrough | superscript subscript | alignleft aligncenter alignright alignjustify |' +
 
-        'bullist numlist checklist outdent indent | removeformat | code table help'
+        'bullist numlist checklist outdent indent | removeformat | code'
 
 })

@@ -4,6 +4,7 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class MissionRepository : Repository<Mission>, IMissionRepository
@@ -87,4 +88,5 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
 
         _dbContext.Database.ExecuteSqlRaw("UPDATE mission SET rating = @rating, updated_at = @updatedAt WHERE mission_id = @missionId", msnId, ratingParam, updateParam);
     }
+    
 }

@@ -36,6 +36,14 @@
                             <img src="~/assets/editing.png" data-type="time" data-timesheetid="@entry.TimesheetId" class="edit-hour-entry" alt="Edit">
                             <img src="~/assets/delete.png" data-type="time" data-timesheetid="@entry.TimesheetId" class="delete-hour-entry" alt="Delete">
                         }
+                            else if (entry.Status == ApprovalStatus.APPROVED)
+                            {
+                                <img src="~/images/static/check-mark1.png" alt="Approved" />
+                            }
+                            else
+                            {
+                                <img src="~/assets/red-close.png" alert="Declined" />
+                            }
                     </td>
                 </tr>
             }
