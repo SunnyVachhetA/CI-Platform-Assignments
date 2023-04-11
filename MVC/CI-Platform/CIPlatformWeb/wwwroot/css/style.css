@@ -71,6 +71,9 @@ body {
     height: 230px;
 }
 
+.bg-tile {
+    background-color: var(--col-tile) !important;
+}
 .bg-orange {
     background-color: var(--col-orange) !important;
 }
@@ -930,14 +933,16 @@ form-subtitle,
     border-bottom: 2px solid var(--col-secondary-brown);
 }
 
-.edit-profile #form-edit-profile .form-label, #contact-form .form-label {
+.edit-profile #form-edit-profile .form-label, #contact-form .form-label,
+.admin-form .form-label {
     margin-bottom: 0.3rem !important;
     font-size: 15px;
     font-weight: 300;
     color: var(--col-black);
 }
 
-.edit-profile #form-edit-profile .form-control::placeholder, #contact-form .form-control::placeholder {
+.edit-profile #form-edit-profile .form-control::placeholder, #contact-form .form-control::placeholder,
+.admin-form .form-control::placeholder {
     font-size: 14px !important;
     color: var(--col-secondary-brown);
 }
@@ -945,7 +950,8 @@ form-subtitle,
 .edit-profile #form-edit-profile .form-control:focus,
 .edit-profile #form-edit-profile .form-select:focus,
 .user-modal-form .form-control:focus,
-#contact-form .form-control:focus {
+#contact-form .form-control:focus,
+.admin-form .form-control:focus {
     border-radius: 3px !important;
     border-color: #2b64b1 !important;
     box-shadow: none !important;
@@ -1165,7 +1171,7 @@ form-subtitle,
     max-width: 20rem;
 }
 
-#usr-search:focus {
+#usr-search:focus , #cms-search:focus{
     border-bottom: 1px solid black !important;
     box-shadow: none !important;
 }

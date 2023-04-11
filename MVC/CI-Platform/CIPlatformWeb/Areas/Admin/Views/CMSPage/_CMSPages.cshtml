@@ -1,0 +1,71 @@
+﻿@model IEnumerable<CMSPageVM>
+<div class = "border-bottom mb-2">
+    <div class = "border-bottom-1 mx-content pb-2 font-30">
+        CMS Page
+    </div>
+</div>
+
+<div class="mt-4 d-flex justify-content-between">
+    <div class="border mx-content py-1 px-3 d-flex align-items-center" id="admin-search-container">
+        <img src="./assets/search.png" alt="Search Here" height="20px" width = "20px">
+        <input type="text" name="Search" id = "cms-search" placeholder="Search here" class="border-0 ms-2 form-control">
+        <div class="spinner-border opacity-0 spinner-control" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>          
+    <button class="btn-g-orange gap-0 px-2 py-0 pe-3" id="btn-cms-add">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f88634" class="bi bi-plus"
+             viewBox="0 0 16 16">
+            <path
+                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+        </svg>
+        Add
+    </button>
+</div>
+
+<div class="mt-4 table-responsive admin-table">
+    @if (!Model.Any())
+    {
+        <p class="text-info-message p-2 mx-content mx-auto">There are no CMS pages at the moment</p>
+        <button class="btn-g-orange mx-auto" id = "btn-load-users">Load All CMS Pages</button>
+    }
+    else
+    {
+        <table class="table border">
+            <thead class="">
+                <tr class="border">
+                    <th class="font-22 fw-400">Title</th>
+                    <th class="font-22 fw-400">Status</th>
+                    <th class="font-22 fw-400">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+            @foreach (var cmsPage in Model)
+            {
+                <tr>
+                    <td>
+                        @cmsPage.Title
+                    </td>
+                    <td>
+                        @if (cmsPage.Status)
+                        {
+                            <p class="mb-0 text-green">Active</p>
+                        }
+                        else
+                        {
+                            <p class="text-danger mb-0">Not Active</p>
+                        }
+                    </td>
+                    <td>
+                        <div class="d-flex gap-3">
+                            <img class="cursor-pointer cms-edit" data-cmsid="@cmsPage.CmsPageId" src="~/assets/editing.png" alt="Edit">
+                            <img class="cursor-pointer cms-delete" data-cmsid="@cmsPage.CmsPageId" src="~/assets/delete.png" alt="Delete">
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>

@@ -12,8 +12,9 @@ function vhToPixels(vh) {
 function updateSidebarHeight() {
     // Get the height of the content
     const contentHeight = rightContent.offsetHeight;
+    console.log(contentHeight);
+    console.log(vhToPixels(100));
     let height = (vhToPixels(100) > contentHeight) ? vhToPixels(100) : contentHeight;
-    // Set the height of the sidebar to match the content height
     adminSidebar.style.height = `${height}px`;
 }
 const formatter = new Intl.DateTimeFormat('en-US', {
@@ -65,8 +66,10 @@ function toggleMenuActive(menu, isToggle) {
     switch (menu) {
         case "user":
             src = '';
-            if (isToggle)
+            if (isToggle) {
                 src = '/assets/user-fill.svg';
+                loadUsersAjax();
+            }
             else
                 src = '/assets/user-empty.svg';
             changeMenu(menu, src);
@@ -74,8 +77,10 @@ function toggleMenuActive(menu, isToggle) {
 
         case "cms":
             src = '';
-            if (isToggle)
+            if (isToggle) {
                 src = '/assets/page.png';
+                loadCMSAjax();
+            }
             else
                 src = '/assets/empty-page.svg';
             changeMenu(menu, src);
@@ -289,3 +294,98 @@ function changeUserStatus(url, userId, message) {
         error: ajaxErrorSweetAlert
     });
 }
+
+
+//CMS Begin
+
+function loadCMSAjax() {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/CMSPage/Index',
+        success: function (result) {
+            loadCMSPagesonDOM(result);
+            registerCmsAddAndSearchEvent();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadCMSPagesonDOM(result) {
+    $('#admin-menu-content').html(result);
+    $.getScript('/js/rich-editor-tiny.js', setTimeout(updateSidebarHeight, 1500));
+    createPagination(5);
+}
+
+function registerCmsAddAndSearchEvent() {
+    registerCmsSearchEvent();
+    registerCmsAddButton();
+    registerAddCmsFormSubmitEvent();
+    registerAddCmsCancelButton();
+}
+
+function registerAddCmsFormSubmitEvent() {
+    $('#form-add-cms').on('submit', e => {
+        e.preventDefault();
+        $('#form-add-cms').valid();
+
+        if (!$('#form-add-cms').valid()) return;
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/CMSPage/AddCMS',
+            data: $('#form-add-cms').serialize(),
+            success: function (result) {
+                loadCMSPagesonDOM(result);
+                registerCmsAddAndSearchEvent();
+            },
+            error: ajaxErrorSweetAlert
+        })
+    });
+}
+function registerAddCmsCancelButton() { console.log('Cancel clicked'); }
+function registerCmsSearchEvent() {
+    let searchBox = document.getElementById('cms-search');
+
+    searchBox.addEventListener('input', e => {
+        searchText = e.target.value;
+        $('.spinner-control').removeClass('opacity-0');
+        $('.spinner-control').addClass('opacity-1');
+        searchCMSWithDebounceAjax(searchText);
+    });
+}
+
+const searchCMSWithDebounceAjax = debounce(
+    (searchText) => {
+
+        if (searchText.trim().length == 0) {
+            $('.spinner-control').removeClass('opacity-1');
+            $('.spinner-control').addClass('opacity-0');
+            return;
+        }
+        $.ajax({
+            type: 'GET',
+            url: '/Admin/CMSPage/SearchCMS',
+            data: { searchKey: searchText.trim() },
+            success: function (result) {
+                loadCMSPagesonDOM(result);
+                registerCmsAddAndSearchEvent();
+                $('.spinner-control').removeClass('opacity-1');
+                $('.spinner-control').addClass('opacity-0');
+            },
+            error: ajaxErrorSweetAlert
+        });
+    });
+
+function registerCmsAddButton() {
+    $('#btn-cms-add').click(() => {
+        $.ajax({
+            type: 'GET',
+            url: '/Admin/CMSPage/AddCMS',
+            success: function (result) {
+                loadCMSPagesonDOM(result);
+            },
+            error: ajaxErrorSweetAlert
+        });
+    });
+}
+//CMS End

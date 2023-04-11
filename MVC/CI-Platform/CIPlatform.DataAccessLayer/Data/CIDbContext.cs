@@ -20,6 +20,8 @@ public partial class CIDbContext : DbContext
 
     public virtual DbSet<City> Cities { get; set; }
 
+    public virtual DbSet<CmsPage> CmsPages { get; set; }
+
     public virtual DbSet<Comment> Comments { get; set; }
 
     public virtual DbSet<ContactUs> ContactUs { get; set; }
@@ -143,6 +145,34 @@ public partial class CIDbContext : DbContext
                 .HasForeignKey(d => d.CountryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_city_country");
+        });
+
+        modelBuilder.Entity<CmsPage>(entity =>
+        {
+            entity.ToTable("cms_page");
+
+            entity.HasIndex(e => e.Slug, "UQ__cms_page__32DD1E4C53E1E875").IsUnique();
+
+            entity.Property(e => e.CmsPageId).HasColumnName("cms_page_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.Description)
+                .HasColumnType("text")
+                .HasColumnName("description");
+            entity.Property(e => e.Slug)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("slug");
+            entity.Property(e => e.Status)
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("status");
+            entity.Property(e => e.Title)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("title");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<Comment>(entity =>

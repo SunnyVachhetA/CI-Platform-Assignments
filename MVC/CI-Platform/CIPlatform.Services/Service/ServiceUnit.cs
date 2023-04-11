@@ -40,6 +40,7 @@ public class ServiceUnit: IServiceUnit
 
     public IContactUsService ContactUsService { get; private set; }
     public ITimesheetService TimesheetService { get; private set; }
+    public ICmsPageService CmsPageService { get; private set; }
 
     public ServiceUnit(IUnitOfWork unitOfWork, IEmailService emailService)
 	{
@@ -65,5 +66,6 @@ public class ServiceUnit: IServiceUnit
         UserSkillService = new UserSkillService(_unitOfWork);
         ContactUsService = new ContactUsService(_unitOfWork);
         TimesheetService = new TimesheetService(_unitOfWork);
+        CmsPageService = new CmsPageService(_unitOfWork);
     }
 }

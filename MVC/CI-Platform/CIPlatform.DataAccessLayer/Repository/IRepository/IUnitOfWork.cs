@@ -27,5 +27,7 @@ public interface IUnitOfWork
     IContactUsRepository ContactUsRepo { get; }
 
     ITimesheetRepository TimesheetRepo { get; }
+
+    ICmsPageRepository CmsPageRepo { get; }
     void Save();
 }

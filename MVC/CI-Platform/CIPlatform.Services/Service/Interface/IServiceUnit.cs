@@ -28,4 +28,6 @@ public interface IServiceUnit
     IContactUsService ContactUsService { get; } 
 
     ITimesheetService TimesheetService { get; }
+
+    ICmsPageService CmsPageService { get; }
 }
