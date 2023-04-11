@@ -1,0 +1,104 @@
+﻿@model IEnumerable<UserRegistrationVM>
+<div class="border-bottom mb-2">
+    <div class="border-bottom-1 mx-content pb-2 font-30">
+        User
+    </div>
+</div>
+<div class="mt-4">
+    <div class="border mx-content py-1 px-3 d-flex align-items-center" id="admin-search-container">
+        <img src="~/assets/search.png" alt="Search Here" height="20px" width="20px">
+        <input type="text" name="Search" id="usr-search" placeholder="Search here" class="border-0 ms-2 form-control">
+    
+        <div class="spinner-border opacity-0 spinner-control" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>  
+
+<!-- User table begin  -->
+<div class="mt-4 table-responsive admin-table">
+    @if (!Model.Any())
+    {
+        <p class="text-info-message p-2 mx-content mx-auto">There are no users at the moment</p>
+        <button class="btn-g-orange mx-auto" id = "btn-load-users">Load All Users</button>
+    }
+    else
+    {
+        <table class="table border tbl-user">
+            <thead>
+            <th class="font-22 fw-400">First Name</th>
+            <th class="font-22 fw-400">Last Name</th>
+            <th class="font-22 fw-400">Email</th>
+            <th class="font-22 fw-400">Employee ID</th>
+            <th class="font-22 fw-400">Department</th>
+            <th class="font-22 fw-400">Status</th>
+            <th class="font-22 fw-400">Action</th>
+            </thead>
+            <tbody>
+
+            @if (Model.Any())
+            {
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>
+                            @user.FirstName
+                        </td>
+                        <td>
+                            @user.LastName
+                        </td>
+                        <td>
+                            @user.Email
+                        </td>
+
+                        @if (string.IsNullOrEmpty(user.EmployeeID))
+                        {
+                            <td class="text-center">-</td>
+                        }
+                        else
+                        {
+                            <td>@user.EmployeeID</td>
+                        }
+
+                        @if (string.IsNullOrEmpty(user.Department))
+                        {
+                            <td class="text-center">-</td>
+                        }
+                        else
+                        {
+                            <td>@user.Department</td>
+                        }
+
+                        <td>
+                            @if (user.Status)
+                            {
+                                <p class="mb-0 text-green">Active</p>
+                            }
+                            else
+                            {
+                                <p class="mb-0 text-danger">Not Active</p>
+                            }
+                        </td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                @if (user.Status)
+                                {
+                                    <img class="cursor-pointer usr-delete" data-userid="@user.UserId" src="~/assets/delete.png" alt="Delete">
+                                }
+                                else
+                                {
+                                    <img class="cursor-pointer usr-restore" data-userid="@user.UserId" src="~/assets/restore.svg" alt="Restore"/>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    }
+</div>
+<!-- USer table finish -->
+
+<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+</div>

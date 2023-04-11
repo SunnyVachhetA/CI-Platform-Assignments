@@ -745,6 +745,10 @@
       "PackagePath": "staticwebassets\\js\\admin-page.js"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\admin-pagination.js",
+      "PackagePath": "staticwebassets\\js\\admin-pagination.js"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\mission-details-ajax.js",
       "PackagePath": "staticwebassets\\js\\mission-details-ajax.js"
     },

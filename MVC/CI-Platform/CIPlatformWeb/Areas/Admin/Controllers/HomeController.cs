@@ -17,11 +17,4 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet]
-    public IActionResult Users()
-    {
-        IEnumerable<UserRegistrationVM> allUsers = _serviceUnit.UserService.FetchAllUsers( isActiveFlag:false );
-        allUsers = allUsers.OrderBy( user => user.Status );
-        return PartialView("_Users", allUsers);
-    }
 }

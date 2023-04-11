@@ -1,6 +1,7 @@
-﻿<main class="d-flex">
+﻿<main class="d-lg-flex">
+    <div class="overlay d-none d-lg-none position-absolute"></div>
     <aside class="sidebar">
-        <div class="d-flex pt-5 px-3 justify-content-between">
+        <div class="d-flex pt-2 pt-4 px-3 justify-content-between">
             <p class="text-white">Navigation</p>
             <button id="sidebar-close" class="btn btn-close bg-white"></button>
         </div>
@@ -27,7 +28,7 @@
                 Mission Skills
             </div>
             <div data-menu="application">
-                <img src="~/assets/folder-empty.svg" alt="Application" />
+                <img src="~/assets/folder-empty.svg" alt="Application"/>
                 Mission Application
             </div>
             <div data-menu="story">
@@ -40,11 +41,11 @@
             </div>
         </div>
     </aside>
-    <section class="flex-grow-1">
+    <section class="flex-grow-1" id="admin-right-content">
         <nav class="d-flex px-4 py-3 align-items-center shadow-sm">
             <button id="btn-sidebar-hamburger" class="border-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                 </svg>
             </button>
             <p class="mb-0 ms-1" id="current-date"></p>
@@ -64,7 +65,7 @@
                 </div>
             </div>
         </nav>
-        <div class="px-4 mt-4" id="admin-menu-content">
+        <div class="px-4 mt-4 mb-5" id="admin-menu-content">
         </div>
     </section>
 </main>
@@ -74,5 +75,6 @@
 
 @section Scripts
 {
+    <script src="~/js/admin-pagination.js"></script>
     <script src="~/js/admin-page.js"></script>
 }

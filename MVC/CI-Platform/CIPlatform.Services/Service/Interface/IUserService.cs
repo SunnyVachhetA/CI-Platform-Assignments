@@ -16,4 +16,8 @@ public interface IUserService
     bool CheckOldCredentialAndUpdate(ChangePasswordVM passwordVm);
     void UpdateUserAvatar(IFormFile file, string wwwRoot, long userId);
     void UpdateUserDetails(UserProfileVM userProfile);
+
+    IEnumerable<UserRegistrationVM> GetSortedUserList( bool isActiveFlag = false);
+    int UpdateUserStatus(long userId, byte status);
+    IEnumerable<UserRegistrationVM> FilterUserBySearchKey(string key);
 }

@@ -76,4 +76,11 @@ public class UserRepository : Repository<User>, IUserRepository
 
     }
 
+    public int UpdateUserStatus(long userId, byte status)
+    {
+        var statusParam = new SqlParameter("@status", status);
+        var userIdParam = new SqlParameter("@userId", userId);
+
+        return _dbContext.Database.ExecuteSqlRaw("UPDATE [user] SET status = @status WHERE user_id = @userId", statusParam, userIdParam);
+    }
 }

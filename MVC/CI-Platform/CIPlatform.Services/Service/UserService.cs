@@ -3,6 +3,7 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using CIPlatform.Services.Utilities;
 using Microsoft.AspNetCore.Http;
 
 namespace CIPlatform.Services.Service;
@@ -221,7 +222,27 @@ public class UserService: IUserService
 
         _unitOfWork.Save();
     }
-    
+
+    public IEnumerable<UserRegistrationVM> GetSortedUserList(bool isActiveFlag = false)
+    {
+        IEnumerable<UserRegistrationVM> allUsers = FetchAllUsers(isActiveFlag);
+        allUsers = allUsers.OrderByDescending(user => user.Status).ThenBy(user => user.FirstName);
+        return allUsers;
+    }
+
+    public int UpdateUserStatus(long userId, byte status) =>
+        _unitOfWork.UserRepo.UpdateUserStatus(userId, status);
+
+    public IEnumerable<UserRegistrationVM> FilterUserBySearchKey(string key)
+    {
+        Func<User, bool> filter = user => user.FirstName.ContainsCaseInsensitive(key) || user.LastName.ContainsCaseInsensitive(key);
+
+        var users = _unitOfWork.UserRepo.GetAll(filter);
+
+        var filteredUsersList = users.Select( ConvertToRegistrationVM );
+        return filteredUsersList;
+    }
+
 
     private UserProfileVM ConvertUserToUserProfileVM(User user)
     {

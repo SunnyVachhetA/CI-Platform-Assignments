@@ -11,4 +11,5 @@ public interface IUserRepository : IRepository<User>
     Task<IEnumerable<string>> GetUserEmailList(Func<User, bool> filter);
     User FetchUserProfile(Func<User, bool> filter);
     void UpdateUserAvatar(string filePath, long userId);
+    int UpdateUserStatus(long userId, byte status);
 }

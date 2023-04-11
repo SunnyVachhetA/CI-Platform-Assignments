@@ -1050,22 +1050,20 @@ form-subtitle,
 /* Admin home css start */
 .sidebar {
     background-color: var(--col-orange);
-    width: 350px;
+    width: clamp(250px, 300px, 350px);
     z-index: 10;
     height: 100vh;
     transition: var(--transition);
 }
-
 @media screen and (min-width: 992px) {
     .sidebar {
         display: block !important;
-        /* position: fixed !important; */
+        position: static !important; 
     }
 
     #sidebar-close {
         display: none;
     }
-
     #btn-sidebar-hamburger {
         display: none;
     }
@@ -1177,5 +1175,9 @@ form-subtitle,
     padding: 0.5rem;
     border-radius: 5px;
 }
-
+.overlay {
+    z-index: 3;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    inset: 0;
+}
 /* Admin home css fin */
