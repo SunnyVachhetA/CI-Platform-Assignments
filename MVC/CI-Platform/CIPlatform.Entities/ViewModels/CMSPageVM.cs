@@ -16,6 +16,8 @@ public class CMSPageVM
     public bool Status { get; set; }
 
     [Required(ErrorMessage = "Please enter unique slug!")]
+    [MinLength(8, ErrorMessage = "Slug should have at least 8 character!")]
     [MaxLength(255, ErrorMessage = "Slug should have less than 255 characters!")]
-    public string Slug { get; set; }
+    [RegularExpression(@"\S+", ErrorMessage = "Please enter a valid slug.")]
+    public string Slug { get; set; } = string.Empty;
 }

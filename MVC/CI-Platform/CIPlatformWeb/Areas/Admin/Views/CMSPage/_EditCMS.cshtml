@@ -3,7 +3,8 @@
     <h4 class="px-4 mb-0 py-3 bg-tile fw-400">Add</h4>
 
     <div class="px-4 mt-2 pb-4">
-        <form id="form-add-cms" class="admin-form d-flex flex-column gap-4">
+        <form id="form-edit-cms" class="admin-form d-flex flex-column gap-4">
+            <input type="hidden" value="@Model.CmsPageId" id="cmsPageId"/>
             <div class="col-12">
                 <label asp-for="Title" class="form-label"></label>
                 <input asp-for="Title" class="form-control" placeholder="Enter Title" id="title">
@@ -31,7 +32,7 @@
 
             <div class="d-flex justify-content-center justify-content-md-end gap-2">
                 <button class="btn-g-gray">Cancel</button>
-                <button class="btn-g-orange" type="submit">Save</button>
+                <button class="btn-g-orange" type="submit">Save Changes</button>
             </div>
         </form>
     </div>

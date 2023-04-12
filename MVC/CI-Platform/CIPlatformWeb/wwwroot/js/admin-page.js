@@ -3,6 +3,15 @@ const btnHamburger = document.getElementById('btn-sidebar-hamburger');
 const adminSidebar = document.querySelector('.sidebar');
 const sidebarClose = document.querySelector('#sidebar-close');
 const rightContent = document.querySelector('#admin-right-content');
+
+const resizeObserver = new ResizeObserver(entries => {
+    for (let entry of entries) {
+        updateSidebarHeight();
+    }
+});
+
+// Start observing the element
+resizeObserver.observe(rightContent);
 let isSidebarOpen = true;
 let searchText = '';
 
@@ -12,8 +21,6 @@ function vhToPixels(vh) {
 function updateSidebarHeight() {
     // Get the height of the content
     const contentHeight = rightContent.offsetHeight;
-    console.log(contentHeight);
-    console.log(vhToPixels(100));
     let height = (vhToPixels(100) > contentHeight) ? vhToPixels(100) : contentHeight;
     adminSidebar.style.height = `${height}px`;
 }
@@ -217,6 +224,7 @@ function registerUserSearchEvent() {
     });
 }
 function loadUsersAjax() {
+    tinymce.remove('#description');
     $.ajax({
         type: 'GET',
         url: '/Admin/User/Users',
@@ -312,13 +320,53 @@ function loadCMSAjax() {
 
 function loadCMSPagesonDOM(result) {
     $('#admin-menu-content').html(result);
-    $.getScript('/js/rich-editor-tiny.js', setTimeout(updateSidebarHeight, 1500));
     createPagination(5);
+    registerCmsEditAndDeleteButton();
+}
+
+function registerCmsEditAndDeleteButton() {
+    $('cms-edit').each((_, item) => {
+        $(item).click(() => {
+
+            let cmsId = $(item).data('cmsid');
+            handleCmsPageEditAjax(cmsId);
+        });
+    });
+
+    $('cms-delete').each((_, item) => {
+        $(item).click(() => {
+            let cmsId = $(item).data('cmsid');
+            handleCmsPageDeleteAjax(cmsId);
+        });
+    });
+}
+
+function handleCmsPageEditAjax(cmsId) {
+    $.ajax(
+        {
+            type: 'GET',
+            url: '/Admin/CMSPage/Edit',
+            data: { cmsId },
+            success: function (result) {
+                loadCMSPagesonDOM();
+                cmsEditFormEvent();
+            },
+            error: ajaxErrorSweetAlert
+        });
+}
+
+function cmsEditFormEvent() {
+   
 }
 
 function registerCmsAddAndSearchEvent() {
     registerCmsSearchEvent();
-    registerCmsAddButton();
+    registerCmsAddButton();   
+    $('#cms-search').val(searchText);
+}
+
+function cmsAddFormEvents() {
+    $.getScript('/js/rich-editor-tiny.js', setTimeout(updateSidebarHeight, 1500));
     registerAddCmsFormSubmitEvent();
     registerAddCmsCancelButton();
 }
@@ -330,10 +378,37 @@ function registerAddCmsFormSubmitEvent() {
 
         if (!$('#form-add-cms').valid()) return;
 
+
+        let description = tinymce.get('description').getContent();
+       
+
+        if (description.length < 20) {
+            $('#err-desc').text('Description should contain at least 20 characters!');
+            return;
+        }
+        $('#err-desc').text('');
+
+        let slugText = $('#input-slug').val().trim();
+        let isSlugUnique = checkIsSlugUnique(slugText, 0);
+
+        if (!isSlugUnique) {
+            //$('#err-slug').show();
+            $('#err-slug').text('Slug URL should be unique!').show();
+            displayActionMessageSweetAlert('Unique slug required', slugText.trim() + ' given slug already exists!', 'error');
+            return false;
+        }
+        $('#err-slug').text('');
+
+        const cmsPage = {} 
+        cmsPage.Title = $('#title').val();
+        cmsPage.Description = description;
+        cmsPage.Status = $('#status').find(':selected').val();
+        cmsPage.Slug = slugText;
+        //console.log("here: " + cmsPage.Description);
         $.ajax({
             type: 'POST',
             url: '/Admin/CMSPage/AddCMS',
-            data: $('#form-add-cms').serialize(),
+            data: cmsPage,
             success: function (result) {
                 loadCMSPagesonDOM(result);
                 registerCmsAddAndSearchEvent();
@@ -341,6 +416,21 @@ function registerAddCmsFormSubmitEvent() {
             error: ajaxErrorSweetAlert
         })
     });
+}
+
+function checkIsSlugUnique(slug, id) {
+    obj = {}
+    obj.slug = slug;
+    obj.id = id;
+    let isSlugUnique = false;
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: '/Admin/CMSPage/IsSlugUnique',
+        data: obj,
+        success: (result) => isSlugUnique = result 
+    })
+    return isSlugUnique;
 }
 function registerAddCmsCancelButton() { console.log('Cancel clicked'); }
 function registerCmsSearchEvent() {
@@ -357,11 +447,6 @@ function registerCmsSearchEvent() {
 const searchCMSWithDebounceAjax = debounce(
     (searchText) => {
 
-        if (searchText.trim().length == 0) {
-            $('.spinner-control').removeClass('opacity-1');
-            $('.spinner-control').addClass('opacity-0');
-            return;
-        }
         $.ajax({
             type: 'GET',
             url: '/Admin/CMSPage/SearchCMS',
@@ -383,6 +468,7 @@ function registerCmsAddButton() {
             url: '/Admin/CMSPage/AddCMS',
             success: function (result) {
                 loadCMSPagesonDOM(result);
+                cmsAddFormEvents();
             },
             error: ajaxErrorSweetAlert
         });
