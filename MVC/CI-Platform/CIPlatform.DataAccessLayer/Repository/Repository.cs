@@ -59,4 +59,9 @@ public class Repository<T> : IRepository<T> where T : class
             dbSet
             .AddRangeAsync(list);
     }
+
+    public void Update(T entity)
+    {
+        dbSet.Update(entity);
+    }
 }

@@ -27,6 +27,8 @@ public class AddStoryVM
 
     [Display(Name = "Enter Video URL")]
     [Url]
+    [RegularExpression(@"^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=)?([a-zA-Z0-9_-]{11})$",
+        ErrorMessage = "Please enter a valid YouTube video URL")]
     public string? VideoUrl { get; set; }
   
     [Required(ErrorMessage = "Minimum one media is required!")]

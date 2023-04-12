@@ -307,6 +307,7 @@ function changeUserStatus(url, userId, message) {
 //CMS Begin
 
 function loadCMSAjax() {
+
     $.ajax({
         type: 'GET',
         url: '/Admin/CMSPage/Index',
@@ -319,13 +320,14 @@ function loadCMSAjax() {
 }
 
 function loadCMSPagesonDOM(result) {
+    tinymce.remove('#description');
     $('#admin-menu-content').html(result);
     createPagination(5);
     registerCmsEditAndDeleteButton();
 }
 
 function registerCmsEditAndDeleteButton() {
-    $('cms-edit').each((_, item) => {
+    $('.cms-edit').each((_, item) => {
         $(item).click(() => {
 
             let cmsId = $(item).data('cmsid');
@@ -333,12 +335,41 @@ function registerCmsEditAndDeleteButton() {
         });
     });
 
-    $('cms-delete').each((_, item) => {
+    $('.cms-delete').each((_, item) => {
         $(item).click(() => {
             let cmsId = $(item).data('cmsid');
             handleCmsPageDeleteAjax(cmsId);
         });
     });
+}
+
+function handleCmsPageDeleteAjax(cmsId) {
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f88634',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Delete CMS Page'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/Admin/CMSPage/Delete',
+                data: { cmsId },
+                success: function (_, _, status) {
+                    
+                        displayActionMessageSweetAlert('CMS Page Deleted', 'CMS Page deleted successfully!', 'success');
+                        loadCMSAjax();
+                    
+                },
+                error: ajaxErrorSweetAlert
+            });
+        }
+    })
+
 }
 
 function handleCmsPageEditAjax(cmsId) {
@@ -348,15 +379,19 @@ function handleCmsPageEditAjax(cmsId) {
             url: '/Admin/CMSPage/Edit',
             data: { cmsId },
             success: function (result) {
-                loadCMSPagesonDOM();
-                cmsEditFormEvent();
+                loadCMSPagesonDOM(result);
+                cmsEditFormEvents();
             },
             error: ajaxErrorSweetAlert
         });
 }
-
-function cmsEditFormEvent() {
-   
+function cmsEditFormEvents() {
+    $.getScript('/js/rich-editor-tiny.js');
+    cmsEditFormSubmitEvent();
+    registerCmsCancelButton();
+}
+function cmsEditFormSubmitEvent() {
+    $('#form-edit-cms').on('submit', e => cmsFormSubmit(e, '#form-edit-cms', '/Admin/CMSPage/Edit', 'PUT'));
 }
 
 function registerCmsAddAndSearchEvent() {
@@ -366,56 +401,13 @@ function registerCmsAddAndSearchEvent() {
 }
 
 function cmsAddFormEvents() {
-    $.getScript('/js/rich-editor-tiny.js', setTimeout(updateSidebarHeight, 1500));
+    $.getScript('/js/rich-editor-tiny.js');
     registerAddCmsFormSubmitEvent();
-    registerAddCmsCancelButton();
+    registerCmsCancelButton();
 }
 
 function registerAddCmsFormSubmitEvent() {
-    $('#form-add-cms').on('submit', e => {
-        e.preventDefault();
-        $('#form-add-cms').valid();
-
-        if (!$('#form-add-cms').valid()) return;
-
-
-        let description = tinymce.get('description').getContent();
-       
-
-        if (description.length < 20) {
-            $('#err-desc').text('Description should contain at least 20 characters!');
-            return;
-        }
-        $('#err-desc').text('');
-
-        let slugText = $('#input-slug').val().trim();
-        let isSlugUnique = checkIsSlugUnique(slugText, 0);
-
-        if (!isSlugUnique) {
-            //$('#err-slug').show();
-            $('#err-slug').text('Slug URL should be unique!').show();
-            displayActionMessageSweetAlert('Unique slug required', slugText.trim() + ' given slug already exists!', 'error');
-            return false;
-        }
-        $('#err-slug').text('');
-
-        const cmsPage = {} 
-        cmsPage.Title = $('#title').val();
-        cmsPage.Description = description;
-        cmsPage.Status = $('#status').find(':selected').val();
-        cmsPage.Slug = slugText;
-        //console.log("here: " + cmsPage.Description);
-        $.ajax({
-            type: 'POST',
-            url: '/Admin/CMSPage/AddCMS',
-            data: cmsPage,
-            success: function (result) {
-                loadCMSPagesonDOM(result);
-                registerCmsAddAndSearchEvent();
-            },
-            error: ajaxErrorSweetAlert
-        })
-    });
+    $('#form-add-cms').on('submit', e => cmsFormSubmit(e, '#form-add-cms', '/Admin/CMSPage/AddCMS', 'POST'));
 }
 
 function checkIsSlugUnique(slug, id) {
@@ -432,7 +424,10 @@ function checkIsSlugUnique(slug, id) {
     })
     return isSlugUnique;
 }
-function registerAddCmsCancelButton() { console.log('Cancel clicked'); }
+function registerCmsCancelButton() {
+    $('#btn-cancel').click(() => loadCMSAjax());
+    updateSidebarHeight();
+}
 function registerCmsSearchEvent() {
     let searchBox = document.getElementById('cms-search');
 
@@ -474,4 +469,50 @@ function registerCmsAddButton() {
         });
     });
 }
+
+function cmsFormSubmit(e, form, url, requestType) 
+    {
+        e.preventDefault();
+        $(form).valid();
+
+        if (!$(form).valid()) return;
+
+        let description = tinymce.get('description').getContent();
+
+
+        if (description.length < 20) {
+            $('#err-desc').text('Description should contain at least 20 characters!');
+            return;
+        }
+        $('#err-desc').text('');
+
+        let slugText = $('#input-slug').val().trim();
+        let isSlugUnique = checkIsSlugUnique(slugText, $('#cmsPageId').val());
+
+        if (!isSlugUnique) {
+            $('#err-slug').text('Slug URL should be unique!').show();
+            displayActionMessageSweetAlert('Unique slug required', '"' + slugText.trim() + '"' + ' slug already exists!', 'error');
+            return false;
+        }
+        $('#err-slug').text('');
+
+        const cmsPage = {};
+        cmsPage.CmsPageId = $('#cmsPageId').val();
+
+        cmsPage.Title = $('#title').val();
+        cmsPage.Description = description;
+        cmsPage.Status = $('#status').find(':selected').val();
+        cmsPage.Slug = slugText;
+        $.ajax({
+            type: requestType,
+            url: url,
+            data: cmsPage,
+            success: function (result) {
+                loadCMSPagesonDOM(result);
+                registerCmsAddAndSearchEvent();
+            },
+            error: ajaxErrorSweetAlert
+        })
+    }
+
 //CMS End

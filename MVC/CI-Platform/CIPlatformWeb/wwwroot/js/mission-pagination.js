@@ -53,7 +53,7 @@ function createHTMLPageButton() {
 
 function createLeftButton(btnLeft) {
     var imgLeft = $('<img>');
-    imgLeft.attr('src', './assets/left.png');
+    imgLeft.attr('src', '/assets/left.png');
     btnLeft.append(imgLeft);
     paginationContainer.append(btnLeft);
     $(btnLeft).click(() => {
@@ -67,7 +67,7 @@ function createLeftButton(btnLeft) {
 
 function createRightButton(btnRight) {
     var imgLeft = $('<img>');
-    imgLeft.attr('src', './assets/right-arrow1.png');
+    imgLeft.attr('src', '/assets/right-arrow1.png');
     btnRight.append(imgLeft);
     paginationContainer.append(btnRight);
     $(btnRight).click(() => {

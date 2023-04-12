@@ -33,7 +33,8 @@ public class CmsPageService: ICmsPageService
             return GetAllCmsPages().FirstOrDefault( cms => cms.Slug.ContainsCaseInsensitive(slug) ) == null;
         }
 
-        return GetAllCmsPages().Any( cms => cms.Slug.ContainsCaseInsensitive(slug) && cms.CmsPageId != id );
+        var result= GetAllCmsPages().Any( cms => cms.Slug.ContainsCaseInsensitive(slug) && cms.CmsPageId != id );
+        return !result;
     }
 
     public void AddCMSPage(CMSPageVM cmsPage)
@@ -54,6 +55,32 @@ public class CmsPageService: ICmsPageService
     {
         if (string.IsNullOrEmpty(searchKey)) return LoadAllCmsPages();
         return LoadAllCmsPages().Where(cms => cms.Title.ContainsCaseInsensitive(searchKey));
+    }
+
+    public CMSPageVM LoadSingleCMSPage(short cmsId)
+    {
+        var page = _unitOfWork.CmsPageRepo.GetFirstOrDefault(cms => cms.CmsPageId == cmsId);
+
+        return ConvertCMSPageVM(page);
+    }
+
+    public void UpdateCMSPage(CMSPageVM page)
+    {
+        var cms = _unitOfWork.CmsPageRepo.GetFirstOrDefault(cms => cms.CmsPageId == page.CmsPageId);
+        
+        cms.Slug = page.Slug;
+        cms.Title = page.Title;
+        cms.Description = page.Description;
+        cms.Status = page.Status;
+        cms.UpdatedAt = DateTimeOffset.Now;
+
+        _unitOfWork.CmsPageRepo.Update(cms);
+        _unitOfWork.Save();
+    }
+
+    public void DeleteCMSPage(short cmsId)
+    {
+        _unitOfWork.CmsPageRepo.DeleteCMSPageSQL(cmsId);
     }
 
 

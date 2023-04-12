@@ -62,4 +62,57 @@ public class CMSPageController : Controller
             return StatusCode(500);
         }
     }
+
+    [HttpGet]
+    public IActionResult Edit(short cmsId)
+    {
+        try
+        {
+            CMSPageVM vm = _serviceUnit.CmsPageService.LoadSingleCMSPage(cmsId);
+            return PartialView("_EditCMS", vm);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error during edit page load: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+
+            return StatusCode(500);
+        }        
+    }
+
+    [HttpPut]
+    public IActionResult Edit(CMSPageVM page)
+    {
+        try
+        {
+            _serviceUnit.CmsPageService.UpdateCMSPage(page);
+            var cmsPages = _serviceUnit.CmsPageService.LoadAllCmsPages();
+            return PartialView("_CMSPages", cmsPages);
+        }
+        catch (Exception e)
+        {
+
+            Console.WriteLine("Error during edit post: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+
+            return StatusCode(500);
+        }
+    }
+
+    [HttpDelete]
+    public IActionResult Delete(short cmsId)
+    {
+        try
+        {
+            _serviceUnit.CmsPageService.DeleteCMSPage(cmsId);
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error during delete: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+
+            return StatusCode(500);
+        }
+    }
 }

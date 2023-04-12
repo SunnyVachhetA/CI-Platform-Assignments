@@ -22,11 +22,11 @@ function successMessageSweetAlert(message) {
     })
 }
 
-function loginRequiredSweetAlert(loginPageLink) {
+function loginRequiredSweetAlert(loginPageLink, text='You need to login before using this feature!') {
     Swal.fire({
         icon: 'info',
         title: 'Login Required!',
-        text: 'You need to login before adding favourite mission.',
+        text: text,
         footer: `<a href="${loginPageLink}">Login Here</a>`
     });
 }

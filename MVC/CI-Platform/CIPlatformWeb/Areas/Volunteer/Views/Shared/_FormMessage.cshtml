@@ -18,7 +18,14 @@
 @if (TempData["TokenNotFound"] != null)
 {
     <div class="alert alert-danger font-15">
-        @TempData["TokenNotFound"]
+        @Html.Raw(TempData["TokenNotFound"])
+    </div>
+}
+
+@if (TempData["EmailNotExists"] != null)
+{
+    <div class="alert alert-danger font-15">
+        @TempData["EmailNotExists"]
     </div>
 }
 

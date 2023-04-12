@@ -148,6 +148,7 @@ function registerAddVolunteerHoursFormSubmit()
         (event) =>
         {
             event.preventDefault();
+            alert('here');
             $('#addVolunteerHourModal').modal('hide');
             $('#form-add-hour').valid();
             if ($('#form-add-hour').valid()) {

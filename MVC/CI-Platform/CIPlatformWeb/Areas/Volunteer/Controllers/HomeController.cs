@@ -63,6 +63,7 @@ namespace CIPlatformWeb.Areas.User.Controllers
             catch (Exception) { return StatusCode(404); }
         }
 
+        [HttpGet]
         public IActionResult LoadMissionsIndexAjax(int page)
         {
             MissionLandingVM missionLanding = new()

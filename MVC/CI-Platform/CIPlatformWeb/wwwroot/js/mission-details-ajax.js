@@ -85,7 +85,7 @@ function toggleBtnFavourite() {
 
 btnFavourite.addEventListener('click', () => {
     if (userId == 0) {
-        loginRequiredSweetAlert(loginPageLink);
+        loginRequiredSweetAlert(loginPageLink, 'You need to login before adding favourite!');
     }
     else
     {

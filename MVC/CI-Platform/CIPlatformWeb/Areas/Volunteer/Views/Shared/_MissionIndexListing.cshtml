@@ -225,25 +225,25 @@
                         </div>
                     }
                 <div class="position-absolute msn-list-location p-2 font-xs text-white text-light-custom rounded-18">
-                    <img src="./assets/pin.png" alt="Location" class="me-2">
+                    <img src="~/assets/pin.png" alt="Location" class="me-2">
                     @mission.CityName
                 </div>
                 
                 @if (userId != 0L && mission.FavrouriteMissionsId.Contains(userId))
                 {
                     <div class="cursor-pointer position-absolute rounded-pill p-2 msn-list-favourite bg-danger" data-missionid="@mission.MissionId">
-                        <img src="./assets/heart.png" alt="Add Favourite">
+                        <img src="~/assets/heart.png" alt="Add Favourite">
                     </div>
                 }
                 else
                 {
                         <div class="cursor-pointer position-absolute rounded-pill p-2 msn-list-favourite" data-missionid="@mission.MissionId">
-                        <img src="./assets/heart.png" alt="Add Favourite">
+                        <img src="~/assets/heart.png" alt="Add Favourite">
                     </div>
                 }
 
                 <div class="cursor-pointer position-absolute rounded-pill p-2 msn-list-share">
-                    <img src="./assets/user.png" alt="Add Favourite">
+                    <img src="~/assets/user.png" alt="Add Favourite">
                 </div>
 
                 <div class="position-relative mx-content mx-auto theme-list-title translate-middle-y px-4 p-2 text-light-custom text-black-1">
@@ -290,7 +290,7 @@
 
                         <button class="btn-g-orange mt-3">
                             Apply
-                            <img src="./assets/right-arrow.png" alt="Right Arrow">
+                            <img src="~/assets/right-arrow.png" alt="Right Arrow">
                         </button>
                     </div>
 

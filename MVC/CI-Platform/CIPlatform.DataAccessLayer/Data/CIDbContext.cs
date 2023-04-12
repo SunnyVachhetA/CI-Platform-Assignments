@@ -64,6 +64,8 @@ public partial class CIDbContext : DbContext
 
     public virtual DbSet<UserSkill> UserSkills { get; set; }
 
+    public virtual DbSet<VerifyEmail> VerifyEmails { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=.;Database=CI_PLATFORM;Trusted_Connection=True;Encrypt=False");
@@ -793,6 +795,22 @@ public partial class CIDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_user_skill_user");
+        });
+
+        modelBuilder.Entity<VerifyEmail>(entity =>
+        {
+            entity.HasKey(e => e.Email).HasName("PK__verify_e__AB6E6165EB01DBAF");
+
+            entity.ToTable("verify_email");
+
+            entity.Property(e => e.Email)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("email");
+            entity.Property(e => e.Token)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("token");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -7,4 +7,7 @@ public interface ICmsPageService
     bool CheckIsSlugUnique(string slug, short id = 0);
     void AddCMSPage(CMSPageVM cmsPage);
     IEnumerable<CMSPageVM> SearchCMSPageByKey(string searchKey);
+    CMSPageVM LoadSingleCMSPage(short cmsId);
+    void UpdateCMSPage(CMSPageVM page);
+    void DeleteCMSPage(short cmsId);
 }

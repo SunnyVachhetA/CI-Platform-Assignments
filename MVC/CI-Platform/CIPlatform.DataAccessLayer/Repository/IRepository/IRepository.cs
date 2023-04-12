@@ -14,4 +14,6 @@ public interface IRepository<T> where T: class
     void RemoveRange(IEnumerable<T> list);
 
     Task AddRangeAsync(IEnumerable<T> list);
+
+    void Update(T entity);
 }

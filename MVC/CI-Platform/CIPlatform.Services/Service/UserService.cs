@@ -37,7 +37,6 @@ public class UserService: IUserService
         var result = _unitOfWork.UserRepo.GetFirstOrDefault(
                 user => user.Email == email
             );
-        Console.WriteLine("Email Exists: " + result!=null);
         return (result != null);
     }
 

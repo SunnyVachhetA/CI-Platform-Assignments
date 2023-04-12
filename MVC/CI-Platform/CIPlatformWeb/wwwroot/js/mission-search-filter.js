@@ -166,8 +166,8 @@ $('#sort-options').change((e) => {
 function LoadMissionIndex() {
     $.ajax({
         type: "GET",
-        url: "Volunteer/Home/LoadMissionsIndexAjax",
-        data: currentPageNumber,
+        url: "/Volunteer/Home/LoadMissionsIndexAjax",
+        data: { page: currentPageNumber },
         success: function (result) {
             $('#partial-mission-listing').html(result);
             missionDisplay();

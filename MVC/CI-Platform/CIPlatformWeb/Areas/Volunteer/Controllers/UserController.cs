@@ -274,6 +274,14 @@ public class UserController : Controller
             return NotFound();
         }
 
+        bool result = _serviceUnit.UserService.IsEmailExists(email.Trim());
+        if (!result)
+        {
+            TempData["EmailNotExists"] = "Your email ID not found! Try registering your email.";
+            TempData["UserEmail"] = email.Trim();
+            return RedirectToRoute("ForgotPasswordPost");
+        }
+
         TokenStatus tokenStatus = _serviceUnit.PasswordResetService.GetTokenStatus(email);
 
         if (tokenStatus == TokenStatus.Empty || tokenStatus == TokenStatus.Expired)

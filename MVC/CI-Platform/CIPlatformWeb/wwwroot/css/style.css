@@ -261,7 +261,7 @@ a {
 }
 
 #reg-form .input-label, #reg-form .custom-input {
-    font-size: 14px !important;
+    font-size: 12px !important;
 }
 
 @media (min-width: 1400px) {
