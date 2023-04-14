@@ -19,5 +19,5 @@ public interface IUserService
 
     IEnumerable<UserRegistrationVM> GetSortedUserList( bool isActiveFlag = false);
     int UpdateUserStatus(long userId, byte status);
-    IEnumerable<UserRegistrationVM> FilterUserBySearchKey(string key);
+    IEnumerable<UserRegistrationVM> FilterUserBySearchKey(string? key);
 }

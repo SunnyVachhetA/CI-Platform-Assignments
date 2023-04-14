@@ -50,7 +50,6 @@ public class ServiceUnit: IServiceUnit
 		CountryService = new CountryService(_unitOfWork);
 		CityService = new CityService(_unitOfWork);
 		SkillService = new SkillService(_unitOfWork);
-		ThemeService = new ThemeService(_unitOfWork);
         MissionApplicationService = new MissionApplicationService(_unitOfWork);
         FavouriteMissionService = new FavouriteMissionService(_unitOfWork);
         MissionService = new MissionService(_unitOfWork);
@@ -67,5 +66,6 @@ public class ServiceUnit: IServiceUnit
         ContactUsService = new ContactUsService(_unitOfWork);
         TimesheetService = new TimesheetService(_unitOfWork);
         CmsPageService = new CmsPageService(_unitOfWork);
+		ThemeService = new ThemeService(_unitOfWork);
     }
 }

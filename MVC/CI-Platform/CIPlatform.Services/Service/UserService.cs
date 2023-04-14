@@ -232,8 +232,11 @@ public class UserService: IUserService
     public int UpdateUserStatus(long userId, byte status) =>
         _unitOfWork.UserRepo.UpdateUserStatus(userId, status);
 
-    public IEnumerable<UserRegistrationVM> FilterUserBySearchKey(string key)
+    public IEnumerable<UserRegistrationVM> FilterUserBySearchKey(string? key)
     {
+
+        if (string.IsNullOrEmpty(key)) return _unitOfWork.UserRepo.GetAll().Select(ConvertToRegistrationVM);
+
         Func<User, bool> filter = user => user.FirstName.ContainsCaseInsensitive(key) || user.LastName.ContainsCaseInsensitive(key);
 
         var users = _unitOfWork.UserRepo.GetAll(filter);

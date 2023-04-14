@@ -3,6 +3,7 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.Services.Service;
 public class MissionService : IMissionService
@@ -220,6 +221,15 @@ public class MissionService : IMissionService
     {
         unitOfWork.MissionRepo.UpdateMissionRating(missionId, avgRating);;
         return Task.CompletedTask;
+    }
+
+    public bool IsThemeUsedInMission(short themeId)
+    {
+        return
+            unitOfWork
+                .MissionRepo
+                .GetAll()
+                .Any(msn => msn.ThemeId == themeId);
     }
 
     //Load related mission based on theme

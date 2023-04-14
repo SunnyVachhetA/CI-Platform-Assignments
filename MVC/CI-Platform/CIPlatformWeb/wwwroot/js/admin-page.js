@@ -3,7 +3,7 @@ const btnHamburger = document.getElementById('btn-sidebar-hamburger');
 const adminSidebar = document.querySelector('.sidebar');
 const sidebarClose = document.querySelector('#sidebar-close');
 const rightContent = document.querySelector('#admin-right-content');
-
+const modalContainer = $('#partial-modal-container');
 const resizeObserver = new ResizeObserver(entries => {
     for (let entry of entries) {
         updateSidebarHeight();
@@ -122,8 +122,10 @@ function toggleMenuActive(menu, isToggle) {
 
         case "theme":
             src = '';
-            if (isToggle)
+            if (isToggle) {
                 src = '/assets/theme-fill.svg';
+                loadThemesAjax();
+            }
             else
                 src = '/assets/themes.png';
             changeMenu(menu, src);
@@ -170,11 +172,10 @@ $(document).ready
 function loadUsersOnDOM(result) {
     $('#admin-menu-content').html(result);
     createPagination(5);
-    updateSidebarHeight();
+    //updateSidebarHeight();
     registerUserDeleteAndRestoreClickEvents();
     registerUserSearchEvent();
-    registerAllUsersButton();
-    
+    //registerAllUsersButton();
     $('#usr-search').val(searchText);
 }
 
@@ -184,12 +185,6 @@ function registerAllUsersButton() {
 
 const searchUserWithDebounceAjax = debounce(
     (searchText) => {
-
-        if (searchText.trim().length == 0) {
-            $('.spinner-control').removeClass('opacity-1');
-            $('.spinner-control').addClass('opacity-0');
-            return;
-        }
     $.ajax({
         type: 'GET',
         url: '/Admin/User/SearchUser',
@@ -388,7 +383,7 @@ function handleCmsPageEditAjax(cmsId) {
 function cmsEditFormEvents() {
     $.getScript('/js/rich-editor-tiny.js');
     cmsEditFormSubmitEvent();
-    registerCmsCancelButton();
+    registerCancelButton();
 }
 function cmsEditFormSubmitEvent() {
     $('#form-edit-cms').on('submit', e => cmsFormSubmit(e, '#form-edit-cms', '/Admin/CMSPage/Edit', 'PUT'));
@@ -403,7 +398,7 @@ function registerCmsAddAndSearchEvent() {
 function cmsAddFormEvents() {
     $.getScript('/js/rich-editor-tiny.js');
     registerAddCmsFormSubmitEvent();
-    registerCmsCancelButton();
+    registerCancelButton();
 }
 
 function registerAddCmsFormSubmitEvent() {
@@ -424,7 +419,7 @@ function checkIsSlugUnique(slug, id) {
     })
     return isSlugUnique;
 }
-function registerCmsCancelButton() {
+function registerCancelButton() {
     $('#btn-cancel').click(() => loadCMSAjax());
     updateSidebarHeight();
 }
@@ -473,7 +468,7 @@ function registerCmsAddButton() {
 function cmsFormSubmit(e, form, url, requestType) 
     {
         e.preventDefault();
-        $(form).valid();
+        $(form).validate();
 
         if (!$(form).valid()) return;
 
@@ -516,3 +511,180 @@ function cmsFormSubmit(e, form, url, requestType)
     }
 
 //CMS End
+
+//Theme Start
+function loadThemesAjax() {
+    tinymce.remove('#description');
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/MissionTheme/Index',
+        success: function (result) {
+            $('#admin-menu-content').html(result);
+            loadThemesOnDOM(result);
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadThemesOnDOM() {
+    $('#msn-theme-search').val(searchText);
+    $('#msn-theme-search').focus();
+    createPagination(5);
+    registerThemeSearchAndAdd();
+    registerThemeEditAndDelete();
+}
+
+function registerThemeSearchAndAdd() {
+    $('#btn-theme-add').click(handleThemeAddEvent);
+    let searchBox = document.getElementById('msn-theme-search');
+    searchBox.addEventListener('input', e => {
+        searchText = e.target.value;
+        $('.spinner-control').removeClass('opacity-0');
+        $('.spinner-control').addClass('opacity-1');
+        genericSearch(searchText, '/Admin/MissionTheme/SearchTheme', "theme");
+    });
+}
+
+//Generic search
+const genericSearch = debounce(
+    (searchText, url, action) => {
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: { searchKey: searchText.trim() },
+            success: function (result) {
+                 $('#admin-menu-content').html(result);
+                 $('.spinner-control').removeClass('opacity-1');
+                 $('.spinner-control').addClass('opacity-0');
+                addAllEvents(action);
+            },
+            error: ajaxErrorSweetAlert
+        });
+    })
+function addAllEvents(action) {
+    switch (action) {
+        case "cms":
+            break;
+        case "theme":
+            loadThemesOnDOM();
+            break;
+        case "":
+            break;
+    }
+}
+
+function handleThemeAddEvent() {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/MissionTheme/AddTheme',
+        success: function (result) {
+            modalContainer.html(result);
+            $('#addThemeModal').modal('show');
+            registerAddThemeFormEvent();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function registerAddThemeFormEvent() {
+    $('#form-add-theme').on('submit', (e) => {
+        e.preventDefault();
+        $('#form-add-theme').valid();
+        if ($('#form-add-theme').valid()) {
+           
+            let themeVm = new URLSearchParams($('#form-add-theme').serialize());
+            
+            let themeName = themeVm.get('Title'); 
+            
+            let isThemeUnique = checkIsThemeUnique(themeName);
+            if (!isThemeUnique) {
+                displayActionMessageSweetAlert(`Theme '${themeName}' Already Exists!`, 'Please enter unique theme name.', 'error');
+                return;
+            }
+            $('#addThemeModal').modal('hide');
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/MissionTheme/AddTheme',
+                data: $('#form-add-theme').serialize(),
+                success: function (result) {
+                    $('#admin-menu-content').html(result);
+                    loadThemesOnDOM();
+                    $('#form-add-theme')[0].reset();
+                    successMessageSweetAlert(themeName + " added successfully!");
+                },
+                error: ajaxErrorSweetAlert
+            });
+        }
+    });
+}
+
+function checkIsThemeUnique(themeName, themeId = 0) {
+    let isThemeUnique = false;
+    $.ajax({
+        async: false,
+        type: 'GET',
+        data: { themeName: themeName, themeId: themeId },
+        url: '/Admin/MissionTheme/CheckIsThemeUnique',
+        success: function (result) {
+            isThemeUnique = result;
+        },
+        error: ajaxErrorSweetAlert
+    });
+    return isThemeUnique;
+}
+
+
+function registerThemeEditAndDelete() {
+    $('.theme-delete').each((_, item) => {
+        $(item).click(() => {
+            let themeId = $(item).data('themeid');
+            handleThemeDelete(themeId);
+        });
+    });
+
+    $('.theme-edit').each((_, item) => {
+        $(item).click(() => {
+            let themeId = $(item).data('themeid');
+            handleThemeEdit(themeId);
+        });
+    });
+}
+
+function handleThemeDelete(themeId) {
+    Swal.fire({
+        title: 'Do you want to delete theme?',
+        icon: 'warning',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Delete Theme',
+        denyButtonText: `De-Activate Theme, Instead`,
+        confirmButtonColor: '#5cb85c',
+        denyButtonColor: '#f88634'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            handleThemeDeleteMenuAjax(themeId, 'DELETE', '/Admin/MissionTheme/DeleteTheme', 'Theme Deleted Successfully!');
+        } else if (result.isDenied) {
+            handleThemeDeleteMenuAjax(themeId, 'PATCH', '/Admin/MissionTheme/DeactivateTheme', 'Theme De-Activated Successfully!');
+        }
+    })
+}
+function handleThemeEdit(themeId) { console.log('hello'); }
+
+function handleThemeDeleteMenuAjax(themeId, type, url, message) {
+    $.ajax({
+        type: type,
+        url: url,
+        data: { themeId },
+        success: (result, _, status) => {
+            if (status === 204) {
+                displayActionMessageSweetAlert(`Can't delete theme!'`, 'Theme is already in use!', 'error');
+                return;
+            }
+            $('#admin-menu-content').html(result);
+            loadThemesOnDOM();
+            successMessageSweetAlert(message);
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+//Theme end

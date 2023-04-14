@@ -1,6 +1,7 @@
 ﻿let totalRows, rowsPerPage, totalPage, currentPageSet, totalPageSet, currentPage, pageBtnDisplay = 2;
 let paginationContainer;
 function createPagination(row = 2) {
+  
     paginationContainer = $('#pagination-container');
     $(paginationContainer).empty();
     currentPage = 1;
@@ -11,7 +12,7 @@ function createPagination(row = 2) {
     totalPageSet = Math.ceil(totalPage / pageBtnDisplay);
 
     createPaginationButton();
-
+  
     handleDisplayTableRow();
     if (totalPageSet > 1) handleButtonDisplayPagination();
 }

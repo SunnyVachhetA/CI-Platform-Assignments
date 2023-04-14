@@ -60,12 +60,10 @@ public class UserController : Controller
     [HttpGet]
     public IActionResult SearchUser(string? searchKey)
     {
-        if (string.IsNullOrEmpty(searchKey))
-            return NoContent();
-
+        
         try
         {
-            IEnumerable<UserRegistrationVM> filterUsers = _serviceUnit.UserService.FilterUserBySearchKey(searchKey);
+            IEnumerable<UserRegistrationVM> filterUsers = _serviceUnit.UserService.FilterUserBySearchKey(searchKey!);
             return PartialView("_Users", filterUsers);
         }
         catch (Exception e)
