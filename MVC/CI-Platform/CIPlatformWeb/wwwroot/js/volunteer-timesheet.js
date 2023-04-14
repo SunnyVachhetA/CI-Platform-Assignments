@@ -148,15 +148,14 @@ function registerAddVolunteerHoursFormSubmit()
         (event) =>
         {
             event.preventDefault();
-            alert('here');
-            $('#addVolunteerHourModal').modal('hide');
-            $('#form-add-hour').valid();
+            $('#form-add-hour').validate();
             if ($('#form-add-hour').valid()) {
                 $.ajax({
                     type: 'POST',
                     url: '/Volunteer/User/AddVolunteerHours',
                     data: $('#form-add-hour').serialize(),
                     success: function (result) {
+                        $('#addVolunteerHourModal').modal('hide');
                         $('#vol-timesheet-hour').html(result);
                         displayActionMessageSweetAlert('Volunteer Hours Added!', 'Entry sent to admin for approval.', 'success');
                         addClickEventListenerToAddButtons();
@@ -164,6 +163,9 @@ function registerAddVolunteerHoursFormSubmit()
                     },
                     error: ajaxErrorSweetAlert
                 });
+            }
+            else {
+                $('#form-add-hour').valid();
             }
         }
     );
@@ -173,14 +175,14 @@ function registerAddVolunteerGoalsFormSubmit() {
     $('#form-add-goal').on('submit',
         (event) => {
             event.preventDefault();
-            $('#addVolunteerGoalModal').modal('hide');
-            $('#form-add-goal').valid();
+            $('#form-add-goal').validate();
             if ($('#form-add-goal').valid()) {
                 $.ajax({
                     type: 'POST',
                     url: '/Volunteer/User/AddVolunteerGoals',
                     data: $('#form-add-goal').serialize(),
                     success: function (result) {
+                        $('#addVolunteerGoalModal').modal('hide');
                         $('#vol-timesheet-goal').html(result);
                         displayActionMessageSweetAlert('Volunteer Goals Added!', 'Entry sent to admin for approval.', 'success');
                         registerAddVolunteerGoalsFormSubmit();
