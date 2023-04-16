@@ -36,10 +36,10 @@ public class ThemeService : IThemeService
     {
         if (themeId == 0)
         {
-            return GetAllThemesModel().FirstOrDefault( theme => theme.Title!.ContainsCaseInsensitive(themeName) ) == null;
+            return GetAllThemesModel().FirstOrDefault( theme => theme.Title!.EqualsIgnoreCase(themeName) ) == null;
         }
 
-        return !GetAllThemesModel().Any( theme => theme.Title!.ContainsCaseInsensitive(themeName) && themeId != theme.ThemeId);
+        return !GetAllThemesModel().Any( theme => theme.Title!.EqualsIgnoreCase(themeName) && themeId != theme.ThemeId);
     }
 
     public void AddTheme(ThemeVM themeVm)
@@ -60,11 +60,30 @@ public class ThemeService : IThemeService
         int numOfrow = _unitOfWork.ThemeRepo.DeleteTheme(themeId);
         if (numOfrow == 0) throw new Exception("Something went during theme delete");
     }
-
-    public void DeActivateThemeById(short themeId)
+    
+    public ThemeVM GetThemeDetails(short themeId)
     {
-        int numOfrow = _unitOfWork.ThemeRepo.DeActivateTheme(themeId);
-        if (numOfrow == 0) throw new Exception("Something went during theme delete");
+        var theme = _unitOfWork.ThemeRepo.GetFirstOrDefault(theme => theme.ThemeId == themeId);
+        return ConvertThemeToViewModel(theme);
+    }
+
+    public void EditTheme(ThemeVM themeVm)
+    {
+        var theme = _unitOfWork.ThemeRepo.GetFirstOrDefault( theme => theme.ThemeId == themeVm.ThemeId );
+        if (theme == null) throw new Exception("Theme Update Error!");
+
+        theme.Title = themeVm.Title;
+        theme.Status = themeVm.Status;
+        theme.UpdatedAt = DateTimeOffset.Now;
+
+        _unitOfWork.Save();
+    }
+
+    public void UpdateThemeStatus(short themeId, byte status = 0)
+    {
+
+        int numOfRow = _unitOfWork.ThemeRepo.UpdateThemeStatus(themeId, status);
+        if (numOfRow == 0) throw new Exception("Something went during theme status update");
     }
 
     public ThemeVM ConvertThemeToViewModel(MissionTheme theme)
@@ -74,8 +93,14 @@ public class ThemeService : IThemeService
             ThemeId = theme.ThemeId,
             Status = theme.Status,
             Title = theme.Title,
-            LastModified = theme.UpdatedAt?? theme.CreatedAt
+            LastModified = LastModifiedThemeDate(theme)    
         };
         return themeVm;
+    }
+
+    public DateTimeOffset LastModifiedThemeDate(MissionTheme theme)
+    {
+        return new[] { theme.CreatedAt, theme.UpdatedAt, theme.DeletedAt }
+            .Max() ?? theme.CreatedAt;
     }
 }

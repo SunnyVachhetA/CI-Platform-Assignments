@@ -25,7 +25,7 @@ public class VerifyEmailService: IVerifyEmailService
     }
 
     public bool CheckEmailAndTokenExists(string email, string token)
-        => _unitOfWork.VerifyEmailRepo.GetAll().Any( verify => verify.Email.ContainsCaseInsensitive(email) && verify.Token == token);
+        => _unitOfWork.VerifyEmailRepo.GetAll().Any( verify => verify.Email.EqualsIgnoreCase(email) && verify.Token == token);
 
     public void DeleteActivationToken(string email)
     {

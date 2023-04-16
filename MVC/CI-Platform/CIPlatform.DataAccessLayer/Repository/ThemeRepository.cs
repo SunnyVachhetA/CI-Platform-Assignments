@@ -18,11 +18,13 @@ public class ThemeRepository : Repository<MissionTheme>, IThemeRepository
         var idParam = new SqlParameter("@id", themeId);
         return _dbContext.Database.ExecuteSqlRaw("DELETE FROM mission_theme WHERE theme_id = @id", idParam);
     }
+    
 
-    public int DeActivateTheme(short themeId)
+    public int UpdateThemeStatus(short themeId, byte status)
     {
+
         var idParam = new SqlParameter("@id", themeId);
-        var statusParam = new SqlParameter("@status", false);
+        var statusParam = new SqlParameter("@status", status);
         return _dbContext.Database.ExecuteSqlRaw("UPDATE mission_theme SET status = @status WHERE theme_id=@id", statusParam, idParam);
     }
 }

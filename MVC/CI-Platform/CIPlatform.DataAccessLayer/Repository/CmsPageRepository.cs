@@ -12,10 +12,12 @@ public class CmsPageRepository: Repository<CmsPage>, ICmsPageRepository
     {
         _dbContext = dbContext;
     }
-
-    public void DeleteCMSPageSQL(short cmsId)
+    
+    public void UpdateCMSPage(short cmsId, byte status)
     {
+
         var idParam = new SqlParameter("@id", cmsId);
-        _dbContext.Database.ExecuteSqlRaw("DELETE FROM cms_page WHERE cms_page_id = @id", idParam);
+        var statusParam = new SqlParameter("@status", status);
+        _dbContext.Database.ExecuteSqlRaw("UPDATE cms_page SET status = @status WHERE cms_page_id = @id", statusParam, idParam);
     }
 }

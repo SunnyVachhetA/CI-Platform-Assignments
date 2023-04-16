@@ -104,12 +104,30 @@ public class CMSPageController : Controller
     {
         try
         {
-            _serviceUnit.CmsPageService.DeleteCMSPage(cmsId);
+            _serviceUnit.CmsPageService.UpdateCMSPageStatus(cmsId, 0);
             return NoContent();
         }
         catch (Exception e)
         {
             Console.WriteLine("Error during delete: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+
+            return StatusCode(500);
+        }
+    }
+
+
+    [HttpPatch]
+    public IActionResult Restore(short cmsId)
+    {
+        try
+        {
+            _serviceUnit.CmsPageService.UpdateCMSPageStatus(cmsId, 1);
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error during restore: " + e.Message);
             Console.WriteLine(e.StackTrace);
 
             return StatusCode(500);

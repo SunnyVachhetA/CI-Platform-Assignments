@@ -62,7 +62,14 @@
                     <td>
                         <div class="d-flex gap-3">
                             <img class="cursor-pointer theme-edit" data-themeid="@theme.ThemeId" src="~/assets/editing.png" alt="Edit">
-                            <img class="cursor-pointer theme-delete" data-themeid="@theme.ThemeId" src="~/assets/delete.png" alt="Delete">
+                            @if (theme.Status ?? false)
+                            {
+                                <img class="cursor-pointer theme-delete" data-themeid="@theme.ThemeId" src="~/assets/delete.png" alt="Delete">
+                            }
+                            else
+                            {
+                                <img class="cursor-pointer theme-restore" height="19px" width="18px" data-themeid="@theme.ThemeId" src="~/assets/restore.svg" alt="Restore">
+                            }
                         </div>
                     </td>
                 </tr>

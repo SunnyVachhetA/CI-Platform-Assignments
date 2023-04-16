@@ -8,5 +8,7 @@ public interface IThemeService
     bool CheckThemeIsUnique(string themeName, short themeId);
     void AddTheme(ThemeVM themeVm);
     void DeleteThemeById(short themeId);
-    void DeActivateThemeById(short themeId);
+    ThemeVM GetThemeDetails(short themeId);
+    void EditTheme(ThemeVM themeVm);
+    void UpdateThemeStatus(short themeId, byte status = 0);
 }

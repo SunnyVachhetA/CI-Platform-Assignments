@@ -60,7 +60,14 @@
                     <td>
                         <div class="d-flex gap-3">
                             <img class="cursor-pointer cms-edit" data-cmsid="@cmsPage.CmsPageId" src="~/assets/editing.png" alt="Edit">
-                            <img class="cursor-pointer cms-delete" data-cmsid="@cmsPage.CmsPageId" src="~/assets/delete.png" alt="Delete">
+                            @if (cmsPage.Status)
+                            {
+                                <img class="cursor-pointer cms-delete" data-cmsid="@cmsPage.CmsPageId" src="~/assets/delete.png" alt="Delete">
+                            }
+                            else
+                            {
+                                <img class="cursor-pointer cms-restore" height="19px" width="18px" data-cmsid="@cmsPage.CmsPageId" src="~/assets/restore.svg" alt="Delete">
+                            }
                         </div>
                     </td>
                 </tr>

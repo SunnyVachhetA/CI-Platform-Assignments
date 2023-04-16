@@ -30,10 +30,10 @@ public class CmsPageService: ICmsPageService
     {
         if (id == 0)
         {
-            return GetAllCmsPages().FirstOrDefault( cms => cms.Slug.ContainsCaseInsensitive(slug) ) == null;
+            return GetAllCmsPages().FirstOrDefault( cms => cms.Slug.EqualsIgnoreCase(slug) ) == null;
         }
 
-        var result= GetAllCmsPages().Any( cms => cms.Slug.ContainsCaseInsensitive(slug) && cms.CmsPageId != id );
+        var result= GetAllCmsPages().Any( cms => cms.Slug.EqualsIgnoreCase(slug) && cms.CmsPageId != id );
         return !result;
     }
 
@@ -78,10 +78,11 @@ public class CmsPageService: ICmsPageService
         _unitOfWork.Save();
     }
 
-    public void DeleteCMSPage(short cmsId)
+    public void UpdateCMSPageStatus(short cmsId, byte status)
     {
-        _unitOfWork.CmsPageRepo.DeleteCMSPageSQL(cmsId);
+        _unitOfWork.CmsPageRepo.UpdateCMSPage(cmsId, status);
     }
+    
 
 
     private static CMSPageVM ConvertCMSPageVM(CmsPage page)

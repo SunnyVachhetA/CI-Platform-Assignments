@@ -110,7 +110,7 @@ public class MissionThemeController : Controller
             bool result = _serviceUnit.MissionService.IsThemeUsedInMission(themeId);
             if (result) return StatusCode(204);
 
-            _serviceUnit.ThemeService.DeActivateThemeById(themeId);
+            _serviceUnit.ThemeService.UpdateThemeStatus(themeId);
 
             var themeList = _serviceUnit.ThemeService.GetAllThemes();
             return PartialView("_themes", themeList);
@@ -123,4 +123,56 @@ public class MissionThemeController : Controller
         }
     }
 
+    [HttpGet]
+    public IActionResult Edit(short themeId)
+    {
+        try
+        {
+            ThemeVM theme = _serviceUnit.ThemeService.GetThemeDetails(themeId);
+
+            if (theme == null) throw new Exception("No such theme exists with themeId!");
+
+            return PartialView("_EditTheme", theme);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while edit theme GET: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
+    [HttpPut]
+    public IActionResult Edit(ThemeVM themeVm)
+    {
+        try
+        {
+            _serviceUnit.ThemeService.EditTheme(themeVm);
+
+            var themeList = _serviceUnit.ThemeService.GetAllThemes();
+            return PartialView("_themes", themeList);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while edit theme POST: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
+    [HttpPatch]
+    public IActionResult Restore(short themeId)
+    {
+        try
+        {
+            _serviceUnit.ThemeService.UpdateThemeStatus(themeId, 1);
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while theme restore: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
 }
