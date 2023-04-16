@@ -82,8 +82,19 @@ public class UserController : Controller
     }
 
     [Route("Login", Name = "Login")]
-    public IActionResult Login()
+    public IActionResult Login(string? _email, string? _token)
     {
+        if (!string.IsNullOrEmpty(_email) && !string.IsNullOrEmpty(_token))
+        {
+            bool result = _serviceUnit.VerifyEmailService.CheckEmailAndTokenExists(_email, _token);
+            if (result)
+            {
+                _serviceUnit.UserService.SetUserStatusToActive(_email);
+                _serviceUnit.VerifyEmailService.DeleteActivationToken(_email);
+                TempData["account-activate"] = "Your account is set to active! Please Login.";
+            }
+            else return BadRequest();
+        }
         return View("Login");
     }
 
@@ -220,7 +231,7 @@ public class UserController : Controller
     [Route("Registration")]
     public IActionResult Registration(UserRegistrationVM user)
     {
-        string email = user.Email;
+        string email = user.Email.Trim().ToLower();
         if (_serviceUnit.UserService.IsEmailExists(email))
         {
             ModelState.AddModelError("Email", "Given Email ID is Already Registered!");
@@ -229,14 +240,19 @@ public class UserController : Controller
         if (ModelState.IsValid)
         {
             _serviceUnit.UserService.Add(user);
-            UserRegistrationVM registeredUser =
-                _serviceUnit.UserService.ValidateUserCredential(new UserLoginVM
-                    { Email = user.Email, Password = user.Password });
-            CreateUserLoginSession(registeredUser);
-            TempData["registratoin-success"] = "You have successfully registered.";
-            return RedirectToAction("Index", "Home");
+            //UserRegistrationVM registeredUser =
+            //    _serviceUnit.UserService.ValidateUserCredential(new UserLoginVM
+            //        { Email = user.Email, Password = user.Password });
+            //CreateUserLoginSession(registeredUser);
+            //TempData["registratoin-success"] = "You have successfully registered.";
+            string token = Guid.NewGuid().ToString();
+            var href = Url.Action("Login", "User", new { _email = email, _token=token }, "https");
+            _serviceUnit.VerifyEmailService.SaveUserActivationToken(email, token);
+            _serviceUnit.UserService.GenerateEmailVerificationToken(user, href!, _emailService);
+            TempData["email-verification"] = "Check Your Email For Link To Activate Your Account!";
+            return View("Login");
         }
-        else return View(user);
+        return View(user);
     }
 
     [Route("Logout", Name = "Logout")]

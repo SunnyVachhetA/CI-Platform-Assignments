@@ -12,4 +12,5 @@ public interface IUserRepository : IRepository<User>
     User FetchUserProfile(Func<User, bool> filter);
     void UpdateUserAvatar(string filePath, long userId);
     int UpdateUserStatus(long userId, byte status);
+    void SetUserStatusToActive(string email);
 }

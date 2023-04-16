@@ -42,6 +42,7 @@ public class ServiceUnit: IServiceUnit
     public ITimesheetService TimesheetService { get; private set; }
     public ICmsPageService CmsPageService { get; private set; }
 
+    public IVerifyEmailService VerifyEmailService { get; private set; }
     public ServiceUnit(IUnitOfWork unitOfWork, IEmailService emailService)
 	{
 		_unitOfWork= unitOfWork;
@@ -67,5 +68,6 @@ public class ServiceUnit: IServiceUnit
         TimesheetService = new TimesheetService(_unitOfWork);
         CmsPageService = new CmsPageService(_unitOfWork);
 		ThemeService = new ThemeService(_unitOfWork);
+        VerifyEmailService = new VerifyEmailService(_unitOfWork);
     }
 }

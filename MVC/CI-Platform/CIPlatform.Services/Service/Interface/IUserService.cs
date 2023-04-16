@@ -20,4 +20,6 @@ public interface IUserService
     IEnumerable<UserRegistrationVM> GetSortedUserList( bool isActiveFlag = false);
     int UpdateUserStatus(long userId, byte status);
     IEnumerable<UserRegistrationVM> FilterUserBySearchKey(string? key);
+    void GenerateEmailVerificationToken(UserRegistrationVM user, string href, IEmailService emailService);
+    void SetUserStatusToActive(string email);
 }

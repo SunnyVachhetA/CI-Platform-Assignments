@@ -83,4 +83,12 @@ public class UserRepository : Repository<User>, IUserRepository
 
         return _dbContext.Database.ExecuteSqlRaw("UPDATE [user] SET status = @status WHERE user_id = @userId", statusParam, userIdParam);
     }
+
+    public void SetUserStatusToActive(string email)
+    {
+        var statusParam = new SqlParameter("@status", 1);
+        var emailParam = new SqlParameter("@email", email);
+
+        _dbContext.Database.ExecuteSqlRaw("UPDATE [user] SET status = @status WHERE email = @email", statusParam, emailParam);
+    }
 }

@@ -29,6 +29,19 @@
     </div>
 }
 
+@if (TempData["account-activate"] != null)
+{
+    <div class="alert alert-success font-15">
+        @TempData["account-activate"]
+    </div>
+}
+
+@if (TempData["email-verification"] != null)
+{
+    <div class="alert alert-success font-15">
+        @TempData["email-verification"]
+    </div>
+}
 @*Successfully Login*@
 @*@if( TempData["login-success"] != null)
 {

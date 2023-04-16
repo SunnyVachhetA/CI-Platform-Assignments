@@ -30,4 +30,6 @@ public interface IServiceUnit
     ITimesheetService TimesheetService { get; }
 
     ICmsPageService CmsPageService { get; }
+
+    IVerifyEmailService VerifyEmailService { get; }
 }

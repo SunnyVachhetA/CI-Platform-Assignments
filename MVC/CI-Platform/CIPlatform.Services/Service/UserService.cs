@@ -23,15 +23,15 @@ public class UserService: IUserService
         {
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Email = user.Email,
+            Email = user.Email.ToLower(),
             PhoneNumber = user.PhoneNumber,
             Password = encryptedPassword,
-            Avatar = user.Avatar
+            Avatar = user.Avatar,
+            Status = false
         };
         _unitOfWork.UserRepo.Add(obj);
         _unitOfWork.Save();
     }
-
     public bool IsEmailExists(string email)
     {
         var result = _unitOfWork.UserRepo.GetFirstOrDefault(
@@ -244,8 +244,7 @@ public class UserService: IUserService
         var filteredUsersList = users.Select( ConvertToRegistrationVM );
         return filteredUsersList;
     }
-
-
+    
     private UserProfileVM ConvertUserToUserProfileVM(User user)
     {
         UserProfileVM userProfileVm = new()
@@ -289,5 +288,17 @@ public class UserService: IUserService
                 ).ToList();
 
         return userSkillList;
+    }
+    public void GenerateEmailVerificationToken(UserRegistrationVM user, string href, IEmailService emailService)
+    {
+        string message = MailMessageFormatUtility.GenerateMessageForAccountActivation(user.FirstName, href);
+        string subject = "Account Activation Email - CI Platform";
+        
+        emailService.EmailSend(user.Email, subject, message);
+    }
+
+    public void SetUserStatusToActive(string email)
+    {
+        _unitOfWork.UserRepo.SetUserStatusToActive(email);
     }
 }

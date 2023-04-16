@@ -29,5 +29,7 @@ public interface IUnitOfWork
     ITimesheetRepository TimesheetRepo { get; }
 
     ICmsPageRepository CmsPageRepo { get; }
+
+    IVerifyEmailRepository VerifyEmailRepo { get; }
     void Save();
 }

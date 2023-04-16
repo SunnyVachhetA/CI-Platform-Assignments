@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Services.Service.Interface;
+using CIPlatform.Services.Utilities;
 using MailKit.Net.Smtp;
 using MimeKit;
 
@@ -26,16 +27,8 @@ public class EmailService : IEmailService
 
     public void SendResetPasswordLink(string email, string? href)
     {
-
-        string toEmail = email;
-        string subject = "Reset Password for CI Platform";
-        string message = $@"
-                            <h2>Welcome Back,</h2>
-                            Click below button to reset account's password!<br>
-                            <hr/>
-                            <a href='{href}'><button>Reset Your Password</button></a>  
-                          ";
-
-        EmailSend(toEmail, subject, message);
+        string subject = "Reset Password Request - CI Platform";
+        string message = MailMessageFormatUtility.GenerateMessageForResetPassword(href!);
+        EmailSend(email, subject, message);
     }
 }
