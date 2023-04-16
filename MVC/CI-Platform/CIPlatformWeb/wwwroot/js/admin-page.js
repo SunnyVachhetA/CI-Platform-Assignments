@@ -14,7 +14,6 @@ const resizeObserver = new ResizeObserver(entries => {
 resizeObserver.observe(rightContent);
 let isSidebarOpen = true;
 let searchText = '';
-
 function vhToPixels(vh) {
     return Math.round(window.innerHeight / (100 / vh));
 }
@@ -142,8 +141,10 @@ function toggleMenuActive(menu, isToggle) {
 
         case "skill":
             src = '';
-            if (isToggle)
+            if (isToggle) {
                 src = '/assets/tools-fill.svg';
+                loadSkillsAjax();
+            }
             else
                 src = '/assets/tools-empty.svg';
             changeMenu(menu, src);
@@ -298,6 +299,41 @@ function changeUserStatus(url, userId, message) {
     });
 }
 
+//-----------------------------------------
+//Generic methods
+function addAllEvents(action) {
+    switch (action) {
+        case "cms":
+            break;
+        case "theme":
+            loadThemesOnDOM();
+            break;
+        case "skill":
+            loadSkillsOnDOM();
+            break;
+    }
+}
+
+
+//Generic search
+const genericSearch = debounce(
+    (searchText, url, action) => {
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: { searchKey: searchText.trim() },
+            success: function (result) {
+                $('#admin-menu-content').html(result);
+                $('.spinner-control').removeClass('opacity-1');
+                $('.spinner-control').addClass('opacity-0');
+                addAllEvents(action);
+            },
+            error: ajaxErrorSweetAlert
+        });
+    })
+
+//-------------------------------------------
+
 
 //CMS Begin
 
@@ -362,9 +398,9 @@ function handleCmsPageDeleteAjax(cmsId) {
                 url: '/Admin/CMSPage/Delete',
                 data: { cmsId },
                 success: function (_, _, status) {
-                    
-                        displayActionMessageSweetAlert('CMS Page Deavtivated', 'CMS Page De-activated successfully!', 'success');
-                        loadCMSAjax();
+
+                    successMessageSweetAlert('CMS Page De-activated successfully!');
+                    loadCMSAjax();
                     
                 },
                 error: ajaxErrorSweetAlert
@@ -391,7 +427,7 @@ function handleCMSPageRestore(cmsId) {
                 data: { cmsId },
                 success: function (_, _, status) {
 
-                    displayActionMessageSweetAlert('CMS Page Activated', 'CMS Page Activated successfully!', 'success');
+                    successMessageSweetAlert('CMS Page Activated successfully!');
                     loadCMSAjax();
 
                 },
@@ -579,33 +615,7 @@ function registerThemeSearchAndAdd() {
     });
 }
 
-//Generic search
-const genericSearch = debounce(
-    (searchText, url, action) => {
-        $.ajax({
-            type: 'GET',
-            url: url,
-            data: { searchKey: searchText.trim() },
-            success: function (result) {
-                 $('#admin-menu-content').html(result);
-                 $('.spinner-control').removeClass('opacity-1');
-                 $('.spinner-control').addClass('opacity-0');
-                addAllEvents(action);
-            },
-            error: ajaxErrorSweetAlert
-        });
-    })
-function addAllEvents(action) {
-    switch (action) {
-        case "cms":
-            break;
-        case "theme":
-            loadThemesOnDOM();
-            break;
-        case "":
-            break;
-    }
-}
+
 
 function handleThemeAddEvent() {
     $.ajax({
@@ -768,3 +778,206 @@ function handleThemeDeleteMenuAjax(themeId, type, url, message) {
     });
 }
 //Theme end
+
+
+
+//Skill Start
+function loadSkillsAjax() {
+    tinymce.remove('#description');
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/MissionSkill/Index',
+        success: function (result) {
+            $('#admin-menu-content').html(result);
+            loadSkillsOnDOM(result);
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadSkillsOnDOM() {
+    $('#msn-skill-search').val(searchText);
+    $('#msn-skill-search').focus();
+    createPagination(5);
+    registerSkillSearchAndAdd();
+    registerSkillEditAndDelete();
+}
+
+function registerSkillSearchAndAdd() {
+    $('#btn-skill-add').click(handleSkillAddEvent);
+    let searchBox = document.getElementById('msn-skill-search');
+    searchBox.addEventListener('input', e => {
+        searchText = e.target.value;
+        $('.spinner-control').removeClass('opacity-0');
+        $('.spinner-control').addClass('opacity-1');
+        genericSearch(searchText, '/Admin/MissionSkill/Search', "skill");
+    });
+}
+
+
+function handleSkillAddEvent() {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/MissionSkill/AddSkill',
+        success: function (result) {
+            modalContainer.html(result);
+            $('#addSkillModal').modal('show');
+            registerSkillFormSubmitEvent('#form-add-skill', 'POST', '/Admin/MissionSkill/AddSkill', '#addSkillModal', 'added successfully!');
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function registerSkillFormSubmitEvent(form, type, url, bModal, message, skillId = 0) {
+    $(form).on('submit', (e) => {
+        e.preventDefault();
+        $(form).validate();
+        if ($(form).valid()) {
+
+            let skillVm = new URLSearchParams($(form).serialize());
+
+            let skillName = skillVm.get('Name');
+
+            let isSkillUnique = checkIsSkillNameUnique(skillName, skillId);
+            
+            if (isSkillUnique) {
+                $('#err-title').text(`${skillName} already exists!`).show();
+                displayActionMessageSweetAlert(`Skill '${skillName}' Already Exists!`, 'Please enter unique skill name.', 'error');
+                return;
+            }
+            $(bModal).modal('hide');
+            $.ajax({
+                type: type,
+                url: url,
+                data: $(form).serialize(),
+                success: function (result) {
+                    $('#admin-menu-content').html(result);
+                    loadSkillsOnDOM();
+                    $(form)[0].reset();
+                    successMessageSweetAlert(skillName + " " + message);
+                },
+                error: ajaxErrorSweetAlert
+            });
+        }
+    });
+}
+
+function checkIsSkillNameUnique(skillName, skillId = 0) {
+    let isSkillUnique = false;
+    $.ajax({
+        async: false,
+        type: 'GET',
+        data: { skillName: skillName, skillId: skillId },
+        url: '/Admin/MissionSkill/CheckIsSkillUnique',
+        success: function (result) {
+            isSkillUnique = result;
+        },
+        error: ajaxErrorSweetAlert
+    });
+    return isSkillUnique;
+}
+
+
+function registerSkillEditAndDelete() {
+    $('.skill-delete').each((_, item) => {
+        $(item).click(() => {
+            let skillId = $(item).data('skillid');
+            let skillName = $(item).data('skillname');
+            
+            handleSkillDelete(skillId, skillName);
+        });
+    });
+
+    $('.skill-edit').each((_, item) => {
+        $(item).click(() => {
+            let skillId = $(item).data('skillid');
+            handleSkillEdit(skillId);
+        });
+    });
+
+    $('.skill-restore').each((_, item) => {
+        $(item).click(() => {
+            let skillId = $(item).data('skillid');
+            let skillName = $(item).data('skillname');
+            handleSkillRestore(skillId, skillName);
+        });
+    });
+}
+
+function handleSkillRestore(skillId, skillName) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: `You can de-activate ${skillName} any time!`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f88634',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Activate Skill'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'PATCH',
+                url: '/Admin/MissionSkill/Restore',
+                data: { skillId },
+                success: function (_, _, status) {
+
+                    successMessageSweetAlert(`${skillName} Activated successfully!`);
+                    loadSkillsAjax();
+
+                },
+                error: ajaxErrorSweetAlert
+            });
+        }
+    })
+
+}
+function handleSkillDelete(skillId, skillName) {
+    Swal.fire({
+        title: `Do you want to delete ${skillName}?`,
+        icon: 'warning',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Delete Skill',
+        denyButtonText: `De-Activate, Instead`,
+        confirmButtonColor: '#5cb85c',
+        denyButtonColor: '#f88634'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            handleSkillDeleteMenuAjax(skillId, 'DELETE', '/Admin/MissionSkill/DeleteSkill', `${skillName} Deleted Successfully!`);
+        } else if (result.isDenied) {
+            handleSkillDeleteMenuAjax(skillId, 'PATCH', '/Admin/MissionSkill/DeactivateSkill', `${skillName} De-Activated Successfully!`);
+        }
+    })
+}
+function handleSkillEdit(skillId) {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/MissionSkill/Edit',
+        data: { skillId },
+        success: (result) => {
+            modalContainer.html(result);
+            $('#editSkillModal').modal('show');
+            registerSkillFormSubmitEvent('#form-edit-skill', 'PUT', '/Admin/MissionSkill/Edit', '#editSkillModal', 'updated successfully', skillId);
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function handleSkillDeleteMenuAjax(skillId, type, url, message) {
+    $.ajax({
+        type: type,
+        url: url,
+        data: { skillId },
+        success: (result, _, status) => {
+            if (status.status === 204) {
+                displayActionMessageSweetAlert(`Can't delete skill!`, 'Skill is already in use!', 'error');
+                return;
+            }
+            $('#admin-menu-content').html(result);
+            loadSkillsOnDOM();
+            successMessageSweetAlert(message);
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+//Skill end

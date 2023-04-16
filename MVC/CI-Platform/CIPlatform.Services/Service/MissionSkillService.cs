@@ -4,10 +4,12 @@ using CIPlatform.Services.Service.Interface;
 namespace CIPlatform.Services.Service;
 public class MissionSkillService : IMissionSkillService
 {
-    private IUnitOfWork unitOfWork;
+    private IUnitOfWork _unitOfWork;
 
     public MissionSkillService(IUnitOfWork unitOfWork)
     {
-        this.unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork;
     }
+
+    public bool CheckSkillExists(short skillId) => _unitOfWork.MissionSkillRepo.GetAll().Any( msn => msn.SkillId == skillId );
 }

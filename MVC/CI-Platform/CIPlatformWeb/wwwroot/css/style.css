@@ -1171,7 +1171,7 @@ form-subtitle,
     max-width: 20rem;
 }
 
-#usr-search:focus , #cms-search:focus, #msn-theme-search:focus{
+#usr-search:focus , #cms-search:focus, #msn-theme-search:focus, #msn-skill-search:focus{
     border-bottom: 1px solid black !important;
     box-shadow: none !important;
 }

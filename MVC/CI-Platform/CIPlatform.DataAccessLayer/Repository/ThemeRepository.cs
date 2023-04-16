@@ -22,7 +22,6 @@ public class ThemeRepository : Repository<MissionTheme>, IThemeRepository
 
     public int UpdateThemeStatus(short themeId, byte status)
     {
-
         var idParam = new SqlParameter("@id", themeId);
         var statusParam = new SqlParameter("@status", status);
         return _dbContext.Database.ExecuteSqlRaw("UPDATE mission_theme SET status = @status WHERE theme_id=@id", statusParam, idParam);

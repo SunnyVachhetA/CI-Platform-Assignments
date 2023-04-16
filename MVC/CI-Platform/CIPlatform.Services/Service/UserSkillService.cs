@@ -49,6 +49,8 @@ public class UserSkillService: IUserSkillService
         _unitOfWork.Save();
     }
 
+    public bool CheckSkillExists(short skillId) => _unitOfWork.UserSkillRepo.GetAll().Any(skill => skill.SkillId == skillId);
+
     private List<UserSkill> GetUserSkillList(List<short> finalSkillList, long userId, bool updateFlag = false)
     {
         List<UserSkill> skillList = new();
