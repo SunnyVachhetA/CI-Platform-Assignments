@@ -31,6 +31,8 @@ public partial class Story
 
     public long? StoryView { get; set; }
 
+    public bool? IsDeleted { get; set; }
+
     public virtual Mission Mission { get; set; } = null!;
 
     public virtual ICollection<StoryInvite> StoryInvites { get; } = new List<StoryInvite>();

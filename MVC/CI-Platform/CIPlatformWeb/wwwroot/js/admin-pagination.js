@@ -86,7 +86,7 @@ function createLeftButton(btnLeft) {
         if (currentPage == 1) return;
         $(`[data-page='${currentPage}'`).removeClass('active');
         currentPage--;
-        if (currentPage < (currentPageSet * pageBtnDisplay)) {
+        if (totalPageSet > 1 && currentPage < (currentPageSet * pageBtnDisplay)) {
             currentPageSet--;
             handleButtonDisplayPagination();
         }
@@ -120,9 +120,10 @@ function createRightButton(btnRight) {
     paginationContainer.append(btnRight);
     $(btnRight).click(() => {
         if (currentPage == totalPage) return;
+        console.log(currentPage);
         $(`[data-page='${currentPage}'`).removeClass('active');
         currentPage++;
-        if (currentPage > (currentPageSet * pageBtnDisplay)) {
+        if (totalPageSet > 1 && currentPage > (currentPageSet * pageBtnDisplay)) {
             currentPageSet++;
             handleButtonDisplayPagination();
         }

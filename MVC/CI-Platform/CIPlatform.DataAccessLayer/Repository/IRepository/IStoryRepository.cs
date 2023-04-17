@@ -12,4 +12,6 @@ public interface IStoryRepository : IRepository<Story>
     void UpdateUserStory(Story entity);
     Story GetStoryDetails(Func<Story, bool> filter);
     void UpdateStoryView(long storyId, long storyViews);
+    IEnumerable<Story> GetStoriesWithMissionAndUser();
+    int UpdateStoryDeletionStatus(long storyId, byte status);
 }

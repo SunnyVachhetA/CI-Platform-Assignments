@@ -1,0 +1,90 @@
+﻿@model IEnumerable<AdminStoryVM>
+<div class="border-bottom mb-2">
+    <div class="border-bottom-1 mx-content pb-2 font-30">
+        Story
+    </div>
+</div>
+<div class="mt-4">
+    <div class="border mx-content py-1 px-3 d-flex align-items-center" id="admin-search-container">
+        <img src="~/assets/search.png" alt="Search Here" height="20px" width="20px">
+        <input type="text" name="Search" id="story-search" placeholder="Search here" class="border-0 ms-2 form-control">
+    
+        <div class="spinner-border opacity-0 spinner-control" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4 table-responsive admin-table">
+    @if (!Model.Any())
+    {
+        <p class="text-info-message p-2 mx-content mx-auto">There are no CMS pages at the moment</p>
+        @*<button class="btn-g-orange mx-auto" id = "btn-load-users">Load All CMS Pages</button>*@
+    }
+    else
+    {
+        <table class="table border">
+            <thead>
+                <tr>
+                    <th class="font-22 fw-400">Story Title</th>
+                    <th class="font-22 fw-400">Full Name</th>
+                    <th class="font-22 fw-400">Mission Title</th>
+                    <th class="font-22 fw-400">Approval Status</th>
+                    <th class="font-22 fw-400 text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var story in Model)
+                {
+                    <tr>
+                        <td>
+                            @story.Title
+                        </td>
+                        <td>
+                            @story.UserName
+                        </td>
+                        <td>
+                            @story.MissionTitle
+                        </td>
+                        <td class="@story.StoryStatus">
+                            @Html.DisplayFor(_ => story.StoryStatus)
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2 flex-wrap justify-content-center">
+                                <a asp-area = "Admin" asp-controller="Story" asp-action = "StoryDetails" asp-route-id="@story.StoryId" target="_blank">
+                                    <button class="cursor-pointer btn-story-view font-13 bg-transparent px-2 text-center">View</button>
+                                </a>
+                                @if (story.StoryStatus == UserStoryStatus.PENDING)
+                                {
+                                    <img class="cursor-pointer story-approve" data-storyid="@story.StoryId" src="~/assets/check-mark.svg" height="19px" width="18px" alt="Approve">
+                                    <img class="cursor-pointer story-decline" data-storyid="@story.StoryId" src="~/assets/x-circle.svg" height="19px" width="18px" alt="Decline">
+                                }
+                                else if (story.StoryStatus == UserStoryStatus.APPROVED)
+                                {
+                                    <img class="cursor-pointer story-decline" data-storyid="@story.StoryId" src="~/assets/x-circle.svg" alt="Decline" height="19px" width="18px">
+                                }
+                                else
+                                {
+                                    <img class="cursor-pointer story-approve" data-storyid="@story.StoryId" src="~/assets/check-mark.svg" alt="Approve"height="19px" width="18px">
+
+                                }
+
+                                @if (story.IsDeleted)
+                                {
+                                    <img class="cursor-pointer story-restore" data-storyid="@story.StoryId" src="~/assets/restore.svg" alt="Restore" height="19px" width="18px">
+                                }
+                                else
+                                {
+                                    <img class="cursor-pointer story-delete" data-storyid="@story.StoryId" src="~/assets/delete.png" alt="Delete">
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+</div>

@@ -11,6 +11,8 @@ public partial class ContactUs
 
     public string Message { get; set; } = null!;
 
+    public string Response { get; set; } = null!;
+
     public DateTimeOffset CreatedAt { get; set; }
 
     public DateTimeOffset? UpdatedAt { get; set; }

@@ -102,4 +102,22 @@ public class StoryRepository : Repository<Story>, IStoryRepository
 
         _dbContext.Database.ExecuteSqlRaw("UPDATE story SET story_view = @storyView WHERE story_id = @storyId", storyViewParam, storyIdParam);
     }
+
+    
+    public IEnumerable<Story> GetStoriesWithMissionAndUser()
+    {
+        return dbSet
+            .Include(story => story.Mission)
+            .Include(story => story.User)
+            .AsEnumerable();
+    }
+
+    public int UpdateStoryDeletionStatus(long storyId, byte status)
+    {
+
+        var statusParam = new SqlParameter("@status", status);
+        var storyIdParam = new SqlParameter("@storyId", storyId);
+
+        return _dbContext.Database.ExecuteSqlRaw("UPDATE story SET is_deleted = @status WHERE story_id = @storyId", statusParam, storyIdParam);
+    }
 }

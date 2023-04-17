@@ -217,6 +217,10 @@ public partial class CIDbContext : DbContext
                 .HasMaxLength(6000)
                 .IsUnicode(false)
                 .HasColumnName("message");
+            entity.Property(e => e.Response)
+                .HasMaxLength(6000)
+                .IsUnicode(false)
+                .HasColumnName("response");
             entity.Property(e => e.Status)
                 .HasDefaultValueSql("((0))")
                 .HasColumnName("status");
@@ -581,6 +585,9 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.Description)
                 .HasColumnType("text")
                 .HasColumnName("description");
+            entity.Property(e => e.IsDeleted)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("is_deleted");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.PublishedAt).HasColumnName("published_at");
             entity.Property(e => e.ShortDescription)

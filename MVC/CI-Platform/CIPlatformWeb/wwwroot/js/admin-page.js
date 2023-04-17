@@ -3,6 +3,7 @@ const btnHamburger = document.getElementById('btn-sidebar-hamburger');
 const adminSidebar = document.querySelector('.sidebar');
 const sidebarClose = document.querySelector('#sidebar-close');
 const rightContent = document.querySelector('#admin-right-content');
+const overlayContainer = document.querySelector('#admin-overlay');
 const modalContainer = $('#partial-modal-container');
 const resizeObserver = new ResizeObserver(entries => {
     for (let entry of entries) {
@@ -43,9 +44,17 @@ setInterval(getCurrentDateTime, 1000);
 btnHamburger.addEventListener('click', () => {
     adminSidebar.classList.remove('hide');
     adminSidebar.classList.add('show');
+    overlayContainer.classList.remove('d-none');
 });
 
 sidebarClose.addEventListener('click', () => {
+    adminSidebar.classList.remove('show');
+    adminSidebar.classList.add('hide');
+    overlayContainer.classList.add('d-none');
+});
+
+$(overlayContainer).click(() => {
+    overlayContainer.classList.add('d-none');
     adminSidebar.classList.remove('show');
     adminSidebar.classList.add('hide');
 });
@@ -132,8 +141,10 @@ function toggleMenuActive(menu, isToggle) {
 
         case "story":
             src = '';
-            if (isToggle)
+            if (isToggle) {
                 src = '/assets/story-fill.svg';
+                loadStoriesAjax();
+            }
             else
                 src = '/assets/tale.png';
             changeMenu(menu, src);
@@ -310,6 +321,10 @@ function addAllEvents(action) {
             break;
         case "skill":
             loadSkillsOnDOM();
+            break;
+
+        case "story":
+            loadStorysOnDOM();
             break;
     }
 }
@@ -981,3 +996,91 @@ function handleSkillDeleteMenuAjax(skillId, type, url, message) {
     });
 }
 //Skill end
+
+
+//Story Begin
+
+function loadStoriesAjax() {
+
+    tinymce.remove('#description');
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/Story/Index',
+        success: (result) => {
+            $('#admin-menu-content').html(result);
+            loadStorysOnDOM();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadStorysOnDOM() {
+    $('#story-search').val(searchText);
+    $('#story-search').focus();
+    createPagination(5);
+    registerAllStoryEvents();
+}
+
+function registerAllStoryEvents() {
+
+    let searchBox = document.getElementById('story-search');
+    searchBox.addEventListener('input', e => {
+        searchText = e.target.value;
+        $('.spinner-control').removeClass('opacity-0');
+        $('.spinner-control').addClass('opacity-1');
+        genericSearch(searchText, '/Admin/Story/Search', "story");
+    });
+
+    $('.story-delete').each((_, item) => {
+        $(item).click(() => {
+            let storyId = $(item).data('storyid');
+            handleStoryStatus(storyId, 'De-Activate Story', 'Story De-Activated Successfully!','/Admin/Story/DeActivate');
+        });
+    });
+    $('.story-restore').each((_, item) => {
+        $(item).click(() => {
+            let storyId = $(item).data('storyid');
+            handleStoryStatus(storyId, 'Restore Story', 'Story Activated Successfully', '/Admin/Story/Restore');
+        });
+    });
+    $('.story-approve').each((_, item) => {
+        $(item).click(() => {
+            let storyId = $(item).data('storyid');
+            handleStoryStatus(storyId, 'Approve Story', 'Story Approved Successfully!', '/Admin/Story/ApproveStory');
+        });
+    });
+    $('.story-decline').each((_, item) => {
+        $(item).click(() => {
+            let storyId = $(item).data('storyid');
+            handleStoryStatus(storyId, 'Decline Story', 'Story Declined Successfully!', '/Admin/Story/DeclineStory');
+        });
+    });
+}
+
+function handleStoryStatus(storyId, btnText, message, url) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You can change story approval anytime!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f88634',
+        cancelButtonColor: '#d33',
+        confirmButtonText: btnText
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'PATCH',
+                url: url,
+                data: { storyId },
+                success: (result) => {
+                    $('#admin-menu-content').html(result);
+                    loadStorysOnDOM();
+                    successMessageSweetAlert(message);
+                },
+                error: ajaxErrorSweetAlert
+            });
+        }
+    })
+}
+
+//Story End

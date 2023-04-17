@@ -1,0 +1,85 @@
+﻿@model ShareStoryVM
+@{
+    var count = Model.MediaList.LongCount();
+    var storyId = Model.StoryId;
+}
+<main>
+    @Html.HiddenFor(model => count, new { id = "story-media-count" })
+    @Html.HiddenFor(model => storyId, new { id = "story-id" })
+
+    
+    <!-- Story Detail Front Begin -->
+    <section class="container d-flex flex-column flex-lg-row gap-4 mt-4">
+        <div class="d-flex flex-column gap-2 flex-basis">
+            <img src="@Model.StoryThumbnail" alt="Mission Thumbnail" id="story-hero-img">
+
+            <div class="position-relative" id="msn-media-carousel">
+                <div class="overflow-auto d-flex gap-1 w-100 slider">
+                    <div class="cursor-pointer position-absolute py-5 px-1 opacity-5" id="scroll-prev">
+                        <img src="~/assets/left1.png" alt="Previous" class="object-fit-cover">
+                    </div>
+
+                    @foreach (var image in Model.MediaList)
+                    {
+                        <img src="@image" alt="Story Image" class="story-img-sm">
+                    }
+                    <div class="cursor-pointer position-absolute right-0 py-5 px-1 opacity-5" id="scroll-next">
+                        <img src="~/assets/right-arrow2.png" alt="Next">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="d-flex flex-column gap-2 gap-md-4 p-2 p-lg-4 my-4 flex-basis">
+            <div>
+                <img src="~/assets/volunteer3.png" alt="volunteer" class="story-volunteer rounded-circle object-fit-cover">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="fw-light">@Model.UserName</div>
+                    <button class="story-view d-flex gap-2 align-items-center">
+                        <img src="~/assets/eye.png" alt="Views">
+                        @Model.StoryViews Views
+                    </button>
+                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.WhyIVolunteer))
+            {
+                <p class="mb-0 fw-light text-black-1">
+                    @Model.WhyIVolunteer
+                </p>
+            }
+            else
+            {
+                <p class="mb-0 fw-light text-black-1">
+                    @Model.UserProfile
+                </p>
+            }
+            
+            @if (!string.IsNullOrEmpty(Model.VideoUrl))
+            {
+                <a href="@Model.VideoUrl" class="mx-content mx-auto btn-g-orange px-4 py-2 text-black-1">
+                    Story Video Link
+                </a>
+            }
+        </div>
+    </section>
+    <!-- Story Detail Front Fin -->
+    <!-- Story details description begin -->
+    <section class="container mt-3 mt-md-5 mb-2 mb-md-4">
+        <div class="border-bottom">
+            <div class="font-lg-size text-black-1 pb-2 border-bottom-1 mx-content">
+                @Model.StoryTitle
+            </div>
+        </div>
+        <div class="mt-4 mt-xxl-5 fw-light text-black-1">
+            @Html.Raw(Model.Description)
+        </div>
+
+    </section>
+    <!-- Story details description end -->
+
+</main>
+
+@section Scripts
+{
+    <script src="~/js/story.js"></script>
+}

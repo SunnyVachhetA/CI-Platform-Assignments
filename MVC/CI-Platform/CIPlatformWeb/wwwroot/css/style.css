@@ -1171,7 +1171,7 @@ form-subtitle,
     max-width: 20rem;
 }
 
-#usr-search:focus , #cms-search:focus, #msn-theme-search:focus, #msn-skill-search:focus{
+#usr-search:focus , #cms-search:focus, #msn-theme-search:focus, #msn-skill-search:focus, #story-search:focus{
     border-bottom: 1px solid black !important;
     box-shadow: none !important;
 }
@@ -1185,5 +1185,15 @@ form-subtitle,
     z-index: 3;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
     inset: 0;
+}
+
+.admin-table .PENDING { color: var(--col-orange); }
+.admin-table .APPROVED { color: var(--col-green); }
+.admin-table .DECLINED {
+    color: #dc3545;
+}
+
+.object-fit-cover {
+    object-fit: cover !important;
 }
 /* Admin home css fin */

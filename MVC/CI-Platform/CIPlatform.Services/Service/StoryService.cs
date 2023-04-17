@@ -3,6 +3,7 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using CIPlatform.Services.Utilities;
 using Microsoft.AspNetCore.Http;
 
 namespace CIPlatform.Services.Service;
@@ -228,5 +229,44 @@ public class StoryService : IStoryService
     public void UpdateStoryView(long storyId, long storyViews)
     {
         _unitOfWork.StoryRepo.UpdateStoryView(storyId,storyViews);
+    }
+
+    public IEnumerable<AdminStoryVM> LoadAllStoriesAdmin()
+    {
+        var stories = _unitOfWork.StoryRepo.GetStoriesWithMissionAndUser();
+        return
+            stories
+                .Select(ConvertStoryModelToAdminStoryVM);
+    }
+
+    public IEnumerable<AdminStoryVM> SearchByKey(string searchKey)
+    {
+        if (string.IsNullOrEmpty(searchKey) || string.IsNullOrWhiteSpace(searchKey))
+            return LoadAllStoriesAdmin();
+        return
+            LoadAllStoriesAdmin()
+                .Where(story => story.Title.ContainsCaseInsensitive(searchKey) || 
+                                story.MissionTitle.ContainsCaseInsensitive(searchKey) || 
+                                story.UserName.ContainsCaseInsensitive(searchKey));
+    }
+
+    public void UpdateStoryDeletionStatus(long storyId, byte status = 0)
+    {
+        int numOfRow = _unitOfWork.StoryRepo.UpdateStoryDeletionStatus(storyId, status);
+        if (numOfRow == 0) throw new Exception("Error during updating story deletion status!");
+    }
+
+    private static AdminStoryVM ConvertStoryModelToAdminStoryVM(Story story)
+    {
+        AdminStoryVM vm = new()
+        {
+            StoryId = story.StoryId,
+            Title = story.Title?? string.Empty,
+            MissionTitle = story.Mission.Title?? string.Empty,
+            UserName = $"{story.User.FirstName} {story.User.LastName}",
+            StoryStatus = (UserStoryStatus)(story.Status ?? 1),
+            IsDeleted = story.IsDeleted ?? false
+        };
+        return vm;
     }
 }
