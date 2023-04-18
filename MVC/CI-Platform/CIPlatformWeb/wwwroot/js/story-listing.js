@@ -50,7 +50,7 @@ function handleRedirectToAddStoryPage()
 const pageNumberDisplay = 5;
 const totalStoryCount = $('#total-story-count').val();
 let currentPageNumber = 1;
-const storyPerPage = 2;
+const storyPerPage = 9;
 const paginationContainer = $('#pagination-container');
 const totalPage = Math.ceil(totalStoryCount / storyPerPage);
 

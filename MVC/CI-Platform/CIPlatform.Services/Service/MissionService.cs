@@ -33,7 +33,8 @@ public class MissionService : IMissionService
 
     public static MissionCardVM ConvertMissionToMissionCardVM(Mission mission)
     {
-        MissionCardVM missionCard = new()
+        var goalObj = mission.GoalMissions?.FirstOrDefault(msnGoal => msnGoal.GoalValue != 0);
+        var missionCard = new MissionCardVM
         {
             MissionId = mission.MissionId,
             ThemeId = mission.ThemeId,
@@ -43,32 +44,32 @@ public class MissionService : IMissionService
             Description = mission.Description,
             StartDate = mission.StartDate,
             EndDate = mission.EndDate,
-            MissionType = mission.MissionType! ? MissionTypeEnum.TIME : MissionTypeEnum.GOAL,
+            MissionType = mission.MissionType == true ? MissionTypeEnum.TIME : MissionTypeEnum.GOAL,
             OrganizationDetails = mission.OrganizationDetail,
-            Status = (bool)mission.Status ? MissionStatus.ONGOING : MissionStatus.FINISHED,
+            Status = mission.Status == true ? MissionStatus.ONGOING : MissionStatus.FINISHED,
             OrganizationName = mission.OrganizationName,
             TotalSeat = mission.TotalSeat,
-            NumberOfVolunteer = mission.MissionApplications?.Where(application => application.ApprovalStatus == 1).LongCount(),
-            SeatLeft = mission?.TotalSeat - mission?.MissionApplications.LongCount(),
+            NumberOfVolunteer = mission.MissionApplications?.Count(application => application.ApprovalStatus == 1),
+            SeatLeft = mission?.TotalSeat - mission?.MissionApplications?.Count(),
             RegistrationDeadline = mission?.RegistrationDeadline,
             Rating = mission?.Rating,
             CityId = mission?.CityId,
             CityName = mission?.City?.Name,
             CountryId = mission.CountryId,
             SkillId = mission.MissionSkills.Select(skill => skill.SkillId).ToList(),
-            Skills = (List<string>)mission.MissionSkills.Select(skill => skill?.Skill?.Name).ToList(),
+            Skills = mission.MissionSkills.Select(skill => skill?.Skill?.Name).ToList(),
             ThumbnailUrl = GetThumbnailUrl(mission.MissionMedia.FirstOrDefault(media => media.Default)),
-            MissionMedias = mission.MissionMedia?.Select(media => GetThumbnailUrl(media)).ToList(),
+            MissionMedias = mission.MissionMedia?.Select(GetThumbnailUrl).ToList(),
             FavrouriteMissionsId = mission.FavouriteMissions?.Select(fav => fav.UserId).ToList(),
-            GoalValue = mission.GoalMissions?.FirstOrDefault(msnGoal => msnGoal.GoalValue != 0)?.GoalValue,
-            GoalText = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalObjectiveText != null)?.GoalObjectiveText,
-            GoalAchieved = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalAchived != null)?.GoalAchived,
-            ApplicationListId = mission.MissionApplications?.Where(application => application.ApprovalStatus == 1).Select(application => (long)application?.UserId).ToList(),
+            GoalValue = goalObj?.GoalValue,
+            GoalText = goalObj?.GoalObjectiveText,
+            GoalAchieved = goalObj?.GoalAchived,
+            ApplicationListId = mission.MissionApplications?.Where(application => application.ApprovalStatus == 1).Select(application => (long)application.UserId).ToList(),
             MissionRating = MissionRatingService.ConvertMissionToRatingVM(mission),
             MissionAvailability = SetMissionAvailability(mission.Availability),
             CommentList = mission.Comments?.Select(comment => comment.UserId).ToList(),
             RecentVolunteers = GetRecentVolunteers(mission),
-            MissionDocuments = GetMissionDocuments( mission.MissionDocuments )
+            MissionDocuments = GetMissionDocuments(mission.MissionDocuments)
         };
 
         return missionCard;
@@ -170,19 +171,28 @@ public class MissionService : IMissionService
     public List<MissionCardVM> FilterMissions(FilterModel filterModel)
     {
         var result = GetAllMissionCards().AsQueryable() ;
-        /*if (filterModel.SortBy.HasValue)
-        {
-            if (filterModel.SortBy == SortByMenu.RESET)
-            {
-                return result.ToList();
-            }
-        }*/
         
         FilterService filter = new FilterService(result, filterModel);
 
         result = filter.FilterCriteria();
         
         return result.ToList();
+    }
+
+    public (IEnumerable<MissionVMCard>, long) FilterMissionsCard(FilterModel filterModel)
+    {
+        var result = unitOfWork.MissionRepo.FetchMissionCardInformation();
+
+        var missionList =
+            result
+                .Select(ConvertMissionToMissionVMCard);
+
+        if (missionList == null || !missionList.Any()) return (new List<MissionVMCard>(), 0);
+        FilterMissionService filter = new FilterMissionService(missionList, filterModel);
+
+        var filteredMissions = filter.Filter();
+
+        return (filteredMissions, filteredMissions.LongCount());
     }
 
     public MissionLandingVM CreateMissionLanding( )
@@ -232,6 +242,7 @@ public class MissionService : IMissionService
                 .Any(msn => msn.ThemeId == themeId);
     }
 
+
     //Load related mission based on theme
     public List<MissionCardVM> LoadRelatedMissionBasedOnTheme(short themeId, long missionId)
     {
@@ -247,4 +258,114 @@ public class MissionService : IMissionService
         return result;
     }
 
+    /// <summary>
+    /// This method is replace of 
+    /// </summary>
+    /// <param name="page"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public (IEnumerable<MissionVMCard>, long ) LoadAllMissionCards(int page)
+    {
+        var missions = unitOfWork.MissionRepo.FetchMissionCardInformation();
+
+        if (!missions.Any()) return (new List<MissionVMCard>(), 0);
+
+        var totalMissionCount = missions.LongCount();
+
+        IEnumerable<MissionVMCard> missionList =
+            missions
+                .Skip((page - 1) * 9)
+                .Take(9)
+                .Select(ConvertMissionToMissionVMCard);
+
+        return (missionList, totalMissionCount);
+    }
+
+    
+    private static MissionVMCard ConvertMissionToMissionVMCard(Mission mission)
+    {
+        var missionApplication = mission.MissionApplications;
+        var missionApprovedApplication = 
+            missionApplication
+            ?.Where(application => application.ApprovalStatus == 1)
+            .ToList();
+        var msnGoal = mission.GoalMissions.FirstOrDefault( goal => goal.GoalValue != 0 );
+        MissionVMCard vmCard = new()
+        {
+            MissionId = mission.MissionId,
+            ThemeId = mission.ThemeId ?? 0,
+            ThemeName = mission.Theme?.Title?? string.Empty,
+            Title = mission.Title ?? string.Empty,
+            ShortDescription = mission.ShortDescription ?? string.Empty,
+            StartDate = mission.StartDate,
+            EndDate = mission.EndDate,
+            MissionType = mission.MissionType ? MissionTypeEnum.TIME : MissionTypeEnum.GOAL,
+            Status = mission.Status == true ? MissionStatus.ONGOING : MissionStatus.FINISHED,
+            OrganizationName = mission.OrganizationName,
+            TotalSeat = mission.TotalSeat,
+            NumberOfVolunteer = missionApprovedApplication?.LongCount() ?? 0,
+            SeatLeft = mission.TotalSeat - missionApprovedApplication?.LongCount() ?? 0,
+            ApplicationListId = missionApplication?.Select( application => application.UserId ) ?? new List<long>(),
+            ApprovedApplicationList = missionApprovedApplication?.Select( application => application.UserId ) ?? new List<long>(),
+            RegistrationDeadline = mission.RegistrationDeadline,
+            Rating = GetMissionRating(mission.MissionRatings),
+            CityName = mission.City?.Name ?? string.Empty,
+            ThumbnailUrl = GetThumbnailUrl(mission.MissionMedia?.FirstOrDefault(media => media.Default)!),
+            FavoriteMissionList =  mission.FavouriteMissions?.Select(msn => msn.UserId) ?? new List<long>(),
+            GoalText = msnGoal?.GoalObjectiveText,
+            GoalValue = msnGoal?.GoalValue,
+            GoalAchieved = msnGoal?.GoalAchived,
+            MissionSkill = mission.MissionSkills?.Select(skill => skill.SkillId) ?? new List<short>(),
+            CountryId = mission.CountryId,
+            CityId = mission.CityId
+        };
+
+        return vmCard;
+    }
+
+    private static byte GetMissionRating(ICollection<MissionRating> missionRating)
+    {
+        if (!missionRating.Any()) return 0;
+
+        return (byte)Math.Floor(missionRating.Average(rating => rating.Rating));
+    }
 }
+/*
+ * MissionCardVM missionCard = new()
+        {
+            MissionId = mission.MissionId,
+            ThemeId = mission.ThemeId,
+            ThemeName = mission.Theme?.Title,
+            Title = mission.Title,
+            ShortDescription = mission.ShortDescription,
+            Description = mission.Description,
+            StartDate = mission.StartDate,
+            EndDate = mission.EndDate,
+            MissionType = mission.MissionType! ? MissionTypeEnum.TIME : MissionTypeEnum.GOAL,
+            OrganizationDetails = mission.OrganizationDetail,
+            Status = (bool)mission.Status ? MissionStatus.ONGOING : MissionStatus.FINISHED,
+            OrganizationName = mission.OrganizationName,
+            TotalSeat = mission.TotalSeat,
+            NumberOfVolunteer = mission.MissionApplications?.Where(application => application.ApprovalStatus == 1).LongCount(),
+            SeatLeft = mission?.TotalSeat - mission?.MissionApplications.LongCount(),
+            RegistrationDeadline = mission?.RegistrationDeadline,
+            Rating = mission?.Rating,
+            CityId = mission?.CityId,
+            CityName = mission?.City?.Name,
+            CountryId = mission.CountryId,
+            SkillId = mission.MissionSkills.Select(skill => skill.SkillId).ToList(),
+            Skills = (List<string>)mission.MissionSkills.Select(skill => skill?.Skill?.Name).ToList(),
+            ThumbnailUrl = GetThumbnailUrl(mission.MissionMedia.FirstOrDefault(media => media.Default)),
+            MissionMedias = mission.MissionMedia?.Select(media => GetThumbnailUrl(media)).ToList(),
+            FavrouriteMissionsId = mission.FavouriteMissions?.Select(fav => fav.UserId).ToList(),
+            GoalValue = mission.GoalMissions?.FirstOrDefault(msnGoal => msnGoal.GoalValue != 0)?.GoalValue,
+            GoalText = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalObjectiveText != null)?.GoalObjectiveText,
+            GoalAchieved = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalAchived != null)?.GoalAchived,
+            ApplicationListId = mission.MissionApplications?.Where(application => application.ApprovalStatus == 1).Select(application => (long)application?.UserId).ToList(),
+            MissionRating = MissionRatingService.ConvertMissionToRatingVM(mission),
+            MissionAvailability = SetMissionAvailability(mission.Availability),
+            CommentList = mission.Comments?.Select(comment => comment.UserId).ToList(),
+            RecentVolunteers = GetRecentVolunteers(mission),
+            MissionDocuments = GetMissionDocuments( mission.MissionDocuments )
+        };
+ */

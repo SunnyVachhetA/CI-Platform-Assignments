@@ -409,6 +409,7 @@ function modalEventListener()
 
 function handleUserRecommendAjax(recommendList) {
     $('#recommendModal').modal('hide');
+    displayActionMessageSweetAlert('Invite sent!', 'Mission invitation will be sent to your co-worker.', 'info');
     $.ajax({
         type: 'POST',
         data: {  userId, missionId, recommendList },
@@ -416,8 +417,6 @@ function handleUserRecommendAjax(recommendList) {
         success:
         function (result) 
         {
-            let subTitle = 'Mission invites sent to co-workers.';
-            successMessageSweetAlert(subTitle);
         },
         error: ajaxErrorSweetAlert
     });

@@ -757,8 +757,8 @@ form-subtitle,
 }
 
 .rec-usr-img {
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 40px;
 }
 /* Volunteering Mission Page CSS Complete */
 
@@ -1171,7 +1171,8 @@ form-subtitle,
     max-width: 20rem;
 }
 
-#usr-search:focus , #cms-search:focus, #msn-theme-search:focus, #msn-skill-search:focus, #story-search:focus{
+#usr-search:focus, #cms-search:focus, #msn-theme-search:focus, #msn-skill-search:focus, #story-search:focus,
+#contact-us-search:focus {
     border-bottom: 1px solid black !important;
     box-shadow: none !important;
 }
@@ -1196,4 +1197,5 @@ form-subtitle,
 .object-fit-cover {
     object-fit: cover !important;
 }
+
 /* Admin home css fin */

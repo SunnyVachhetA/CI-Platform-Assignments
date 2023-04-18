@@ -88,5 +88,25 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
 
         _dbContext.Database.ExecuteSqlRaw("UPDATE mission SET rating = @rating, updated_at = @updatedAt WHERE mission_id = @missionId", msnId, ratingParam, updateParam);
     }
-    
+
+    /// <summary>
+    /// Instead of using List GetAllMission() use this because of IEnumerable
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<Mission> FetchAllMissions() => FetchMissionInformation();
+
+    public IEnumerable<Mission> FetchMissionCardInformation()
+    {
+        return
+            dbSet
+                .Include(mission => mission.MissionMedia)
+                .Include(mission => mission.MissionApplications)
+                .Include(mission => mission.Theme)
+                .Include(mission => mission.GoalMissions)
+                .Include(mission => mission.GoalMissions)
+                .Include(mission => mission.FavouriteMissions)
+                .Include(mission => mission.MissionRatings)
+                .Include(mission => mission.City)
+                .Include(mission => mission.MissionSkills);
+    }
 }

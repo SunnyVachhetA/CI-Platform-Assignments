@@ -3,6 +3,7 @@ using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Services.Service.Interface;
+using CIPlatform.Services.Utilities;
 
 namespace CIPlatform.Services.Service;
 public class StoryInviteService: IStoryInviteService
@@ -74,19 +75,7 @@ public class StoryInviteService: IStoryInviteService
 
     private static string CreateStoryInviteMessage(string storyInviteLink, string userName)
     {
-        string message =
-            @$"
-                <div class='text-center'>
-                <h2>You got story invite from your co-worker {userName}</h2>
-
-                <h4>Check Out Mission Details By Clicking Below Button</h4>
-
-                <hr>
-                
-                <a href = '{storyInviteLink}'> <button>Mission Information</button> </a>
-                </div>
-            ";
-
+        string message = MailMessageFormatUtility.GenerateStoryInviteMessage(userName, storyInviteLink);
         return message;
     }
 

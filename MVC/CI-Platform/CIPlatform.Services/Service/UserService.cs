@@ -87,7 +87,8 @@ public class UserService: IUserService
             Email = result.Email,
             PhoneNumber = result.PhoneNumber,
             Password = result.Password,
-            Avatar = result.Avatar!
+            Avatar = result.Avatar!,
+            Status = result.Status?? false
         };
 
         return user;
@@ -140,30 +141,16 @@ public class UserService: IUserService
     public async void SendUserMissionInviteService(IEnumerable<string> userEmailList, string senderUserName, string missionInviteLink, IEmailService _emailService)
     {
         var inviteMessage = CreateMissionInviteMessage( senderUserName, missionInviteLink );
-        var subject = "Mission Invitation From Co-Worker";
+        var subject = "Mission Invitation From Co-Worker | CI Platform";
         foreach( var email in userEmailList )
         {
             _emailService.EmailSend( email, subject, inviteMessage);
         }
     }
 
-    private string CreateMissionInviteMessage( string senderUserName, string missionInviteLink )
-    {
-        string message = 
-            @$"
-                <div class='text-center'>
-                <h2>You got mission invite from your co-worker { senderUserName }</h2>
-
-                <h4>Check Out Mission Details By Clicking Below Button</h4>
-
-                <hr>
-                
-                <a href = '{missionInviteLink}'> <button class='btn-g-orange'>Mission Information</button> </a>
-                </div>
-            ";
-
-        return message;
-    }
+    private string CreateMissionInviteMessage(string senderUserName, string missionInviteLink) =>
+        MailMessageFormatUtility.GenerateMissionInviteMessage(senderUserName, missionInviteLink);
+    
     
     public UserProfileVM LoadUserProfile(long id)
     {
@@ -192,11 +179,13 @@ public class UserService: IUserService
         return true;
     }
 
-    public void UpdateUserAvatar(IFormFile file, string wwwRoot, long userId)
+    public string UpdateUserAvatar(IFormFile file, string wwwRoot, long userId)
     {
         MediaVM media = StoreMediaService.storeMediaToWwwRoot( wwwRoot, @"images\user", file );
 
         _unitOfWork.UserRepo.UpdateUserAvatar( $"{media.Path}{media.Name}{media.Type}", userId );
+
+        return $"{media.Path}{media.Name}{media.Type}";
     }
 
     public void UpdateUserDetails(UserProfileVM userProfile)

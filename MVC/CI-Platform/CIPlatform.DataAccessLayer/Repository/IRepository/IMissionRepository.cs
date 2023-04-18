@@ -9,4 +9,6 @@ public interface IMissionRepository : IRepository<Mission>
     List<Mission> LoadFilteredMissions(FilterModel filterModel);
     IQueryable<Mission> FetchMissionInformation();
     void UpdateMissionRating(long missionId, byte avgRating);
+    IEnumerable<Mission> FetchAllMissions();
+    IEnumerable<Mission> FetchMissionCardInformation();
 }

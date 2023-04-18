@@ -174,12 +174,12 @@ function changeMenu(menu, imgSrc) {
 
 
 //Ajax and other important js 
-$(document).ready
-(
-    () => {
+//$(document).ready
+//(
+//    () => {
         loadUsersAjax();
-    }
-);
+//    }
+//);
 
 function loadUsersOnDOM(result) {
     $('#admin-menu-content').html(result);

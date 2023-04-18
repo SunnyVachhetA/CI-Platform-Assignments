@@ -31,7 +31,7 @@ function addFilterToHtmlList(id, item, type) {
     li.dataset.type = type;
 
     let image = document.createElement('img');
-    image.src = "./assets/cancel1.png";
+    image.src = "/assets/cancel1.png";
     image.alt = "Cancel";
     image.classList.add('cancel-filter');
     image.classList.add( 'cursor-pointer' );
@@ -166,7 +166,7 @@ $('#sort-options').change((e) => {
 function LoadMissionIndex() {
     $.ajax({
         type: "GET",
-        url: "/Volunteer/Home/LoadMissionsIndexAjax",
+        url: "/Volunteer/Home/LoadMissionCardIndex",
         data: { page: currentPageNumber },
         success: function (result) {
             $('#partial-mission-listing').html(result);
@@ -182,25 +182,24 @@ function LoadMissionIndex() {
 
 $(document).ready(() => {
     userId = loggedUser.value;
-    LoadMissionIndex();
 });
+LoadMissionIndex();
 
 function filterMissionCardAjax() {
 
-    
     const filterList = {
-        countryList: countryList,
-        cityList: cityList,
-        searchKeyword: searchText,
-        themeList: themeList,
-        skillList: skillList,
-        sortBy: sortByOption,
-        page: currentPageNumber,
-        userId: userId
+        CountryList: countryList,
+        CityList: cityList,
+        SearchKeyword: searchText,
+        ThemeList: themeList,
+        SkillList: skillList,
+        SortBy: sortByOption,
+        Page: currentPageNumber,
+        UserId: userId
     };
     $.ajax({
         type: "POST",
-        url: "Volunteer/Home/TestAjax",
+        url: "/Volunteer/Home/FilterMissions",
         data: filterList,
         success: function (result) {
             $('#partial-mission-listing').html(result);
@@ -210,8 +209,6 @@ function filterMissionCardAjax() {
         error: ajaxErrorSweetAlert
     });
 }
-
-
 
 //MissionCount
 const hasMission = document.querySelector('#has-mission');
@@ -235,3 +232,13 @@ function missionDisplay() {
 }
 
 
+//Mission apply
+$('#btn-msn-apply').click
+    (
+        () => {
+            if (loggedUserId == undefined || loggedUserId == 0) {
+                loginRequiredSweetAlert(userLoginPageLink, 'You need to login before applying to missions!');
+                return;
+            }
+        }
+);

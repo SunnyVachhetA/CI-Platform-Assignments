@@ -1,6 +1,7 @@
 ﻿using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Mvc;
 namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 
@@ -32,8 +33,11 @@ public class StoryController : Controller
     }
 
     [HttpGet]
+    [Authentication]
     public IActionResult AddStory(long userId)
     {
+        long id = long.Parse(HttpContext.Session.GetString("UserId")!);
+        if (userId != id) return Unauthorized();
         SingleUserMissionsVM userMissions = _serviceUnit.MissionApplicationService.GetSingleUserMission(userId);
 
         if (!userMissions.MissionId.Any())
@@ -63,7 +67,7 @@ public class StoryController : Controller
             ViewBag.MediaList = mediaList;  
             return View("EditStory", userDraft); 
         }
-        else return View();
+        return View();
     }
 
     [HttpPost]

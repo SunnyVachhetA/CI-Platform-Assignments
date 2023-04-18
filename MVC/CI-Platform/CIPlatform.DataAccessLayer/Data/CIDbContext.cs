@@ -213,6 +213,10 @@ public partial class CIDbContext : DbContext
 
             entity.Property(e => e.ContactId).HasColumnName("contact_id");
             entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
+            entity.Property(e => e.IsDeleted)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("is_deleted");
             entity.Property(e => e.Message)
                 .HasMaxLength(6000)
                 .IsUnicode(false)

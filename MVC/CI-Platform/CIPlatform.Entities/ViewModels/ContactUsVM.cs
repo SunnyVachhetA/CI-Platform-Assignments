@@ -1,4 +1,5 @@
 ﻿
+using CIPlatform.Entities.DataModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace CIPlatform.Entities.ViewModels;
@@ -21,5 +22,14 @@ public class ContactUsVM
     [MinLength(15, ErrorMessage = "Minimum 15 and maximum 255 characters are allowed!")]
 
     public string Message { get; set; } = string.Empty;
-    
+
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
+
+    public string? Response { get; set; }
+
+    public DateTimeOffset? DeletedAt { get; set; }
+
+    public bool? IsDeleted { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }

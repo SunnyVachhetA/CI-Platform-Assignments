@@ -27,10 +27,10 @@ internal class FilterService
     private IQueryable<MissionCardVM> CountCheck( IQueryable<MissionCardVM> result) => result.Count() == 0 ? missions : result;
     public IQueryable<MissionCardVM> FilterBySkill1()
     {
-        if (filterModel.SkillList.Length == 0) return missions;
+        if (!filterModel.SkillList.Any()) return missions;
         List<MissionCardVM> filteredMissions = new();
 
-        for (int i = 0; i < filterModel.SkillList.Length; i++)
+        for (int i = 0; i < filterModel.SkillList.Count; i++)
         {
             short skillId = (short)filterModel.SkillList[i];
 
@@ -47,10 +47,9 @@ internal class FilterService
     }
     public IQueryable<MissionCardVM> FilterBySkill()
     {
-        Console.WriteLine("Length: " + filterModel.SkillList.Length);
-        if (filterModel.SkillList != null && filterModel.SkillList.Length > 0 && filterModel.SkillList!.Any())
+        if (filterModel.SkillList != null && filterModel.SkillList.Any())
         {
-            int n = filterModel.SkillList.Length;
+            int n = filterModel.SkillList.Count;
             for(int i = 0; i < n; i++)
             {
                 Console.WriteLine("--> " + filterModel.SkillList[i]);
@@ -64,7 +63,7 @@ internal class FilterService
 
     internal IQueryable<MissionCardVM> FilterByTheme()
     {
-        if (filterModel.ThemeList != null && filterModel.ThemeList.Length > 0 && filterModel.ThemeList!.Any())
+        if (filterModel.ThemeList != null && filterModel.ThemeList.Any())
         {
             missions = missions.Where(msn => filterModel.ThemeList.ToList().Contains((short)msn.ThemeId!));
         }
@@ -74,7 +73,7 @@ internal class FilterService
     internal IQueryable<MissionCardVM> FilterByCity()
     {
         var filterMissions = missions;
-        if (filterModel.CityList != null && filterModel.CityList.Length > 0 && filterModel.CityList!.Any())
+        if (filterModel.CityList != null && filterModel.CityList.Any())
         {
             filterMissions = filterMissions.Where(msn => filterModel.CityList.ToList().Contains((int)msn.CityId!));
         }
@@ -83,7 +82,7 @@ internal class FilterService
     internal IQueryable<MissionCardVM> FilterByCountry()
     {
         var filterMissions = missions;
-        if ( filterModel.CountryList != null && filterModel.CountryList.Length > 0 && filterModel.CountryList.Any() )
+        if ( filterModel.CountryList != null && filterModel.CountryList.Any() )
         {
             filterMissions = filterMissions.Where( msn => filterModel.CountryList.ToList().Contains((byte)msn.CountryId!)  );
         }

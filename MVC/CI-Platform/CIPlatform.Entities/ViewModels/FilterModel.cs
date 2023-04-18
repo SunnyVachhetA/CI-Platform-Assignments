@@ -4,15 +4,16 @@ using CIPlatform.Entities.VMConstants;
 namespace CIPlatform.Entities.ViewModels;
 public class FilterModel
 {
-    public int[]? CountryList { get; set; }
-    public int[]? CityList { get; set; } 
+    public List<int> CountryList { get; set; } = new();
+    public List<int> CityList { get; set; } = new();
 
-    public int[]? ThemeList { get; set; } 
-    public int[]? SkillList { get; set; }
+    public List<int> ThemeList { get; set; } = new(); 
+    public List<int> SkillList { get; set; } = new();
 
     public string? SearchKeyword { get; set; } 
 
     public SortByMenu? SortBy { get; set; }
 
+    public int Page { get; set; }
     public long? UserId { get; set; }
 }

@@ -14,6 +14,7 @@
     var storySubmitRequest = TempData["story-submit"];
 
     var missionError = TempData["MissionError"];
+    TempData.Remove("MissionError");
 }
 <input type="hidden" id="add-story-page-url" value="@addStoryPageUrl" />
 @Html.HiddenFor(model => totalStoryCount, new { id = "total-story-count" })
@@ -49,7 +50,7 @@
                         <div class="col" data-storynumber="@index">
                             <article class="card h-100 shadow-sm flex-nowrap">
                                 <div class="position-relative story-img-card">
-                                    <img src="@story.StoryThumbnail" alt="Story Thumbnail" class="w-100 story-card-img">
+                                    <img src="@story.StoryThumbnail" alt="Story Thumbnail" class="w-100 story-card-img object-fit-cover">
                                     <a asp-controller="Story" asp-action="Story" asp-route-id="@story.StoryId" class="btn-g-white d-block position-absolute btn-story-center d-none">
                                         View Details
                                         <img src="~/assets/arrow-8-24.png" alt="Right Arrow">

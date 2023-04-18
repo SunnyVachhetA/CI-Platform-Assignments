@@ -11,4 +11,6 @@ public interface IMissionService
     MissionLandingVM CreateMissionLanding(List<MissionCardVM> missionList);
     Task UpdateMissionRating(long missionId, byte avgRating);
     bool IsThemeUsedInMission(short themeId);
+    (IEnumerable<MissionVMCard>, long) LoadAllMissionCards(int page);
+    (IEnumerable<MissionVMCard>, long) FilterMissionsCard(FilterModel filterModel);
 }

@@ -18,6 +18,10 @@ public partial class ContactUs
     public DateTimeOffset? UpdatedAt { get; set; }
 
     public byte? Status { get; set; }
+    
+    public DateTimeOffset? DeletedAt { get; set; }
+
+    public bool? IsDeleted { get; set; }
 
     public virtual User User { get; set; } = null!;
 }

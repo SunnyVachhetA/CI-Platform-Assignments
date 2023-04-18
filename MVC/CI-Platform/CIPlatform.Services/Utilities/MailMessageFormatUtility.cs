@@ -115,6 +115,31 @@ public static class MailMessageFormatUtility
         return CreateEmailBody(bodySection);
     }
 
+
+    public static string GenerateStoryInviteMessage(string userName, string storyInviteLink)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Story Invitation From Co-Worker</h1>
+                </div>
+                <div class='body'>
+                     
+                    <p>You got story invite from your co-worker {userName}</p>
+                    <p>Check Out Story Details By Clicking Below Button</p>
+                    
+                    <a href = '{storyInviteLink}' class='button'> <button>Story Information</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+
     private static string CreateEmailBody(string bodySection)
         =>
             $@"
@@ -122,4 +147,28 @@ public static class MailMessageFormatUtility
                 {HeadSection}
                 {bodySection}
             </html>";
+
+    public static string GenerateMissionInviteMessage(string userName, string link)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Story Invitation From Co-Worker</h1>
+                </div>
+                <div class='body'>
+                     
+                    <p>You got mission invite from your co-worker {userName}.</p>
+                    <p>Check Out Mission Details By Clicking Below Button</p>
+                    
+                    <a href = '{link}' class='button'> <button>Mission Information</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
 }   

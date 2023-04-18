@@ -42,6 +42,12 @@
         @TempData["email-verification"]
     </div>
 }
+@if (TempData["login-block"] != null)
+{
+    <div class="alert alert-danger font-15">
+        @TempData["login-block"]
+    </div>
+}
 @*Successfully Login*@
 @*@if( TempData["login-success"] != null)
 {

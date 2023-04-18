@@ -1,5 +1,7 @@
 ﻿const imgUpload = document.querySelector('#usr-profile-upload');
 const profileImg = document.querySelector('#usr-profile-img');
+const navProfileImg = document.querySelector('#nav-profile-img');
+
 
 imgUpload.addEventListener
     (
@@ -8,6 +10,7 @@ imgUpload.addEventListener
             const file = imgUpload.files[0];
 
             profileImg.src = URL.createObjectURL(file);
+            navProfileImg.src = profileImg.src;
 
             handleProfileImageUpload(file);
 

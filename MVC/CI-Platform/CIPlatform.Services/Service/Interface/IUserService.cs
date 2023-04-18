@@ -14,7 +14,7 @@ public interface IUserService
     Task<IEnumerable<string>> GetUserEmailList(long[] userId);
     UserProfileVM LoadUserProfile(long id);
     bool CheckOldCredentialAndUpdate(ChangePasswordVM passwordVm);
-    void UpdateUserAvatar(IFormFile file, string wwwRoot, long userId);
+    string UpdateUserAvatar(IFormFile file, string wwwRoot, long userId);
     void UpdateUserDetails(UserProfileVM userProfile);
 
     IEnumerable<UserRegistrationVM> GetSortedUserList( bool isActiveFlag = false);

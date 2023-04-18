@@ -1,7 +1,9 @@
-﻿using CIPlatform.Entities.ViewModels;
+﻿using CIPlatform.Entities.DataModels;
+using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service;
 using CIPlatform.Services.Service.Interface;
+using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CIPlatformWeb.Areas.Volunteer.Controllers;
@@ -21,11 +23,16 @@ public class UserController : Controller
         _webHostEnvironment = webHostEnvironment;
     }
 
+    [Authentication]
     [Route("UserProfile", Name = "UserProfile")]
     public IActionResult Index(long id)
     {
         try
         {
+            long userId = long.Parse(HttpContext.Session.GetString("UserId")!);
+
+            if (userId != id) return Unauthorized();
+
             var countryList = _serviceUnit.CountryService.GetAllCountry() ?? new List<CountryVM>();
             var cityList = _serviceUnit.CityService.GetAllCities() ?? new List<CityVM>();
             var skillList = _serviceUnit.SkillService.GetAllSkills() ?? new List<SkillVM>();
@@ -109,6 +116,11 @@ public class UserController : Controller
 
             if (user != null)
             {
+                if (!user.Status)
+                {
+                    TempData["login-block"] = "Your account is in-active! Please contact Admin for Activation.";
+                    return View();
+                }
                 CreateUserLoginSession(user);
                 TempData["login-success"] = "Successfully logged in as " + user.FirstName + " " + user.LastName;
                 return RedirectToAction("Index", "Home");
@@ -399,7 +411,8 @@ public class UserController : Controller
                 StoreMediaService.DeleteFileFromWebRoot(Path.Combine(directoryPath, prevFileName));
             }
 
-            _serviceUnit.UserService.UpdateUserAvatar(file, wwwRootPath, userId);
+            string path = _serviceUnit.UserService.UpdateUserAvatar(file, wwwRootPath, userId);
+            HttpContext.Session.SetString("UserAvatar", path);
             return Ok();
         }
         catch (Exception e)
@@ -442,10 +455,13 @@ public class UserController : Controller
 
     #endregion
 
+    [Authentication]
     [HttpGet]
     [Route("VolunteerTimesheet", Name = "Timesheet")]
     public IActionResult VolunteerTimesheet(long id)
     {
+        long userId = long.Parse(HttpContext.Session.GetString("UserId")!);
+        if (userId != id) return Unauthorized();
         List<VolunteerTimesheetVM> timesheetList =
             _serviceUnit.TimesheetService.LoadUserTimesheet(id);
         return View(timesheetList);

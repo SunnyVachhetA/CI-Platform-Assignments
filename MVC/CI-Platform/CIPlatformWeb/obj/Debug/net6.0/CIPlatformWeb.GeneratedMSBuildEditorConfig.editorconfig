@@ -28,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ01TUGFnZVxfRWRpdENNUy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/ContactUs/_ContactInquires.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ29udGFjdFVzXF9Db250YWN0SW5xdWlyZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -114,6 +118,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_MissionIndexListing.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfTWlzc2lvbkluZGV4TGlzdGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_MissionListing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfTWlzc2lvbkxpc3RpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_Navbar.cshtml]
