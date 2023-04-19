@@ -14,7 +14,7 @@ public class FilterMissionService
         this.filterModel = filterModel;
     }
 
-    public IEnumerable<MissionVMCard> Filter()
+    public IEnumerable<MissionVMCard> Filter(out long totalMissionCount)
     {
         missions = FilterBySearch();
         missions = FilterByCountry();
@@ -22,6 +22,7 @@ public class FilterMissionService
         missions = FilterByTheme();
         missions = FilterBySkill();
         missions = FilterBySortMenu();
+        totalMissionCount = missions.LongCount();
         return
             missions
                 .Skip((filterModel.Page - 1) * 9)
@@ -76,41 +77,39 @@ public class FilterMissionService
 
     public IQueryable<MissionVMCard> FilterBySortMenu()
     {
-        if (filterModel.SortBy.HasValue)
+        if (!filterModel.SortBy.HasValue) return missions;
+        switch (filterModel.SortBy)
         {
-            switch (filterModel.SortBy)
-            {
-                case SortByMenu.NEWEST:
-                    missions = missions.OrderBy(msn => msn.StartDate.HasValue);
-                    break;
+            case SortByMenu.NEWEST:
+                missions = missions.OrderBy(msn => msn.StartDate.HasValue).OrderByDescending(msn => msn.StartDate);
+                break;
 
-                case SortByMenu.OLDEST:
-                    missions = missions.OrderByDescending(msn => msn.StartDate.HasValue);
-                    break;
+            case SortByMenu.OLDEST:
+                missions = missions.OrderByDescending(msn => msn.StartDate.HasValue).OrderBy(msn => msn.StartDate);
+                break;
 
-                case SortByMenu.LOWEST_SEAT_AVAILABLE:
-                    missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING)
-                        .OrderByDescending(msn => msn.SeatLeft.HasValue);
-                    break;
+            case SortByMenu.LOWEST_SEAT_AVAILABLE:
+                missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderByDescending(msn => msn.SeatLeft.HasValue).OrderBy(msn => msn.SeatLeft);
+                break;
 
-                case SortByMenu.HIGHEST_SEAT_AVAILABLE:
-                    missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderBy(msn => msn.SeatLeft.HasValue);
-                    break;
+            case SortByMenu.HIGHEST_SEAT_AVAILABLE:
+                missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderBy(msn => msn.SeatLeft.HasValue).OrderByDescending(msn => msn.SeatLeft);
+                break;
 
-                case SortByMenu.FAVOURITE:
-                    if (filterModel.UserId != 0)
-                    {
-                        missions = missions.Where(msn => (msn.FavoriteMissionList.Contains((long)filterModel.UserId!)));
-                    }
-                    break;
+            case SortByMenu.FAVOURITE:
+                if (filterModel.UserId != 0)
+                {
+                    missions = missions.Where(msn => (msn.FavoriteMissionList.Contains((long)filterModel.UserId!)));
+                }
+                break;
 
-                case SortByMenu.RESET:
-                    break;
+            case SortByMenu.RESET:
+                break;
 
-                case SortByMenu.REGISTRATION_DEADLINE:
-                    missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderBy(msn => msn.RegistrationDeadline.HasValue);
-                    break;
-            }
+            case SortByMenu.REGISTRATION_DEADLINE:
+                missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderBy(msn => msn.RegistrationDeadline.HasValue).OrderByDescending(msn => msn.RegistrationDeadline);
+                break;
+            default: throw new ArgumentOutOfRangeException();
         }
         return missions;
     }

@@ -189,10 +189,10 @@ public class MissionService : IMissionService
 
         if (missionList == null || !missionList.Any()) return (new List<MissionVMCard>(), 0);
         FilterMissionService filter = new FilterMissionService(missionList, filterModel);
+        long totalMissionCount = 0;
+        var filteredMissions = filter.Filter(out totalMissionCount);
 
-        var filteredMissions = filter.Filter();
-
-        return (filteredMissions, filteredMissions.LongCount());
+        return (filteredMissions, totalMissionCount);
     }
 
     public MissionLandingVM CreateMissionLanding( )

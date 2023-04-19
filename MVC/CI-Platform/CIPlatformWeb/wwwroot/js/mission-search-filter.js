@@ -153,8 +153,25 @@ clearAllFilter.addEventListener(
     }
 );
 
-searchMission.addEventListener('input', () => {
-    searchText = searchMission.value;
+function debounce(cb, delay = 1000) {
+    let timeout
+
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            cb(...args)
+        }, delay);
+    }
+}
+
+searchMission.addEventListener('input', (e) => {
+    searchText = e.target.value;
+    $('.spinner-control').removeClass('opacity-0');
+    $('.spinner-control').addClass('opacity-1');
+    searchMissionDebounce(searchText);
+});
+
+const searchMissionDebounce = debounce((searchText) => {
     filterMissionCardAjax();
 });
 
@@ -203,6 +220,8 @@ function filterMissionCardAjax() {
         data: filterList,
         success: function (result) {
             $('#partial-mission-listing').html(result);
+            $('.spinner-control').removeClass('opacity-1');
+            $('.spinner-control').addClass('opacity-0');
             missionDisplay();
             missionPagination();
         },
