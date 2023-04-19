@@ -31,5 +31,7 @@ public interface IUnitOfWork
     ICmsPageRepository CmsPageRepo { get; }
 
     IVerifyEmailRepository VerifyEmailRepo { get; }
+
+    IBannerRepository BannerRepo { get; }
     void Save();
 }

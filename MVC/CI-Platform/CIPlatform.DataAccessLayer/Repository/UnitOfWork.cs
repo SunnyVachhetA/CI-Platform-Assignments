@@ -38,6 +38,7 @@ public class UnitOfWork : IUnitOfWork
     public ITimesheetRepository TimesheetRepo { get; private set; }
     public ICmsPageRepository CmsPageRepo { get; private set; }
     public IVerifyEmailRepository VerifyEmailRepo { get; private set; }
+    public IBannerRepository BannerRepo { get; private set; }
 
     public UnitOfWork(CIDbContext dbContext)
     {
@@ -65,6 +66,7 @@ public class UnitOfWork : IUnitOfWork
         TimesheetRepo = new TimesheetRepository(_dbContext);
         CmsPageRepo = new CmsPageRepository(_dbContext);
         VerifyEmailRepo = new VerifyEmailRepository(_dbContext);
+        BannerRepo = new BannerRepository(_dbContext);
     }
 
     public void Save()

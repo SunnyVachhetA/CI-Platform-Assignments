@@ -32,4 +32,6 @@ public interface IServiceUnit
     ICmsPageService CmsPageService { get; }
 
     IVerifyEmailService VerifyEmailService { get; }
+
+    IBannerService BannerService { get; }
 }

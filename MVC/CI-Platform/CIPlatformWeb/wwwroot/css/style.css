@@ -1172,7 +1172,7 @@ form-subtitle,
 }
 
 #usr-search:focus, #cms-search:focus, #msn-theme-search:focus, #msn-skill-search:focus, #story-search:focus,
-#contact-us-search:focus {
+#contact-us-search:focus, #banner-search:focus {
     border-bottom: 1px solid black !important;
     box-shadow: none !important;
 }

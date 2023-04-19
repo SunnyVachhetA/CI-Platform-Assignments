@@ -113,10 +113,16 @@ public partial class CIDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnName("created_at");
             entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
-            entity.Property(e => e.Image).HasColumnName("image");
+            entity.Property(e => e.Path)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("path");
             entity.Property(e => e.SortOrder)
                 .HasDefaultValueSql("((0))")
                 .HasColumnName("sort_order");
+            entity.Property(e => e.Status)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("status");
             entity.Property(e => e.Text)
                 .HasColumnType("text")
                 .HasColumnName("text");

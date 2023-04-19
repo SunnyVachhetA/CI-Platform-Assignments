@@ -123,8 +123,10 @@ function toggleMenuActive(menu, isToggle) {
 
         case "banner":
             src = '';
-            if (isToggle)
+            if (isToggle) {
                 src = '/assets/banner-fill.svg';
+                loadBannersAjax();
+            }
             else
                 src = '/assets/banner-empty.svg';
             changeMenu(menu, src);
@@ -1214,3 +1216,87 @@ function registerContactUsFormSubmit() {
     });
 }
 //Contact Us End
+
+//Banner Start
+function loadBannersAjax() {
+    searchText = '';
+    tinymce.remove('#description');
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/Banner/Index',
+        success: (result) => {
+            adminMenuContent.html(result);
+            loadBannerOnDOM();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+function loadBannerOnDOM() {
+    $('#banner-search').val(searchText);
+    $('#banner-search').focus();
+    createPagination(5);
+    $('#btn-banner-add').click( handleBannerAdd );
+}
+
+function handleBannerAdd() {
+    $.ajax({
+        type: 'GET',
+        url: 'Admin/Banner/Add',
+        success: (result) => {
+            adminMenuContent.html(result);
+            regsterBannerAddFormEvents();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function regsterBannerAddFormEvents() {
+    handleImageUploadPreview();
+    handleBannerFormSubmit('#form-add-banner', 'POST', '/Admin/Banner/Add', 'Banner Added Successfully!');
+}
+
+function handleImageUploadPreview() {
+    const fileUpload = document.getElementById('banner');
+    const previewContainer = document.getElementById("banner-preview");
+
+    fileUpload.addEventListener('change', () => {
+        $(previewContainer).empty();
+        const file = fileUpload.files[0];
+
+        let src = URL.createObjectURL(file);
+
+        let img = $('<img>');
+        img.attr('src', src);
+        img.attr('alt', 'Banner Image Preview');
+        previewContainer.append(img.get(0));
+    });
+}
+function handleBannerFormSubmit(form, type, url, message) {
+
+    $(form).on('submit', e => {
+        e.preventDefault();
+
+        $(form).valid();
+
+        if (!$(form).valid()) return;
+        const formData = new FormData(form);
+        $.ajax({
+            type: type,
+            url: url,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (result) => {
+                adminMenuContent.html(result);
+                successMessageSweetAlert(message);
+                loadBannersAjax();
+            },
+            error: ajaxErrorSweetAlert
+        });
+
+    });
+
+}
+
+
+//Banner end
