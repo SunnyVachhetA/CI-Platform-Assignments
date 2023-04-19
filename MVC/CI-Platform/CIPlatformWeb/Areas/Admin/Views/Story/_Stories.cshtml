@@ -50,7 +50,7 @@
                             @Html.DisplayFor(_ => story.StoryStatus)
                         </td>
                         <td>
-                            <div class="d-flex gap-2 flex-wrap justify-content-center">
+                            <div class="d-flex gap-2 flex-wrap justify-content-center align-items-center">
                                 <a asp-area = "Admin" asp-controller="Story" asp-action = "StoryDetails" asp-route-id="@story.StoryId" target="_blank">
                                     <button class="cursor-pointer btn-story-view font-13 bg-transparent px-2 text-center">View</button>
                                 </a>

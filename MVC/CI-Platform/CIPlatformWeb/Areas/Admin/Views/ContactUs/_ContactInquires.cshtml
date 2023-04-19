@@ -1,24 +1,26 @@
 ﻿@model IEnumerable<ContactUsVM>
 <div class="border-bottom mb-2">
     <div class="border-bottom-1 mx-content pb-2 font-30">
-        Mission Skill
+        Contact Us
     </div>
 </div>
 
-<div class="mt-4 d-flex justify-content-between">
-    <div class="border mx-content py-1 px-3 d-flex align-items-center" id="admin-search-container">
-        <img src="./assets/search.png" alt="Search Here" height="20px" width="20px">
-        <input type="text" name="Search" id="contact-us-search" placeholder="Search here" class="border-0 ms-2 form-control">
-        <div class="spinner-border opacity-0 spinner-control" role="status">
-            <span class="visually-hidden">Loading...</span>
+@if (!Model.Any())
+{
+    <div class="mt-4 d-flex justify-content-between">
+        <div class="border mx-content py-1 px-3 d-flex align-items-center" id="admin-search-container">
+            <img src="./assets/search.png" alt="Search Here" height="20px" width="20px">
+            <input type="text" name="Search" id="contact-us-search" placeholder="Search here" class="border-0 ms-2 form-control">
+            <div class="spinner-border opacity-0 spinner-control" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
     </div>
-</div>
-
+}
 <div class="mt-4 table-responsive admin-table">
     @if (!Model.Any())
     {
-        <p class="text-info-message p-2 mx-content mx-auto">There are no mission skills available at the moment!</p>
+        <p class="text-info-message p-2 mx-content mx-auto">There are no contact queries available at the moment!</p>
     }
     else
     {
@@ -28,8 +30,8 @@
                     <th class="font-22 fw-400">User Name</th>
                     <th>Email</th>
                     <th>Subject</th>
-                    <th class="font-22 fw-400">Last Modified</th>
-                    <th class="font-22 fw-400">Action</th>
+                    <th>Reply Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,12 +48,20 @@
                         <td>
                             @contact.Subject
                         </td>
-                        <td>
-                            
+                        <td class="@contact.Status">
+                            @Html.DisplayFor(_ => contact.Status)
                         </td>
                         <td>
-                            <div class="d-flex gap-3">
-                                
+                            <div class="d-flex gap-3 justify-content-center">
+                                @if (contact.Status == ContactStatus.PENDING)
+                                {
+                                    <img class="cursor-pointer contact-reply" src="~/assets/reply.svg" width="18px" height = "19px" alt="Reply" data-contactid="@contact.ContactId"/>
+                                }    
+                                else if (contact.Status == ContactStatus.DECLINE)
+                                {
+                                    <img class="cursor-pointer contact-restore" src="~/assets/restore.svg" width="18px" height = "19px" alt="Restore" data-contactid="@contact.ContactId"/>
+                                }
+                                <img class="cursor-pointer contact-delete" src="~/assets/delete.png" alt="Delete" data-contactid ="@contact.ContactId" />
                             </div>
                         </td>
                     </tr>

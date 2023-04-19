@@ -171,4 +171,31 @@ public static class MailMessageFormatUtility
 
         return CreateEmailBody(bodySection);
     }
+
+    public static string GenerateContactResponseMailMessage(string contactSubject, string contactResponse)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Contact Us Response From CI Platform | Admin</h1>
+                </div>
+                <div class='body'>
+                    
+                    <h3> You Queried: </h3>
+                    <p>{contactSubject}</p>
+                    <hr/>
+                    <p>Response: {contactResponse}</p>
+
+                    
+                    <br>
+                    <p>Thank you for contact us! If you're not satisfied with above response please contact us again.</p>
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
 }   

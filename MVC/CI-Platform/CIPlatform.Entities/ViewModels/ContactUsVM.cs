@@ -1,6 +1,7 @@
 ﻿
 using CIPlatform.Entities.DataModels;
 using System.ComponentModel.DataAnnotations;
+using CIPlatform.Entities.VMConstants;
 
 namespace CIPlatform.Entities.ViewModels;
 public class ContactUsVM
@@ -27,9 +28,5 @@ public class ContactUsVM
 
     public string? Response { get; set; }
 
-    public DateTimeOffset? DeletedAt { get; set; }
-
-    public bool? IsDeleted { get; set; }
-
-    public virtual User User { get; set; } = null!;
+    public ContactStatus Status { get; set; }
 }

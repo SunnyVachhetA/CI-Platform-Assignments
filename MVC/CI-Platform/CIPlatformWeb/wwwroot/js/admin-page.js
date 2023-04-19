@@ -5,6 +5,8 @@ const sidebarClose = document.querySelector('#sidebar-close');
 const rightContent = document.querySelector('#admin-right-content');
 const overlayContainer = document.querySelector('#admin-overlay');
 const modalContainer = $('#partial-modal-container');
+const adminMenuContent = $('#admin-menu-content');
+
 const resizeObserver = new ResizeObserver(entries => {
     for (let entry of entries) {
         updateSidebarHeight();
@@ -160,6 +162,18 @@ function toggleMenuActive(menu, isToggle) {
                 src = '/assets/tools-empty.svg';
             changeMenu(menu, src);
             break;
+
+        case "contact":
+            src = '';
+            if (isToggle) {
+                src = '/assets/contact-fill.svg';
+                loadContactUsAjax();
+            }
+            else {
+                src = '/assets/contact-empty.svg';
+            }
+            changeMenu(menu, src);
+            break;
     }
 
 }
@@ -174,12 +188,8 @@ function changeMenu(menu, imgSrc) {
 
 
 //Ajax and other important js 
-//$(document).ready
-//(
-//    () => {
         loadUsersAjax();
-//    }
-//);
+
 
 function loadUsersOnDOM(result) {
     $('#admin-menu-content').html(result);
@@ -1084,3 +1094,123 @@ function handleStoryStatus(storyId, btnText, message, url) {
 }
 
 //Story End
+
+
+//Contact Us Begin
+
+function loadContactUsAjax() {
+    tinymce.remove('#description');
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/ContactUs/Index',
+        success: (result) => {
+            adminMenuContent.html(result);
+            loadContactUsOnDOM();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadContactUsOnDOM() {
+    $('#contact-us-search').val('');
+    $('#contact-us-search').focus();
+    createPagination(5);
+    registerAllContactUsEvents();
+}
+
+function registerAllContactUsEvents() {
+    $('.contact-reply').each((_, item) => {
+        $(item).click(() => {
+            let contactId = $(item).data('contactid');
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/ContactUs/ContactQuery',
+                data: { contactId },
+                success: (result) => {
+                    modalContainer.html(result);
+                    $('#contactUsFormModal').modal('show');
+                    registerContactUsFormSubmit();
+                },
+                error: ajaxErrorSweetAlert
+            });
+        });
+    });
+
+    $('.contact-restore').each((_, item) => {
+        $(item).click(() => {
+            let contactId = $(item).data('contactid');
+        });
+    });
+    $('.contact-delete').each((_, item) => {
+        $(item).click(() => {
+            let contactId = $(item).data('contactid');
+            handleContactEntryDelete(contactId);
+        });
+    });
+}
+
+function handleContactEntryDelete(contactId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You can't revert back!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f88634',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Delete Inquiry'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/Admin/ContactUs/DeleteContact',
+                data: { contactId },
+                success: function (_, __, xhr) {
+                    if (xhr.status === 204) {
+                        errorMessageSweetAlert('Something went during delete contact entry!');
+                        return;
+                    }
+                    loadContactUsAjax();
+                },
+                error: ajaxErrorSweetAlert
+            });
+        }
+    })
+}
+
+function registerContactUsFormSubmit() {
+    const response = $('#response');
+    $(response).on('input', () => {
+        let val = $(response).val();
+        if (val.length < 15)
+            $('#err-response').text('Reponse should at least have 15 character!');
+        else
+            $('#err-response').text('');
+    });
+
+    $('#contact-reply-form').on('submit', e => {
+        e.preventDefault();
+        let reply = $(response).val().trim().length;
+        if ( reply < 15) {
+            $('#err-response').text('Reponse should at least have 15 character!');
+            return;
+        }
+        let userName = $('#user-name').val();
+        let contactId = $('#contact-id').val();
+        $('#contactUsFormModal').modal('hide');
+        $.ajax({
+            type: 'PATCH',
+            url: '/Admin/ContactUs/ContactResponse',
+            data: $('#contact-reply-form').serialize(),
+            success: (_, __, xhr) => {
+                if (xhr.status === 204) {
+                    errorMessageSweetAlert('Something went wrong! Please try again.');
+                    return;
+                }
+                successMessageSweetAlert(`Response message sent to user ${userName} through email!`);
+                loadContactUsAjax();
+            },
+            error: ajaxErrorSweetAlert
+        });
+    });
+}
+//Contact Us End

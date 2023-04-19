@@ -1189,7 +1189,7 @@ form-subtitle,
 }
 
 .admin-table .PENDING { color: var(--col-orange); }
-.admin-table .APPROVED { color: var(--col-green); }
+.admin-table .APPROVED, .admin-table .REPLIED { color: var(--col-green); }
 .admin-table .DECLINED {
     color: #dc3545;
 }

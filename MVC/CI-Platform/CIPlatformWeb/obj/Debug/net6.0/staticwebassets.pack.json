@@ -189,6 +189,14 @@
       "PackagePath": "staticwebassets\\assets\\chevron-right.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\contact-empty.svg",
+      "PackagePath": "staticwebassets\\assets\\contact-empty.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\contact-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\contact-fill.svg"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\cross.png",
       "PackagePath": "staticwebassets\\assets\\cross.png"
     },
@@ -395,6 +403,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\red-close.png",
       "PackagePath": "staticwebassets\\assets\\red-close.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\reply.svg",
+      "PackagePath": "staticwebassets\\assets\\reply.svg"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\restore.svg",

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dq7Tttqavq8FrSoZou0oJ2UgzSY5ETKoKwtpnuUImiI=",
+  "Hash": "Fg/Ya1YYJx1I9EHR0vyElX8diMRBXy9VJyPgh+x7Fyc=",
   "Source": "CIPlatformWeb",
   "BasePath": "_content/CIPlatformWeb",
   "Mode": "Default",
@@ -406,6 +406,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\chevron-right.png"
+    },
+    {
+      "Identity": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\contact-empty.svg",
+      "SourceId": "CIPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CIPlatformWeb",
+      "RelativePath": "assets/contact-empty.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\contact-empty.svg"
+    },
+    {
+      "Identity": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\contact-fill.svg",
+      "SourceId": "CIPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CIPlatformWeb",
+      "RelativePath": "assets/contact-fill.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\contact-fill.svg"
     },
     {
       "Identity": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\cross.png",
@@ -1664,6 +1698,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\red-close.png"
+    },
+    {
+      "Identity": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\reply.svg",
+      "SourceId": "CIPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CIPlatformWeb",
+      "RelativePath": "assets/reply.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\reply.svg"
     },
     {
       "Identity": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\restore.svg",

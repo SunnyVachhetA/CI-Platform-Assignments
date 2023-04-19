@@ -24,7 +24,7 @@ public partial class CIDbContext : DbContext
 
     public virtual DbSet<Comment> Comments { get; set; }
 
-    public virtual DbSet<ContactUs> ContactUs { get; set; }
+    public virtual DbSet<ContactU> ContactUs { get; set; }
 
     public virtual DbSet<Country> Countries { get; set; }
 
@@ -205,7 +205,7 @@ public partial class CIDbContext : DbContext
                 .HasConstraintName("FK_comment_user");
         });
 
-        modelBuilder.Entity<ContactUs>(entity =>
+        modelBuilder.Entity<ContactU>(entity =>
         {
             entity.HasKey(e => e.ContactId);
 
