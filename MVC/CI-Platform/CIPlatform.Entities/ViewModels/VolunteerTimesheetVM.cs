@@ -12,4 +12,7 @@ public class VolunteerTimesheetVM
     public int? Action { get; set; }
     public TimeSpan? Time { get; set; }
     public MissionTypeEnum MissionType { get; set; }
+
+    public string Message = string.Empty;
+    public string UserName = string.Empty;
 }

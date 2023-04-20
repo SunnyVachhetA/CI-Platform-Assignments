@@ -13,4 +13,7 @@ public interface ITimesheetService
     VolunteerGoalVM LoadUserGoalEntry(long timesheetId);
     void UpdateUserTimesheetEntry(VolunteerGoalVM vm);
     void DeleteUserTimesheetEntry(long timesheetId);
+    IEnumerable<VolunteerTimesheetVM> LoadHourTimesheet(MissionTypeEnum missionType);
+    void UpdateTimesheetStatus(long timesheetId, byte status);
+    IEnumerable<VolunteerTimesheetVM> SearchTimesheet(string searchKey, MissionTypeEnum missionTypeEnum);
 }

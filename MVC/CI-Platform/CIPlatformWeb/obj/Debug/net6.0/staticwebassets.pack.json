@@ -473,6 +473,14 @@
       "PackagePath": "staticwebassets\\assets\\themes.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\timesheet-empty.svg",
+      "PackagePath": "staticwebassets\\assets\\timesheet-empty.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\timesheet-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\timesheet-fill.svg"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\tools-empty.svg",
       "PackagePath": "staticwebassets\\assets\\tools-empty.svg"
     },

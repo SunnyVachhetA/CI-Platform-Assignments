@@ -3,6 +3,7 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using CIPlatform.Services.Utilities;
 
 namespace CIPlatform.Services.Service;
 public class TimesheetService: ITimesheetService
@@ -53,7 +54,9 @@ public class TimesheetService: ITimesheetService
             Status = (ApprovalStatus)(timesheet.Status?? 0),
             Date = timesheet.CreatedAt,
             Action = timesheet.Action,
-            MissionType = (MissionTypeEnum)(timesheet.Mission.MissionType ? 1 : 0)
+            MissionType = (MissionTypeEnum)(timesheet.Mission.MissionType ? 1 : 0),
+            UserName = $"{timesheet.User.FirstName} {timesheet.User.LastName}",
+            Message = timesheet.Notes?? string.Empty
         };
 
         return timesheetVM;
@@ -150,6 +153,39 @@ public class TimesheetService: ITimesheetService
         _unitOfWork.TimesheetRepo.DeleteTimesheetEntry(timesheetId);
     }
 
+    public IEnumerable<VolunteerTimesheetVM> LoadHourTimesheet(MissionTypeEnum missionType)
+    {
+        bool checkFor = missionType != MissionTypeEnum.GOAL;
+        Func<Timesheet, bool> filter = timesheet => timesheet.Mission.MissionType == checkFor;
+        IEnumerable<Timesheet> timesheet = _unitOfWork.TimesheetRepo.LoadTimesheet(filter);
+        
+        return
+            timesheet
+                .Select(ConvertTimesheetToVolunteerTimesheetVM);
+    }
+
+    public void UpdateTimesheetStatus(long timesheetId, byte status)
+    {
+        int result = _unitOfWork.TimesheetRepo.UpdateTimesheetApprovalStatus(timesheetId, status);
+        if (result == 0) throw new Exception("Something went wrong during update timesheet status!");
+    }
+
+    public IEnumerable<VolunteerTimesheetVM> SearchTimesheet(string searchKey, MissionTypeEnum missionTypeEnum)
+    {
+        bool checkFor = missionTypeEnum != MissionTypeEnum.GOAL;
+        Func<Timesheet, bool> filter;
+        if(string.IsNullOrEmpty(searchKey))
+            filter = timesheet => timesheet.Mission.MissionType == checkFor;
+        else
+            filter = timesheet => (timesheet.Mission.MissionType == checkFor) && 
+                                  (timesheet.User.FirstName.ContainsCaseInsensitive(searchKey) || timesheet.User.LastName.ContainsCaseInsensitive(searchKey)
+                                  || timesheet.Mission.Title!.ContainsCaseInsensitive(searchKey));
+
+        IEnumerable<Timesheet> timesheet = _unitOfWork.TimesheetRepo.LoadTimesheet(filter);
+        return
+            timesheet
+                .Select(ConvertTimesheetToVolunteerTimesheetVM);
+    }
 
     private static Timesheet ConvertVolunteerGoalVMToTimesheetModel(VolunteerGoalVM vlGoal)
     {

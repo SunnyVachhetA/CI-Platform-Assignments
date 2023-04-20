@@ -176,6 +176,18 @@ function toggleMenuActive(menu, isToggle) {
             }
             changeMenu(menu, src);
             break;
+
+        case "timesheet":
+            src = '';
+            if (isToggle) {
+                src = '/assets/timesheet-fill.svg';
+                loadHourTimesheetAjax();
+            }
+            else {
+                src = '/assets/timesheet-empty.svg';
+            }
+            changeMenu(menu, src);
+            break;
     }
 
 }
@@ -337,6 +349,11 @@ function addAllEvents(action) {
 
         case "story":
             loadStorysOnDOM();
+            break;
+
+        case "timesheet":
+            if (isGoalClicked) loadGoalTimesheetOnDOM();
+            else loadHourTimesheetOnDOM();
             break;
     }
 }
@@ -1343,8 +1360,7 @@ function handleBannerFormSubmit(form, type, url, message) {
             data: formData,
             processData: false,
             contentType: false,
-            success: (result) => {
-                adminMenuContent.html(result);
+            success: (_, __, xhr) => {
                 successMessageSweetAlert(message);
                 loadBannersAjax();
             },
@@ -1407,3 +1423,157 @@ function handleBannerStatus(bannerId, url, message) {
     });
 }
 //Banner end
+
+
+//Timesheet Begin
+let isHourClicked = true;
+let isGoalClicked = false;
+function loadHourTimesheetAjax() {
+    tinymce.remove('#description');
+    searchText = '';
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/Timesheet/LoadHourTimesheet',
+        success: (result) => {
+            adminMenuContent.html(result);
+            loadHourTimesheetOnDOM();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadGoalTimesheetAjax() {
+    searchText = '';
+      $.ajax({
+            type: 'GET',
+            url: '/Admin/Timesheet/LoadGoalTimesheet',
+            success: (result) => {
+                adminMenuContent.html(result);
+                loadGoalTimesheetOnDOM();
+            },
+            error: ajaxErrorSweetAlert
+      });
+}
+
+function toggleTimesheetButton(btnAdd, btnRemove) {
+    $(btnAdd).addClass('active');
+    $(btnRemove).removeClass('active');
+}
+
+function loadGoalTimesheetOnDOM() {
+    $('#timesheet-goal-search').focus();
+
+    toggleTimesheetButton('#btn-goal-entry', '#btn-hour-entry');
+    $('#timesheet-goal-search').val(searchText);
+    createPagination(5);
+    registerTimesheetHourGoalEvents('goal');
+    registerTimesheetSearch('timesheet-goal-search', 'Goal');
+}
+
+function loadHourTimesheetOnDOM() {
+    toggleTimesheetButton('#btn-hour-entry', '#btn-goal-entry');
+    
+    $('#timesheet-hour-search').focus();
+    $('#timesheet-hour-search').val(searchText);
+    createPagination(5);
+    registerTimesheetHourGoalEvents('hour');
+    registerTimesheetSearch('timesheet-hour-search', 'Hour');
+}
+
+
+function registerTimesheetSearch(id, type) {
+    let searchBox = document.getElementById(id);
+    searchBox.addEventListener('input', e => {
+        searchText = e.target.value;
+        $('.spinner-control').removeClass('opacity-0');
+        $('.spinner-control').addClass('opacity-1');
+        genericSearch(searchText, '/Admin/Timesheet/Search'+type, "timesheet");
+    });
+}
+
+function registerTimesheetHourGoalEvents(timesheetType) {
+    $('#btn-hour-entry').click(() => {
+        if (isHourClicked) return;
+        loadHourTimesheetAjax(); isGoalClicked = false;
+        isHourClicked = !isHourClicked;
+    });
+
+    $('#btn-goal-entry').click(() => {
+        if (isGoalClicked) return;
+        loadGoalTimesheetAjax(); isHourClicked = false;
+        isGoalClicked = !isGoalClicked;
+    });
+
+    $('.entry-approve').each((_, item) => {
+        $(item).click(() => {
+            let timesheetId = $(item).data('timesheetid');
+            handleTimesheetApprove(timesheetId, timesheetType);
+        });
+    });
+
+    $('.entry-decline').each((_, item) => {
+        $(item).click(() => {
+            let timesheetId = $(item).data('timesheetid');
+            handleTimesheetDecline(timesheetId, timesheetType);
+        });
+    });
+
+    $('.btn-story-view').each((_, item) => {
+        $(item).click(() => {
+            let timesheetId = $(item).data('timesheetid');
+        });
+    });
+}
+
+function handleTimesheetApprove(id, type) {
+    let message = (type === 'hour') ? 'Volunteer hour entry approved successfully!' : 'Volunteer goal entry approved successfully!';
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f88634',
+        cancelButtonColor: '#d33',
+        confirmButtonText: `Approve ${type} entry`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            updateTimesheetApprovalStatusAjax(id, message, '/Admin/Timesheet/Approve',type);
+        }
+    })
+}
+
+function handleTimesheetDecline(id, type) {
+    let message = (type === 'hour') ? 'Volunteer hour entry declined successfully!' : 'Volunteer goal entry declined successfully!';
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f88634',
+        cancelButtonColor: '#d33',
+        confirmButtonText: `Decline ${type} entry`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            updateTimesheetApprovalStatusAjax(id, message, '/Admin/Timesheet/Decline', type);
+        }
+    })
+}
+
+function updateTimesheetApprovalStatusAjax(timesheetId, message, url, type) {
+    $.ajax({
+        type: 'PATCH',
+        url: url,
+        data: { timesheetId },
+        success: function (result) {
+            successMessageSweetAlert(message);
+            if (type === 'hour') {
+                loadHourTimesheetAjax();
+                return;
+            }
+            loadGoalTimesheetAjax();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+//Timesheet End

@@ -58,8 +58,7 @@ public class BannerController : Controller
 
             
             _serviceUnit.BannerService.UpdateBanner(banner, wwwRootPath);
-
-            return Ok();
+            return StatusCode(200);
         }
         catch (Exception e)
         {

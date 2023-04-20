@@ -1,0 +1,75 @@
+﻿@model IEnumerable<VolunteerTimesheetVM>
+<div class="border-bottom mb-2">
+    <div class="border-bottom-1 mx-content pb-2 font-30">
+        Volunteer Hour Timesheet
+    </div>
+</div>
+
+<div class="mt-4 d-flex flex-column flex-md-row justify-content-center justify-content-md-between">
+    <div class="border mx-content py-1 px-3 d-flex align-items-center" id="admin-search-container">
+        <img src="./assets/search.png" alt="Search Here" height="20px" width="20px">
+        <input type="text" name="Search" id="timesheet-hour-search" placeholder="Search here" class="border-0 ms-2 form-control timesheet-search">
+        <div class="spinner-border opacity-0 spinner-control" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div class="d-flex gap-4">
+        <button class="btn-timesheet" id="btn-hour-entry">
+            Hour Timesheet
+        </button>
+        <button class="btn-timesheet" id="btn-goal-entry">
+            Goal Timesheet
+        </button>
+    </div>
+</div>
+
+<div class="mt-4 table-responsive admin-table">
+    @if (!Model.Any())
+    {
+        <p class="text-info-message p-2 mx-content mx-auto">There are no timesheet entry at the moment!</p>
+    }
+    else
+    {
+        <table class="table border">
+            <thead class="">
+                <tr class="border">
+                    <th>User Name</th>
+                    <th>Mission Title</th>
+                    <th>Date Volunteered</th>
+                    <th>Time Volunteered</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                @foreach (var entry in Model)
+                {
+                    <tr>
+                        <td>@entry.UserName</td>
+                        <td>@entry.MissionTitle</td>
+                        <td>@entry.Date.ToString("d")</td>
+                        <td>@entry.Time?.ToString(@"hh\:mm")</td>
+                        <td class="@entry.Status">
+                            @Html.DisplayFor(_ => entry.Status)
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2 justify-content-center">
+                                <button class="cursor-pointer btn-story-view font-13 bg-transparent px-2 text-center" data-timesheetid="@entry.TimesheetId">View</button>
+                                @if (entry.Status == ApprovalStatus.PENDING)
+                                {
+                                    <img class="cursor-pointer entry-approve" data-timesheetid="@entry.TimesheetId" src="~/assets/check-mark.svg" height="19px" width="18px" alt="Approve">
+                                    <img class="cursor-pointer entry-decline" data-timesheetid="@entry.TimesheetId" src="~/assets/x-circle.svg" height="19px" width="18px" alt="Decline">
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    }
+</div>
+
+<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+</div>

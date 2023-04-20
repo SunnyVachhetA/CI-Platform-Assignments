@@ -36,4 +36,18 @@ public class TimesheetRepository: Repository<Timesheet>, ITimesheetRepository
 
         _dbContext.Database.ExecuteSqlRaw("DELETE FROM timesheet WHERE timesheet_id = @id", idParam);
     }
+
+    public IEnumerable<Timesheet> LoadTimesheet(Func<Timesheet, bool> filter)
+    {
+        return
+            TimesheetWithUserAndMission()
+                .AsEnumerable()
+                .Where(filter);
+    }
+
+    public int UpdateTimesheetApprovalStatus(long timesheetId, byte status)
+    {
+        var query = "UPDATE timesheet SET status = {0} WHERE timesheet_id = {1}";
+        return _dbContext.Database.ExecuteSqlRaw(query, status, timesheetId);
+    }
 }
