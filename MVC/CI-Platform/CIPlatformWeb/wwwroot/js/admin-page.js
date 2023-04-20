@@ -1199,6 +1199,7 @@ function registerContactUsFormSubmit() {
         let userName = $('#user-name').val();
         let contactId = $('#contact-id').val();
         $('#contactUsFormModal').modal('hide');
+        successMessageSweetAlert(`Response message will be sent to user ${userName} through email!`);
         $.ajax({
             type: 'PATCH',
             url: '/Admin/ContactUs/ContactResponse',
@@ -1208,7 +1209,6 @@ function registerContactUsFormSubmit() {
                     errorMessageSweetAlert('Something went wrong! Please try again.');
                     return;
                 }
-                successMessageSweetAlert(`Response message sent to user ${userName} through email!`);
                 loadContactUsAjax();
             },
             error: ajaxErrorSweetAlert
@@ -1235,7 +1235,53 @@ function loadBannerOnDOM() {
     $('#banner-search').val(searchText);
     $('#banner-search').focus();
     createPagination(5);
-    $('#btn-banner-add').click( handleBannerAdd );
+    $('#btn-banner-add').click(handleBannerAdd);
+    registerBannerListEvents();
+}
+
+function registerBannerListEvents() {
+    $('.banner-edit').each((_, item) => {
+        $(item).click(() => {
+            let bannerId = $(item).data('bannerid');
+            handleBannerEdit(bannerId);
+        });
+    });
+    $('.banner-delete').each((_, item) => {
+        $(item).click(() => {
+            let bannerId = $(item).data('bannerid');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You can activate banner status anytime!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#f88634',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'De-Activate Banner'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    handleBannerStatus(bannerId, '/Admin/Banner/DeActivate', 'Banner De-Activated Successfully!');
+                }
+            });
+        });
+    });
+    $('.banner-restore').each((_, item) => {
+        $(item).click(() => {
+            let bannerId = $(item).data('bannerid');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You can de-activate banner status anytime!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#f88634',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Activate Banner'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    handleBannerStatus(bannerId, '/Admin/Banner/Restore', 'Banner Activated Successfully!');
+                }
+            });
+        });
+    });
 }
 
 function handleBannerAdd() {
@@ -1252,7 +1298,15 @@ function handleBannerAdd() {
 
 function regsterBannerAddFormEvents() {
     handleImageUploadPreview();
+    registerBannerFormCancel(loadBannersAjax);
     handleBannerFormSubmit('#form-add-banner', 'POST', '/Admin/Banner/Add', 'Banner Added Successfully!');
+}
+
+function registerBannerFormCancel(cb) {
+    $('#btn-cancel').click(e => {
+        e.preventDefault();
+        cb();
+    });
 }
 
 function handleImageUploadPreview() {
@@ -1268,6 +1322,9 @@ function handleImageUploadPreview() {
         let img = $('<img>');
         img.attr('src', src);
         img.attr('alt', 'Banner Image Preview');
+        img.attr('height', '250px');
+        img.attr('width', '250px');
+
         previewContainer.append(img.get(0));
     });
 }
@@ -1279,7 +1336,7 @@ function handleBannerFormSubmit(form, type, url, message) {
         $(form).valid();
 
         if (!$(form).valid()) return;
-        const formData = new FormData(form);
+        const formData = new FormData($(form)[0]);
         $.ajax({
             type: type,
             url: url,
@@ -1298,5 +1355,55 @@ function handleBannerFormSubmit(form, type, url, message) {
 
 }
 
+function handleBannerEdit(bannerId) {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/Banner/Edit',
+        data: { bannerId },
+        success: (result) => {
+            $(adminMenuContent).html(result);
+            registerEditBannerFormEvents();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
 
+function registerEditBannerFormEvents() {
+    handleEditBannerImagePreview();
+    handleImageUploadPreview();
+    registerBannerFormCancel(loadBannersAjax);
+    handleBannerFormSubmit('#form-edit-banner', 'PUT', '/Admin/Banner/Edit', 'Banner updated successfully!');
+}
+function handleEditBannerImagePreview()
+{
+    const path = $('#banner-path').val();
+    const fileName = path.split("\\").pop();
+    const preview = document.getElementById('img-preview');
+    fetch(path)
+        .then(response => response.arrayBuffer())
+        .then(buffer => {
+            const extension = fileName.split('.').pop();
+            const type = `image/${extension}`;
+            const myFile = new File([buffer], fileName, { type: `image/${type}` });
+            preview.src = URL.createObjectURL(myFile);
+            preview.style.height = "250px";
+
+            let myFileList = new DataTransfer();
+            myFileList.items.add(myFile);
+            document.querySelector("#banner").files = myFileList.files;
+        });
+}
+
+function handleBannerStatus(bannerId, url, message) {
+    $.ajax({
+        type: 'PATCH',
+        url: url,
+        data: { bannerId },
+        success: () => {
+            successMessageSweetAlert(message);
+            loadBannersAjax();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
 //Banner end

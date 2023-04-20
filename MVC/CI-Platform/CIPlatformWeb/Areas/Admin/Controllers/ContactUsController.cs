@@ -43,8 +43,8 @@ public class ContactUsController : Controller
         {
             if ( contact == null || string.IsNullOrEmpty(contact.Response)) return NoContent();
 
-            await _serviceUnit.ContactUsService.UpdateContactResponse(contact.Response, contact.ContactId);
-            _serviceUnit.ContactUsService.SendContactResponseEmail(contact);
+            await _serviceUnit.ContactUsService.SendContactResponseEmail(contact);
+            _serviceUnit.ContactUsService.UpdateContactResponse(contact.Response, contact.ContactId);
             return Ok();
         }
         catch (Exception e)

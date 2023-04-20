@@ -1,4 +1,6 @@
-﻿namespace CIPlatform.Services.Service.Interface;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+
+namespace CIPlatform.Services.Service.Interface;
 public interface IServiceUnit
 {
     IUserService UserService { get; }
@@ -34,4 +36,9 @@ public interface IServiceUnit
     IVerifyEmailService VerifyEmailService { get; }
 
     IBannerService BannerService { get; }
+
+    Task<IDbContextTransaction> BeginTransactionAsync();
+
+
+
 }

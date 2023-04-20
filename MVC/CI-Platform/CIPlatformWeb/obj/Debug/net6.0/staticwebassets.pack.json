@@ -585,6 +585,18 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\banner\\6cb26513-454c-4847-96d6-0f19e644a10e.jpg",
+      "PackagePath": "staticwebassets\\images\\banner\\6cb26513-454c-4847-96d6-0f19e644a10e.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\banner\\db9a25e0-eb09-4add-85f4-9bb377300e8d.jpg",
+      "PackagePath": "staticwebassets\\images\\banner\\db9a25e0-eb09-4add-85f4-9bb377300e8d.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\banner\\f0800377-8d5a-4ed1-b423-3a5acfea1829.jpg",
+      "PackagePath": "staticwebassets\\images\\banner\\f0800377-8d5a-4ed1-b423-3a5acfea1829.jpg"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\CSR-initiative-stands-for-Coffee--and-Farmer-Equity-4.png",
       "PackagePath": "staticwebassets\\images\\static\\CSR-initiative-stands-for-Coffee--and-Farmer-Equity-4.png"
     },

@@ -1,5 +1,6 @@
 ﻿using CIPlatform.DataAccessLayer.Data;
 using CIPlatform.DataAccessLayer.Repository.IRepository;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class UnitOfWork : IUnitOfWork
@@ -72,5 +73,15 @@ public class UnitOfWork : IUnitOfWork
     public void Save()
     {
         _dbContext.SaveChanges();
+    }
+
+    public async Task<IDbContextTransaction> BeginTransactionAsync()
+    {
+        if (_dbContext.Database.CurrentTransaction != null)
+        {
+            throw new InvalidOperationException("A transaction is already in progress.");
+        }
+
+        return await _dbContext.Database.BeginTransactionAsync();
     }
 }

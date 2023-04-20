@@ -1,0 +1,56 @@
+﻿@model BannerVM
+
+<div class="mt-4 border pb-4">
+    <h4 class="px-4 mb-0 py-3 bg-tile fw-400">Edit Banner</h4>
+
+    <div class="px-4 mt-2 ">
+        <form id="form-edit-banner" enctype="multipart/form-data" class="admin-form d-flex flex-column gap-4">
+            
+            <input type="hidden" asp-for="BannerId"/>
+            <input type="hidden" id="banner-path" asp-for="Path"/>
+            <div>
+                <label asp-for="File" class="form-label"></label>
+                <input class="form-control form-control-md" asp-for="File" id="banner" type="file">
+                <span class="font-xs text-danger" asp-validation-for="File"></span>
+                <div class="mt-2" id="banner-preview">
+                    <img src="@Model.Path" height="250px" width="250px" id="img-preview" alt="Banner image"/>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" placeholder="Enter Banner Title">
+                <span class="font-xs text-danger" asp-validation-for="Title"></span>
+            </div>
+            <div>
+                <label asp-for="Text" class="form-label"></label>
+                <textarea class="form-control" asp-for="Text" placeholder="Enter banner text" rows="4"></textarea>
+                <span class="font-xs text-danger"></span>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label asp-for="SortOrder" class="form-label"></label>
+                    <input class="form-control" placeholder="Enter Sort Order" asp-for="SortOrder">
+                    <span class="font-xs text-danger" asp-validation-for="SortOrder"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Status" class="form-label"></label>
+                    <select class="form-select" asp-for="Status">
+                        <option value="Select Status" disabled selected>Select Status</option>
+                        <option value="true">Active</option>
+                        <option value="false">In-Active</option>
+                    </select>
+                    <span class="font-xs text-danger" asp-validation-for="Status"></span>
+                </div>
+            </div>
+
+
+            <div class="d-flex justify-content-center justify-content-md-end gap-2">
+                <button class="btn-g-gray" id="btn-cancel">Cancel</button>
+                <button class="btn-g-orange" type="submit">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+                        <partial name="_ValidationScriptsPartial"/>

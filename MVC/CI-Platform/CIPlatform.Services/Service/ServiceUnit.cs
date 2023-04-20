@@ -1,6 +1,7 @@
 ﻿
 using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Services.Service.Interface;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CIPlatform.Services.Service;
 public class ServiceUnit: IServiceUnit
@@ -72,5 +73,9 @@ public class ServiceUnit: IServiceUnit
 		ThemeService = new ThemeService(_unitOfWork);
         VerifyEmailService = new VerifyEmailService(_unitOfWork);
         BannerService = new BannerService(_unitOfWork);
+    }
+    public async Task<IDbContextTransaction> BeginTransactionAsync()
+    {
+        return await _unitOfWork.BeginTransactionAsync();
     }
 }

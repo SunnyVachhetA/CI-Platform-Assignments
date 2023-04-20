@@ -1,4 +1,6 @@
-﻿namespace CIPlatform.DataAccessLayer.Repository.IRepository;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+
+namespace CIPlatform.DataAccessLayer.Repository.IRepository;
 public interface IUnitOfWork
 {
     IUserRepository UserRepo { get; }
@@ -34,4 +36,6 @@ public interface IUnitOfWork
 
     IBannerRepository BannerRepo { get; }
     void Save();
+
+    Task<IDbContextTransaction> BeginTransactionAsync();
 }
