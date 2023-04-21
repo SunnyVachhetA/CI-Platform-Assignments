@@ -182,7 +182,8 @@
                 @if (mission.Status == MissionStatus.ONGOING && userId != 0L)
                 {
                     <a class="my-2 my-md-3 mx-auto btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
-                        Apply
+                        
+
                         <img src="~/assets/right-arrow.png" alt="Right Arrow">
                     </a>
                 }

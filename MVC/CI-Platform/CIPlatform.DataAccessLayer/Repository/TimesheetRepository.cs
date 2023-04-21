@@ -50,4 +50,12 @@ public class TimesheetRepository: Repository<Timesheet>, ITimesheetRepository
         var query = "UPDATE timesheet SET status = {0} WHERE timesheet_id = {1}";
         return _dbContext.Database.ExecuteSqlRaw(query, status, timesheetId);
     }
+
+    public Timesheet? FetchTimesheetEntry(Func<Timesheet, bool> filter)
+    {
+        return
+            TimesheetWithUserAndMission()
+                .AsEnumerable()
+                .FirstOrDefault(filter);
+    }
 }

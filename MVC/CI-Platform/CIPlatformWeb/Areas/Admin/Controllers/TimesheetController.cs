@@ -111,4 +111,23 @@ public class TimesheetController : Controller
             return StatusCode(500);
         }
     }
+
+
+    [HttpGet]
+    public IActionResult View(long timesheetId)
+    {
+        try
+        {
+            if (timesheetId == 0) return BadRequest();
+
+            VolunteerTimesheetVM entry = _serviceUnit.TimesheetService.ViewTimesheetEntry(timesheetId);
+            return PartialView("_ViewTimesheetEntry", entry);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error occured during view timesheet: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
 }

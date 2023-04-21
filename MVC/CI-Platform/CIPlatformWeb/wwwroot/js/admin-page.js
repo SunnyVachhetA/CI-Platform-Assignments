@@ -1521,7 +1521,21 @@ function registerTimesheetHourGoalEvents(timesheetType) {
     $('.btn-story-view').each((_, item) => {
         $(item).click(() => {
             let timesheetId = $(item).data('timesheetid');
+            handleTimesheetView(timesheetId);
         });
+    });
+}
+
+function handleTimesheetView(timesheetId) {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/Timesheet/View',
+        data: { timesheetId },
+        success: (result) => {
+            modalContainer.html(result);
+            $('#viewTimesheetModal').modal('show');
+        },
+        error: ajaxErrorSweetAlert
     });
 }
 

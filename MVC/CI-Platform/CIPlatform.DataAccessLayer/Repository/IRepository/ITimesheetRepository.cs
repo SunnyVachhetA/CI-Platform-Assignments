@@ -7,4 +7,5 @@ public interface ITimesheetRepository: IRepository<Timesheet>
     void DeleteTimesheetEntry(long timesheetId);
     IEnumerable<Timesheet> LoadTimesheet(Func<Timesheet, bool> filter);
     int UpdateTimesheetApprovalStatus(long timesheetId, byte status);
+    Timesheet? FetchTimesheetEntry(Func<Timesheet, bool> filter);
 }

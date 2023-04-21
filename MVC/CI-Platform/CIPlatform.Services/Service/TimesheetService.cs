@@ -187,6 +187,15 @@ public class TimesheetService: ITimesheetService
                 .Select(ConvertTimesheetToVolunteerTimesheetVM);
     }
 
+    public VolunteerTimesheetVM ViewTimesheetEntry(long timesheetId)
+    {
+        Func<Timesheet, bool> filter = entry => entry.TimesheetId == timesheetId;
+        var timesheet = _unitOfWork.TimesheetRepo.FetchTimesheetEntry( filter );
+        if (timesheet == null) throw new ArgumentNullException(nameof(timesheet));
+
+        return ConvertTimesheetToVolunteerTimesheetVM(timesheet);
+    }
+
     private static Timesheet ConvertVolunteerGoalVMToTimesheetModel(VolunteerGoalVM vlGoal)
     {
         Timesheet timesheet = new()

@@ -1,0 +1,59 @@
+﻿@model VolunteerTimesheetVM
+<!-- Add Volunteer Hours Modal Begin -->
+<div class="modal" tabindex="-1" id="viewTimesheetModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title font-22 text-black-1">Volunteer Timesheet Entry</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="user-modal-form">
+                <div class="modal-body d-flex flex-column gap-3">
+                    <div>
+                        <label class="form-label">Volunteer Name</label>
+                        <input disabled type="text" asp-for="UserName" class="form-control">
+                    </div>
+                    <div>
+                        <label class="form-label">Mission</label>
+                        <select class="form-select">
+                            <option value="" selected disabled>@Model.MissionTitle</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" asp-for="Date"></label>
+                        <input disabled type="date" asp-for="Date" class="form-control">
+                    </div>
+                    @if (Model.MissionType == MissionTypeEnum.TIME)
+                    {
+                        <div class="row gx-3">
+                            <div class="col-6">
+                                <label class="form-label">Hours</label>
+                                <input type="number" disabled class="form-control" value="@Model.Time?.Hours" placeholder="Enter Spent Hours">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Minutes</label>
+                                <input disabled type="number" class="form-control" value="@Model.Time?.Minutes" placeholder="Enter Spent Minutes">
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <label class="form-label" asp-for="Action"></label>
+                            <input type="number" class="form-control" asp-for="Action" placeholder="Enter Actions" disabled>
+                        </div>
+                    }
+                    <div>
+                        <label asp-for="Message" class="form-label"></label>
+                        <textarea disabled class="form-control" rows="4" asp-for="Message" placeholder="Enter Your Message"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-g-gray" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Volunteer Hours modal finish -->

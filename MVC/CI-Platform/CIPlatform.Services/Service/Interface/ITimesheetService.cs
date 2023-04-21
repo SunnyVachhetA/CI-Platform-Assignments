@@ -16,4 +16,5 @@ public interface ITimesheetService
     IEnumerable<VolunteerTimesheetVM> LoadHourTimesheet(MissionTypeEnum missionType);
     void UpdateTimesheetStatus(long timesheetId, byte status);
     IEnumerable<VolunteerTimesheetVM> SearchTimesheet(string searchKey, MissionTypeEnum missionTypeEnum);
+    VolunteerTimesheetVM ViewTimesheetEntry(long timesheetId);
 }
