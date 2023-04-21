@@ -1,0 +1,118 @@
+﻿@model UserProfileVM
+<!-- Add Volunteer Hours Modal Begin -->
+<div class="modal" tabindex="-1" id="viewUserProfile">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title font-22 text-black-1">Volunteer Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="user-modal-form">
+                <div class="modal-body d-flex flex-column gap-3">
+                    <div class="row gx-3">
+                        <div class="col-6">
+                            <label class="form-label" asp-for="FirstName"></label>
+                            <input disabled class="form-control" asp-for="FirstName">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label" asp-for="LastName"></label>
+                            <input class="form-control" asp-for="LastName" disabled>
+                        </div>
+                    </div>
+                    
+                    <div class="row gx-3">
+                        <div class="col-6">
+                            <label class="form-label" asp-for="EmployeeId"></label>
+                            <input disabled class="form-control" asp-for="EmployeeId">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label" asp-for="Title"></label>
+                            <input class="form-control" asp-for="Title" disabled>
+                        </div>
+                    </div>
+                    
+                    <div class="row gx-3">
+                        <div class="col-6">
+                            <label class="form-label" asp-for="Department"></label>
+                            <input disabled class="form-control" asp-for="Department">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label" asp-for="PhoneNumber"></label>
+                            <input class="form-control" asp-for="PhoneNumber" disabled>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label asp-for="MyProfile" class="form-label"></label>
+                        <textarea disabled class="form-control" rows="4" asp-for="MyProfile"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label asp-for="WhyIVolunteer" class="form-label"></label>
+                        <textarea disabled class="form-control" rows="4" asp-for="WhyIVolunteer"></textarea>
+                    </div>
+
+                    <div class="row gx-3">
+                        <div class="col-6">
+                            <label class="form-label" asp-for="CityId"></label>
+                            <select class="form-select" disabled>
+                                @foreach (var city in Model.CityList)
+                                {
+                                    <option value="@city.CityId">@city.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label" asp-for="CountryId"></label>
+                            <select class="form-select" disabled>
+                                @foreach (var country in Model.CountryList)
+                                {
+                                    <option value="@country.CountryId">@country.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="row gx-3">
+                        <div class="col-6">
+                            <label asp-for="Availability" class="form-label"></label>
+                            <select class="form-select cursor-pointer" asp-for="Availability" asp-items="Html.GetEnumSelectList<MissionAvailability>()" disabled>
+                                <option value="" disabled selected>Availability</option>
+                            </select>
+                            <span asp-validation-for="Availability" class="font-xs text-danger"></span>
+                        </div>
+                        <div class="col-6">
+                            <label asp-for="LinkedInUrl" class="form-label"></label>
+                            <input asp-for="LinkedInUrl" class="form-control" disabled>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="form-label">User Skill</label>
+                        <ul class="list-unstyled ps-3 py-2 mb-0 fw-light font-xs text-black-1 d-flex flex-column gap-2 border" id="user-profile-skill">
+                            @if (Model.UserSkills.Any())
+                            {
+                                @foreach (var skill in Model.UserSkills)
+                                {
+                                    <li>@skill.Name</li>
+                                }
+                            }
+                            else
+                            {
+                                <div class="py-2 fw-light font-xs text-danger">
+                                    No skill!
+                                </div>
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn-g-gray" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Volunteer Hours modal finish -->

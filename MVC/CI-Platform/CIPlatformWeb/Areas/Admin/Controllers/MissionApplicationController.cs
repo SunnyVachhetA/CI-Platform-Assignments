@@ -61,4 +61,28 @@ public class MissionApplicationController : Controller
             return StatusCode(500);
         }
     }
+
+    [HttpGet]
+    public IActionResult ViewUser(long userId)
+    {
+        try
+        {
+            UserProfileVM vm = _serviceUnit.UserService.LoadUserProfile(userId)?? throw new Exception("Cannot find user : " + userId);
+
+            var countryList = _serviceUnit.CountryService.GetAllCountry() ?? new List<CountryVM>();
+            var cityList = _serviceUnit.CityService.GetAllCities() ?? new List<CityVM>();
+            var skillList = _serviceUnit.SkillService.GetAllSkills() ?? new List<SkillVM>();
+
+            vm.CountryList = countryList;
+            vm.CityList = cityList;
+            vm.AllSkills = skillList;
+            return PartialView("_UserProfile", vm);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while loading user details: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
 }

@@ -154,7 +154,7 @@ public class UserService: IUserService
     
     public UserProfileVM LoadUserProfile(long id)
     {
-        Func<User, bool> filter = user => ( user.UserId == id && (user.Status?? true) );
+        Func<User, bool> filter = user => user.UserId == id ;
         User user = _unitOfWork.UserRepo.FetchUserProfile( filter );
         if (user == null) return null!;
 

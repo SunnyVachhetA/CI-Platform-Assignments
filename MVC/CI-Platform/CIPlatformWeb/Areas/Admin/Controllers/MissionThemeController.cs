@@ -107,8 +107,8 @@ public class MissionThemeController : Controller
     {
         try
         {
-            bool result = _serviceUnit.MissionService.IsThemeUsedInMission(themeId);
-            if (result) return StatusCode(204);
+            //bool result = _serviceUnit.MissionService.IsThemeUsedInMission(themeId);
+            //if (result) return StatusCode(204);
 
             _serviceUnit.ThemeService.UpdateThemeStatus(themeId);
 

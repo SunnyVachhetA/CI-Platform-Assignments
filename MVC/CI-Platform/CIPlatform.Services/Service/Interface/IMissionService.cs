@@ -13,4 +13,6 @@ public interface IMissionService
     bool IsThemeUsedInMission(short themeId);
     (IEnumerable<MissionVMCard>, long) LoadAllMissionCards(int page);
     (IEnumerable<MissionVMCard>, long) FilterMissionsCard(FilterModel filterModel);
+    IEnumerable<AdminMissionVM> LoadAllMissionsAdmin();
+    IEnumerable<AdminMissionVM> SearchMission(string searchKey);
 }

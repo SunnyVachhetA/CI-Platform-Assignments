@@ -3,6 +3,7 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using CIPlatform.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.Services.Service;
@@ -196,6 +197,7 @@ public class MissionService : IMissionService
         return (filteredMissions, totalMissionCount);
     }
 
+
     public MissionLandingVM CreateMissionLanding( )
     {
         ICountryService countryService = new CountryService(unitOfWork);
@@ -329,6 +331,37 @@ public class MissionService : IMissionService
         if (!missionRating.Any()) return 0;
 
         return (byte)Math.Floor(missionRating.Average(rating => rating.Rating));
+    }
+    
+    //Admin methods
+    public IEnumerable<AdminMissionVM> LoadAllMissionsAdmin()
+    {
+        var missions = unitOfWork.MissionRepo.GetAll();
+        return
+            missions
+                .Select(ConvertToMissionAdminVM);
+    }
+
+    public IEnumerable<AdminMissionVM> SearchMission(string searchKey)
+    {
+        if (string.IsNullOrEmpty(searchKey) || string.IsNullOrWhiteSpace(searchKey)) return LoadAllMissionsAdmin();
+        Func<Mission, bool> filter = msn => msn.Title!.ContainsCaseInsensitive(searchKey);
+        return
+            unitOfWork.MissionRepo.GetAll(filter)
+                .Select(ConvertToMissionAdminVM);
+    }
+
+    private static AdminMissionVM ConvertToMissionAdminVM(Mission mission)
+    {
+        AdminMissionVM vm = new()
+        {
+            MissionId = mission.MissionId,
+            StartDate = mission.StartDate,
+            EndDate = mission.EndDate,
+            Title = mission.Title?? string.Empty,
+            MissionType = (MissionTypeEnum) ( mission.MissionType ? 1 : 0)
+        };
+        return vm;
     }
 }
 /*

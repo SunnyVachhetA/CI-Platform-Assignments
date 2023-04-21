@@ -105,8 +105,10 @@ function toggleMenuActive(menu, isToggle) {
 
         case "mission":
             src = '';
-            if (isToggle)
+            if (isToggle) {
                 src = '/assets/target-fill.svg';
+                loadMissionsAjax();
+            }
             else
                 src = '/assets/empty-target.png';
             changeMenu(menu, src);
@@ -360,6 +362,10 @@ function addAllEvents(action) {
 
         case "application":
             loadApplciationsOnDOM();
+            break;
+
+        case "mission":
+            loadMissionsOnDOM();
             break;
     }
 }
@@ -1634,6 +1640,12 @@ function registerApplicationEvents() {
             genericSweetPromptId(`You won't be able to change this action!`, 'Decline Application', handleAppDecline, applicationId);
         });
     });
+    $('.btn-user-view').each((_, item) => {
+        $(item).click(() => {
+            let userId = $(item).data('userid');
+            handleUserProfileView(userId);
+        });
+    });
     adminSearch('msn-app-search', '/Admin/MissionApplication/Search', "application");
 }
 
@@ -1645,6 +1657,18 @@ function handleAppDecline(id) {
     handleApplicationApprovalAjax(id, 2, '/Admin/MissionApplication/ApplicationApproval','Application declined!');
 }
 
+function handleUserProfileView(userId) {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/MissionApplication/ViewUser',
+        data: { userId },
+        success: (result) => {
+            $(modalContainer).html(result);
+            $('#viewUserProfile').modal('show');
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
 function handleApplicationApprovalAjax(id, status, url, message) {
     $.ajax({
         type: 'PATCH',
@@ -1684,3 +1708,24 @@ function adminSearch(id, url, action) {
         genericSearch(searchText, url, action);
     });
 }
+
+//Mission Begin
+function loadMissionsAjax() {
+    searchText = '';
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/Mission/Index',
+        success: (result) => {
+            $(adminMenuContent).html(result);
+            loadMissionsOnDOM();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadMissionsOnDOM() {
+    $('#msn-search').focus();
+    $('#msn-search').val(searchText);
+    adminSearch('msn-search', '/Admin/Mission/Search', "mission");
+}
+//Mission End

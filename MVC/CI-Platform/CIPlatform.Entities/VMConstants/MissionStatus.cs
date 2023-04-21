@@ -1,5 +1,10 @@
-﻿namespace CIPlatform.Entities.VMConstants;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CIPlatform.Entities.VMConstants;
 public enum MissionStatus
 {
-    ONGOING, FINISHED
+    [Display(Name="ONGOING")]
+    ONGOING,
+    [Display(Name="Finished")]
+    FINISHED
 }

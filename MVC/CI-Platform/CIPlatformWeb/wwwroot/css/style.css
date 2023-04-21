@@ -1189,8 +1189,8 @@ form-subtitle,
 }
 
 .admin-table .PENDING { color: var(--col-orange); }
-.admin-table .APPROVED, .admin-table .REPLIED { color: var(--col-green); }
-.admin-table .DECLINED {
+.admin-table .APPROVED, .admin-table .REPLIED, .admin-table .ONGOING{ color: var(--col-green); }
+.admin-table .DECLINED, .admin-table .FINISHED{
     color: #dc3545;
 }
 
@@ -1225,5 +1225,9 @@ form-subtitle,
 #btn-msn-cancel:hover {
     background-color: var(--col-orange);
     color: white;
+}
+
+#viewUserProfile > div {
+    max-width: 35rem !important;
 }
 /* Admin home css fin */

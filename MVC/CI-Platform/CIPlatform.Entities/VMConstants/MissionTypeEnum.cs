@@ -1,5 +1,10 @@
-﻿namespace CIPlatform.Entities.VMConstants;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CIPlatform.Entities.VMConstants;
 public enum MissionTypeEnum
 {
-    GOAL, TIME   
+    [Display(Name="Goal")]
+    GOAL,
+    [Display(Name="Time")]
+    TIME   
 }
