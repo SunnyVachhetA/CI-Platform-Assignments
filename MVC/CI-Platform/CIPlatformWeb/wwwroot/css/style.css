@@ -79,7 +79,7 @@ body {
 }
 
 .text-black-1 {
-    color: var(--col-black);
+    color: var(--col-black) ;
 }
 
 .font-lg-size {
@@ -1161,7 +1161,7 @@ form-subtitle,
     background-color: var(--col-tile) !important;
 }
 
-.btn-story-view {
+.btn-story-view, .btn-user-view {
     border: 1px solid var(--col-orange);
     color: var(--col-orange);
     border-radius: 13px;
@@ -1209,5 +1209,21 @@ form-subtitle,
 }
 
 .btn-timesheet.active { background-color: var(--col-orange); color: white; }
+#btn-msn-cancel {
+    background-color: var(--col-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: .5rem 1.5rem;
+    border: 2px solid #ff0000;
+    border-radius: 24px;
+    color: #ff0000;
+    transition: var(--transition);
+}
 
+#btn-msn-cancel:hover {
+    background-color: var(--col-orange);
+    color: white;
+}
 /* Admin home css fin */

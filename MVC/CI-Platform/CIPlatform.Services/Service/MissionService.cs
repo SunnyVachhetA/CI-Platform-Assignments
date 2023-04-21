@@ -69,7 +69,8 @@ public class MissionService : IMissionService
             MissionAvailability = SetMissionAvailability(mission.Availability),
             CommentList = mission.Comments?.Select(comment => comment.UserId).ToList(),
             RecentVolunteers = GetRecentVolunteers(mission),
-            MissionDocuments = GetMissionDocuments(mission.MissionDocuments)
+            MissionDocuments = GetMissionDocuments(mission.MissionDocuments),
+            ApplicationList = mission.MissionApplications!.Select( app => app.UserId )
         };
 
         return missionCard;

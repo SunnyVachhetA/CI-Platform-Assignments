@@ -165,6 +165,10 @@
       "PackagePath": "staticwebassets\\assets\\calender.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\cancel-application.svg",
+      "PackagePath": "staticwebassets\\assets\\cancel-application.svg"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\cancel.png",
       "PackagePath": "staticwebassets\\assets\\cancel.png"
     },

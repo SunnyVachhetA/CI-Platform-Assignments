@@ -290,4 +290,12 @@ public class UserService: IUserService
     {
         _unitOfWork.UserRepo.SetUserStatusToActive(email);
     }
+
+    public bool CheckUserDetailsFilled(long userId)
+    {
+        var user = _unitOfWork.UserRepo.GetFirstOrDefault(user => user.UserId == userId);
+        if (user == null) throw new Exception("User not found with ID: " + userId);
+
+        return user.CityId.HasValue;
+    }
 }

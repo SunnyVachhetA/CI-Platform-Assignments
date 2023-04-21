@@ -114,8 +114,10 @@ function toggleMenuActive(menu, isToggle) {
 
         case "application":
             src = '';
-            if (isToggle)
+            if (isToggle) {
                 src = '/assets/folder-fill.svg';
+                loadApplicationsAjax();
+            }
             else
                 src = '/assets/folder-empty.svg';
             changeMenu(menu, src);
@@ -354,6 +356,10 @@ function addAllEvents(action) {
         case "timesheet":
             if (isGoalClicked) loadGoalTimesheetOnDOM();
             else loadHourTimesheetOnDOM();
+            break;
+
+        case "application":
+            loadApplciationsOnDOM();
             break;
     }
 }
@@ -1591,3 +1597,90 @@ function updateTimesheetApprovalStatusAjax(timesheetId, message, url, type) {
     });
 }
 //Timesheet End
+
+
+//Mission Application start
+
+function loadApplicationsAjax() {
+    searchText = '';
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/MissionApplication/Index',
+        success: function (result) {
+            $(adminMenuContent).html(result);
+            loadApplciationsOnDOM();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadApplciationsOnDOM() {
+    createPagination(5);
+    $('#msn-app-search').focus();
+    $('#msn-app-search').val(searchText);
+    registerApplicationEvents();
+}
+
+function registerApplicationEvents() {
+    $('.app-approve').each((_, item) => {
+        $(item).click(() => {
+            let applicationId = $(item).data('appid');
+            genericSweetPromptId(`You won't be able to change this action!`, 'Approve Application', handleAppApproval, applicationId);
+        });
+    });
+    $('.app-decline').each((_, item) => {
+        $(item).click(() => {
+            let applicationId = $(item).data('appid');
+            genericSweetPromptId(`You won't be able to change this action!`, 'Decline Application', handleAppDecline, applicationId);
+        });
+    });
+    adminSearch('msn-app-search', '/Admin/MissionApplication/Search', "application");
+}
+
+
+function handleAppApproval(id) {
+    handleApplicationApprovalAjax(id, 1, '/Admin/MissionApplication/ApplicationApproval','Application approved!');
+}
+function handleAppDecline(id) {
+    handleApplicationApprovalAjax(id, 2, '/Admin/MissionApplication/ApplicationApproval','Application declined!');
+}
+
+function handleApplicationApprovalAjax(id, status, url, message) {
+    $.ajax({
+        type: 'PATCH',
+        url: url,
+        data: { id, status },
+        success: () => {
+            successMessageSweetAlert(message);
+            loadApplicationsAjax();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+//Mission Application End
+
+function genericSweetPromptId(text, cnfButtonText, cb, id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f88634',
+        cancelButtonColor: '#d33',
+        confirmButtonText: cnfButtonText
+    }).then((result) => {
+        if (result.isConfirmed) {
+            cb(id);
+        }
+    })
+}
+
+function adminSearch(id, url, action) {
+    let searchBox = document.getElementById(id);
+    searchBox.addEventListener('input', e => {
+        searchText = e.target.value;
+        $('.spinner-control').removeClass('opacity-0');
+        $('.spinner-control').addClass('opacity-1');
+        genericSearch(searchText, url, action);
+    });
+}

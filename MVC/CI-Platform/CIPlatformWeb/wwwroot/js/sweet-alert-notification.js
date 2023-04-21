@@ -31,6 +31,15 @@ function loginRequiredSweetAlert(loginPageLink, text='You need to login before u
     });
 }
 
+function requiredSweetAlert(title, text, link, linkText) {
+    Swal.fire({
+        icon: 'info',
+        title: title,
+        text: text,
+        footer: `<a href="${link}">${linkText}</a>`
+    });
+}
+
 function displayActionMessageSweetAlert(title, subTitle, icon) {
     Swal.fire(
         title,

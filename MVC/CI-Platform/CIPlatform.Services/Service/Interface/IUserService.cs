@@ -22,4 +22,5 @@ public interface IUserService
     IEnumerable<UserRegistrationVM> FilterUserBySearchKey(string? key);
     void GenerateEmailVerificationToken(UserRegistrationVM user, string href, IEmailService emailService);
     void SetUserStatusToActive(string email);
+    bool CheckUserDetailsFilled(long userId);
 }

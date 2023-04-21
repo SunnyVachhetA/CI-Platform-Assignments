@@ -592,5 +592,43 @@ public class UserController : Controller
             return StatusCode(500);
         }
     }
-    
+
+
+    [HttpPatch]
+    [Route("CancelMissionApplication")]
+    public IActionResult CancelMissionApplication(long missionId, long userId)
+    {
+        try
+        {
+            _serviceUnit.MissionApplicationService.DeleteMissionApplication(missionId, userId);
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while mission application cancel: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
+    [HttpPost]
+    [Route("ApproveMissionApplication")]
+    public IActionResult ApproveMissionApplication(long missionId, long userId)
+    {
+        try
+        {
+            bool isUserDetailsFilled = _serviceUnit.UserService.CheckUserDetailsFilled(userId);
+            if (!isUserDetailsFilled) return NoContent();
+            
+            _serviceUnit.MissionApplicationService.SaveApplication(missionId, userId);
+            return StatusCode(201);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while mission application apply: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
 }

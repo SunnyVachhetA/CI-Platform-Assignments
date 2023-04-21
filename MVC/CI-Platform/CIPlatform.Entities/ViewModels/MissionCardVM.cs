@@ -40,4 +40,6 @@ public class MissionCardVM
     public List<RecentVolunteersVM> RecentVolunteers { get; set; } = new();
 
     public List<MissionDocumentVM> MissionDocuments { get; set; } = new();
+
+    public IEnumerable<long> ApplicationList { get; set; } = new List<long>();
 }

@@ -423,4 +423,112 @@ function handleUserRecommendAjax(recommendList) {
 }
 
 
+const btnContainer = document.querySelector('#btnContainer');
+
+const editProfileLink = $('#editProfileUrl').val();
+
+buttonApplyEvent();
+buttonCancelEvent();
+
+function buttonCancelEvent() {
+    const btnApplicationCancel = document.querySelector('#btn-msn-cancel');
+    if (btnApplicationCancel == undefined || btnApplicationCancel == null) return;
+    btnApplicationCancel.addEventListener('click', () => {
+        let missionId = $('#btn-msn-cancel').data('missionid');
+        let userId = loggedUserId;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You may reapply for the mission till its application period is open!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#f88634',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirm'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'PATCH',
+                    url: '/Volunteer/User/CancelMissionApplication',
+                    data: { missionId, userId },
+                    success: (_, __, xhr) => {
+                        if (xhr.status === 204) {
+                            displayActionMessageSweetAlert('Cancelled!', 'You application for mission is cancelled.', 'success');
+                            createApplyButton();
+                            buttonApplyEvent();
+                            return;
+                        }
+                        errorMessageSweetAlert('Something went wrong during cancelling application!');
+                    },
+                    error: ajaxErrorSweetAlert
+                });
+            }
+        })
+    });
+
+}
+
+function buttonApplyEvent() {
+    const btnApplicationApply = document.querySelector('#btn-msn-apply');
+    if (btnApplicationApply == undefined || btnApplicationApply == null) return;
+
+    btnApplicationApply.addEventListener('click', () => {
+        let missionId = $('#btn-msn-apply').data('missionid');
+        let userId = loggedUserId;    
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You may cancel application for the mission before admin approves!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#f88634',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirm'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Volunteer/User/ApproveMissionApplication',
+                    data: { missionId, userId },
+                    success: (result, _, xhr) => {
+                        if (xhr.status === 204) {
+                            requiredSweetAlert('Update Profile!', 'You need to edit your profile before applying for mission!', editProfileLink, 'Update Profile');
+                            return;
+                        }
+
+                        displayActionMessageSweetAlert('Applied!', 'Admin will review your application for mission.', 'success');
+                        createCancelButton();
+                        buttonCancelEvent();
+                    },
+                    error: ajaxErrorSweetAlert
+                });
+            }
+        })
+    });
+}
+
+
+function createCancelButton() {
+    $(btnContainer).empty();
+    var button = document.createElement("button");
+    button.setAttribute("class", "my-2 my-md-3 mx-auto");
+    button.setAttribute("id", "btn-msn-cancel");
+    button.setAttribute("data-missionid", missionId);
+    button.innerHTML = "Cancel Application <img src='/assets/cancel-application.svg' alt='Cancel' height='15px' width='19px'>";
+
+    // Append the button to a container element
+    btnContainer.append(button);
+}
+
+function createApplyButton() {
+    $(btnContainer).empty();
+    var button = document.createElement("button");
+    button.setAttribute("class", "my-2 my-md-3 mx-auto btn-g-orange");
+    button.setAttribute("id", "btn-msn-apply");
+    button.setAttribute("data-missionid", missionId);
+    button.innerHTML = "Apply Now <img src='/assets/right-arrow.png' alt='Right Arrow'>";
+
+    // Append the button to a container element
+    btnContainer.append(button);
+}
+
 

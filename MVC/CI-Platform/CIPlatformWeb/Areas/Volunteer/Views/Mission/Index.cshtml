@@ -29,6 +29,8 @@
     var volunteerCount = Model.RecentVolunteers.LongCount();
 
     var mediaCount = Model.MissionMedias?.LongCount();
+
+    var editProfileLink = Url.Action("Index", "User", new { id = userId });
 }
 <header>  
 <partial name="_Navbar"></partial>
@@ -48,10 +50,11 @@
     @Html.HiddenFor( model => isCommentExists, new { id="isCommentExists" } )
     @Html.HiddenFor(model => totalVolunteers, new { id = "total-volunteer-count" })
     @Html.HiddenFor( model => mediaCount, new { id="msn-media-count" })
+    @Html.HiddenFor(model => editProfileLink, new { id="editProfileUrl" })
     <!-- Mission Front Section Begin -->
     <section class="container d-flex flex-column flex-lg-row">
-        <div class="d-flex flex-column gap-2 flex-basis">
-            <img src="@Model.ThumbnailUrl" alt="Mission Thumbnail" id="mission-hero-img" class="h-70">
+        <div class="d-flex flex-column gap-2 flex-basis my-auto">
+            <img src="@Model.ThumbnailUrl" alt="Mission Thumbnail" id="mission-hero-img" class="object-fit-cover">
             
             <div class="position-relative" id="msn-media-carousel">
                 <div class="overflow-auto d-flex gap-1 w-100 slider">
@@ -244,25 +247,36 @@
                 </div>
             </div>
             <!-- Mission Information End  -->
+            <div id="btnContainer">
             @if (userId != 0 && Model.ApplicationListId.Any(application => application == userId))
             {
-                <button class="btn bg-orange px-4 py-2 my-2 my-md-3 mx-auto rounded-pill cursor-pointer">
-                    View Timesheet
-                </button>
+                <a asp-controller="User" asp-action="VolunteerTimesheet" asp-route-id="@userId" class="mx-auto">
+                    <button class="btn bg-orange px-4 py-2 my-2 my-md-3 rounded-pill cursor-pointer">
+                        View Timesheet
+                    </button>
+                </a>
             }
             else if( Model.Status == MissionStatus.FINISHED )
             {
-                <p class="my-2 my-md-3 mx-auto bg-danger px-4 py-2 rounded-pill">
+                <p class="my-2 my-md-3 mx-auto bg-danger px-4 py-2 rounded-pill mx-content">
                     Mission Closed
                 </p>   
             }
+            else if (userId != 0 && Model.ApplicationList.Any(id => id == userId))
+            {
+                <button class="my-2 my-md-3 mx-auto" id="btn-msn-cancel" data-missionid ="@Model.MissionId">
+                    Cancel Application
+                    <img src="~/assets/cancel-application.svg" alt="Cancel" height="15px" width="19px">
+                </button>
+            }
             else
             {
-                <button class="my-2 my-md-3 mx-auto btn-g-orange" id="btn-msn-apply">
+                <button class="my-2 my-md-3 mx-auto btn-g-orange" id="btn-msn-apply" data-missionid="@Model.MissionId">
                     Apply Now
                     <img src="~/assets/right-arrow.png" alt="Right Arrow">
                 </button>
             }
+            </div>
         </div>
     </section>
     <!-- Mission Front Section End  -->
@@ -445,7 +459,7 @@
 </main>
 @section Scripts 
 {
+    <script src="~/js/site.js"></script>
     <script src="~/js/mission-page-carousel-tab.js"></script>
     <script src="~/js/mission-details-ajax.js"></script>
-    <script src="~/js/site.js"></script>
 }

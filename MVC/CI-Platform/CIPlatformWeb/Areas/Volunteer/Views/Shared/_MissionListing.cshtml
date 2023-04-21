@@ -17,15 +17,15 @@
             <article class="card h-100 flex-nowrap">
                 <div class="position-relative">
                     <img src='@mission.ThumbnailUrl'
-                     alt="Mission Image" class="w-100 msn-card-img">
+                     alt="Mission Image" class="w-100 msn-card-img object-fit-cover">
 
-                    @if (mission.RegistrationDeadline < currentDateTime || mission.EndDate < currentDateTime || mission.GoalAchieved >= mission.GoalValue)
+                    @if (mission.Status == MissionStatus.FINISHED || mission.RegistrationDeadline < currentDateTime || mission.EndDate < currentDateTime || mission.GoalAchieved >= mission.GoalValue)
                     {
                         <div class="msn-status-closed">
                             Closed
                         </div>
                     }
-                    @if (mission.ApprovedApplicationList.Contains(userId))
+                    @if (mission.ApplicationListId.Contains(userId))
                     {
                         <div class="msn-status-applied">
                             Applied
@@ -57,9 +57,9 @@
 
 
                 <div class="d-flex flex-column mt-n1 mb-3">
-                    <h3 class="mt-0 px-4">
+                    <a class= "mt-0 px-4 text-black-1 h3" asp-action="Index" asp-route-id="@mission.MissionId" asp-controller="Mission">
                         @mission.Title
-                    </h3>
+                    </a>
                     @if (mission.Status == MissionStatus.ONGOING)
                     {
                         <p class="mission-desc-ellips px-4">
@@ -181,10 +181,27 @@
                 </div>
                 @if (mission.Status == MissionStatus.ONGOING && userId != 0L)
                 {
-                    <a class="my-2 my-md-3 mx-auto btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
-                        Apply
-                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
-                    </a>
+                    @if (mission.ApprovedApplicationList.Any(id => id == userId))
+                    {
+                        <a class="my-2 my-md-3 mx-auto btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
+                            View Details
+                            <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                        </a>
+                    }
+                    else if (mission.ApplicationListId.Any(id => id == userId))
+                    {
+                        <a class="my-2 my-md-3 mx-auto btn-g-orange btn-app-cancel text-danger" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
+                            Cancel Application
+                            <img src = "~/assets/cancel-application.svg" height="15px" width="19px" alt="Cancel Application"/>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="my-2 my-md-3 mx-auto btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
+                            Apply
+                            <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                        </a>
+                    }
                 }
                 else
                 {

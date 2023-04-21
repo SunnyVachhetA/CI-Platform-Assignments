@@ -3,6 +3,7 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using CIPlatform.Services.Utilities;
 
 namespace CIPlatform.Services.Service;
 public class MissionApplicationService : IMissionApplicationService
@@ -80,5 +81,72 @@ public class MissionApplicationService : IMissionApplicationService
                     MissionType = application.Mission.MissionType ? MissionTypeEnum.TIME : MissionTypeEnum.GOAL
                 });
         return userMissionList;
+    }
+
+    public void DeleteMissionApplication(long missionId, long userId)
+    {
+        int result = unitOfWork.MissionApplicationRepo.DeleteMissionApplication(missionId, userId);
+        if (result == 0) throw new Exception("Something went wrong during delete mission application !");
+    }
+
+    public void SaveApplication(long missionId, long userId)
+    {
+        MissionApplication application = new()
+        {
+            MissionId = missionId,
+            UserId = userId,
+            CreatedAt = DateTimeOffset.Now,
+            AppliedAt = DateTimeOffset.Now,
+            ApprovalStatus = 0
+        };
+
+        unitOfWork.MissionApplicationRepo.Add(application);
+        unitOfWork.Save();
+    }
+
+    public IEnumerable<MissionApplicationVM> LoadApplications()
+    {
+        IEnumerable<MissionApplication> applications = unitOfWork.MissionApplicationRepo.LoadAllApplications();
+
+        return
+            applications
+                .Select(ConvertToApplicationVM);
+    }
+
+    public void UpdateApplicationStatus(long id, byte status)
+    {
+        int result = unitOfWork.MissionApplicationRepo.UpdateApplicationStatus(id, status);
+        if (result == 0) throw new Exception("Application status could not be changed!");
+    }
+
+    public IEnumerable<MissionApplicationVM> SearchApplication(string searchKey)
+    {
+        if (string.IsNullOrWhiteSpace(searchKey) || string.IsNullOrEmpty(searchKey))
+            return LoadApplications();
+
+        Func<MissionApplication, bool> filter = app => app.Mission.Title!.ContainsCaseInsensitive(searchKey) ||
+                                                       app.User.FirstName.ContainsCaseInsensitive(searchKey) ||
+                                                       app.User.LastName.ContainsCaseInsensitive(searchKey); 
+        IEnumerable<MissionApplication> applications = unitOfWork.MissionApplicationRepo.LoadApplications(filter);
+
+        return
+            applications
+                .Select(ConvertToApplicationVM);
+    }
+
+
+    private static MissionApplicationVM ConvertToApplicationVM(MissionApplication app)
+    {
+        MissionApplicationVM vm = new()
+        {
+            MissionId = app.MissionId,
+            UserId = app.UserId,
+            ApplicationId = app.MissionApplicationId,
+            ApprovalStatus = (ApprovalStatus) (app.ApprovalStatus ?? 0),
+            AppliedAt = app.AppliedAt,
+            MissionTitle = app.Mission.Title?? string.Empty,
+            UserName = $"{app.User.FirstName} {app.User.LastName}"
+        };
+        return vm;
     }
 }

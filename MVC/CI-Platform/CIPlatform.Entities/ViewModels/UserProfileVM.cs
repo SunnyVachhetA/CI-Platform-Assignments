@@ -46,6 +46,7 @@ public class UserProfileVM
     public string? LinkedInUrl { get; set; }
 
     [Display(Name="Phone Number")]
+    [Required(ErrorMessage = "Please enter phone number!")]
     [RegularExpression("^[0-9]{10}$", ErrorMessage = "Phone number should contains only numbers!")]
     public string? PhoneNumber { get; set; }
 

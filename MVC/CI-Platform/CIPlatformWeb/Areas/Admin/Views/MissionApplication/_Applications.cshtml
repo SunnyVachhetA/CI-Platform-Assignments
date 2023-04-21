@@ -1,0 +1,77 @@
+﻿@model IEnumerable<MissionApplicationVM>
+
+<div class="border-bottom mb-2">
+    <div class="border-bottom-1 mx-content pb-2 font-30">
+        Mission Applications
+    </div>
+</div>
+<div class="mt-4">
+    <div class="border mx-content py-1 px-3 d-flex align-items-center" id="admin-search-container">
+        <img src="~/assets/search.png" alt="Search Here" height="20px" width="20px">
+        <input type="text" name="Search" id="msn-app-search" placeholder="Search here" class="border-0 ms-2 form-control timesheet-search">
+
+        <div class="spinner-border opacity-0 spinner-control" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4 table-responsive admin-table">
+    @if (!Model.Any())
+    {
+        <p class="text-info-message p-2 mx-content mx-auto">There are no CMS pages at the moment</p>
+        @*<button class="btn-g-orange mx-auto" id = "btn-load-users">Load All CMS Pages</button>*@
+    }
+    else
+    {
+        <table class="table border">
+            <thead>
+                <tr>
+                    <th>Mission Title</th>
+                    <th>Mission ID</th>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Applied Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var application in Model)
+                {
+                    <tr>
+                        <td>
+                            @application.MissionTitle
+                        </td>
+                        <td>
+                            @application.MissionId
+                        </td>
+                        <td>
+                            @application.UserId
+                        </td>
+                        <td>
+                            @application.UserName
+                        </td>
+                        <td>
+                            @application.AppliedAt.ToString("d")
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2 flex-wrap justify-content-center align-items-center">
+                                <button class="cursor-pointer btn-user-view font-13 bg-transparent px-2 text-center">View</button>
+                                
+                                @if (application.ApprovalStatus == ApprovalStatus.PENDING)
+                                {
+                                    <img class="cursor-pointer app-approve" data-appid="@application.ApplicationId" src="~/assets/check-mark.svg" alt="Approve" height="19px" width="18px">
+                                    <img class="cursor-pointer app-decline" data-appid="@application.ApplicationId" src="~/assets/x-circle.svg" alt="Decline" height="19px" width="18px">
+                                }
+                                
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+</div>
