@@ -49,7 +49,7 @@ public class ServiceUnit: IServiceUnit
     public ServiceUnit(IUnitOfWork unitOfWork, IEmailService emailService)
 	{
 		_unitOfWork= unitOfWork;
-		UserService = new UserService(_unitOfWork);
+		UserService = new UserService(_unitOfWork, emailService);
 		PasswordResetService = new PasswordResetService(_unitOfWork);
 		CountryService = new CountryService(_unitOfWork);
 		CityService = new CityService(_unitOfWork);

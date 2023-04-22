@@ -23,4 +23,6 @@ public interface IUserService
     void GenerateEmailVerificationToken(UserRegistrationVM user, string href, IEmailService emailService);
     void SetUserStatusToActive(string email);
     bool CheckUserDetailsFilled(long userId);
+    bool CheckIsEmailUnique(string email);
+    Task AddUserByAdmin(AdminUserInfoVM user, string rootPath, string link, string token);
 }

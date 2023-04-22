@@ -198,4 +198,33 @@ public static class MailMessageFormatUtility
 
         return CreateEmailBody(bodySection);
     }
+
+    public static string GenerateAccountCreationMail(string userName, string email, string password, string link)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Account Creation Notification on CI Platform | Admin</h1>
+                </div>
+                <div class='body'>
+                    
+                    <h3>{userName} have been successfully registered on CI Platform.</h3>
+                    <p>Your Credentials:</p>
+                    <br>
+                    <p>Email ID: <b>{email}</b><p>
+                    <p>Password: <b>{password}</b></p>
+                    <span>(Please change your password after login!)</span>
+                    <br>
+                    <a href='{link}' class='button'><button>Login Here(Activate Your Account)</button></a>
+                    <br>
+                    <p>We are looking forward to work with you!</p>
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
 }   

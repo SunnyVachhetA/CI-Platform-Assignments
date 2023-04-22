@@ -73,6 +73,28 @@ public class StoreMediaService
         return media;
     }
 
+    public static async Task<MediaVM> StoreMediaToWwwRootAsync(string wwwRoot, string path, IFormFile file)
+    {
+        var uploadDir = Path.Combine(wwwRoot, path);
+
+        string fileName = Guid.NewGuid().ToString();
+        string extension = Path.GetExtension(file.FileName);
+
+        using (var fileStream = new FileStream(Path.Combine(uploadDir, fileName + extension), FileMode.Create))
+        {
+            await file.CopyToAsync(fileStream);
+        }
+
+        MediaVM media = new()
+        {
+            Type = extension,
+            Name = fileName,
+            Path = $@"\{path}\"
+        };
+
+        return media;
+    }
+
     public static void DeleteFileFromWebRoot(string filePath)
     {
         if (Exists(filePath))

@@ -207,21 +207,135 @@ function changeMenu(menu, imgSrc) {
 
 //Ajax and other important js 
         loadUsersAjax();
+function registerCityAndCountryEvent() {
+    $('#country-menu option').click
+        (
+            () => {
+                let countryId = $('#country-menu').find(':selected').val();
+                handleCityDisplayOption(countryId);
+            }
+        );
 
+    let cityList = $('[data-countryid]')
+    function handleCityDisplayOption(countryId) {
+
+        if ($('#city-menu').find(':selected').data('countryid') != countryId) {
+            $('#city-menu option[value=""]').prop('selected', true);
+        }
+
+        $.each(cityList, (_, item) => {
+            let id = $(item).data('countryid');
+
+            if (countryId === undefined) return;
+
+            if (id == countryId)
+                $(item).show();
+            else
+                $(item).hide();
+        });
+    }
+
+}
 
 function loadUsersOnDOM(result) {
     $('#admin-menu-content').html(result);
     createPagination(5);
-    //updateSidebarHeight();
     registerUserDeleteAndRestoreClickEvents();
     registerUserSearchEvent();
-    //registerAllUsersButton();
     $('#usr-search').val(searchText);
+    $('#btn-user-add').click(handleUserAdd);
+}
+function showSpinner() {
+    $("#spinner").removeClass('d-none');
+}
+function registerImagePreview() {
+    const imgUpload = document.querySelector('#usr-profile-upload');
+    const profileImgContainer = document.querySelector('#user-img-preview');
+
+    imgUpload.addEventListener('change', () => {
+        const file = imgUpload.files[0];
+        const src = URL.createObjectURL(file);
+        const img = $('<img>', { src: src, height: '100px', width: '100px', class: 'object-fit-cover' });
+        $(profileImgContainer).empty().append(img);
+    });
+}
+function hideSpinner() {
+    $("#spinner").addClass('d-none');
 }
 
-function registerAllUsersButton() {
-    $('#btn-load-users').click(() => { $('#usr-search').val(''); loadUsersAjax(); });
+function handleUserAdd() {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/User/Add',
+        success: (result) => {
+            $(adminMenuContent).html(result);
+            registerUserFormSubmit();
+            registerImagePreview();
+            registerCityAndCountryEvent();
+        },
+        error: ajaxErrorSweetAlert
+    });
 }
+
+function registerUserFormSubmit() {
+    $('#btn-cancel').click(loadUsersAjax);
+    handleUserFormSubmitEvent('#form-add-user', 'POST', '/Admin/User/Add', 'User successfully added!', loadUsersAjax);
+}
+
+function CheckIsEmailUnique(email) {
+    let isEmailUnique = false;
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: '/Admin/User/CheckIsEmailUnique',
+        data: { email },
+        success: (result) => {
+            isEmailUnique = result;
+        },
+        error: ajaxErrorSweetAlert
+    });
+    return isEmailUnique;
+}
+
+function handleUserFormSubmitEvent(form, type, url, message, cb) {
+    $(form).on('submit', e => {
+        e.preventDefault();
+
+        $(form).valid();
+
+        if (!$(form).valid()) return;
+
+        const formData = new FormData($(form)[0]);
+      
+        let email = formData.get('Email');
+        let isUnique = CheckIsEmailUnique(email);
+
+        if (!isUnique) {
+            $('#err-email').text('Email is Already registered!').show();
+            return;
+        }
+
+        $.ajax({
+            type: type,
+            url: url,
+            beforeSend: function () {
+                showSpinner();
+            },
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (_, __, xhr) => {
+                successMessageSweetAlert(message);
+                cb();
+            },
+            error: ajaxErrorSweetAlert,
+            complete: function () {
+                hideSpinner();
+            }
+        });
+    });
+}
+
 
 const searchUserWithDebounceAjax = debounce(
     (searchText) => {
@@ -1378,7 +1492,6 @@ function handleBannerFormSubmit(form, type, url, message) {
             },
             error: ajaxErrorSweetAlert
         });
-
     });
 
 }

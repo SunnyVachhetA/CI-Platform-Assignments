@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
+using System.Threading.Tasks;
 
 namespace CIPlatform.DataAccessLayer.Repository.IRepository;
 public interface IUnitOfWork
@@ -38,4 +39,6 @@ public interface IUnitOfWork
     void Save();
 
     Task<IDbContextTransaction> BeginTransactionAsync();
+
+    Task<int> SaveAsync();
 }

@@ -10,10 +10,11 @@ namespace CIPlatform.Services.Service;
 public class UserService: IUserService
 {
     private readonly IUnitOfWork _unitOfWork;
-
-	public UserService( IUnitOfWork unitOfWork)
+    private readonly IEmailService _emailService;
+	public UserService(IUnitOfWork unitOfWork, IEmailService emailService)
 	{
 		_unitOfWork = unitOfWork;
+        _emailService = emailService;
 	}
 
     public void Add(UserRegistrationVM user)
@@ -297,5 +298,68 @@ public class UserService: IUserService
         if (user == null) throw new Exception("User not found with ID: " + userId);
 
         return user.CityId.HasValue;
+    }
+
+    public bool CheckIsEmailUnique(string email) => 
+        _unitOfWork.UserRepo.GetAll().FirstOrDefault(user => user.Email.EqualsIgnoreCase(email) ) == null;
+
+    public async Task AddUserByAdmin(AdminUserInfoVM user, string wwwRootPath, string link, string token)
+    {
+        using (var transaction = await _unitOfWork.BeginTransactionAsync())
+        {
+            try
+            {
+                var entity = user.UserAvatar == null
+                    ? ConvertAdminUserVMToUser(user)
+                    : await AddUserAvatarAsync(wwwRootPath, user);
+                _unitOfWork.UserRepo.Add(entity);
+                _unitOfWork.VerifyEmailRepo.Add( new VerifyEmail() { Email= entity.Email, Token = token});
+                await SendUserAccountCreationEmailByAdmin(user, link);
+                await _unitOfWork.SaveAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error occured duing saving user [service]: " + ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+    }
+
+    private async Task<User> AddUserAvatarAsync(string wwwRootPath, AdminUserInfoVM user)
+    {
+        MediaVM media = await StoreMediaService.StoreMediaToWwwRootAsync(wwwRootPath, @"images\user", user.UserAvatar!);
+        user.Avatar = $"{media.Path}{media.Name}{media.Type}";
+        return ConvertAdminUserVMToUser(user);
+    }
+
+    private async Task SendUserAccountCreationEmailByAdmin(AdminUserInfoVM user, string link)
+    {
+        string subject = "Your account has been created Admin | CI Platform";
+        string message = MailMessageFormatUtility.GenerateAccountCreationMail($"{user.FirstName} {user.LastName}", user.Email.ToLower().Trim(), user.Password, link);
+        await _emailService.EmailSendAsync(user.Email.Trim().ToLower(), subject, message);
+    }
+    private static User ConvertAdminUserVMToUser(AdminUserInfoVM user)
+    {
+        User entity = new()
+        {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email.Trim().ToLower(),
+            Password = EncryptionService.EncryptAES(user.Password),
+            Avatar = string.IsNullOrEmpty(user.Avatar) ?  "\\images\\static\\anon-profile.png" : user.Avatar,
+            ProfileText = user.Profile,
+            EmployeeId = user.EmployeeId,
+            Department = user.Department,
+            Title = user.Title,
+            CityId = user.CityId,
+            CountryId = user.CountryId,
+            Status = user.Status,
+            CreatedAt = DateTimeOffset.Now,
+            PhoneNumber = user.PhoneNumber?? string.Empty
+        };
+        return entity;
     }
 }
