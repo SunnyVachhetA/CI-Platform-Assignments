@@ -328,6 +328,7 @@ public class UserService: IUserService
         }
     }
 
+
     private async Task<User> AddUserAvatarAsync(string wwwRootPath, AdminUserInfoVM user)
     {
         MediaVM media = await StoreMediaService.StoreMediaToWwwRootAsync(wwwRootPath, @"images\user", user.UserAvatar!);
@@ -361,5 +362,72 @@ public class UserService: IUserService
             PhoneNumber = user.PhoneNumber?? string.Empty
         };
         return entity;
+    }
+    public AdminUserInfoVM LoadUserProfileEdit(long id)
+    {
+        var user = _unitOfWork.UserRepo.GetFirstOrDefault(user => user.UserId == id);
+        if (user == null) throw new Exception("User not found with ID: " + id);
+        return ConvertUserToAdminUserVM(user);
+    }
+
+    public async Task UpdateUserByAdmin(AdminUserInfoVM user, string wwwRootPath)
+    {
+        var entity = _unitOfWork.UserRepo.GetFirstOrDefault(entity => entity.UserId == user.UserId);
+        if (entity == null) throw new Exception("User details not found: " + user.UserId);
+
+        string avatar = await GetUpdatedMediaPath(user.UserAvatar, user.Avatar, @"images\user", wwwRootPath);
+
+        entity.Avatar = avatar;
+        entity.FirstName = user.FirstName;
+        entity.LastName = user.LastName;
+        entity.Status = user.Status;
+        entity.CityId = user.CityId;
+        entity.CountryId = user.CountryId;
+        entity.EmployeeId = user.EmployeeId;
+        entity.ProfileText = user.Profile;
+        entity.UpdatedAt = DateTimeOffset.Now;
+        entity.PhoneNumber = user.PhoneNumber?? string.Empty;
+        entity.Department = user.Department;
+
+        _unitOfWork.UserRepo.Update(entity);
+        _unitOfWork.Save();
+    }
+
+    private static async Task<string> GetUpdatedMediaPath(IFormFile? file, string avatar, string path, string webRootPath)
+    {
+        if (file == null) return avatar;
+
+        string existingFile = Path.GetFileName(avatar);
+        string newFile = Path.GetFileName(file.FileName);
+
+        if (existingFile.EqualsIgnoreCase(newFile)) return avatar;
+        
+
+        string directoryPath = $@"{webRootPath}\{path}\";
+        if(!existingFile.EqualsIgnoreCase("anon-profile.png"))
+            StoreMediaService.DeleteFileFromWebRoot(Path.Combine(directoryPath, existingFile));
+
+        MediaVM media = await StoreMediaService.StoreMediaToWwwRootAsync(webRootPath, path, file);
+        return $"{media.Path}{media.Name}{media.Type}";
+    }
+
+    private static AdminUserInfoVM ConvertUserToAdminUserVM(User user)
+    {
+        AdminUserInfoVM vm = new()
+        {
+            UserId = user.UserId,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            EmployeeId = user.EmployeeId,
+            Department = user.Department,
+            Avatar = user.Avatar?? "\\images\\static\\anon-profile.png",
+            CityId = user.CityId?? 0,
+            CountryId = user.CountryId ?? 0,
+            Profile = user.ProfileText?? string.Empty,
+            Status = user.Status?? false
+        };
+        return vm;
     }
 }

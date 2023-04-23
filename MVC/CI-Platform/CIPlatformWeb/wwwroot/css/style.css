@@ -1241,3 +1241,7 @@ form-subtitle,
     z-index: 9999;
     display: none; /* hide spinner by default */
 }
+.admin-form #usr-profile-img {
+    height: 150px;
+    width: 150px;
+}

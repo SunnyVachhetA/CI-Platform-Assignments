@@ -119,4 +119,40 @@ public class UserController : Controller
 
     [HttpGet]
     public bool CheckIsEmailUnique(string email) => _serviceUnit.UserService.CheckIsEmailUnique(email.Trim());
+
+    [HttpGet]
+    public IActionResult Edit(long id)
+    {
+        try
+        {
+            AdminUserInfoVM user = _serviceUnit.UserService.LoadUserProfileEdit(id);
+            user.CityList = _serviceUnit.CityService.GetAllCities();
+            user.CountryList = _serviceUnit.CountryService.GetAllCountry();
+            return PartialView("_EditUser", user);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error during user GET edit: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
+
+    [HttpPut]
+    public async Task<IActionResult> Edit(AdminUserInfoVM user)
+    {
+        try
+        {
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            await _serviceUnit.UserService.UpdateUserByAdmin(user, wwwRootPath);
+            return Ok(200);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error during user POST edit: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
 }

@@ -208,7 +208,7 @@ function changeMenu(menu, imgSrc) {
 //Ajax and other important js 
         loadUsersAjax();
 function registerCityAndCountryEvent() {
-    $('#country-menu option').click
+    $('#country-menu').change
         (
             () => {
                 let countryId = $('#country-menu').find(':selected').val();
@@ -279,7 +279,7 @@ function handleUserAdd() {
 
 function registerUserFormSubmit() {
     $('#btn-cancel').click(loadUsersAjax);
-    handleUserFormSubmitEvent('#form-add-user', 'POST', '/Admin/User/Add', 'User successfully added!', loadUsersAjax);
+    handleUserFormSubmitEvent('#form-add-user', 'POST', '/Admin/User/Add', 'User successfully added!', loadUsersAjax, true);
 }
 
 function CheckIsEmailUnique(email) {
@@ -297,7 +297,7 @@ function CheckIsEmailUnique(email) {
     return isEmailUnique;
 }
 
-function handleUserFormSubmitEvent(form, type, url, message, cb) {
+function handleUserFormSubmitEvent(form, type, url, message, cb, checkEmail) {
     $(form).on('submit', e => {
         e.preventDefault();
 
@@ -306,13 +306,15 @@ function handleUserFormSubmitEvent(form, type, url, message, cb) {
         if (!$(form).valid()) return;
 
         const formData = new FormData($(form)[0]);
-      
-        let email = formData.get('Email');
-        let isUnique = CheckIsEmailUnique(email);
 
-        if (!isUnique) {
-            $('#err-email').text('Email is Already registered!').show();
-            return;
+        if (checkEmail) {
+            let email = formData.get('Email');
+            let isUnique = CheckIsEmailUnique(email);
+
+            if (!isUnique) {
+                $('#err-email').text('Email is Already registered!').show();
+                return;
+            }
         }
 
         $.ajax({
@@ -324,6 +326,7 @@ function handleUserFormSubmitEvent(form, type, url, message, cb) {
             data: formData,
             processData: false,
             contentType: false,
+            ,
             success: (_, __, xhr) => {
                 successMessageSweetAlert(message);
                 cb();
@@ -386,46 +389,56 @@ function loadUsersAjax() {
 
 function registerUserDeleteAndRestoreClickEvents() {
     $('.tbl-user .usr-delete').each((_, item) => {
-
         $(item).click(() => {
             let userId = $(item).data('userid');
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You can change user status anytime!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#f88634',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'De-Activate User Account'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    handleUserDeleteAjax(userId);
-                }
-            })
+            genericSweetPromptId("You can change user status anytime!", "De-Activate User Account", handleUserDeleteAjax, userId);
         });
-
     })
 
     $('.tbl-user .usr-restore').each((_, item) => {
-        
         $(item).click(() => {
             let userId = $(item).data('userid');
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You can change user status anytime!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#f88634',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Activate User Account'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    handleUserRestoreAjax(userId);
-                }
-            })
+            genericSweetPromptId("You can change user status anytime!", 'Activate User Account', handleUserRestoreAjax, userId);
         });
-
     });
+
+    $('.usr-edit').each((_, item) => {
+        $(item).click(() => {
+            let userId = $(item).data('userid');
+            handleUserEdit(userId);
+        });
+    })
+}
+
+function handleUserEdit(id) {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/User/Edit',
+        data: { id },
+        success: (result) => {
+            $(adminMenuContent).html(result);
+            $('#btn-cancel').click(loadUsersAjax);
+            editUserProfileImage();
+            handleUserFormSubmitEvent('#form-edit-user', 'PUT', '/Admin/User/Edit', 'User profile updated successfully!', loadUsersAjax, false);
+            registerCityAndCountryEvent();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function editUserProfileImage() {
+    const imgUpload = document.querySelector('#usr-profile-upload');
+    const profileImg = document.querySelector('#usr-profile-img');
+    profileImg.src = $('#user-avatar').val();
+    imgUpload.addEventListener
+        (
+            'change',
+            () => {
+                const file = imgUpload.files[0];
+
+                profileImg.src = URL.createObjectURL(file);
+            }
+        );
 }
 
 function handleUserDeleteAjax(userId) {
