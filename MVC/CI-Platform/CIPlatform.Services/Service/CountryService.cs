@@ -23,6 +23,14 @@ public class CountryService: ICountryService
         return listVm;
     }
 
+    public async Task<IEnumerable<CountryVM>> GetAllCountriesAsync()
+    {
+        var result = await _unitOfWork.CountryRepo.GetAllAsync();
+        return
+            result
+                .Select(ConvertCountryToViewModel);
+    }
+
     public CountryVM ConvertCountryToViewModel(Country country)
     {
         CountryVM countryVM = new()

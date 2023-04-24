@@ -86,6 +86,17 @@ public class ThemeService : IThemeService
         if (numOfRow == 0) throw new Exception("Something went during theme status update");
     }
 
+    public async Task<IEnumerable<ThemeVM>> GetAllThemesAsync()
+    {
+        Func<MissionTheme, bool> filter = theme => theme.Status?? false;
+        var result = await _unitOfWork.ThemeRepo.GetAllAsync();
+
+        return
+            result
+                .Where(filter)
+                .Select(ConvertThemeToViewModel);
+    }
+
     public ThemeVM ConvertThemeToViewModel(MissionTheme theme)
     {
         ThemeVM themeVm = new()

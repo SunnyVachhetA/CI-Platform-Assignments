@@ -4,15 +4,21 @@ using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
 using CIPlatform.Services.Utilities;
-using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.Services.Service;
 public class MissionService : IMissionService
 {
     private IUnitOfWork unitOfWork;
-    public MissionService(IUnitOfWork unitOfWork)
+    private readonly IMissionMediaService _missionMediaService;
+    private readonly IMissionDocumentService _missionDocumentService;
+    private readonly IMissionSkillService _missionSkillService;
+    public MissionService(IUnitOfWork unitOfWork, IMissionMediaService missionMediaService,
+        IMissionDocumentService missionDocumentService, IMissionSkillService missionSkillService)
     {
         this.unitOfWork = unitOfWork;
+        _missionMediaService = missionMediaService;
+        _missionDocumentService = missionDocumentService;
+        _missionSkillService = missionSkillService;
     }
     
 
@@ -86,8 +92,8 @@ public class MissionService : IMissionService
                             new MissionDocumentVM
                             {
                                 DocumentId = document.MissionDocumentId,
-                                DocumentPath = GetDocumentPath( document ),
-                                Title = $"{document.DocumentName}.{document.DocumentType}"
+                                Path = GetDocumentPath( document ),
+                                Title = $"{document.DocumentTitle}.{document.DocumentType}"
                             }
                     );
         return result.ToList();
@@ -351,6 +357,57 @@ public class MissionService : IMissionService
                 .Select(ConvertToMissionAdminVM);
     }
 
+    public async Task CreateTimeMission(TimeMissionVM mission, string wwwRootPath)
+    {
+        using (var transaction = await unitOfWork.BeginTransactionAsync())
+        {
+            try
+            {
+                Mission entity = ConvertTimeVMToMission(mission);
+                await unitOfWork.MissionRepo.AddAsync(entity);
+                await unitOfWork.SaveAsync();
+
+                await _missionSkillService.SaveMissionSkills(mission.Skills, entity.MissionId);
+                await _missionMediaService.StoreMissionMedia(mission.Images, wwwRootPath, entity.MissionId);
+                await _missionDocumentService.StoreMissionDocument(mission.Documents!, wwwRootPath, entity.MissionId);
+                await transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error while creating mission: " + e.Message);
+                Console.WriteLine(e.StackTrace);
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+        
+    }
+
+    public Mission ConvertTimeVMToMission(TimeMissionVM mission)
+    {
+        Mission entity = new()
+        {
+            ThemeId = mission.ThemeId,
+            CountryId = mission.CountryId,
+            CityId = mission.CityId,
+            Title = mission.Title,
+            ShortDescription = mission.ShortDescription,
+            StartDate = mission.StartDate,
+            EndDate = mission.EndDate,
+            MissionType = true,
+            IsActive = mission.IsActive,
+            OrganizationName = mission.OrganizationName,
+            OrganizationDetail = mission.OrganizationDetail,
+            Availability = (byte)mission.Availability,
+            TotalSeat = mission.TotalSeats,
+            RegistrationDeadline = mission.RegistrationDeadline,
+            CreatedAt = DateTimeOffset.Now,
+            Description = mission.Description
+        };
+
+        return entity;
+    }
+
     private static AdminMissionVM ConvertToMissionAdminVM(Mission mission)
     {
         AdminMissionVM vm = new()
@@ -359,47 +416,9 @@ public class MissionService : IMissionService
             StartDate = mission.StartDate,
             EndDate = mission.EndDate,
             Title = mission.Title?? string.Empty,
-            MissionType = (MissionTypeEnum) ( mission.MissionType ? 1 : 0)
+            MissionType = (MissionTypeEnum) ( mission.MissionType ? 1 : 0),
+            IsActive = mission.IsActive?? true
         };
         return vm;
     }
 }
-/*
- * MissionCardVM missionCard = new()
-        {
-            MissionId = mission.MissionId,
-            ThemeId = mission.ThemeId,
-            ThemeName = mission.Theme?.Title,
-            Title = mission.Title,
-            ShortDescription = mission.ShortDescription,
-            Description = mission.Description,
-            StartDate = mission.StartDate,
-            EndDate = mission.EndDate,
-            MissionType = mission.MissionType! ? MissionTypeEnum.TIME : MissionTypeEnum.GOAL,
-            OrganizationDetails = mission.OrganizationDetail,
-            Status = (bool)mission.Status ? MissionStatus.ONGOING : MissionStatus.FINISHED,
-            OrganizationName = mission.OrganizationName,
-            TotalSeat = mission.TotalSeat,
-            NumberOfVolunteer = mission.MissionApplications?.Where(application => application.ApprovalStatus == 1).LongCount(),
-            SeatLeft = mission?.TotalSeat - mission?.MissionApplications.LongCount(),
-            RegistrationDeadline = mission?.RegistrationDeadline,
-            Rating = mission?.Rating,
-            CityId = mission?.CityId,
-            CityName = mission?.City?.Name,
-            CountryId = mission.CountryId,
-            SkillId = mission.MissionSkills.Select(skill => skill.SkillId).ToList(),
-            Skills = (List<string>)mission.MissionSkills.Select(skill => skill?.Skill?.Name).ToList(),
-            ThumbnailUrl = GetThumbnailUrl(mission.MissionMedia.FirstOrDefault(media => media.Default)),
-            MissionMedias = mission.MissionMedia?.Select(media => GetThumbnailUrl(media)).ToList(),
-            FavrouriteMissionsId = mission.FavouriteMissions?.Select(fav => fav.UserId).ToList(),
-            GoalValue = mission.GoalMissions?.FirstOrDefault(msnGoal => msnGoal.GoalValue != 0)?.GoalValue,
-            GoalText = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalObjectiveText != null)?.GoalObjectiveText,
-            GoalAchieved = mission?.GoalMissions?.FirstOrDefault(goal => goal.GoalAchived != null)?.GoalAchived,
-            ApplicationListId = mission.MissionApplications?.Where(application => application.ApprovalStatus == 1).Select(application => (long)application?.UserId).ToList(),
-            MissionRating = MissionRatingService.ConvertMissionToRatingVM(mission),
-            MissionAvailability = SetMissionAvailability(mission.Availability),
-            CommentList = mission.Comments?.Select(comment => comment.UserId).ToList(),
-            RecentVolunteers = GetRecentVolunteers(mission),
-            MissionDocuments = GetMissionDocuments( mission.MissionDocuments )
-        };
- */

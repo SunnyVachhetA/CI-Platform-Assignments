@@ -3,7 +3,7 @@
 namespace CIPlatform.Entities.VMConstants;
 public enum MissionStatus
 {
-    [Display(Name="ONGOING")]
+    [Display(Name="Ongoing")]
     ONGOING,
     [Display(Name="Finished")]
     FINISHED

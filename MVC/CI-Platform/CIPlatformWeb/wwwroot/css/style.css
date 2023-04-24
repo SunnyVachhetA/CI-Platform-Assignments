@@ -803,16 +803,16 @@ form-subtitle,
     margin-bottom: 0.3rem;
 }
 
-.story-form .form-control-file {
+.story-form .form-control-file, .admin-form .form-control-file {
     border: 1px dotted var(--col-black);
 }
 
-.story-form .form-group .upload-img {
+.story-form .form-group .upload-img, .admin-form .upload-img {
     height: 6.25rem;
     width: 6.25rem;
 }
 
-.story-form .form-group .uploaded-files .btn-cancel {
+.story-form .form-group .uploaded-files .btn-cancel, .admin-form .uploaded-files .btn-cancel {
     background-color: rgba(0, 0, 0, 0.5);
     border: none;
     padding: 0.1rem 0.2rem;
@@ -1244,4 +1244,10 @@ form-subtitle,
 .admin-form #usr-profile-img {
     height: 150px;
     width: 150px;
+}
+
+.admin-form select.multi-select option {
+    padding: 0.5rem;
+    margin: 0.1rem;
+    width: 250px;
 }

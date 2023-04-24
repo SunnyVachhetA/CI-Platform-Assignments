@@ -29,7 +29,7 @@ public class FilterMissionService
                 .Take(9);
     }
 
-    public IQueryable<MissionVMCard> FilterByCity()
+    private IQueryable<MissionVMCard> FilterByCity()
     {
         if( ! filterModel.CityList.Any() ) return missions;
 
@@ -38,7 +38,7 @@ public class FilterMissionService
                 .Where( msn => filterModel.CityList.Any(id => id == msn.CityId) );
     }
 
-    public IQueryable<MissionVMCard> FilterByCountry()
+    private IQueryable<MissionVMCard> FilterByCountry()
     {
         if (!filterModel.CountryList.Any()) return missions;
         return
@@ -46,7 +46,7 @@ public class FilterMissionService
                 .Where( msn => filterModel.CountryList.Any( id => id == msn.CountryId ) );
     }
 
-    public IQueryable<MissionVMCard> FilterByTheme()
+    private IQueryable<MissionVMCard> FilterByTheme()
     {
         if (!filterModel.ThemeList.Any()) return missions;
         return
@@ -54,7 +54,7 @@ public class FilterMissionService
                 .Where(msn => filterModel.ThemeList.Any(id => id == msn.ThemeId));
     }
 
-    public IQueryable<MissionVMCard> FilterBySkill()
+    private IQueryable<MissionVMCard> FilterBySkill()
     {
         if (!filterModel.SkillList.Any()) return missions;
 
@@ -63,7 +63,7 @@ public class FilterMissionService
                 .Where(msn => msn.MissionSkill.Any(id => filterModel.SkillList.Contains(id)) );
     }
 
-    public IQueryable<MissionVMCard> FilterBySearch()
+    private IQueryable<MissionVMCard> FilterBySearch()
     {
         if (string.IsNullOrEmpty(filterModel.SearchKeyword) || string.IsNullOrWhiteSpace(filterModel.SearchKeyword))
             return missions;
@@ -75,7 +75,7 @@ public class FilterMissionService
                             msn.OrganizationName!.ContainsCaseInsensitive(filterModel.SearchKeyword)  );
     }
 
-    public IQueryable<MissionVMCard> FilterBySortMenu()
+    private IQueryable<MissionVMCard> FilterBySortMenu()
     {
         if (!filterModel.SortBy.HasValue) return missions;
         switch (filterModel.SortBy)

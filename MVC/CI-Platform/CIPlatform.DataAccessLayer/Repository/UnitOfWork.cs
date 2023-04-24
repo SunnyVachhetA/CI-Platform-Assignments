@@ -40,6 +40,7 @@ public class UnitOfWork : IUnitOfWork
     public ICmsPageRepository CmsPageRepo { get; private set; }
     public IVerifyEmailRepository VerifyEmailRepo { get; private set; }
     public IBannerRepository BannerRepo { get; private set; }
+    public IMissionDocumentRepository MissionDocumentRepo { get; private set; }
 
     public UnitOfWork(CIDbContext dbContext)
     {
@@ -50,12 +51,12 @@ public class UnitOfWork : IUnitOfWork
         CityRepo = new CityRepository(_dbContext);    
         SkillRepo = new SkillRepository(_dbContext);
         ThemeRepo = new ThemeRepository(_dbContext);
-        MissionRepo = new MissionRepository(_dbContext);
         FavouriteMissionRepo = new FavouriteMissionRepository(_dbContext);
         MissionApplicationRepo = new MissionApplicationRepository(_dbContext);
         GoalMissionRepo = new GoalMissionRepository(_dbContext);
         MissionMediaRepo = new MissionMediaRepository(_dbContext);
         MissionSkillRepo = new MissionSkillRepository(_dbContext);
+        MissionRepo = new MissionRepository(_dbContext);
         MissionRatingRepo = new MissionRatingRepository(_dbContext);
         CommentRepo = new CommentRepository(_dbContext);
         MissionInviteRepo = new MissionInviteRepository(_dbContext);
@@ -68,6 +69,7 @@ public class UnitOfWork : IUnitOfWork
         CmsPageRepo = new CmsPageRepository(_dbContext);
         VerifyEmailRepo = new VerifyEmailRepository(_dbContext);
         BannerRepo = new BannerRepository(_dbContext);
+        MissionDocumentRepo = new MissionDocumentRepository(_dbContext);
     }
 
     public void Save()

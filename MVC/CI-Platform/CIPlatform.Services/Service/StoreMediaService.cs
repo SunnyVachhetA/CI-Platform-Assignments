@@ -102,4 +102,63 @@ public class StoreMediaService
             Delete(filePath);
         }
     }
+
+    public static async Task<IEnumerable<MediaVM>> StoreMediasToWwwRootAsync(string wwwRootPath, string path, IEnumerable<IFormFile> files)
+    {
+        var uploadDir = Path.Combine(wwwRootPath, path);
+
+        var tasks = files.Select(async file =>
+        {
+            var fileName = Guid.NewGuid().ToString();
+            var extension = Path.GetExtension(file.FileName);
+
+            var filePath = Path.Combine(uploadDir, fileName + extension);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+
+            var media = new MediaVM
+            {
+                Type = extension,
+                Name = fileName,
+                Path = $@"\{path}\"
+            };
+
+            return media;
+        });
+
+        return await Task.WhenAll(tasks);
+    }
+
+    public static async Task<IEnumerable<MissionDocumentVM>> StoreDocumentsToWebRootAsync(string wwwRootPath, string path, IEnumerable<IFormFile> files)
+    {
+        var uploadDir = Path.Combine(wwwRootPath, path);
+
+        var tasks = files.Select(async file =>
+        {
+            var fileName = Guid.NewGuid().ToString();
+            var extension = Path.GetExtension(file.FileName);
+            var title = Path.GetFileName(file.FileName).Split(".")[0];
+            var filePath = Path.Combine(uploadDir, fileName + extension);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+
+            var document = new MissionDocumentVM()
+            {
+                Type = extension,
+                Name = fileName,
+                Path = $@"\{path}\",
+                Title = title
+            };
+
+            return document;
+        });
+
+        return await Task.WhenAll(tasks);
+    }
 }

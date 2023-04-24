@@ -295,18 +295,7 @@
                 
                         <!-- Mission Tab Content -->
                         <div class = "tab-content overflow-auto mt-4 " id = "tab-msn-content">
-                            <h3 class = "font-lg-size">
-                                Introduction
-                            </h3>
-                            <p class = "font-15 text-light-custom">
-                                @Model.ShortDescription
-                            </p>
-                            <h3 class = "font-lg-size">
-                                Challenge
-                            </h3>
-                            <p class = "font-15 text-light-custom">
-                                @Model.Description
-                            </p>
+                            @Html.Raw(Model.Description)
                             <h3 class = "font-lg-size">
                                 Documents
                             </h3>
@@ -315,7 +304,7 @@
                             {
                                 @foreach (var document in Model.MissionDocuments) 
                                 {   
-                                    <a href="@document.DocumentPath" target="_blank">
+                                    <a href="@document.Path" target="_blank">
                                         <button class = "cursor-pointer font-15 px-4 py-2 d-flex align-items-center gap-2 doc-file">
                                         @document.Title
                                         </button>
@@ -332,7 +321,7 @@
                     
                         <!-- Organization Tab Content -->
                         <div class = "tab-content overflow-auto mt-4 text-light-custom font-15 d-none" id = "tab-org-content">
-                            @Model.OrganizationDetails
+                            @Html.Raw(Model.OrganizationDetails)
                         </div>
                         <!-- Organization Tab Content Fin -->
                     

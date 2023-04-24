@@ -326,7 +326,6 @@ function handleUserFormSubmitEvent(form, type, url, message, cb, checkEmail) {
             data: formData,
             processData: false,
             contentType: false,
-            ,
             success: (_, __, xhr) => {
                 successMessageSweetAlert(message);
                 cb();
@@ -376,7 +375,7 @@ function registerUserSearchEvent() {
     });
 }
 function loadUsersAjax() {
-    tinymce.remove('#description');
+    removeTiny()
     $.ajax({
         type: 'GET',
         url: '/Admin/User/Users',
@@ -534,7 +533,7 @@ function loadCMSAjax() {
 }
 
 function loadCMSPagesonDOM(result) {
-    tinymce.remove('#description');
+    removeTiny()
     $('#admin-menu-content').html(result);
     createPagination(5);
     registerCmsEditAndDeleteButton();
@@ -767,7 +766,7 @@ function cmsFormSubmit(e, form, url, requestType)
 
 //Theme Start
 function loadThemesAjax() {
-    tinymce.remove('#description');
+    removeTiny()
     $.ajax({
         type: 'GET',
         url: '/Admin/MissionTheme/Index',
@@ -966,7 +965,7 @@ function handleThemeDeleteMenuAjax(themeId, type, url, message) {
 
 //Skill Start
 function loadSkillsAjax() {
-    tinymce.remove('#description');
+    removeTiny()
     $.ajax({
         type: 'GET',
         url: '/Admin/MissionSkill/Index',
@@ -1170,7 +1169,7 @@ function handleSkillDeleteMenuAjax(skillId, type, url, message) {
 
 function loadStoriesAjax() {
 
-    tinymce.remove('#description');
+    removeTiny()
     $.ajax({
         type: 'GET',
         url: '/Admin/Story/Index',
@@ -1257,7 +1256,7 @@ function handleStoryStatus(storyId, btnText, message, url) {
 //Contact Us Begin
 
 function loadContactUsAjax() {
-    tinymce.remove('#description');
+    removeTiny()
     $.ajax({
         type: 'GET',
         url: '/Admin/ContactUs/Index',
@@ -1376,7 +1375,7 @@ function registerContactUsFormSubmit() {
 //Banner Start
 function loadBannersAjax() {
     searchText = '';
-    tinymce.remove('#description');
+    removeTiny()
     $.ajax({
         type: 'GET',
         url: '/Admin/Banner/Index',
@@ -1567,7 +1566,7 @@ function handleBannerStatus(bannerId, url, message) {
 let isHourClicked = true;
 let isGoalClicked = false;
 function loadHourTimesheetAjax() {
-    tinymce.remove('#description');
+    removeTiny()
     searchText = '';
     $.ajax({
         type: 'GET',
@@ -1837,6 +1836,7 @@ function adminSearch(id, url, action) {
 
 //Mission Begin
 function loadMissionsAjax() {
+    removeTiny();
     searchText = '';
     $.ajax({
         type: 'GET',
@@ -1852,6 +1852,74 @@ function loadMissionsAjax() {
 function loadMissionsOnDOM() {
     $('#msn-search').focus();
     $('#msn-search').val(searchText);
+    registerAddMissionEvent();
     adminSearch('msn-search', '/Admin/Mission/Search', "mission");
 }
+
+function registerAddMissionEvent() {
+    $('#btn-msn-time-add').click( handleTimeMission );
+    $('#btn-msn-goal-add').click( handleGoalMission );
+}
+
+
+function handleTimeMission() {
+    let id = 0;
+    loadMissionForm('/Admin/Mission/TimeMission', id, registerAddTimeMissionEvent);
+}
+
+function loadMissionForm(url, id, cb) {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        data: { id },
+        success: (result) => {
+            $(adminMenuContent).html(result);
+            registerCityAndCountryEvent();
+            cb();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function registerAddTimeMissionEvent() {
+    $('#btn-cancel').click(loadMissionsAjax);
+    uploadImages();
+    uploadDocuments();
+    $.getScript('/js/msn-editor-tiny.js');
+    handleAddMissionFormSubmit('#form-add-msn-time', '/Admin/Mission/TimeMission', 'Time mission added successfully!');
+}
+
+function handleAddMissionFormSubmit(form, url, message) {
+    $(form).on('submit', e => {
+        e.preventDefault();
+        if (fileErrorOutput()) return;
+        $(form).valid();
+
+        if (!$(form).valid()) return;
+        fileUpload.files = new FileListItems(validUploadFiles);
+        const formData = new FormData($(form)[0]);
+        formData.set("Description", tinymce.get('description').getContent());
+        formData.set("OrganizationDetail", tinymce.get('description1').getContent());
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (_, __, xhr) => {
+                successMessageSweetAlert(message);
+                loadMissionsAjax();
+            },
+            error: ajaxErrorSweetAlert
+        });
+    });
+
+}
+function handleGoalMission() { console.log('hello there'); }
 //Mission End
+
+function removeTiny() {
+    tinymce.remove('#description');
+    tinymce.remove('#description1');
+}

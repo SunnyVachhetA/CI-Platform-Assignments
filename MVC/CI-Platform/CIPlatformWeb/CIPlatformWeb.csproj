@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\documents\mission\" />
     <Folder Include="wwwroot\images\banner\" />
+    <Folder Include="wwwroot\images\mission\" />
     <Folder Include="wwwroot\images\user\" />
     <Folder Include="wwwroot\images\story\" />
     <Folder Include="wwwroot\images\static\" />

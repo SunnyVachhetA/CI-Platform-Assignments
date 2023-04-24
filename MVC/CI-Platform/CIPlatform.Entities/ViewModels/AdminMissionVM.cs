@@ -13,4 +13,6 @@ public class AdminMissionVM
     public DateTimeOffset? EndDate { get; set; }
 
     public MissionStatus MissionStatus { get; set; }
+
+    public bool IsActive { get; set; }
 }

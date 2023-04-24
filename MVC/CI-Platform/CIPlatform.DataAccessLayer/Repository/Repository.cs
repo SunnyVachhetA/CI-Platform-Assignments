@@ -64,4 +64,16 @@ public class Repository<T> : IRepository<T> where T : class
     {
         dbSet.Update(entity);
     }
+
+    public async Task<IEnumerable<T>> GetAllAsync()
+    {
+        IQueryable<T> query = dbSet;
+        return await query.ToListAsync();
+    }
+
+    public async Task<T> AddAsync(T entity)
+    {
+        await dbSet.AddAsync(entity);
+        return entity;
+    }
 }

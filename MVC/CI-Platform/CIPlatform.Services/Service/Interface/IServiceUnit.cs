@@ -37,8 +37,8 @@ public interface IServiceUnit
 
     IBannerService BannerService { get; }
 
+    IMissionDocumentService MissionDocumentService { get; }
+
     Task<IDbContextTransaction> BeginTransactionAsync();
-
-
-
+    
 }

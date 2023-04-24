@@ -23,6 +23,15 @@ internal class CityService : ICityService
         return cityList;
     }
 
+    public async Task<IEnumerable<CityVM>> GetAllCitiesAsync()
+    {
+        var result = await _unitOfWork.CityRepo.GetAllAsync();
+
+        return
+            result
+                .Select(ConvertCityToViewModel);
+    }
+
     public CityVM ConvertCityToViewModel( City city )
     {
         CityVM cityVm = new()

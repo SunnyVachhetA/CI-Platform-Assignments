@@ -15,4 +15,5 @@ public interface IMissionService
     (IEnumerable<MissionVMCard>, long) FilterMissionsCard(FilterModel filterModel);
     IEnumerable<AdminMissionVM> LoadAllMissionsAdmin();
     IEnumerable<AdminMissionVM> SearchMission(string searchKey);
+    Task CreateTimeMission(TimeMissionVM mission, string wwwRootPath);
 }

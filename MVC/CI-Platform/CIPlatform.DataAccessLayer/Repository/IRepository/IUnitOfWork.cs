@@ -36,6 +36,8 @@ public interface IUnitOfWork
     IVerifyEmailRepository VerifyEmailRepo { get; }
 
     IBannerRepository BannerRepo { get; }
+
+    IMissionDocumentRepository MissionDocumentRepo { get; } 
     void Save();
 
     Task<IDbContextTransaction> BeginTransactionAsync();

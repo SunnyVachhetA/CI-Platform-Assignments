@@ -95,6 +95,15 @@ public class SkillService : ISkillService
         if (numOfRow == 0) throw new Exception("Something went wrong during updating skill status!");
     }
 
+    public async Task<IEnumerable<SkillVM>> GetAllSkillsAsync()
+    {
+        var result = await _unitOfWork.SkillRepo.GetAllAsync();
+
+        return
+            result
+                .Select(ConvertSkillToViewModel);
+    }
+
     public SkillVM ConvertSkillToViewModel( Skill skill )
     {
         SkillVM skillVm = new()

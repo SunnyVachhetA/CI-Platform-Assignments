@@ -45,6 +45,7 @@ public class ServiceUnit: IServiceUnit
 
     public IVerifyEmailService VerifyEmailService { get; private set; }
     public IBannerService BannerService { get; private set; }
+    public IMissionDocumentService MissionDocumentService { get; private set; }
 
     public ServiceUnit(IUnitOfWork unitOfWork, IEmailService emailService)
 	{
@@ -56,7 +57,6 @@ public class ServiceUnit: IServiceUnit
 		SkillService = new SkillService(_unitOfWork);
         MissionApplicationService = new MissionApplicationService(_unitOfWork);
         FavouriteMissionService = new FavouriteMissionService(_unitOfWork);
-        MissionService = new MissionService(_unitOfWork);
         GoalMissionService = new GoalMissionService(_unitOfWork);
         MissionMediaService = new MissionMediaService(_unitOfWork);
         MissionSkillService = new MissionSkillService(_unitOfWork);
@@ -73,6 +73,8 @@ public class ServiceUnit: IServiceUnit
 		ThemeService = new ThemeService(_unitOfWork);
         VerifyEmailService = new VerifyEmailService(_unitOfWork);
         BannerService = new BannerService(_unitOfWork);
+        MissionDocumentService = new MissionDocumentService(_unitOfWork);
+        MissionService = new MissionService(_unitOfWork, MissionMediaService, MissionDocumentService, MissionSkillService);
     }
     public async Task<IDbContextTransaction> BeginTransactionAsync()
     {

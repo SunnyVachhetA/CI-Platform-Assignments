@@ -58,9 +58,14 @@
                         <td>@Html.DisplayFor(_ => mission.MissionType)</td>
                         <td>@mission.StartDate?.ToString("d")</td>
                         <td>@mission.EndDate?.ToString("d")</td>
-                        <td class="@mission.MissionStatus .text-capitalize">
-                            @mission.MissionStatus
-                        </td>
+                        @if (mission.IsActive)
+                        {
+                            <td class="text-green">Active</td>
+                        }
+                        else
+                        {
+                            <td class="text-danger">In Active</td>
+                        }
                         <td>
                             <div class="d-flex gap-2">
                                 

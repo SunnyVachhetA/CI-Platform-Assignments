@@ -593,6 +593,10 @@
       "PackagePath": "staticwebassets\\documents\\lorem-pdf.pdf"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\documents\\mission\\1f79844f-4434-43c0-a090-7b30767e8b5c.pdf",
+      "PackagePath": "staticwebassets\\documents\\mission\\1f79844f-4434-43c0-a090-7b30767e8b5c.pdf"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
@@ -607,6 +611,34 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\banner\\f0800377-8d5a-4ed1-b423-3a5acfea1829.jpg",
       "PackagePath": "staticwebassets\\images\\banner\\f0800377-8d5a-4ed1-b423-3a5acfea1829.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\mission\\20eed8bf-1e36-49e8-a764-d613177afd18.jpg",
+      "PackagePath": "staticwebassets\\images\\mission\\20eed8bf-1e36-49e8-a764-d613177afd18.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\mission\\36898ffd-4d0e-42f5-aedd-071d81b57b72.png",
+      "PackagePath": "staticwebassets\\images\\mission\\36898ffd-4d0e-42f5-aedd-071d81b57b72.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\mission\\5b89256a-cbc1-4cae-bc39-38da0c489b33.png",
+      "PackagePath": "staticwebassets\\images\\mission\\5b89256a-cbc1-4cae-bc39-38da0c489b33.png"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\mission\\76ec953a-5b3f-46c4-a617-6e305b8baa75.jpg",
+      "PackagePath": "staticwebassets\\images\\mission\\76ec953a-5b3f-46c4-a617-6e305b8baa75.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\mission\\e13b90b2-1d02-4a85-afa0-e3111994e89f.jpg",
+      "PackagePath": "staticwebassets\\images\\mission\\e13b90b2-1d02-4a85-afa0-e3111994e89f.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\mission\\f7e68646-a063-48d4-a816-6f9291621190.jpg",
+      "PackagePath": "staticwebassets\\images\\mission\\f7e68646-a063-48d4-a816-6f9291621190.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\mission\\f84c3ca2-1942-41f8-8b0c-ea1a3a375e2d.png",
+      "PackagePath": "staticwebassets\\images\\mission\\f84c3ca2-1942-41f8-8b0c-ea1a3a375e2d.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\static\\CSR-initiative-stands-for-Coffee--and-Farmer-Equity-4.png",
@@ -781,12 +813,12 @@
       "PackagePath": "staticwebassets\\images\\user\\02593b14-68bb-43c4-9e3d-4ae4e3ebb04b.png"
     },
     {
-      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\3173336c-170e-4310-be11-7cd6092ff398.jpg",
-      "PackagePath": "staticwebassets\\images\\user\\3173336c-170e-4310-be11-7cd6092ff398.jpg"
-    },
-    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\36bafe6f-99d5-4ff6-879f-87e385b7b547.jpg",
       "PackagePath": "staticwebassets\\images\\user\\36bafe6f-99d5-4ff6-879f-87e385b7b547.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\41f27808-d020-4969-8e5b-619b47877314.png",
+      "PackagePath": "staticwebassets\\images\\user\\41f27808-d020-4969-8e5b-619b47877314.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\4265fd2f-d78c-4749-a090-656c40764288.png",
@@ -841,6 +873,10 @@
       "PackagePath": "staticwebassets\\js\\mission-view-toggler.js"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\msn-editor-tiny.js",
+      "PackagePath": "staticwebassets\\js\\msn-editor-tiny.js"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\rich-editor-tiny.js",
       "PackagePath": "staticwebassets\\js\\rich-editor-tiny.js"
     },
@@ -863,6 +899,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\sweet-alert-notification.js",
       "PackagePath": "staticwebassets\\js\\sweet-alert-notification.js"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\upload-media.js",
+      "PackagePath": "staticwebassets\\js\\upload-media.js"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\js\\user-edit-profile.js",

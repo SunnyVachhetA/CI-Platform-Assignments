@@ -45,6 +45,8 @@ public partial class Mission
 
     public int? CityId { get; set; }
 
+    public bool? IsActive { get; set; }
+
     public virtual City? City { get; set; }
 
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();

@@ -21,5 +21,7 @@ public partial class MissionDocument
 
     public DateTimeOffset? DeletedAt { get; set; }
 
+    public string? DocumentTitle { get; set; }
+
     public virtual Mission Mission { get; set; } = null!;
 }

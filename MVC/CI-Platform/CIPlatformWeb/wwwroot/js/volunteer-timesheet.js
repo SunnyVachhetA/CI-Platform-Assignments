@@ -148,7 +148,7 @@ function registerAddVolunteerHoursFormSubmit()
         (event) =>
         {
             event.preventDefault();
-            $('#form-add-hour').validate();
+            $('#form-add-hour').valid();
             if ($('#form-add-hour').valid()) {
                 $.ajax({
                     type: 'POST',
@@ -175,7 +175,7 @@ function registerAddVolunteerGoalsFormSubmit() {
     $('#form-add-goal').on('submit',
         (event) => {
             event.preventDefault();
-            $('#form-add-goal').validate();
+            $('#form-add-goal').valid();
             if ($('#form-add-goal').valid()) {
                 $.ajax({
                     type: 'POST',

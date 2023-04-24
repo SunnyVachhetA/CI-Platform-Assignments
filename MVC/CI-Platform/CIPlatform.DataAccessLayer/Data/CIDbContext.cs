@@ -329,6 +329,9 @@ public partial class CIDbContext : DbContext
                 .HasColumnType("text")
                 .HasColumnName("description");
             entity.Property(e => e.EndDate).HasColumnName("end_date");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_active");
             entity.Property(e => e.MissionType).HasColumnName("mission_type");
             entity.Property(e => e.OrganizationDetail)
                 .HasColumnType("text")
@@ -406,6 +409,10 @@ public partial class CIDbContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("document_path");
+            entity.Property(e => e.DocumentTitle)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("document_title");
             entity.Property(e => e.DocumentType)
                 .HasMaxLength(5)
                 .IsUnicode(false)
