@@ -7,14 +7,14 @@ const overlayContainer = document.querySelector('#admin-overlay');
 const modalContainer = $('#partial-modal-container');
 const adminMenuContent = $('#admin-menu-content');
 
-const resizeObserver = new ResizeObserver(entries => {
-    for (let entry of entries) {
-        updateSidebarHeight();
-    }
-});
+//const resizeObserver = new ResizeObserver(entries => {
+//    for (let entry of entries) {
+//        updateSidebarHeight();
+//    }
+//});
 
 // Start observing the element
-resizeObserver.observe(rightContent);
+//resizeObserver.observe(rightContent);
 let isSidebarOpen = true;
 let searchText = '';
 function vhToPixels(vh) {
@@ -1852,8 +1852,23 @@ function loadMissionsAjax() {
 function loadMissionsOnDOM() {
     $('#msn-search').focus();
     $('#msn-search').val(searchText);
+    createPagination(5);
     registerAddMissionEvent();
     adminSearch('msn-search', '/Admin/Mission/Search', "mission");
+    registerMissionListEvents();
+}
+
+
+function registerMissionListEvents() {
+    $('.msn-edit').each((_, item) => {
+        let id = $(item).data('missionid');
+        let type = $(item).data('type');
+        $(item).click( () => handleMissionEdit(id, type) );
+    });
+
+    $('.msn-delete').each((_, item) => {
+        $(item).click(() => console.log('clicked'));
+    });
 }
 
 function registerAddMissionEvent() {
@@ -1886,13 +1901,15 @@ function registerAddTimeMissionEvent() {
     uploadImages();
     uploadDocuments();
     $.getScript('/js/msn-editor-tiny.js');
-    handleAddMissionFormSubmit('#form-add-msn-time', '/Admin/Mission/TimeMission', 'Time mission added successfully!');
+    handleAddMissionFormSubmit('#form-add-msn-time', '/Admin/Mission/TimeMission', 'Time mission added successfully!', 'POST');
 }
 
-function handleAddMissionFormSubmit(form, url, message) {
+function handleAddMissionFormSubmit(form, url, message, type) {
     $(form).on('submit', e => {
         e.preventDefault();
-        if (fileErrorOutput()) return;
+        let fileResult = fileErrorOutput();
+        let descResult = tinyDescriptionError(tinymce.get('description').getContent());
+        if (fileResult || descResult) return;
         $(form).valid();
 
         if (!$(form).valid()) return;
@@ -1902,7 +1919,7 @@ function handleAddMissionFormSubmit(form, url, message) {
         formData.set("OrganizationDetail", tinymce.get('description1').getContent());
 
         $.ajax({
-            type: 'POST',
+            type: type,
             url: url,
             data: formData,
             processData: false,
@@ -1914,9 +1931,48 @@ function handleAddMissionFormSubmit(form, url, message) {
             error: ajaxErrorSweetAlert
         });
     });
-
 }
-function handleGoalMission() { console.log('hello there'); }
+
+function tinyDescriptionError(text) {
+
+    const err = text.length < 25;
+    if (err) {
+        $('#err-desc').text('Description should have at least 25 character!');
+    }
+    else {
+        $('#err-desc').text('');
+    }
+    return err;
+}
+
+function handleGoalMission() {
+    let id = 0;
+    loadMissionForm('/Admin/Mission/GoalMission', id, registerAddGoalMissionEvent);
+}
+
+function registerAddGoalMissionEvent() {
+    $('#btn-cancel').click(loadMissionsAjax);
+    uploadImages();
+    uploadDocuments();
+    $.getScript('/js/msn-editor-tiny.js');
+    handleAddMissionFormSubmit('#form-add-msn-goal', '/Admin/Mission/GoalMission', 'Goal mission added successfully!', 'POST');
+}
+
+function handleMissionEdit(id, type) {
+    if(type == "TIME")
+        loadMissionForm('/Admin/Mission/TimeMission', id, registerEditTimeMissionEvent);
+    else
+        loadMissionForm('/Admin/Mission/GoalMission', id, registerEditTimeMissionEvent);
+}
+
+function registerEditTimeMissionEvent() {
+    $('#btn-cancel').click(loadMissionsAjax);
+    
+    $.getScript('/js/msn-editor-tiny.js')
+    handleFilePreloadMission();
+    handleDocumentPreloadMission();
+    handleAddMissionFormSubmit('#form-edit-msn-time', '/Admin/Mission/EditTimeMission', 'Time mission updated successfully!', 'PUT');
+}
 //Mission End
 
 function removeTiny() {

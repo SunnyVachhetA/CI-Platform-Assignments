@@ -92,6 +92,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxfQWRkVGltZU1pc3Npb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_EditGoalMission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxfRWRpdEdvYWxNaXNzaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_EditTimeMission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxfRWRpdFRpbWVNaXNzaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/Project/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_Missions.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxfTWlzc2lvbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

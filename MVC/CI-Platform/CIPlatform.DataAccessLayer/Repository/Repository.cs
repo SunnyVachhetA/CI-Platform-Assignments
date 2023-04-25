@@ -38,6 +38,11 @@ public class Repository<T> : IRepository<T> where T : class
         return query.FirstOrDefault();
     }
 
+    public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter)
+    {
+        IQueryable<T> query = dbSet.Where(filter);
+        return await query.FirstOrDefaultAsync();
+    }
     public void Remove(T entity)
     {
         dbSet.Remove(entity);
@@ -75,5 +80,11 @@ public class Repository<T> : IRepository<T> where T : class
     {
         await dbSet.AddAsync(entity);
         return entity;
+    }
+
+    public Task RemoveRangeAsync(IEnumerable<T> list)
+    {
+        dbSet.RemoveRange(list);
+        return Task.CompletedTask;
     }
 }

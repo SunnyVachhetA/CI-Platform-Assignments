@@ -1058,7 +1058,6 @@ form-subtitle,
     background-color: var(--col-orange);
     width: clamp(250px, 300px, 350px);
     z-index: 10;
-    height: 100vh;
     transition: var(--transition);
 }
 @media screen and (min-width: 992px) {
@@ -1250,4 +1249,12 @@ form-subtitle,
     padding: 0.5rem;
     margin: 0.1rem;
     width: 250px;
+}
+
+#loader {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #21242d url('https://cssauthor.com/wp-content/uploads/2018/06/Bouncy-Preloader.gif') no-repeat center;
+    z-index: 999;
 }

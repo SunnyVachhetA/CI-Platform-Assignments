@@ -71,10 +71,10 @@
                                 
                                 @if (mission.MissionStatus == MissionStatus.ONGOING)
                                 {
-                                    <img src="~/assets/editing.png" data-missionid = "@mission.MissionId" alt="Edit"/>
+                                    <img src="~/assets/editing.png" class="cursor-pointer msn-edit" data-type="@mission.MissionType" data-missionid = "@mission.MissionId" alt="Edit"/>
                                 }
 
-                                <img src="~/assets/delete.png" alt="Delete" data-missionid="@mission.MissionId" />
+                                <img src="~/assets/delete.png" alt="Delete" class="cursor-pointer msn-delete" data-missionid="@mission.MissionId" />
 
                             </div>
                         </td>

@@ -32,6 +32,30 @@ public class MissionSkillService : IMissionSkillService
         }
     }
 
+    public async Task EditMissionSkill(long missionId, IEnumerable<short> missionSkills, IEnumerable<short> preloadedSkill)
+    {
+        try
+        {
+            var deleteSkill = preloadedSkill.Except(missionSkills);
+            var entities = await _unitOfWork.MissionSkillRepo.GetAllAsync();
+
+            foreach (var id in deleteSkill)
+            {
+                _unitOfWork.MissionSkillRepo.Remove(_unitOfWork.MissionSkillRepo.GetFirstOrDefault(sk => sk.SkillId == id && sk.MissionId == missionId));
+            }
+
+            var addSkill = missionSkills.Except(preloadedSkill); 
+            entities = addSkill.Select( id => ConvertToMissionSkill(id, missionId));
+            await _unitOfWork.MissionSkillRepo.AddRangeAsync(entities);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error occured during delete skills: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            throw;
+        }
+    }
+
 
     public MissionSkill ConvertToMissionSkill(short skillId, long missionId)
     {

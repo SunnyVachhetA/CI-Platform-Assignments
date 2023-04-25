@@ -88,7 +88,16 @@ public class ThemeService : IThemeService
 
     public async Task<IEnumerable<ThemeVM>> GetAllThemesAsync()
     {
-        Func<MissionTheme, bool> filter = theme => theme.Status?? false;
+        var result = await _unitOfWork.ThemeRepo.GetAllAsync();
+        return
+            result
+                .Select(ConvertThemeToViewModel);
+    }
+
+    public async Task<IEnumerable<ThemeVM>> GetAllActiveThemesAsync()
+    {
+
+        Func<MissionTheme, bool> filter = theme => theme.Status ?? false;
         var result = await _unitOfWork.ThemeRepo.GetAllAsync();
 
         return

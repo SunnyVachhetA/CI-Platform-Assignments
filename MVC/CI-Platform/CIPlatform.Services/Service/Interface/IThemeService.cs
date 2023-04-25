@@ -12,4 +12,6 @@ public interface IThemeService
     void EditTheme(ThemeVM themeVm);
     void UpdateThemeStatus(short themeId, byte status = 0);
     Task<IEnumerable<ThemeVM>> GetAllThemesAsync();
+    Task<IEnumerable<ThemeVM>> GetAllActiveThemesAsync();
+
 }

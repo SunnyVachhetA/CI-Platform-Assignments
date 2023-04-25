@@ -58,9 +58,11 @@ public class TimeMissionVM
 
     [Display(Name="Mission Theme")]
     [Required(ErrorMessage = "Please select mission theme!")]
-    public short ThemeId { get; set; }
+    public short? ThemeId { get; set; }
 
-    [Display(Name = "Select Skills")] public IEnumerable<short> Skills { get; set; } = new List<short>();
+    [Display(Name = "Select Skills")] 
+    [Required(ErrorMessage = "Please select at least one skill!")]
+    public IEnumerable<short> Skills { get; set; } = new List<short>();
 
     [Required(ErrorMessage = "Please upload mission photos!")]
     public IEnumerable<IFormFile> Images { get; set; }
@@ -71,4 +73,7 @@ public class TimeMissionVM
     public IEnumerable<CountryVM> CountryList { get; set; } = new List<CountryVM>();
     public IEnumerable<SkillVM> SkillList { get; set; } = new List<SkillVM>();
     public IEnumerable<ThemeVM> ThemeList { get; set; } = new List<ThemeVM>();
+
+    public IEnumerable<MediaVM> MediaList { get; set; } = new List<MediaVM>();
+    public IEnumerable<MissionDocumentVM> DocumentList { get; set; } = new List<MissionDocumentVM>();
 }

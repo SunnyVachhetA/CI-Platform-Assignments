@@ -12,13 +12,15 @@ public class MissionService : IMissionService
     private readonly IMissionMediaService _missionMediaService;
     private readonly IMissionDocumentService _missionDocumentService;
     private readonly IMissionSkillService _missionSkillService;
+    private readonly IGoalMissionService _goalMissionService;
     public MissionService(IUnitOfWork unitOfWork, IMissionMediaService missionMediaService,
-        IMissionDocumentService missionDocumentService, IMissionSkillService missionSkillService)
+        IMissionDocumentService missionDocumentService, IMissionSkillService missionSkillService, IGoalMissionService goalMissionService)
     {
         this.unitOfWork = unitOfWork;
         _missionMediaService = missionMediaService;
         _missionDocumentService = missionDocumentService;
         _missionSkillService = missionSkillService;
+        _goalMissionService = goalMissionService;
     }
     
 
@@ -383,6 +385,97 @@ public class MissionService : IMissionService
         
     }
 
+    public async Task CreateGoalMission(GoalMissionVM mission, string wwwRootPath)
+    {
+        using (var transaction = await unitOfWork.BeginTransactionAsync())
+        {
+            try
+            {
+                Mission entity = ConvertGoalVMToMission(mission);
+                await unitOfWork.MissionRepo.AddAsync(entity);
+                await unitOfWork.SaveAsync();
+                
+                var saveMissionGoalDetails = _goalMissionService.SaveMissionGoalDetails(mission, entity.MissionId);
+                var saveMissionSkillsTask = _missionSkillService.SaveMissionSkills(mission.Skills, entity.MissionId);
+                var storeMissionMediaTask = _missionMediaService.StoreMissionMedia(mission.Images, wwwRootPath, entity.MissionId);
+                var storeMissionDocumentTask = _missionDocumentService.StoreMissionDocument(mission.Documents!, wwwRootPath, entity.MissionId);
+
+                await Task.WhenAll(saveMissionGoalDetails, saveMissionSkillsTask, storeMissionMediaTask, storeMissionDocumentTask);
+                await transaction.CommitAsync();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error while creating goal mission: " + e.Message);
+                Console.WriteLine(e.StackTrace);
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+    }
+
+    public async Task<TimeMissionVM> LoadEditTimeMissionDetails(long id)
+    {
+        try
+        {
+            var mission = await unitOfWork.MissionRepo.FetchMissionWithMedia(id);
+            if (mission == null) throw new Exception("Mission not found: " + id);
+
+            var vm = ConvertMissionToTimeVM(mission);
+
+            vm.MediaList = await _missionMediaService.ConvertMediaToMediaVM(mission.MissionMedia);
+            vm.DocumentList = await _missionDocumentService.ConvertToDocumentVM(mission.MissionDocuments);
+            return vm;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while editing time mission load: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            throw;
+        }
+    }
+
+    public async Task UpdateTimeMission(TimeMissionVM mission, IEnumerable<string> preloadedMediaList,
+        IEnumerable<string> preloadedDocumentPathList,
+        IEnumerable<short> preloadedSkill, string wwwRootPath)
+    {
+        using (var transaction = await unitOfWork.BeginTransactionAsync())
+        {
+            try
+            {
+                Task editMissionSkill = _missionSkillService.EditMissionSkill(mission.MissionId, mission.Skills, preloadedSkill);
+                Task editMedia = _missionMediaService.EditMissionMedia(mission.MissionId, mission.Images, preloadedMediaList, wwwRootPath);
+                var entity = await unitOfWork.MissionRepo.GetFirstOrDefaultAsync( msn => msn.MissionId == mission.MissionId );
+
+                entity.Title = mission.Title;
+                entity.ShortDescription = mission.ShortDescription;
+                entity.Description = mission.Description;
+                entity.OrganizationName = mission.OrganizationName;
+                entity.OrganizationDetail = mission.OrganizationDetail;
+                entity.ThemeId = mission.ThemeId;
+                entity.StartDate = mission.StartDate;
+                entity.EndDate = mission.EndDate;
+                entity.CityId = mission.CityId;
+                entity.CountryId = mission.CountryId;
+                entity.TotalSeat = mission.TotalSeats;
+                entity.RegistrationDeadline = mission.RegistrationDeadline;
+                entity.Availability = (byte)mission.Availability;
+                entity.Status = mission.IsActive;
+                
+                await Task.WhenAll(editMissionSkill, editMedia);
+                await unitOfWork.SaveAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error while editing time mission: " + e.Message);
+                Console.WriteLine(e.StackTrace);
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+    }
+
     public Mission ConvertTimeVMToMission(TimeMissionVM mission)
     {
         Mission entity = new()
@@ -402,12 +495,61 @@ public class MissionService : IMissionService
             TotalSeat = mission.TotalSeats,
             RegistrationDeadline = mission.RegistrationDeadline,
             CreatedAt = DateTimeOffset.Now,
-            Description = mission.Description
+            Description = mission.Description,
+            Status = true
         };
 
         return entity;
     }
+    public TimeMissionVM ConvertMissionToTimeVM(Mission mission)
+    {
+        TimeMissionVM timeMissionVM = new TimeMissionVM
+        {
+            MissionId = mission.MissionId,
+            ThemeId = mission.ThemeId,
+            CountryId = mission.CountryId?? 0,
+            CityId = mission.CityId?? 0,
+            Title = mission.Title!,
+            ShortDescription = mission.ShortDescription!,
+            StartDate = mission.StartDate,
+            EndDate = mission.EndDate,
+            IsActive = mission.IsActive,
+            OrganizationName = mission.OrganizationName!,
+            OrganizationDetail = mission.OrganizationDetail,
+            Availability = (MissionAvailability)(mission.Availability?? 0),
+            TotalSeats = mission.TotalSeat,
+            RegistrationDeadline = mission.RegistrationDeadline,
+            Description = mission.Description!,
+            Skills = mission.MissionSkills.Select( sk => sk.SkillId )
+        };
 
+        return timeMissionVM;
+    }
+    public Mission ConvertGoalVMToMission(GoalMissionVM mission)
+    {
+        Mission entity = new()
+        {
+            ThemeId = mission.ThemeId,
+            CountryId = mission.CountryId,
+            CityId = mission.CityId,
+            Title = mission.Title,
+            ShortDescription = mission.ShortDescription,
+            StartDate = mission.StartDate,
+            EndDate = mission.EndDate,
+            MissionType = false,
+            IsActive = mission.IsActive,
+            OrganizationName = mission.OrganizationName,
+            OrganizationDetail = mission.OrganizationDetail,
+            Availability = (byte)mission.Availability,
+            TotalSeat = mission.TotalSeats,
+            RegistrationDeadline = mission.RegistrationDeadline,
+            CreatedAt = DateTimeOffset.Now,
+            Description = mission.Description,
+            Status = true
+        };
+
+        return entity;
+    }
     private static AdminMissionVM ConvertToMissionAdminVM(Mission mission)
     {
         AdminMissionVM vm = new()

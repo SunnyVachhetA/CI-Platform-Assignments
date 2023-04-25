@@ -47,18 +47,20 @@ public class MissionController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> TimeMission(long? id)
+    public async Task<IActionResult> TimeMission(long id)
     {
         try
         {
-            TimeMissionVM vm = null;
-            if (id == 0) vm = new TimeMissionVM();
+            var vm = id == 0 ? new TimeMissionVM() : await _serviceUnit.MissionService.LoadEditTimeMissionDetails(id);
 
             vm.CityList = await _serviceUnit.CityService.GetAllCitiesAsync();
             vm.CountryList = await _serviceUnit.CountryService.GetAllCountriesAsync();
             vm.SkillList = await _serviceUnit.SkillService.GetAllSkillsAsync();
-            vm.ThemeList = await _serviceUnit.ThemeService.GetAllThemesAsync();
-            return PartialView("_AddTimeMission", vm);
+            vm.ThemeList = id == 0
+                ? await _serviceUnit.ThemeService.GetAllActiveThemesAsync()
+                : await _serviceUnit.ThemeService.GetAllThemesAsync();
+
+            return PartialView(id == 0 ? "_AddTimeMission" : "_EditTimeMission", vm);
         }
         catch (Exception e)
         {
@@ -85,4 +87,64 @@ public class MissionController : Controller
             return StatusCode(500);
         }
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GoalMission(long id)
+    {
+        try
+        {
+            GoalMissionVM vm = null!;
+            if (id == 0) vm = new GoalMissionVM();
+
+            vm.CityList = await _serviceUnit.CityService.GetAllCitiesAsync();
+            vm.CountryList = await _serviceUnit.CountryService.GetAllCountriesAsync();
+            vm.SkillList = await _serviceUnit.SkillService.GetAllSkillsAsync();
+            vm.ThemeList = await _serviceUnit.ThemeService.GetAllThemesAsync();
+            return PartialView("_AddGoalMission", vm);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while time mission[get]: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> GoalMission(GoalMissionVM mission)
+    {
+        try
+        {
+            if (!ModelState.IsValid) return NoContent();
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            await _serviceUnit.MissionService.CreateGoalMission(mission, wwwRootPath);
+            return StatusCode(201);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while time mission[post]: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> EditTimeMission(TimeMissionVM mission, IEnumerable<string> preloadedMediaList, 
+        IEnumerable<string> preloadedDocumentPathList, IEnumerable<short> preloadedSkill)
+    {
+        try
+        {
+            if (!ModelState.IsValid) return NoContent();
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            await _serviceUnit.MissionService.UpdateTimeMission(mission, preloadedMediaList, preloadedDocumentPathList, preloadedSkill, wwwRootPath);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while edit time mission[put]: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
 }

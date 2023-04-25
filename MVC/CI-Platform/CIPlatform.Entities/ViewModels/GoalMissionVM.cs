@@ -61,13 +61,16 @@ public class GoalMissionVM
 
     [Display(Name = "Goal Value")]
     [Required]
-    public int GoalValue { get; set; }
+    [Range(0, int.MaxValue, ErrorMessage = "The value must be greater than zero.")]
+    public int? GoalValue { get; set; }
     
     [Display(Name = "Goal Objective")]
     [Required]
-    public string GoalObjetive { get; set; } = string.Empty;
+    public string GoalObjective { get; set; } = string.Empty;
 
-    [Display(Name = "Select Skills")] public IEnumerable<short> Skills { get; set; } = new List<short>();
+    [Display(Name = "Select Skills")]
+    [Required(ErrorMessage = "Please select at least one skill!")]
+    public IEnumerable<short> Skills { get; set; } = new List<short>();
 
     [Required(ErrorMessage = "Please upload mission photos!")]
     public IEnumerable<IFormFile> Images { get; set; }

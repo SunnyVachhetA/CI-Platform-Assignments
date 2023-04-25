@@ -109,4 +109,15 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                 .Include(mission => mission.City)
                 .Include(mission => mission.MissionSkills);
     }
+
+    public async Task<Mission> FetchMissionWithMedia(long id)
+    {
+        var mission = await
+            dbSet
+                .Include(mission => mission.MissionMedia)
+                .Include(mission => mission.MissionDocuments)
+                .Include( mission => mission.MissionSkills )
+                .FirstOrDefaultAsync(msn => msn.MissionId == id);
+        return mission;
+    }
 }

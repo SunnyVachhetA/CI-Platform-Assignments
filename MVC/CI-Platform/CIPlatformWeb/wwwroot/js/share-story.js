@@ -175,8 +175,7 @@ function handleFilePreloadStory()
         preloadedImagePathList.push(path);
     });
 
-    console.log(preloadedImagePathList);
-
+   
     for (var i = 0; i < preloadedImagePathList.length; i++) {
         let path = preloadedImagePathList[i];
         let promise = fetch(path)
@@ -192,7 +191,6 @@ function handleFilePreloadStory()
 
     Promise.all(promises)
         .then(files => {
-            console.log('All files loaded:', files);
             validUploadFiles = files;
             renderMediaOnHTML(files);
         })

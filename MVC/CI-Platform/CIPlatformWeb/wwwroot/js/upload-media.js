@@ -10,6 +10,8 @@ function uploadImages() {
     fileUpload = document.querySelector('#file-upload');
     fileList = document.querySelector('#file-list');
     uploadArea = document.querySelector('#upload-area');
+    fileIndex = 0;
+    validUploadFiles = [];
     registerUploadImagesEvents();
 }
 
@@ -116,10 +118,12 @@ function FileListItems(files) {
 
 //js for document upload
 let docUpload;
-const documentList = [];
+let documentList = [];
 function uploadDocuments() {
+    documentList = [];
     docUpload = document.getElementById('doc-upload');
     docUpload.addEventListener('change', handleDocumentFiles);
+    $('#doc-list').empty();
 }
 
 function handleDocumentFiles(files) {
@@ -149,4 +153,108 @@ function addDocumentPreview(docSrc, fileName) {
     link.textContent = fileName;
     li.appendChild(link);
     document.getElementById("doc-list").appendChild(li); // Append the list item to the list
+}
+
+
+//Re-Render Uploaded Images
+let preloadedImagePathList = [];
+let preloadedMedia = [];
+function handleFilePreloadMission() {
+
+    preloadedImagePathList = [];
+    preloadedMedia = [];
+    uploadImages();
+    preloadedMedia = $("[data-media]");
+    let promises = [];
+
+    $.each(preloadedMedia, (_, item) => {
+        let path = $(item).data('media');
+        preloadedImagePathList.push(path);
+    });
+
+
+    for (var i = 0; i < preloadedImagePathList.length; i++) {
+        let path = preloadedImagePathList[i];
+        let promise = fetch(path)
+            .then(response => response.arrayBuffer())
+            .then(buffer => {
+                return new File([buffer], path);
+            })
+            .catch(error => {
+                console.error('Failed to load file:', path, error);
+            });
+        promises.push(promise);
+    }
+
+    Promise.all(promises)
+        .then(files => {
+            validUploadFiles = files;
+            renderMediaOnHTML(files);
+        })
+        .catch(error => {
+            console.error('Error loading files:', error);
+        });
+}
+
+function renderMediaOnHTML(files) {
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+        let url = URL.createObjectURL(file);
+        let image = new Image();
+        image.onload = function () {
+            URL.revokeObjectURL(url);
+        };
+        addDom(url, i);
+    }
+}
+
+let preloadedDocumentPathList = [];
+let preloadedDocument = [];
+let titleList = [];
+function handleDocumentPreloadMission() {
+
+    preloadedDocumentPathList = [];
+    preloadedDocument = [];
+    titleList = [];
+    uploadDocuments();
+    preloadedDocument = $("[data-doc]");
+    let promises = [];
+    $.each(preloadedDocument, (_, item) => {
+        let path = $(item).data('doc');
+        let title = $(item).data('title');
+
+        titleList.push(title);
+        preloadedDocumentPathList.push(path);
+    });
+
+    for (var i = 0; i < preloadedDocumentPathList.length; i++) {
+        let path = preloadedDocumentPathList[i];
+        let promise = fetch(path)
+            .then(response => response.arrayBuffer())
+            .then(buffer => {
+                return new File([buffer], path);
+            })
+            .catch(error => {
+                console.error('Failed to load file:', path, error);
+            });
+        promises.push(promise);
+    }
+
+    Promise.all(promises)
+        .then(files => {
+            documentList = files;
+            renderDocumentOnHTML(files)
+        })
+        .catch(error => {
+            console.error('Error loading files:', error);
+        });
+}
+
+function renderDocumentOnHTML(files) {
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+        let url = URL.createObjectURL(file);
+     
+        addDocumentPreview(url, titleList[i]);
+    }
 }

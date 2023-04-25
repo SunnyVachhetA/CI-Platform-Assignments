@@ -74,7 +74,7 @@ public class ServiceUnit: IServiceUnit
         VerifyEmailService = new VerifyEmailService(_unitOfWork);
         BannerService = new BannerService(_unitOfWork);
         MissionDocumentService = new MissionDocumentService(_unitOfWork);
-        MissionService = new MissionService(_unitOfWork, MissionMediaService, MissionDocumentService, MissionSkillService);
+        MissionService = new MissionService(_unitOfWork, MissionMediaService, MissionDocumentService, MissionSkillService, GoalMissionService);
     }
     public async Task<IDbContextTransaction> BeginTransactionAsync()
     {

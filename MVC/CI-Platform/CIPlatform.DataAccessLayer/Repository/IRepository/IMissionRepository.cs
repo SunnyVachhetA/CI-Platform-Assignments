@@ -11,4 +11,5 @@ public interface IMissionRepository : IRepository<Mission>
     void UpdateMissionRating(long missionId, byte avgRating);
     IEnumerable<Mission> FetchAllMissions();
     IEnumerable<Mission> FetchMissionCardInformation();
+    Task<Mission> FetchMissionWithMedia(long id);
 }

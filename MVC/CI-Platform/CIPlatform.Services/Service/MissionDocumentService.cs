@@ -35,6 +35,21 @@ public class MissionDocumentService : IMissionDocumentService
 
     }
 
+    public async Task<IEnumerable<MissionDocumentVM>> ConvertToDocumentVM(ICollection<MissionDocument> documents)
+    {
+        try
+        {
+            var docs = await Task.Run(() => documents.Select(ConvertToDocumentVM));
+            return docs;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error occured during loading documents: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            throw;
+        }
+    }
+
     public static MissionDocument ConvertVMToMissionDocument(MissionDocumentVM doc, long missionId)
     {
         MissionDocument entity = new()
@@ -47,5 +62,17 @@ public class MissionDocumentService : IMissionDocumentService
             DocumentTitle = doc.Title
         };
         return entity;
+    }
+
+    public static MissionDocumentVM ConvertToDocumentVM(MissionDocument document)
+    {
+        var doc = new MissionDocumentVM()
+        {
+            Title = document.DocumentTitle?? string.Empty,
+            Path = document.DocumentPath?? string.Empty,
+            Type = document.DocumentType?? string.Empty,
+            Name = document.DocumentName ?? string.Empty
+        };
+        return doc;
     }
 }
