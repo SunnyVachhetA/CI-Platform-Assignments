@@ -1,9 +1,10 @@
 ﻿@model GoalMissionVM
 <div class="mt-4 border">
-    <h4 class="px-4 mb-0 py-3 bg-tile fw-400">Add Mission</h4>
+    <h4 class="px-4 mb-0 py-3 bg-tile fw-400">Edit Mission</h4>
 
     <div class="px-4 mt-2 pb-4">
-        <form id="form-add-msn-goal" class="admin-form d-flex flex-column gap-3" enctype="multipart/form-data">
+        <form id="form-edit-msn-goal" class="admin-form d-flex flex-column gap-3" enctype="multipart/form-data">
+            <input type="hidden" asp-for="MissionId"> 
             <div>
                 <label asp-for="Title" class="form-label"></label>
                 <input class="form-control" asp-for="Title">
@@ -52,7 +53,7 @@
                     <input type="date" class="form-control" asp-for="RegistrationDeadline">
                 </div>
             </div>
-            
+
             <div class="row g-3">
                 <div class="col-md-6">
                     <label asp-for="GoalObjective" class="form-label"></label>
@@ -106,9 +107,24 @@
                     <span class="font-xs text-danger" asp-validation-for="ThemeId"></span>
                 </div>
                 <div class="col-md-6">
+                    @foreach (var id in Model.Skills)
+                    {
+                        <input type="hidden" value="@id" name="preloadedSkill">
+                    }
                     <label asp-for="Skills" class="form-label"></label>
-                    <select asp-for="Skills" multiple class="form-select multi-select" asp-items="@Model.SkillList.Select(s => new SelectListItem { Value = s.SkillId.ToString(), Text = s.Name })">
+                    <select asp-for="Skills" multiple class="form-select multi-select" >
                         <option value="" disabled selected>Select Skills</option>
+                        @foreach (var sk in Model.SkillList)
+                        {
+                            if (Model.Skills.Any(id => sk.SkillId == id))
+                            {
+                                <option value="@sk.SkillId" selected>@sk.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@sk.SkillId">@sk.Name</option>
+                            }
+                        }
                     </select>
                     <span class="font-xs text-danger" asp-validation-for="Skills"></span>
                 </div>
@@ -116,12 +132,15 @@
 
             <div>
                 <label class="form-label">Upload Mission Photos</label>
-
+                @foreach (var image in Model.MediaList)
+                {
+                    <input type="hidden" data-media="@image.Path@image.Name@image.Type" value='@image.Name@image.Type' name="preloadedMediaList" />
+                }
                 <div class="form-control-file d-flex justify-content-center align-items-center p-4 cursor-pointer"
                      id="upload-area">
-                    <img src="./assets/drag-and-drop.png" alt="Drag and drop" for="file-upload" />
+                    <img src="./assets/drag-and-drop.png" alt="Drag and drop" for="file-upload"/>
                     <input type="file" multiple id="file-upload" onchange="handleFiles(this.files)"
-                           accept=".png, .jpg, .jpeg" asp-for="Images" hidden />
+                           accept=".png, .jpg, .jpeg" asp-for="Images" hidden/>
                 </div>
                 <span class="text-danger font-xs" id="err-media" asp-validation-for="Images"></span>
 
@@ -135,6 +154,10 @@
             </div>
 
             <div class="form-group">
+                @foreach (var doc in Model.DocumentList)
+                {
+                    <input type="hidden" data-title="@doc.Title@doc.Type" data-doc="@doc.Path@doc.Name@doc.Type" value="@doc.Name@doc.Type" name="preloadedDocumentPathList">
+                }
                 <label for="" class="form-label">Mission Documents</label>
                 <input type="file" asp-for="Documents" class="form-control" accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple id="doc-upload" onchange="handleDocumentFiles(this.files)">
                 <!-- Uploaded files  -->
@@ -145,7 +168,7 @@
                 </div>
                 <!-- Uploaded Files Fin -->
             </div>
-            
+
             <div class="row g-3">
                 <div class="col-md-6">
                     <label asp-for="Availability" class="form-label"></label>
@@ -164,10 +187,10 @@
                     <span asp-validation-for="IsActive" class="font-xs text-danger"></span>
                 </div>
             </div>
-            
+
             <div class="d-flex justify-content-center justify-content-md-end gap-2">
                 <button class="btn-g-gray" type="button" id="btn-cancel">Cancel</button>
-                <button class="btn-g-orange" type="submit">Save</button>
+                <button class="btn-g-orange" type="submit">Save Changes</button>
             </div>
         </form>
     </div>

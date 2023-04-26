@@ -120,4 +120,16 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                 .FirstOrDefaultAsync(msn => msn.MissionId == id);
         return mission;
     }
+
+    public async Task<Mission> FetchMissionWithMediaGoal(long id)
+    {
+        var mission = await
+            dbSet
+                .Include(mission => mission.MissionMedia)
+                .Include(mission => mission.MissionDocuments)
+                .Include(mission => mission.MissionSkills)
+                .Include(mission => mission.GoalMissions)
+                .FirstOrDefaultAsync(msn => msn.MissionId == id);
+        return mission;
+    }
 }

@@ -12,4 +12,5 @@ public interface IMissionRepository : IRepository<Mission>
     IEnumerable<Mission> FetchAllMissions();
     IEnumerable<Mission> FetchMissionCardInformation();
     Task<Mission> FetchMissionWithMedia(long id);
+    Task<Mission> FetchMissionWithMediaGoal(long id);
 }

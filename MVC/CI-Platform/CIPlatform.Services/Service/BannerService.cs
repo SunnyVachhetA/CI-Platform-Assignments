@@ -20,9 +20,9 @@ public class BannerService: IBannerService
         if( ! banners.Any() ) return Enumerable.Empty<BannerVM>();
 
         return
-            banners
-                .OrderByDescending(banner => banner.SortOrder)
-                .Select(ConvertBannerToBannerVM);
+            banners.OrderByDescending(banner => banner.Status)
+            .ThenByDescending(banner => banner.SortOrder)
+            .Select(ConvertBannerToBannerVM);
     }
 
     public void Add(BannerVM banner, string wwwRootPath)

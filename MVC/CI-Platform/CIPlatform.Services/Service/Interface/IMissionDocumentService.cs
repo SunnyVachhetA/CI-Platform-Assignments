@@ -8,4 +8,5 @@ public interface IMissionDocumentService
 {
     Task StoreMissionDocument(IEnumerable<IFormFile> missionImages, string wwwRootPath, long entityMissionId);
     Task<IEnumerable<MissionDocumentVM>> ConvertToDocumentVM(ICollection<MissionDocument> missionMissionDocuments);
+    Task EditMissionDocument(long missionMissionId, IEnumerable<IFormFile> missionDocuments, IEnumerable<string> preloadedDocumentPathList, string wwwRootPath);
 }

@@ -104,6 +104,15 @@ public class SkillService : ISkillService
                 .Select(ConvertSkillToViewModel);
     }
 
+    public async Task<IEnumerable<SkillVM>> GetAllActiveSkillsAsync()
+    {
+        var skills = await _unitOfWork.SkillRepo.GetAllAsync();
+        return
+            skills
+                .Where(sk => sk.Status ?? false)
+                .Select(ConvertSkillToViewModel);
+    }
+
     public SkillVM ConvertSkillToViewModel( Skill skill )
     {
         SkillVM skillVm = new()

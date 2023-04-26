@@ -13,4 +13,5 @@ public interface ISkillService
     void DeleteSkill(short skillId);
     void UpdateSkillStatus(short skillId, byte status = 0);
     Task<IEnumerable<SkillVM>> GetAllSkillsAsync();
+    Task<IEnumerable<SkillVM>> GetAllActiveSkillsAsync();
 }

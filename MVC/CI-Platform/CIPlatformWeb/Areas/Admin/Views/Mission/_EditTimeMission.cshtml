@@ -110,7 +110,6 @@
                 @foreach (var image in Model.MediaList)
                 {
                     <input type="hidden" data-media="@image.Path@image.Name@image.Type" value='@image.Name@image.Type' name="preloadedMediaList"/>
-
                 }
                 <label class="form-label">Upload Mission Photos</label>
 
@@ -134,7 +133,7 @@
             <div class="form-group">
                 @foreach (var doc in Model.DocumentList)
                 {
-                    <input type="hidden" data-title="@doc.Title" data-doc="@doc.Path@doc.Name@doc.Type" name="preloadedDocumentPathList">
+                    <input type="hidden" data-title="@doc.Title@doc.Type" data-doc="@doc.Path@doc.Name@doc.Type" value = "@doc.Name@doc.Type" name="preloadedDocumentPathList">
                 }
                 <label for="" class="form-label">Mission Documents</label>
                 <input type="file" asp-for="Documents" class="form-control" accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple id="doc-upload" onchange="handleDocumentFiles(this.files)">

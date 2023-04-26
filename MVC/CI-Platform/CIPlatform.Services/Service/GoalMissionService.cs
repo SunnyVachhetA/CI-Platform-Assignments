@@ -2,6 +2,7 @@
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Services.Service.Interface;
+using System.Reflection;
 
 namespace CIPlatform.Services.Service;
 public class GoalMissionService : IGoalMissionService
@@ -25,6 +26,25 @@ public class GoalMissionService : IGoalMissionService
         catch (Exception e)
         {
             Console.WriteLine("Error during saving goal details: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            throw;
+        }
+    }
+    
+    public async Task EditGoalMissionDetails(GoalMission goal, int? goalValue, string goalObjective)
+    {
+        try
+        {
+            var entity = await _unitOfWork.GoalMissionRepo.GetFirstOrDefaultAsync(msn => msn.GoalMissionId == goal.GoalMissionId);
+            entity.GoalValue = goalValue?? 0;
+            entity.GoalObjectiveText = goalObjective;
+            entity.UpdatedAt = DateTimeOffset.Now;
+            _unitOfWork.GoalMissionRepo.Update(entity);
+            await _unitOfWork.SaveAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error during updating goal details: " + e.Message);
             Console.WriteLine(e.StackTrace);
             throw;
         }

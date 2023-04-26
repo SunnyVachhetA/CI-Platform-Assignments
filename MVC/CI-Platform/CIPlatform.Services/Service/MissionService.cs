@@ -95,7 +95,7 @@ public class MissionService : IMissionService
                             {
                                 DocumentId = document.MissionDocumentId,
                                 Path = GetDocumentPath( document ),
-                                Title = $"{document.DocumentTitle}.{document.DocumentType}"
+                                Title = $"{document.DocumentTitle}{document.DocumentType}"
                             }
                     );
         return result.ToList();
@@ -103,7 +103,7 @@ public class MissionService : IMissionService
 
     private static string GetDocumentPath(MissionDocument document)
     {
-        string path = $"{document.DocumentPath}{document.DocumentName}.{document.DocumentType}";
+        string path = $"{document.DocumentPath}{document.DocumentName}{document.DocumentType}";
 
         return path;
     }
@@ -443,8 +443,9 @@ public class MissionService : IMissionService
         {
             try
             {
-                Task editMissionSkill = _missionSkillService.EditMissionSkill(mission.MissionId, mission.Skills, preloadedSkill);
-                Task editMedia = _missionMediaService.EditMissionMedia(mission.MissionId, mission.Images, preloadedMediaList, wwwRootPath);
+                await _missionSkillService.EditMissionSkill(mission.MissionId, mission.Skills, preloadedSkill);
+                await _missionMediaService.EditMissionMedia(mission.MissionId, mission.Images, preloadedMediaList, wwwRootPath);
+                await _missionDocumentService.EditMissionDocument(mission.MissionId, mission.Documents, preloadedDocumentPathList, wwwRootPath);
                 var entity = await unitOfWork.MissionRepo.GetFirstOrDefaultAsync( msn => msn.MissionId == mission.MissionId );
 
                 entity.Title = mission.Title;
@@ -462,7 +463,6 @@ public class MissionService : IMissionService
                 entity.Availability = (byte)mission.Availability;
                 entity.Status = mission.IsActive;
                 
-                await Task.WhenAll(editMissionSkill, editMedia);
                 await unitOfWork.SaveAsync();
                 await transaction.CommitAsync();
             }
@@ -474,6 +474,98 @@ public class MissionService : IMissionService
                 throw;
             }
         }
+    }
+
+    public async Task<GoalMissionVM> LoadEditGoalMissionDetails(long id)
+    {
+        try
+        {
+            var mission = await unitOfWork.MissionRepo.FetchMissionWithMediaGoal(id);
+            if (mission == null) throw new Exception("Mission not found: " + id);
+
+            var vm = ConvertMissionToGoalVM(mission);
+
+            vm.MediaList = await _missionMediaService.ConvertMediaToMediaVM(mission.MissionMedia);
+            vm.DocumentList = await _missionDocumentService.ConvertToDocumentVM(mission.MissionDocuments);
+
+            return vm;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while editing goal mission load: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            throw;
+        }
+    }
+
+    
+
+    public async Task UpdateGoalMission(GoalMissionVM mission, IEnumerable<string> preloadedMediaList, IEnumerable<string> preloadedDocumentPathList,
+        IEnumerable<short> preloadedSkill, string wwwRootPath)
+    {
+        using (var transaction = await unitOfWork.BeginTransactionAsync())
+        {
+            try
+            {
+                await _missionSkillService.EditMissionSkill(mission.MissionId, mission.Skills, preloadedSkill);
+                await _missionMediaService.EditMissionMedia(mission.MissionId, mission.Images, preloadedMediaList, wwwRootPath);
+                await _missionDocumentService.EditMissionDocument(mission.MissionId, mission.Documents, preloadedDocumentPathList, wwwRootPath);
+                var entity = await unitOfWork.MissionRepo.FetchMissionWithMediaGoal(mission.MissionId);
+                await _goalMissionService.EditGoalMissionDetails(entity.GoalMissions.First(), mission.GoalValue, mission.GoalObjective);
+
+                entity.Title = mission.Title;
+                entity.ShortDescription = mission.ShortDescription;
+                entity.Description = mission.Description;
+                entity.OrganizationName = mission.OrganizationName;
+                entity.OrganizationDetail = mission.OrganizationDetail;
+                entity.ThemeId = mission.ThemeId;
+                entity.StartDate = mission.StartDate;
+                entity.EndDate = mission.EndDate;
+                entity.CityId = mission.CityId;
+                entity.CountryId = mission.CountryId;
+                entity.TotalSeat = mission.TotalSeats;
+                entity.RegistrationDeadline = mission.RegistrationDeadline;
+                entity.Availability = (byte)mission.Availability;
+                entity.Status = mission.IsActive;
+
+                await unitOfWork.SaveAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error while editing goal mission: " + e.Message);
+                Console.WriteLine(e.StackTrace);
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+    }
+
+    private static GoalMissionVM ConvertMissionToGoalVM(Mission mission)
+    {
+        var goal = mission.GoalMissions.First();
+        GoalMissionVM goalVM = new GoalMissionVM()
+        {
+            MissionId = mission.MissionId,
+            ThemeId = mission.ThemeId,
+            CountryId = mission.CountryId ?? 0,
+            CityId = mission.CityId ?? 0,
+            Title = mission.Title!,
+            ShortDescription = mission.ShortDescription!,
+            StartDate = mission.StartDate,
+            EndDate = mission.EndDate,
+            IsActive = mission.IsActive,
+            OrganizationName = mission.OrganizationName!,
+            OrganizationDetail = mission.OrganizationDetail,
+            Availability = (MissionAvailability)(mission.Availability ?? 0),
+            TotalSeats = mission.TotalSeat,
+            RegistrationDeadline = mission.RegistrationDeadline,
+            Description = mission.Description!,
+            Skills = mission.MissionSkills.Select(sk => sk.SkillId),
+            GoalObjective = goal.GoalObjectiveText?? string.Empty,
+            GoalValue = goal.GoalValue
+        };
+        return goalVM;
     }
 
     public Mission ConvertTimeVMToMission(TimeMissionVM mission)

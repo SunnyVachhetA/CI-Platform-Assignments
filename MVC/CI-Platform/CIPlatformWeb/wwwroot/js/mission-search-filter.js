@@ -261,3 +261,11 @@ $('#btn-msn-apply').click
             }
         }
 );
+
+$(document).ajaxStart(function () {
+    $('#load-spinner1').show();
+});
+
+$(document).ajaxStop(function () {
+    $('#load-spinner1').hide();
+});

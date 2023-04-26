@@ -57,7 +57,7 @@ public class GoalMissionVM
 
     [Display(Name = "Mission Theme")]
     [Required(ErrorMessage = "Please select mission theme!")]
-    public short ThemeId { get; set; }
+    public short? ThemeId { get; set; }
 
     [Display(Name = "Goal Value")]
     [Required]
@@ -81,4 +81,7 @@ public class GoalMissionVM
     public IEnumerable<CountryVM> CountryList { get; set; } = new List<CountryVM>();
     public IEnumerable<SkillVM> SkillList { get; set; } = new List<SkillVM>();
     public IEnumerable<ThemeVM> ThemeList { get; set; } = new List<ThemeVM>();
+
+    public IEnumerable<MediaVM> MediaList { get; set; } = new List<MediaVM>();
+    public IEnumerable<MissionDocumentVM> DocumentList { get; set; } = new List<MissionDocumentVM>();
 }

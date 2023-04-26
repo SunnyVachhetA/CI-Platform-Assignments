@@ -298,6 +298,7 @@ function CheckIsEmailUnique(email) {
 }
 
 function handleUserFormSubmitEvent(form, type, url, message, cb, checkEmail) {
+    $('#btn-cancel').click(loadUsersAjax);
     $(form).on('submit', e => {
         e.preventDefault();
 
@@ -1914,6 +1915,7 @@ function handleAddMissionFormSubmit(form, url, message, type) {
 
         if (!$(form).valid()) return;
         fileUpload.files = new FileListItems(validUploadFiles);
+        docUpload.files = new FileListItems(documentList);
         const formData = new FormData($(form)[0]);
         formData.set("Description", tinymce.get('description').getContent());
         formData.set("OrganizationDetail", tinymce.get('description1').getContent());
@@ -1922,12 +1924,14 @@ function handleAddMissionFormSubmit(form, url, message, type) {
             type: type,
             url: url,
             data: formData,
+            beforeSend: showSpinner,
             processData: false,
             contentType: false,
             success: (_, __, xhr) => {
                 successMessageSweetAlert(message);
                 loadMissionsAjax();
             },
+            complete: hideSpinner,
             error: ajaxErrorSweetAlert
         });
     });
@@ -1962,7 +1966,7 @@ function handleMissionEdit(id, type) {
     if(type == "TIME")
         loadMissionForm('/Admin/Mission/TimeMission', id, registerEditTimeMissionEvent);
     else
-        loadMissionForm('/Admin/Mission/GoalMission', id, registerEditTimeMissionEvent);
+        loadMissionForm('/Admin/Mission/GoalMission', id, registerEditGoalMissionEvent);
 }
 
 function registerEditTimeMissionEvent() {
@@ -1973,9 +1977,26 @@ function registerEditTimeMissionEvent() {
     handleDocumentPreloadMission();
     handleAddMissionFormSubmit('#form-edit-msn-time', '/Admin/Mission/EditTimeMission', 'Time mission updated successfully!', 'PUT');
 }
+
+function registerEditGoalMissionEvent() {
+    $('#btn-cancel').click(loadMissionsAjax);
+
+    $.getScript('/js/msn-editor-tiny.js')
+    handleFilePreloadMission();
+    handleDocumentPreloadMission();
+    handleAddMissionFormSubmit('#form-edit-msn-goal', '/Admin/Mission/EditGoalMission', 'Goal mission updated successfully!', 'PUT');
+}
 //Mission End
 
 function removeTiny() {
     tinymce.remove('#description');
     tinymce.remove('#description1');
 }
+
+$(document).ajaxStart(function () {
+    $('#load-spinner').show();
+});
+
+$(document).ajaxStop(function () {
+    $('#load-spinner').hide(); 
+});

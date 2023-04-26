@@ -20,4 +20,7 @@ public interface IMissionService
     Task<TimeMissionVM> LoadEditTimeMissionDetails(long id);
     Task UpdateTimeMission(TimeMissionVM mission, IEnumerable<string> preloadedMediaList,
         IEnumerable<string> preloadedDocumentPathList, IEnumerable<short> preloadedSkill, string wwwRootPath);
+
+    Task<GoalMissionVM> LoadEditGoalMissionDetails(long id);
+    Task UpdateGoalMission(GoalMissionVM mission, IEnumerable<string> preloadedMediaList, IEnumerable<string> preloadedDocumentPathList, IEnumerable<short> preloadedSkill, string wwwRootPath);
 }

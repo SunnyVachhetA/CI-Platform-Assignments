@@ -54,8 +54,10 @@ public class MissionController : Controller
             var vm = id == 0 ? new TimeMissionVM() : await _serviceUnit.MissionService.LoadEditTimeMissionDetails(id);
 
             vm.CityList = await _serviceUnit.CityService.GetAllCitiesAsync();
-            vm.CountryList = await _serviceUnit.CountryService.GetAllCountriesAsync();
-            vm.SkillList = await _serviceUnit.SkillService.GetAllSkillsAsync();
+            vm.CountryList = await _serviceUnit.CountryService.GetAllCountriesAsync(); 
+            vm.SkillList = (id == 0)
+                ? await _serviceUnit.SkillService.GetAllActiveSkillsAsync()
+                : await _serviceUnit.SkillService.GetAllSkillsAsync();
             vm.ThemeList = id == 0
                 ? await _serviceUnit.ThemeService.GetAllActiveThemesAsync()
                 : await _serviceUnit.ThemeService.GetAllThemesAsync();
@@ -93,14 +95,20 @@ public class MissionController : Controller
     {
         try
         {
-            GoalMissionVM vm = null!;
-            if (id == 0) vm = new GoalMissionVM();
+            GoalMissionVM vm = (id == 0)
+                ? new GoalMissionVM()
+                : await _serviceUnit.MissionService.LoadEditGoalMissionDetails(id);
 
             vm.CityList = await _serviceUnit.CityService.GetAllCitiesAsync();
             vm.CountryList = await _serviceUnit.CountryService.GetAllCountriesAsync();
-            vm.SkillList = await _serviceUnit.SkillService.GetAllSkillsAsync();
-            vm.ThemeList = await _serviceUnit.ThemeService.GetAllThemesAsync();
-            return PartialView("_AddGoalMission", vm);
+            vm.SkillList = (id == 0)
+                ? await _serviceUnit.SkillService.GetAllActiveSkillsAsync()
+                : await _serviceUnit.SkillService.GetAllSkillsAsync();
+            vm.ThemeList = id == 0
+                ? await _serviceUnit.ThemeService.GetAllActiveThemesAsync()
+                : await _serviceUnit.ThemeService.GetAllThemesAsync();
+
+            return PartialView(id == 0 ? "_AddGoalMission" : "_EditGoalMission", vm);
         }
         catch (Exception e)
         {
@@ -147,4 +155,23 @@ public class MissionController : Controller
         }
     }
 
+
+    [HttpPut]
+    public async Task<IActionResult> EditGoalMission(GoalMissionVM mission, IEnumerable<string> preloadedMediaList,
+        IEnumerable<string> preloadedDocumentPathList, IEnumerable<short> preloadedSkill)
+    {
+        try
+        {
+            if (!ModelState.IsValid) return NoContent();
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            await _serviceUnit.MissionService.UpdateGoalMission(mission, preloadedMediaList, preloadedDocumentPathList, preloadedSkill, wwwRootPath);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while edit time mission[put]: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
 }

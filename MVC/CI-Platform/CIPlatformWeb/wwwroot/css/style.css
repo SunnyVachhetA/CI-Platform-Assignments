@@ -1251,10 +1251,28 @@ form-subtitle,
     width: 250px;
 }
 
-#loader {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: #21242d url('https://cssauthor.com/wp-content/uploads/2018/06/Bouncy-Preloader.gif') no-repeat center;
-    z-index: 999;
+#load-spinner, #load-spinner1 {
+    border: 10px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--col-orange);
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+#load-spinner1 {
+    top: 50%;
+    left: 40%;
+    right: 80%;
+    height: 200px;
+    width: 200px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }

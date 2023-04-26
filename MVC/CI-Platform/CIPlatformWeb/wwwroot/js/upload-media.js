@@ -121,6 +121,7 @@ let docUpload;
 let documentList = [];
 function uploadDocuments() {
     documentList = [];
+
     docUpload = document.getElementById('doc-upload');
     docUpload.addEventListener('change', handleDocumentFiles);
     $('#doc-list').empty();
