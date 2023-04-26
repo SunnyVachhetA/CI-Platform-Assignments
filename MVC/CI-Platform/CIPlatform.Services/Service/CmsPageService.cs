@@ -82,8 +82,23 @@ public class CmsPageService: ICmsPageService
     {
         _unitOfWork.CmsPageRepo.UpdateCMSPage(cmsId, status);
     }
-    
 
+    public async Task<IEnumerable<CMSPageVM>> LoadAllActiveCmsPageAsync()
+    {
+        var pages = await _unitOfWork.CmsPageRepo.GetAllAsync();
+
+        return
+            pages
+                .Where( page => page.Status == true )
+                .Select(ConvertCMSPageVM);
+    }
+
+    public async Task<CMSPageVM> LoadCmsPageDetailsAsync(short id)
+    {
+        var entity = await _unitOfWork.CmsPageRepo.GetFirstOrDefaultAsync(page => page.CmsPageId == id);
+        if (entity == null) throw new Exception("CMS page not found!: " + id);
+        return ConvertCMSPageVM(entity);
+    }
 
     private static CMSPageVM ConvertCMSPageVM(CmsPage page)
     {

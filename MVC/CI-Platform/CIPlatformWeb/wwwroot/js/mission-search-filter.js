@@ -263,9 +263,9 @@ $('#btn-msn-apply').click
 );
 
 $(document).ajaxStart(function () {
-    $('#load-spinner1').show();
+    $('#load-spinner').show();
 });
 
 $(document).ajaxStop(function () {
-    $('#load-spinner1').hide();
+    $('#load-spinner').hide();
 });

@@ -1,0 +1,33 @@
+﻿<main class="d-grid min-vh-100 cms-grid">
+    <header>
+        <partial name="_Navbar"></partial>
+        <hr class="m-0" />
+    </header>
+    <section class="container mt-2 text-center">
+        <div class="h3 text-light-custom mt-4 text-center">
+            Oops... Page Not Found!!
+        </div>
+        
+        <img class="object-fit-cover h-50 mt-2" src="~/assets/404-Page-image.png">
+        
+        <p class="text-light-custom mt-4">
+            The page your are looking for not found!
+        </p>
+        
+        <a asp-controller="Home" asp-action="Index" class="d-block mx-auto">
+            <button class="btn-g-orange px-4 py-2 mx-auto">
+                Back To Home Page
+            </button>
+        </a>
+
+    </section>
+
+    <partial name="_Footer"></partial>
+
+</main>
+
+
+@section Scripts
+    {
+    <script src="~/js/site.js"></script>
+}

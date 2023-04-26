@@ -13,4 +13,6 @@ public class UserLoginVM
     [Required(ErrorMessage = "Please enter your password!")]
     [StringLength(255, MinimumLength = 8, ErrorMessage = "Password must have at least 8 character!")]
     public string Password { get; set; } = string.Empty;
+
+    public IEnumerable<BannerVM>? Banners { get; set; } = new List<BannerVM>();
 }

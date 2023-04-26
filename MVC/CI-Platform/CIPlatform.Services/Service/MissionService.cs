@@ -277,11 +277,20 @@ public class MissionService : IMissionService
     /// <exception cref="NotImplementedException"></exception>
     public (IEnumerable<MissionVMCard>, long ) LoadAllMissionCards(int page)
     {
+        var start = System.Diagnostics.Stopwatch.StartNew();
+        start.Start();
         var missions = unitOfWork.MissionRepo.FetchMissionCardInformation();
+        start.Stop();
+        var elapsed = start.ElapsedMilliseconds;
+        Console.WriteLine("Elapsed1: " + elapsed);
+        //if (!missions.Any()) return (new List<MissionVMCard>(), 0);
+        start.Reset();
+        start.Start();
+        long totalMissionCount = missions.LongCount();
+        start.Stop();
+        elapsed = start.ElapsedMilliseconds;
+        Console.WriteLine("Elapsed2: " + elapsed);
 
-        if (!missions.Any()) return (new List<MissionVMCard>(), 0);
-
-        var totalMissionCount = missions.LongCount();
 
         IEnumerable<MissionVMCard> missionList =
             missions

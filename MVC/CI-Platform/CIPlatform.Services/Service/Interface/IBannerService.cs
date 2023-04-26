@@ -8,4 +8,5 @@ public interface IBannerService
     BannerVM LoadBannerDetails(long bannerId);
     void UpdateBanner(BannerVM banner, string wwwRootPath);
     void UpdateBannerStatus(long bannerId, byte status = 0);
+    IEnumerable<BannerVM> LoadAllActiveBanners();
 }

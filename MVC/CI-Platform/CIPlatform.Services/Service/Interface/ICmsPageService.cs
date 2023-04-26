@@ -10,4 +10,6 @@ public interface ICmsPageService
     CMSPageVM LoadSingleCMSPage(short cmsId);
     void UpdateCMSPage(CMSPageVM page);
     void UpdateCMSPageStatus(short cmsId, byte status);
+    Task<IEnumerable<CMSPageVM>> LoadAllActiveCmsPageAsync();
+    Task<CMSPageVM> LoadCmsPageDetailsAsync(short id);
 }

@@ -31,7 +31,7 @@ a:hover {
 }
 
 .index-grid {
-    grid-template-rows: auto auto auto 0.3fr;
+    grid-template-rows: auto auto 1fr auto;
 }
 
 body {
@@ -1251,28 +1251,27 @@ form-subtitle,
     width: 250px;
 }
 
-#load-spinner, #load-spinner1 {
+#load-spinner{
     border: 10px solid rgba(0, 0, 0, 0.1);
     border-top-color: var(--col-orange);
     border-radius: 50%;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     animation: spin 1s linear infinite;
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: 45%;
+    top: 45%;
+    /*transform: translate(-50%, -50%);*/
 }
 
-#load-spinner1 {
-    top: 50%;
-    left: 40%;
-    right: 80%;
-    height: 200px;
-    width: 200px;
-}
 
 @keyframes spin {
     to {
         transform: rotate(360deg);
     }
+}
+
+
+.cms-grid {
+    grid-template-rows: auto 1fr auto;
 }

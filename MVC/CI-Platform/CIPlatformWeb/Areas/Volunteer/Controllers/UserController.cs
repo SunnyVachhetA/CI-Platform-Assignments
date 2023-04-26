@@ -102,7 +102,10 @@ public class UserController : Controller
             }
             else return BadRequest();
         }
-        return View("Login");
+
+        UserLoginVM vm = new UserLoginVM();
+        vm.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
+        return View("Login", vm);
     }
 
     [HttpPost]
@@ -125,13 +128,11 @@ public class UserController : Controller
                 TempData["login-success"] = "Successfully logged in as " + user.FirstName + " " + user.LastName;
                 return RedirectToAction("Index", "Home");
             }
-            else
-            {
-                ModelState.AddModelError("PasswordError", "Invalid Email ID or Password!");
-            }
-        }
 
-        return View();
+            ModelState.AddModelError("PasswordError", "Invalid Email ID or Password!");
+        }
+        credential.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
+        return View(credential);
     }
 
     public void CreateUserLoginSession(UserRegistrationVM user)

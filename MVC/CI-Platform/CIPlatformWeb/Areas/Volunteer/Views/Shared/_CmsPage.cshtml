@@ -1,0 +1,25 @@
+﻿@model CMSPageVM
+<main class="d-grid min-vh-100 cms-grid">
+    <header>
+        <partial name="_Navbar"></partial>
+        <hr class="m-0" />
+    </header>
+    <section class="container mt-2 mb-4">
+        <div class="h3 text-light-custom mt-4">
+            @Model.Title
+        </div>
+        
+        <div class="mt-4 fw-light">
+            @Html.Raw( Model.Description )
+        </div>
+    </section>
+        
+    <partial name="_Footer"></partial>
+    
+</main>
+
+
+@section Scripts
+{
+    <script src="~/js/site.js"></script>
+}

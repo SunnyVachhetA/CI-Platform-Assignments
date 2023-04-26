@@ -1,5 +1,4 @@
-﻿
-let loggedUserId = $('#logged-user-id').val();
+﻿let loggedUserId = $('#logged-user-id').val();
 
 const userLoginPageLink = $('#user-login-page-link').val();
 const loggedUserName = $('#loggedUserName').val();
@@ -20,6 +19,7 @@ $(document).ready(() => {
         successMessageSweetAlert(loginSuccessMessage);
         loginSuccessMessage = '';
     }
+    handleCMSMenu();
 });
 
 //Logout Ajax
@@ -101,4 +101,28 @@ function handleContactUsFormSubmit(event) {
             error: ajaxErrorSweetAlert
         });
     }
+}
+
+const cmsMenu = document.getElementById('cms-drop');
+
+
+function handleCMSMenu() {
+    if (cmsMenu == null) return;
+
+    $.ajax({
+        type: 'GET',
+        url: '/Volunteer/CmsPage/Index',
+        dataType: 'json',
+        success: (result) => {
+            $('#cms-drop ul').empty();
+            result.forEach(page => {
+                    var li = $('<li>');
+                    var link = $('<a>').addClass('dropdown-item').text(page.title).attr('href', '/volunteer/cmspage/get/' + page.id);
+                    li.append(link);
+                    $('#cms-drop ul').append(li);
+            });
+        },
+        error: ajaxErrorSweetAlert
+    });
+
 }

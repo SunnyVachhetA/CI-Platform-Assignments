@@ -25,16 +25,13 @@
     <a asp-action ="Index" asp-controller="Home"><img src="~/assets/logo.png" alt="Logo" /></a>
     <div class="d-flex gap-2 gap-sm-5 align-items-center">
         <a class="medium-text cursor-pointer" asp-controller ="Story" asp-action="Index">Stories</a>
-        <div class="dropdown">
+        <div class="dropdown" id="cms-drop">
             <a class="dropdown-toggle medium-text d-none d-sm-block" href="#" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">
                 Policy
                 <img src="~/assets/drop-down.png" class="ms-2" alt="Options">
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
         </div>
     </div>

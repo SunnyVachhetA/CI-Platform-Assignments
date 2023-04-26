@@ -69,6 +69,20 @@ public class BannerService: IBannerService
         if (result == 0) throw new Exception("Something went wrong during delete !!!");
     }
 
+    public IEnumerable<BannerVM> LoadAllActiveBanners()
+    {
+
+        var banners = _unitOfWork.BannerRepo.GetAll();
+
+        if (!banners.Any()) return Enumerable.Empty<BannerVM>();
+
+        return
+            banners
+                .Where( banner => banner.Status == true )
+                .OrderByDescending(banner => banner.SortOrder)
+                .Select(ConvertBannerToBannerVM);
+    }
+
 
     public string DeletePreviousBannerImage(BannerVM banner, string wwwRootPath)
     {

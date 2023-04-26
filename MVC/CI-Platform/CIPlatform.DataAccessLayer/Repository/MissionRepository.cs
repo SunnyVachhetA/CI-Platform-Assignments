@@ -107,7 +107,7 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                 .Include(mission => mission.FavouriteMissions)
                 .Include(mission => mission.MissionRatings)
                 .Include(mission => mission.City)
-                .Include(mission => mission.MissionSkills);
+                .Include(mission => mission.MissionSkills).ToList();
     }
 
     public async Task<Mission> FetchMissionWithMedia(long id)
