@@ -12,7 +12,6 @@ $(document).ready(() => {
     }
 
  
-
     let loginSuccessMessage = $('#successful-login').val();
 
     if (loginSuccessMessage !== undefined && loginSuccessMessage !== '') {

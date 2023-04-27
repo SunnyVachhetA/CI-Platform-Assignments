@@ -14,4 +14,6 @@ public class ResetPasswordPostVM: PasswordResetVM
     [Compare("Password")]
     [DisplayName("Confirm Password")]
     public string ConfirmPassword { get; set; } = string.Empty;
+
+    public IEnumerable<BannerVM>? Banners { get; set; } = new List<BannerVM>();
 }

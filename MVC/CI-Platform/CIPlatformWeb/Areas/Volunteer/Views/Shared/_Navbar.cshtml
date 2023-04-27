@@ -15,6 +15,7 @@
         loggedUserEmail = Context.Session.GetString("UserEmail");
     }
     var loginSucess = TempData["login-success"];
+    TempData.Clear();
 }
 @Html.HiddenFor(model => userId, new{ id = "logged-user-id" })
 @Html.HiddenFor(model => userLoginPageLink, new { id = "user-login-page-link" })

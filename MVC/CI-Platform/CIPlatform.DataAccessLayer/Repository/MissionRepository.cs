@@ -103,11 +103,11 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                 .Include(mission => mission.MissionApplications)
                 .Include(mission => mission.Theme)
                 .Include(mission => mission.GoalMissions)
-                .Include(mission => mission.GoalMissions)
                 .Include(mission => mission.FavouriteMissions)
                 .Include(mission => mission.MissionRatings)
                 .Include(mission => mission.City)
-                .Include(mission => mission.MissionSkills).ToList();
+                .Include(mission => mission.MissionSkills)
+                .ToList();
     }
 
     public async Task<Mission> FetchMissionWithMedia(long id)
@@ -131,5 +131,19 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
                 .Include(mission => mission.GoalMissions)
                 .FirstOrDefaultAsync(msn => msn.MissionId == id);
         return mission;
+    }
+
+    public async Task<IEnumerable<Mission>> FetchMissionCardInformationAsync()
+    {
+        return await dbSet
+            .Include(mission => mission.MissionMedia)
+            .Include(mission => mission.MissionApplications)
+            .Include(mission => mission.Theme)
+            .Include(mission => mission.GoalMissions)
+            .Include(mission => mission.FavouriteMissions)
+            .Include(mission => mission.MissionRatings)
+            .Include(mission => mission.City)
+            .Include(mission => mission.MissionSkills)
+            .ToListAsync();
     }
 }

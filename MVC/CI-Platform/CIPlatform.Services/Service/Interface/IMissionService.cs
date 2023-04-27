@@ -23,4 +23,5 @@ public interface IMissionService
 
     Task<GoalMissionVM> LoadEditGoalMissionDetails(long id);
     Task UpdateGoalMission(GoalMissionVM mission, IEnumerable<string> preloadedMediaList, IEnumerable<string> preloadedDocumentPathList, IEnumerable<short> preloadedSkill, string wwwRootPath);
+    Task<(IEnumerable<MissionVMCard>, long)> LoadAllMissionCardsAsync(int page);
 }

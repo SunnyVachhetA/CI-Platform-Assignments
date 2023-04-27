@@ -183,7 +183,7 @@ $('#sort-options').change((e) => {
 function LoadMissionIndex() {
     $.ajax({
         type: "GET",
-        url: "/Volunteer/Home/LoadMissionCardIndex",
+        url: "/Volunteer/Home/LoadMissionCardIndexAsync",
         data: { page: currentPageNumber },
         success: function (result) {
             $('#partial-mission-listing').html(result);

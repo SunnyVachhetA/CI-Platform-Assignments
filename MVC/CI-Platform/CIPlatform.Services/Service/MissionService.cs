@@ -664,4 +664,19 @@ public class MissionService : IMissionService
         };
         return vm;
     }
+    public async Task<(IEnumerable<MissionVMCard>, long)> LoadAllMissionCardsAsync(int page)
+    {
+        var missions = await unitOfWork.MissionRepo.FetchMissionCardInformationAsync();
+
+        long totalMissionCount = missions.LongCount();
+
+        IEnumerable<MissionVMCard> missionList = missions
+            .OrderByDescending(msn => msn.CreatedAt)
+            .Skip((page - 1) * 9)
+            .Take(9)
+            .Select(ConvertMissionToMissionVMCard);
+
+        return (missionList, totalMissionCount);
+    }
+
 }

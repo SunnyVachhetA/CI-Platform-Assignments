@@ -100,6 +100,26 @@ namespace CIPlatformWeb.Areas.Volunteer.Controllers
                 return StatusCode(500);
             }
         }
+
+        //Async version
+        [HttpGet]
+        [Route("/Volunteer/Home/LoadMissionCardIndexAsync")]
+        public async Task<IActionResult> LoadMissionCardIndexAsync(int page)
+        {
+            try
+            {
+                (IEnumerable<MissionVMCard>, long) missionList =
+                    await _serviceUnit.MissionService.LoadAllMissionCardsAsync(page);
+                ViewBag.MissionCount = missionList.Item2;
+                return PartialView("_MissionListing", missionList.Item1);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error during loading missions card on index: " + e.Message);
+                Console.WriteLine(e.StackTrace);
+                return StatusCode(500);
+            }
+        }
         #endregion 
 
     }

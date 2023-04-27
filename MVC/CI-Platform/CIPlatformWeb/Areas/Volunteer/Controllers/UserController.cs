@@ -61,7 +61,7 @@ public class UserController : Controller
         if (!ModelState.IsValid)
         {
             TempData["edit-profile-fail"] = "Provide valid information!";
-            return RedirectToAction("UserProfile", userProfile);
+            return RedirectToAction("EditUserProfile", userProfile);
         }
 
         _serviceUnit.UserService.UpdateUserDetails(userProfile);
@@ -146,7 +146,8 @@ public class UserController : Controller
     [Route("ForgotPassword")]
     public IActionResult ForgotPassword()
     {
-        return View();
+        var banners = _serviceUnit.BannerService.LoadAllActiveBanners();
+        return View(banners);
     }
 
     [HttpPost]
@@ -206,7 +207,8 @@ public class UserController : Controller
         ResetPasswordPostVM postVm = new()
         {
             Email = _email,
-            Token = _token
+            Token = _token,
+            Banners = _serviceUnit.BannerService.LoadAllActiveBanners()
         };
         return View(postVm);
     }
@@ -230,13 +232,16 @@ public class UserController : Controller
             }
         }
 
+        reset.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
         return View(reset);
     }
 
     [Route("Registration")]
     public IActionResult Registration()
     {
-        return View();
+        UserRegistrationVM vm = new();
+        vm.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
+        return View(vm);
     }
 
     [HttpPost]
@@ -249,15 +254,10 @@ public class UserController : Controller
         {
             ModelState.AddModelError("Email", "Given Email ID is Already Registered!");
         }
-
-        if (ModelState.IsValid)
+        else if (ModelState.IsValid)
         {
             _serviceUnit.UserService.Add(user);
-            //UserRegistrationVM registeredUser =
-            //    _serviceUnit.UserService.ValidateUserCredential(new UserLoginVM
-            //        { Email = user.Email, Password = user.Password });
-            //CreateUserLoginSession(registeredUser);
-            //TempData["registratoin-success"] = "You have successfully registered.";
+
             string token = Guid.NewGuid().ToString();
             var href = Url.Action("Login", "User", new { _email = email, _token=token }, "https");
             _serviceUnit.VerifyEmailService.SaveUserActivationToken(email, token);
@@ -265,6 +265,8 @@ public class UserController : Controller
             TempData["email-verification"] = "Check Your Email For Link To Activate Your Account!";
             return View("Login");
         }
+
+        user.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
         return View(user);
     }
 
@@ -320,10 +322,8 @@ public class UserController : Controller
             TempData["TokenMessage"] = "Reset password link is sent to your email address!";
             return RedirectToAction("Login", "User");
         }
-        else
-        {
-            TempData["multiRequestError"] = "Please check your email for reset password link!(30 Minute Timeout)";
-        }
+
+        TempData["multiRequestError"] = "Please check your email for reset password link!(30 Minute Timeout)";
 
         return RedirectToAction("ForgotPassword");
     }

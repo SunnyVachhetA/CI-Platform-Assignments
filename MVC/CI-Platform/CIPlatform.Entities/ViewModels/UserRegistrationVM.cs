@@ -46,4 +46,6 @@ public class UserRegistrationVM
 
     public string? EmployeeID { get; set; }
     public string? Department { get; set; }
+
+    public IEnumerable<BannerVM>? Banners { get; set; } = new List<BannerVM>();
 }
