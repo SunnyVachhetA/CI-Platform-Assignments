@@ -13,4 +13,5 @@ public interface IUserRepository : IRepository<User>
     void UpdateUserAvatar(string filePath, long userId);
     int UpdateUserStatus(long userId, byte status);
     void SetUserStatusToActive(string email);
+    Admin CheckAdminCredential(string credentialEmail, string credentialPassword);
 }

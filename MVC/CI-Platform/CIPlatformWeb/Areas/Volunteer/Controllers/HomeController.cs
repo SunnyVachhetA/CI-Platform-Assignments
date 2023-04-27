@@ -4,10 +4,14 @@ using CIPlatform.Services.Service.Interface;
 using CIPlatformWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using CIPlatformWeb.Areas.Volunteer.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CIPlatformWeb.Areas.Volunteer.Controllers
 {
     [Area("Volunteer")]
+    [Authentication]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

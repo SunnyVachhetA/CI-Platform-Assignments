@@ -1,15 +1,18 @@
-﻿using CIPlatform.Entities.DataModels;
+﻿
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service;
 using CIPlatform.Services.Service.Interface;
 using CIPlatformWeb.Areas.Volunteer.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 
 [Area("Volunteer")]
 [Route("/Volunteer/User/")]
+[Authentication]
+[AllowAnonymous]
 public class UserController : Controller
 {
     private readonly IServiceUnit _serviceUnit;
@@ -113,34 +116,52 @@ public class UserController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Login(UserLoginVM credential)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            UserRegistrationVM user = _serviceUnit.UserService.ValidateUserCredential(credential);
 
-            if (user != null)
-            {
-                if (!user.Status)
-                {
-                    TempData["login-block"] = "Your account is in-active! Please contact Admin for Activation.";
-                    return View();
-                }
-                CreateUserLoginSession(user);
-                TempData["login-success"] = "Successfully logged in as " + user.FirstName + " " + user.LastName;
-                return RedirectToAction("Index", "Home");
-            }
-
-            ModelState.AddModelError("PasswordError", "Invalid Email ID or Password!");
+            credential.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
+            return View(credential);
         }
+
+        if (CheckUserAdmin(credential)) return RedirectToAction("Index", "Home", new { area = "Admin" }); 
+
+        UserRegistrationVM user = _serviceUnit.UserService.ValidateUserCredential(credential);
+        if (user != null)
+        {
+            if (!user.Status)
+            {
+                TempData["login-block"] = "Your account is in-active! Please contact Admin for Activation.";
+                return View();
+            }
+            CreateUserLoginSession(user);
+            TempData["login-success"] = "Successfully logged in as " + user.FirstName + " " + user.LastName;
+            return RedirectToAction("Index", "Home");
+        }
+
+        ModelState.AddModelError("PasswordError", "Invalid Email ID or Password!");
         credential.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
         return View(credential);
     }
 
-    public void CreateUserLoginSession(UserRegistrationVM user)
+    private bool CheckUserAdmin(UserLoginVM credential)
+    {
+        UserRegistrationVM vm = _serviceUnit.UserService.CheckAdminCredential(credential);
+        if (vm is not null)
+        {
+            TempData["admin-login"] = "Logged in as admin user: " + vm.FirstName;
+            CreateUserLoginSession(vm, true);
+        }
+
+        return (vm is not null);
+    }
+
+    public void CreateUserLoginSession(UserRegistrationVM user, bool isAdmin = false)
     {
         HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
         HttpContext.Session.SetString("UserId", user.UserId.ToString()!);
         HttpContext.Session.SetString("UserAvatar", user.Avatar);
         HttpContext.Session.SetString("UserEmail", user.Email);
+        HttpContext.Session.SetString("IsAdmin", isAdmin.ToString());
     }
 
     [Route("ForgotPassword")]
@@ -259,7 +280,7 @@ public class UserController : Controller
             _serviceUnit.UserService.Add(user);
 
             string token = Guid.NewGuid().ToString();
-            var href = Url.Action("Login", "User", new { _email = email, _token=token }, "https");
+            var href = Url.Action("Login", "User", new { _email = email, _token = token }, "https");
             _serviceUnit.VerifyEmailService.SaveUserActivationToken(email, token);
             _serviceUnit.UserService.GenerateEmailVerificationToken(user, href!, _emailService);
             TempData["email-verification"] = "Check Your Email For Link To Activate Your Account!";
@@ -278,6 +299,7 @@ public class UserController : Controller
         HttpContext.Session.Remove("UserName");
         HttpContext.Session.Remove("UserId");
         HttpContext.Session.Remove("Avatar");
+        HttpContext.Session.Remove("IsAdmin");
         TempData["logout-success"] = "You have been successfully logged out.";
         return Json(new { redirectToUrl = Url.Action("Index", "Home") });
     }
@@ -529,7 +551,7 @@ public class UserController : Controller
     [Route("EditVolunteerHour", Name = "EditVolunteerHour")]
     public IActionResult EditVolunteerHour(long timesheetId, long userId)
     {
-        VolunteerHourVM vm = _serviceUnit.TimesheetService.LoadUserTimesheetEntry(timesheetId, MissionTypeEnum.TIME)?? new VolunteerHourVM();
+        VolunteerHourVM vm = _serviceUnit.TimesheetService.LoadUserTimesheetEntry(timesheetId, MissionTypeEnum.TIME) ?? new VolunteerHourVM();
         var missionList = _serviceUnit.MissionApplicationService.LoadUserApprovedMissions(userId);
         vm.MissionList = missionList;
         return PartialView("_EditVolunteerHourModal", vm);
@@ -541,7 +563,7 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            _serviceUnit.TimesheetService.UpdateUserTimesheetEntry( vm );
+            _serviceUnit.TimesheetService.UpdateUserTimesheetEntry(vm);
         }
         var timesheetList = _serviceUnit.TimesheetService.LoadUserTimesheet(vm.UserId, MissionTypeEnum.TIME);
         return PartialView("_VolunteerHoursList", timesheetList);
@@ -620,7 +642,7 @@ public class UserController : Controller
         {
             bool isUserDetailsFilled = _serviceUnit.UserService.CheckUserDetailsFilled(userId);
             if (!isUserDetailsFilled) return NoContent();
-            
+
             _serviceUnit.MissionApplicationService.SaveApplication(missionId, userId);
             return StatusCode(201);
         }

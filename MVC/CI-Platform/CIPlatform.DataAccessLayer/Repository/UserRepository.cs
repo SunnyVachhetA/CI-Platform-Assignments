@@ -91,4 +91,15 @@ public class UserRepository : Repository<User>, IUserRepository
 
         _dbContext.Database.ExecuteSqlRaw("UPDATE [user] SET status = @status WHERE email = @email", statusParam, emailParam);
     }
+
+    public Admin CheckAdminCredential(string credentialEmail, string credentialPassword)
+    {
+        var query = "SELECT * FROM admin WHERE email = @Email AND password = @Password";
+        var emailParameter = new SqlParameter("@Email", credentialEmail);
+        var passwordParameter = new SqlParameter("@Password", credentialPassword);
+
+        var admin = _dbContext.Admins.FromSqlRaw(query, emailParameter, passwordParameter).FirstOrDefault();
+        return admin!;
+    }
+
 }

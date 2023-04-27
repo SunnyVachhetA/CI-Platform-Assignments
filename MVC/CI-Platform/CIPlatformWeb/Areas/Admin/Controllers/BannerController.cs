@@ -2,10 +2,12 @@
 using CIPlatform.Services.Service;
 using CIPlatform.Services.Service.Interface;
 using CIPlatform.Services.Utilities;
+using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CIPlatformWeb.Areas.Admin.Controllers;
 [Area("Admin")]
+[AdminAuthentication]
 public class BannerController : Controller
 {
     private readonly IServiceUnit _serviceUnit;

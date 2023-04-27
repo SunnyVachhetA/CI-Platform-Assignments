@@ -1,11 +1,13 @@
 ﻿using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CIPlatformWeb.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[AdminAuthentication]
 public class TimesheetController : Controller
 {
     private readonly IServiceUnit _serviceUnit;

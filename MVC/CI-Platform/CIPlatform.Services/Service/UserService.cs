@@ -393,6 +393,24 @@ public class UserService: IUserService
         _unitOfWork.Save();
     }
 
+    public UserRegistrationVM CheckAdminCredential(UserLoginVM credential)
+    {
+        string password = EncryptionService.EncryptAES(credential.Password);
+
+        var result = _unitOfWork.UserRepo.CheckAdminCredential(credential.Email, password);
+
+        if (result is null) return null!;
+
+        var adminUser = new UserRegistrationVM()
+        {
+            AdminId = result.AdminId,
+            FirstName = result.FirstName,
+            LastName = result.LastName,
+            Email = result.Email,
+        };
+        return adminUser;
+    }
+
     private static async Task<string> GetUpdatedMediaPath(IFormFile? file, string avatar, string path, string webRootPath)
     {
         if (file == null) return avatar;

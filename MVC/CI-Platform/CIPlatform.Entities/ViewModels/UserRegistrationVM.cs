@@ -48,4 +48,6 @@ public class UserRegistrationVM
     public string? Department { get; set; }
 
     public IEnumerable<BannerVM>? Banners { get; set; } = new List<BannerVM>();
+
+    public long? AdminId { get; set; }
 }

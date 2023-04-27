@@ -2000,3 +2000,22 @@ $(document).ajaxStart(function () {
 $(document).ajaxStop(function () {
     $('#load-spinner').hide(); 
 });
+
+
+//Admin logout
+
+$('#admin-logout').on('click', () => genericSweetPromptId("You can login using email ID and password!", "Logout", handleAdminLogoutAjax, 0));
+
+function handleAdminLogoutAjax() {
+    $.ajax({
+        type: "GET",
+        url: "/Admin/Home/Logout",
+        success: function (result) {
+            window.location.href = result.redirectToUrl;
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+let msg = $('#admin-user').val();
+if (msg !== '') successMessageSweetAlert(msg);

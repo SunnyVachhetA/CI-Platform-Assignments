@@ -27,4 +27,5 @@ public interface IUserService
     Task AddUserByAdmin(AdminUserInfoVM user, string rootPath, string link, string token);
     AdminUserInfoVM LoadUserProfileEdit(long id);
     Task UpdateUserByAdmin(AdminUserInfoVM user, string wwwRootPath);
+    UserRegistrationVM CheckAdminCredential(UserLoginVM credential);
 }

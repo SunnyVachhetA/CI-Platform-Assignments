@@ -177,6 +177,10 @@
       "PackagePath": "staticwebassets\\assets\\cancel1.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\check-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\check-fill.svg"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\check-mark.svg",
       "PackagePath": "staticwebassets\\assets\\check-mark.svg"
     },
@@ -199,6 +203,14 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\contact-fill.svg",
       "PackagePath": "staticwebassets\\assets\\contact-fill.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\cross-fill.svg",
+      "PackagePath": "staticwebassets\\assets\\cross-fill.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\cross-fill.txt",
+      "PackagePath": "staticwebassets\\assets\\cross-fill.txt"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\cross.png",

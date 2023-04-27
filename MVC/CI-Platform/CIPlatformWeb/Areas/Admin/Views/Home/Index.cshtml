@@ -1,4 +1,9 @@
-﻿<main class="d-lg-flex">
+﻿@{
+    var userName = Context.Session.GetString("UserName");
+    var msg = TempData["admin-login"];
+}
+<input type="hidden" value = "@msg" id="admin-user"/>
+<main class="d-lg-flex">
     <div class="overlay d-none d-lg-none position-absolute" id="admin-overlay"></div>
     <aside class="sidebar flex-shrink-0 min-vh-100">
         <div class="d-flex pt-2 pt-4 px-3 justify-content-between">
@@ -61,14 +66,12 @@
                 <div class="dropdown">
                     <a class="dropdown-toggle medium-text" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="~/assets/user-img.png" alt="Profile Image" class="nav-profile-picture">
-                        <span class="d-none d-sm-inline">Evan Donohue</span>
+                        <img src="~/assets/user-img.png" alt="Profile Image" class="nav-profile-picture object-fit-cover">
+                        <span class="d-none d-sm-inline">@userName</span>
                         <img src="~/assets/drop-down.png" class="ms-2" alt="Options">
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Timesheet</a></li>
-                        <li><a class="dropdown-item" href="#">Favourites</a></li>
+                        <li><a class="dropdown-item" id="admin-logout">Logout</a></li>
                     </ul>
                 </div>
             </div>

@@ -31,9 +31,9 @@ $('#user-logout').on
                 text: "You can login using email ID and password!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: 'orange',
+                confirmButtonColor: '#f88634',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Confirm'
+                confirmButtonText: 'Logout'
             }).then((result) => {
                 if (result.isConfirmed) {
                     handleUserLogoutAjax();
