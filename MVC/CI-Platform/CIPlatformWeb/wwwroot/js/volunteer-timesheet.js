@@ -3,13 +3,18 @@ const editGoalUrl = '/Volunteer/User/EditVolunteerGoal';
 const deleteHourUrl = '/Volunteer/User/DeleteVolunteerHour';
 const deleteGoalUrl = '/Volunteer/User/DeleteVolunteerGoal';
 
+const modalContainer = $('#partial-modal-container');
 let goalCount = 0;
 let timeCount = 0;
 $(document).ready(() => {
     addClickEventListenerToAddButtons();
     goalCount = $('#goal-msn-count').val();
     timeCount = $('#time-msn-count').val();
+    console.log(goalCount);
+    console.log(timeCount);
 })
+
+
 
 function addClickEventListenerToAddButtons() {
     addVolunteerHourBtnClick();
@@ -29,8 +34,11 @@ function addVolunteerHourBtnClick() {
                     url: '/Volunteer/User/AddHourModal',
                     data: { userId: loggedUserId },
                     success: function (result) {
+                        hideModal();
                         $('#partial-modal-container').html(result);
+                        handleCloseModal();
                         $('#addVolunteerHourModal').modal('show');
+                        setDateRange();
                         addClickEventListenerToAddButtons();
                         registerAddVolunteerHoursFormSubmit();
                     },
@@ -59,8 +67,11 @@ function handleVolunteerHourEdit() {
         url: editHourUrl,
         data: { timesheetId: timesheetId, userId: loggedUserId },
         success: function (result) {
+            hideModal();
             $('#partial-modal-container').html(result);
             $('#editVolunteerHourModal').modal('show');
+            setDateRange();
+            handleCloseModal();
             registerEditHourFormSubmit();
         },
         error: ajaxErrorSweetAlert
@@ -74,8 +85,11 @@ function handleVolunteerGoalEdit() {
         url: editGoalUrl,
         data: { timesheetId: timesheetId, userId: loggedUserId },
         success: function (result) {
+            hideModal();
             $('#partial-modal-container').html(result);
+            handleCloseModal();
             $('#editVolunteerGoalModal').modal('show');
+            setDateRange();
             registerEditGoalFormSubmit();
         },
         error: ajaxErrorSweetAlert
@@ -112,7 +126,6 @@ function deleteVoluteerEntry(timesheetId, type) {
                 $('#vol-timesheet-hour').html(result);
 
             addClickEventListenerToAddButtons();
-            register
             displayActionMessageSweetAlert('Deleted!', 'Your timesheet entry has been deleted.', 'success');
         },
         error: ajaxErrorSweetAlert
@@ -123,17 +136,21 @@ function addVolunteerGoalBtnClick() {
     $('#btnAddVolunteerGoal').click
         (
             () => {
-                if (timeCount == 0) {
-                    displayActionMessageSweetAlert('No Time Mission!', 'You need to be volunteer of goal mission to create entry!', 'info');
+                if (goalCount == 0) {
+                    displayActionMessageSweetAlert('No goal Mission!', 'You need to be volunteer of goal mission to create entry!', 'info');
                     return;
                 }
+                
                 $.ajax({
                     type: 'GET',
                     url: '/Volunteer/User/AddGoalModal',
                     data: { userId: loggedUserId },
                     success: function (result) {
+                        hideModal();
                         $('#partial-modal-container').html(result);
+                        handleCloseModal();
                         $('#addVolunteerGoalModal').modal('show');
+                        setDateRange();
                         registerAddVolunteerGoalsFormSubmit();
                         addClickEventListenerToAddButtons();
                     }
@@ -150,12 +167,12 @@ function registerAddVolunteerHoursFormSubmit()
             event.preventDefault();
             $('#form-add-hour').valid();
             if ($('#form-add-hour').valid()) {
+                $('#addVolunteerHourModal').modal('hide');
                 $.ajax({
                     type: 'POST',
                     url: '/Volunteer/User/AddVolunteerHours',
                     data: $('#form-add-hour').serialize(),
                     success: function (result) {
-                        $('#addVolunteerHourModal').modal('hide');
                         $('#vol-timesheet-hour').html(result);
                         displayActionMessageSweetAlert('Volunteer Hours Added!', 'Entry sent to admin for approval.', 'success');
                         addClickEventListenerToAddButtons();
@@ -182,7 +199,7 @@ function registerAddVolunteerGoalsFormSubmit() {
                     url: '/Volunteer/User/AddVolunteerGoals',
                     data: $('#form-add-goal').serialize(),
                     success: function (result) {
-                        $('#addVolunteerGoalModal').modal('hide');
+                        hideModal();
                         $('#vol-timesheet-goal').html(result);
                         displayActionMessageSweetAlert('Volunteer Goals Added!', 'Entry sent to admin for approval.', 'success');
                         registerAddVolunteerGoalsFormSubmit();
@@ -202,6 +219,7 @@ function registerEditHourFormSubmit() {
             $('#form-edit-hour').valid();
             if (!$('#form-edit-hour').valid()) return;
             $('#editVolunteerHourModal').modal('hide');
+           
             $.ajax({
                 type: 'PUT',
                 url: editHourUrl+'Put',
@@ -223,6 +241,9 @@ function registerEditGoalFormSubmit() {
             evt.preventDefault();
             $('#form-edit-goal').valid();
             if (!$('#form-edit-goal').valid()) return;
+            $('#form-add-hour').reset();
+            $('#form-add-goal').reset();
+            $('#form-edit-hour').reset();
             $('#editVolunteerGoalModal').modal('hide');
             $.ajax({
                 type: 'PUT',
@@ -238,3 +259,66 @@ function registerEditGoalFormSubmit() {
         }
     );
 }
+
+
+function handleCloseModal() {
+
+    $('#addVolunteerHourModal, #addVolunteerGoalModal').on('shown.bs.modal', function (e) {
+        $(this).css('z-index', parseInt($('.modal.show').last().css('z-index')));
+        $(this).find('.modal-content').css('background-color', '#fff');
+    });
+
+
+    $('#addVolunteerHourModal, #addVolunteerGoalModal').on('hide.bs.modal', function (e) {
+        if ($('.modal:visible').length > 1) {
+            $('body').addClass('modal-open');
+        } else {
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        }
+    });
+}
+
+function hideModal() {
+    $('#addVolunteerHourModal').modal('hide');
+    $('#addVolunteerGoalModal').modal('hide');
+    $('#editVolunteerHourModal').modal('hide');
+    $('#editVolunteerGoalModal').modal('hide');
+}
+
+function setDateRange() {
+    let startDate;
+    startDate = $('#vol-msn').find(':selected').data('startdate');
+    let endDate = $('#vol-msn').find(':selected').data('enddate');
+
+    $('#vol-msn').on('change', function () {
+        startDate = $('#vol-msn').find(':selected').data('startdate');
+        console.log(startDate);
+        setDate(startDate);
+    });
+    setDate(startDate, endDate);
+}
+
+function setDate(startDate, endDate) {
+    var date = moment(startDate, 'DD-MM-YYYY HH:mm:ss Z');
+    var formattedDate = date.format('YYYY-MM-DD');
+
+    var current = new Date().toISOString().split('T')[0];
+    
+    var today = moment().startOf('day');
+    var msnEnd = moment(endDate, 'DD-MM-YYYY HH:mm:ss Z');
+
+    if (msnEnd.isBefore(today))
+    {
+        $('#vol-date').attr('max', msnEnd.format('YYYY-MM-DD'));
+    } else if (msnEnd.isAfter(today))
+    {
+        $('#vol-date').attr('max', current);
+    }
+
+    $('#vol-date').attr('min', formattedDate);
+}
+
+
+
+

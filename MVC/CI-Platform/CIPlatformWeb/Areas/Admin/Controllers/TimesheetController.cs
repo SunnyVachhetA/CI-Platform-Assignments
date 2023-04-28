@@ -52,11 +52,11 @@ public class TimesheetController : Controller
     }
 
     [HttpPatch]
-    public IActionResult Approve(long timesheetId)
+    public IActionResult Approve(long timesheetId, string type)
     {
         try
         {
-            _serviceUnit.TimesheetService.UpdateTimesheetStatus(timesheetId, 1);
+            _serviceUnit.TimesheetService.UpdateTimesheetStatus(timesheetId, 1, type);
             return NoContent();
         }
         catch (Exception e)
@@ -68,11 +68,11 @@ public class TimesheetController : Controller
     }
 
     [HttpPatch]
-    public IActionResult Decline(long timesheetId)
+    public IActionResult Decline(long timesheetId, string? type)
     {
         try
         {
-            _serviceUnit.TimesheetService.UpdateTimesheetStatus(timesheetId, 2);
+            _serviceUnit.TimesheetService.UpdateTimesheetStatus(timesheetId, 2, string.Empty);
             return NoContent();
         }
         catch (Exception e)

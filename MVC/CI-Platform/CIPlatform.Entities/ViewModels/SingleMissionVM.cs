@@ -7,4 +7,8 @@ public class SingleMissionVM
     public string Title { get; set; } = string.Empty;
 
     public MissionTypeEnum MissionType { get; set; }
+
+    public DateTimeOffset? StartDate { get; set; }
+
+    public DateTimeOffset? EndDate { get; set; }
 }

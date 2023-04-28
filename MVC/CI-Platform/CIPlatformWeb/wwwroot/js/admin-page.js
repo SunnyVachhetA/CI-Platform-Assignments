@@ -247,6 +247,7 @@ function loadUsersOnDOM(result) {
 }
 function showSpinner() {
     $("#spinner").removeClass('d-none');
+    $('#loader').addClass('d-none');
 }
 function registerImagePreview() {
     const imgUpload = document.querySelector('#usr-profile-upload');
@@ -261,6 +262,7 @@ function registerImagePreview() {
 }
 function hideSpinner() {
     $("#spinner").addClass('d-none');
+    $('#loader').addClass('d-none');
 }
 
 function handleUserAdd() {
@@ -1716,7 +1718,7 @@ function updateTimesheetApprovalStatusAjax(timesheetId, message, url, type) {
     $.ajax({
         type: 'PATCH',
         url: url,
-        data: { timesheetId },
+        data: { timesheetId, type },
         success: function (result) {
             successMessageSweetAlert(message);
             if (type === 'hour') {
@@ -1868,7 +1870,41 @@ function registerMissionListEvents() {
     });
 
     $('.msn-delete').each((_, item) => {
-        $(item).click(() => console.log('clicked'));
+        $(item).click(() => {
+            let id = $(item).data('missionid');
+            genericSweetPromptId('You can change mission status to active anytime.', 'De-Activate Mission', handleMissionDeleteAjax, id);
+        });
+    });
+
+    $('.msn-restore').each((_, item) => {
+        $(item).click(() => {
+            let id = $(item).data('missionid');
+            genericSweetPromptId('You can change mission status to in-active anytime.', 'Activate Mission', handleMissionRestoreAjax, id);
+        });
+    });
+
+    $('.btn-msn-close').each((_, item) => {
+        $(item).click(() => {
+            let id = $(item).data('missionid');
+            genericSweetPromptId(`You will not be able to re-open mission again!`, 'Close Mission', hanldeMissionCloseAjax, id);
+        });
+    });
+}
+function hanldeMissionCloseAjax(id) { updateMissionStatus(id, '/Admin/Mission/Close', 'Mission Closed.') }
+
+function handleMissionDeleteAjax(id) { updateMissionStatus(id, '/Admin/Mission/DeActivate', 'Mission status set to In-Active.'); }
+function handleMissionRestoreAjax(id) { updateMissionStatus(id, '/Admin/Mission/Restore', 'Mission status set to Active'); }
+
+function updateMissionStatus(id, url, message) {
+    $.ajax({
+        type: 'PATCH',
+        url: url,
+        data: { id },
+        success: (result) => {
+            successMessageSweetAlert(message);
+            loadMissionsAjax();
+        },
+        error: ajaxErrorSweetAlert
     });
 }
 
@@ -1876,20 +1912,18 @@ function registerAddMissionEvent() {
     $('#btn-msn-time-add').click( handleTimeMission );
     $('#btn-msn-goal-add').click( handleGoalMission );
 }
-
-
 function handleTimeMission() {
     let id = 0;
     loadMissionForm('/Admin/Mission/TimeMission', id, registerAddTimeMissionEvent);
 }
-
 function loadMissionForm(url, id, cb) {
     $.ajax({
         type: 'GET',
         url: url,
         data: { id },
         success: (result) => {
-            $(adminMenuContent).html(result);
+            adminMenuContent.html(result);
+            registerDateValidation();
             registerCityAndCountryEvent();
             cb();
         },
@@ -1902,20 +1936,23 @@ function registerAddTimeMissionEvent() {
     uploadImages();
     uploadDocuments();
     $.getScript('/js/msn-editor-tiny.js');
+    var today = new Date().toISOString().split('T')[0];
+    $('#start-date').attr('min', today);
     handleAddMissionFormSubmit('#form-add-msn-time', '/Admin/Mission/TimeMission', 'Time mission added successfully!', 'POST');
 }
 
 function handleAddMissionFormSubmit(form, url, message, type) {
     $(form).on('submit', e => {
         e.preventDefault();
-        let fileResult = fileErrorOutput();
-        let descResult = tinyDescriptionError(tinymce.get('description').getContent());
-        if (fileResult || descResult) return;
-        $(form).valid();
 
-        if (!$(form).valid()) return;
         fileUpload.files = new FileListItems(validUploadFiles);
         docUpload.files = new FileListItems(documentList);
+        let fileResult = fileErrorOutput();
+        let descResult = tinyDescriptionError(tinymce.get('description').getContent());
+        let dateResult = validateDates();
+        if (fileResult || descResult || !dateResult) return;
+        $(form).valid();
+        if (!$(form).valid()) return;
         const formData = new FormData($(form)[0]);
         formData.set("Description", tinymce.get('description').getContent());
         formData.set("OrganizationDetail", tinymce.get('description1').getContent());
@@ -1959,6 +1996,8 @@ function registerAddGoalMissionEvent() {
     uploadImages();
     uploadDocuments();
     $.getScript('/js/msn-editor-tiny.js');
+    var today = new Date().toISOString().split('T')[0];
+    $('#start-date').attr('min', today);
     handleAddMissionFormSubmit('#form-add-msn-goal', '/Admin/Mission/GoalMission', 'Goal mission added successfully!', 'POST');
 }
 
@@ -2019,3 +2058,46 @@ function handleAdminLogoutAjax() {
 
 let msg = $('#admin-user').val();
 if (msg !== '') successMessageSweetAlert(msg);
+
+//Date validation
+
+function validateDates() {
+    var startDate = new Date($('#start-date').val());
+    var endDate = new Date($('#end-date').val());
+    var regDate = new Date($('#reg-date').val());
+
+    $('#end-date').attr('min', startDate.toISOString().split('T')[0]);
+    $('#reg-date').attr('min', startDate.toISOString().split('T')[0]);
+    var isValid = true;
+
+    if (startDate >= endDate) {
+        $('#err-start').text('Start date must be before end date');
+        isValid = false;
+    } else {
+        $('#err-start').text('');
+    }
+
+    if (endDate <= startDate) {
+        $('#err-end').text('End date must be after start date');
+        isValid = false;
+    } else {
+        $('#err-end').text('');
+    }
+
+    if (regDate != '') {
+        if (regDate >= startDate || regDate >= endDate) {
+            $('#err-reg').text('Registration deadline must be between start and end date.');
+            isValid = false;
+        } else {
+            $('#err-reg').text('');
+        }
+    }
+
+    return isValid;
+}
+
+function registerDateValidation() {
+    $('#start-date, #end-date, #reg-date').change(function () {
+        validateDates();
+    });
+}

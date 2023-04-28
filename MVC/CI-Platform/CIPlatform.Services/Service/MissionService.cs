@@ -189,20 +189,22 @@ public class MissionService : IMissionService
         return result.ToList();
     }
 
-    public (IEnumerable<MissionVMCard>, long) FilterMissionsCard(FilterModel filterModel)
+    public async Task<(IEnumerable<MissionVMCard>, long)> FilterMissionsCard(FilterModel filterModel)
     {
-        var result = unitOfWork.MissionRepo.FetchMissionCardInformation();
+        var result = await unitOfWork.MissionRepo.FetchMissionCardInformationAsync();
 
         var missionList =
             result
+                .OrderBy(msn => msn.CreatedAt)
                 .Select(ConvertMissionToMissionVMCard);
 
         if (missionList == null || !missionList.Any()) return (new List<MissionVMCard>(), 0);
-        FilterMissionService filter = new FilterMissionService(missionList, filterModel);
-        long totalMissionCount = 0;
-        var filteredMissions = filter.Filter(out totalMissionCount);
 
-        return (filteredMissions, totalMissionCount);
+        FilterMissionService filter = new FilterMissionService(missionList.AsQueryable(), filterModel);
+        
+        var filteredMissions =  filter.Filter();
+
+        return (filteredMissions.Item1, filteredMissions.Item2);
     }
 
 
@@ -337,7 +339,8 @@ public class MissionService : IMissionService
             GoalAchieved = msnGoal?.GoalAchived,
             MissionSkill = mission.MissionSkills?.Select(skill => skill.SkillId) ?? new List<short>(),
             CountryId = mission.CountryId,
-            CityId = mission.CityId
+            CityId = mission.CityId,
+            CreatedAt = mission.CreatedAt
         };
 
         return vmCard;
@@ -356,6 +359,7 @@ public class MissionService : IMissionService
         var missions = unitOfWork.MissionRepo.GetAll();
         return
             missions
+                .OrderByDescending(msn => msn.CreatedAt)
                 .Select(ConvertToMissionAdminVM);
     }
 
@@ -660,7 +664,8 @@ public class MissionService : IMissionService
             EndDate = mission.EndDate,
             Title = mission.Title?? string.Empty,
             MissionType = (MissionTypeEnum) ( mission.MissionType ? 1 : 0),
-            IsActive = mission.IsActive?? true
+            IsActive = mission.IsActive?? true,
+            MissionStatus = (mission.Status??true) ? MissionStatus.ONGOING : MissionStatus.FINISHED
         };
         return vm;
     }
@@ -679,4 +684,15 @@ public class MissionService : IMissionService
         return (missionList, totalMissionCount);
     }
 
+    public async Task UpdateMissionActiveStatus(long id, byte status = 0)
+    {
+        int result = await unitOfWork.MissionRepo.UpdateMissionActiveStatus(id, status);
+        if (result == 0) throw new Exception("Something went wrong during updating mission activation status!!");
+    }
+
+    public async Task UpdateMissionCloseStatus(long id, int status)
+    {
+        int result = await unitOfWork.MissionRepo.UpdateMissionCloseStatus(id, status);
+        if (result == 0) throw new Exception("Something went wrong during updating mission close status!!");
+    }
 }

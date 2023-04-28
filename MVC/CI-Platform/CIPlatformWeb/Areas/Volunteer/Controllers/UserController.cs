@@ -12,7 +12,6 @@ namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 [Area("Volunteer")]
 [Route("/Volunteer/User/")]
 [Authentication]
-[AllowAnonymous]
 public class UserController : Controller
 {
     private readonly IServiceUnit _serviceUnit;
@@ -25,8 +24,7 @@ public class UserController : Controller
         _emailService = emailService;
         _webHostEnvironment = webHostEnvironment;
     }
-
-    [Authentication]
+    
     [Route("UserProfile", Name = "UserProfile")]
     public IActionResult Index(long id)
     {
@@ -92,6 +90,7 @@ public class UserController : Controller
     }
 
     [Route("Login", Name = "Login")]
+    [AllowAnonymous]
     public IActionResult Login(string? _email, string? _token)
     {
         if (!string.IsNullOrEmpty(_email) && !string.IsNullOrEmpty(_token))
@@ -114,6 +113,7 @@ public class UserController : Controller
     [HttpPost]
     [Route("Login")]
     [ValidateAntiForgeryToken]
+    [AllowAnonymous]
     public IActionResult Login(UserLoginVM credential)
     {
         if (!ModelState.IsValid)
@@ -158,13 +158,14 @@ public class UserController : Controller
     public void CreateUserLoginSession(UserRegistrationVM user, bool isAdmin = false)
     {
         HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
-        HttpContext.Session.SetString("UserId", user.UserId.ToString()!);
+        HttpContext.Session.SetString("UserId", user.UserId.ToString()?? "1");
         HttpContext.Session.SetString("UserAvatar", user.Avatar);
         HttpContext.Session.SetString("UserEmail", user.Email);
         HttpContext.Session.SetString("IsAdmin", isAdmin.ToString());
     }
 
     [Route("ForgotPassword")]
+    [AllowAnonymous]
     public IActionResult ForgotPassword()
     {
         var banners = _serviceUnit.BannerService.LoadAllActiveBanners();
@@ -173,6 +174,7 @@ public class UserController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [AllowAnonymous]
     [Route("ForgotPassword", Name = "ForgotPasswordPost")]
     public IActionResult ForgotPassword(string email)
     {
@@ -214,6 +216,7 @@ public class UserController : Controller
     }
 
     [Route("ResetPassword", Name = "ResetPassword")]
+    [AllowAnonymous]
     public IActionResult ResetPassword(string _email, string _token)
     {
 
@@ -237,6 +240,7 @@ public class UserController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("ResetPassword", Name = "ResetPasswordPost")]
+    [AllowAnonymous]
     public IActionResult ResetPassword(ResetPasswordPostVM reset)
     {
         if (ModelState.IsValid)
@@ -258,6 +262,7 @@ public class UserController : Controller
     }
 
     [Route("Registration")]
+    [AllowAnonymous]
     public IActionResult Registration()
     {
         UserRegistrationVM vm = new();
@@ -268,6 +273,7 @@ public class UserController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("Registration")]
+    [AllowAnonymous]
     public IActionResult Registration(UserRegistrationVM user)
     {
         string email = user.Email.Trim().ToLower();
@@ -320,6 +326,7 @@ public class UserController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Route("ForgotPasswordV1", Name = "ForgotPasswordPostV1")]
+    [AllowAnonymous]
     public IActionResult ForgotPasswordV1(string email)
     {
         if (email == null || !ModelState.IsValid)
@@ -487,6 +494,8 @@ public class UserController : Controller
         if (userId != id) return Unauthorized();
         List<VolunteerTimesheetVM> timesheetList =
             _serviceUnit.TimesheetService.LoadUserTimesheet(id);
+        ViewBag.GoalCount = _serviceUnit.MissionApplicationService.UserMissionCount(id, MissionTypeEnum.GOAL);
+        ViewBag.TimeCount = _serviceUnit.MissionApplicationService.UserMissionCount(id, MissionTypeEnum.TIME);
         return View(timesheetList);
     }
 

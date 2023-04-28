@@ -1,6 +1,7 @@
 ﻿using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.Services.Service;
 public class FilterMissionService
@@ -14,7 +15,7 @@ public class FilterMissionService
         this.filterModel = filterModel;
     }
 
-    public IEnumerable<MissionVMCard> Filter(out long totalMissionCount)
+    public (IEnumerable<MissionVMCard>, long) Filter()
     {
         missions = FilterBySearch();
         missions = FilterByCountry();
@@ -22,20 +23,21 @@ public class FilterMissionService
         missions = FilterByTheme();
         missions = FilterBySkill();
         missions = FilterBySortMenu();
-        totalMissionCount = missions.LongCount();
-        return
+        var filterMissions =
             missions
+                .OrderByDescending(msn => msn.CreatedAt)
                 .Skip((filterModel.Page - 1) * 9)
                 .Take(9);
+        return (filterMissions, missions.LongCount());
     }
 
     private IQueryable<MissionVMCard> FilterByCity()
     {
-        if( ! filterModel.CityList.Any() ) return missions;
+        if (!filterModel.CityList.Any()) return missions;
 
         return
             missions
-                .Where( msn => filterModel.CityList.Any(id => id == msn.CityId) );
+                .Where(msn => filterModel.CityList.Any(id => id == msn.CityId));
     }
 
     private IQueryable<MissionVMCard> FilterByCountry()
@@ -43,7 +45,7 @@ public class FilterMissionService
         if (!filterModel.CountryList.Any()) return missions;
         return
             missions
-                .Where( msn => filterModel.CountryList.Any( id => id == msn.CountryId ) );
+                .Where(msn => filterModel.CountryList.Any(id => id == msn.CountryId));
     }
 
     private IQueryable<MissionVMCard> FilterByTheme()
@@ -60,7 +62,7 @@ public class FilterMissionService
 
         return
             missions
-                .Where(msn => msn.MissionSkill.Any(id => filterModel.SkillList.Contains(id)) );
+                .Where(msn => msn.MissionSkill.Any(id => filterModel.SkillList.Contains(id)));
     }
 
     private IQueryable<MissionVMCard> FilterBySearch()
@@ -70,9 +72,9 @@ public class FilterMissionService
 
         return
             missions
-                .Where( msn => msn.Title.ContainsCaseInsensitive(filterModel.SearchKeyword) 
-                               || 
-                            msn.OrganizationName!.ContainsCaseInsensitive(filterModel.SearchKeyword)  );
+                .Where(msn => msn.Title.ContainsCaseInsensitive(filterModel.SearchKeyword)
+                               ||
+                            msn.OrganizationName!.ContainsCaseInsensitive(filterModel.SearchKeyword));
     }
 
     private IQueryable<MissionVMCard> FilterBySortMenu()

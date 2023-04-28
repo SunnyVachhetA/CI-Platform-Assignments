@@ -12,7 +12,7 @@ public interface IMissionService
     Task UpdateMissionRating(long missionId, byte avgRating);
     bool IsThemeUsedInMission(short themeId);
     (IEnumerable<MissionVMCard>, long) LoadAllMissionCards(int page);
-    (IEnumerable<MissionVMCard>, long) FilterMissionsCard(FilterModel filterModel);
+    Task<(IEnumerable<MissionVMCard>, long)> FilterMissionsCard(FilterModel filterModel);
     IEnumerable<AdminMissionVM> LoadAllMissionsAdmin();
     IEnumerable<AdminMissionVM> SearchMission(string searchKey);
     Task CreateTimeMission(TimeMissionVM mission, string wwwRootPath);
@@ -24,4 +24,6 @@ public interface IMissionService
     Task<GoalMissionVM> LoadEditGoalMissionDetails(long id);
     Task UpdateGoalMission(GoalMissionVM mission, IEnumerable<string> preloadedMediaList, IEnumerable<string> preloadedDocumentPathList, IEnumerable<short> preloadedSkill, string wwwRootPath);
     Task<(IEnumerable<MissionVMCard>, long)> LoadAllMissionCardsAsync(int page);
+    Task UpdateMissionActiveStatus(long id, byte status = 0);
+    Task UpdateMissionCloseStatus(long id, int status);
 }

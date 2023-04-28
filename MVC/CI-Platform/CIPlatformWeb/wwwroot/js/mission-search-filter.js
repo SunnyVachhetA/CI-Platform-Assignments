@@ -263,9 +263,13 @@ $('#btn-msn-apply').click
 );
 
 $(document).ajaxStart(function () {
+    $('.spinner-overlay').removeClass('d-none');
+
     $('#load-spinner').show();
 });
 
 $(document).ajaxStop(function () {
     $('#load-spinner').hide();
+    $('.spinner-overlay').addClass('d-none');
+
 });

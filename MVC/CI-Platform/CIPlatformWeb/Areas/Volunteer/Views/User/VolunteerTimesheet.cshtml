@@ -3,13 +3,13 @@
     var goalList = Model.Where( timesheet => timesheet.MissionType == MissionTypeEnum.GOAL).ToList();
     var timeList = Model.Where(timesheet => timesheet.MissionType == MissionTypeEnum.TIME).ToList();
 
-    var goalMissionCount = Model.Where(msn => msn.MissionType == MissionTypeEnum.GOAL);
-    var timeMissionCount = Model.Where( msn => msn.MissionType == MissionTypeEnum.TIME );
+    var goalMissionCount = ViewBag.GoalCount;
+    var timeMissionCount = ViewBag.TimeCount;
 }
 
 @Html.HiddenFor(model => goalMissionCount, new { id="goal-msn-count" })
 @Html.HiddenFor(model => timeMissionCount, new { id="time-msn-count" })
-<main class="h-100 timesheet-grid">
+<main class="d-grid min-vh-100 timesheet-grid">
     <header>
         <partial name="_Navbar" />
         <hr class="m-0"/>
@@ -35,6 +35,7 @@
 
 @section Scripts
 {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="~/js/site.js"></script>
     <script src="~/js/volunteer-timesheet.js"></script>
 }

@@ -36,6 +36,7 @@ public class ContactUsService: IContactUsService
         IEnumerable<ContactU> messageList = _unitOfWork.ContactUsRepo.FetchContactMessage();
         return
             messageList
+                .OrderByDescending(query => query.CreatedAt)
                 .Select(ConvertContactModelToContactUsVM);
     }
 

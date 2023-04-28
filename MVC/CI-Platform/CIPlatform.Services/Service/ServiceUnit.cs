@@ -68,7 +68,7 @@ public class ServiceUnit: IServiceUnit
         StoryInviteService = new StoryInviteService(_unitOfWork, emailService);
         UserSkillService = new UserSkillService(_unitOfWork);
         ContactUsService = new ContactUsService(_unitOfWork, emailService);
-        TimesheetService = new TimesheetService(_unitOfWork);
+        TimesheetService = new TimesheetService(_unitOfWork, GoalMissionService);
         CmsPageService = new CmsPageService(_unitOfWork);
 		ThemeService = new ThemeService(_unitOfWork);
         VerifyEmailService = new VerifyEmailService(_unitOfWork);

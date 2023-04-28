@@ -13,7 +13,7 @@ public class VolunteerHourVM
 
     [Required(ErrorMessage = "Please select volunteered date!")]
     [Display(Name = "Date Volunteered")]
-    public DateTimeOffset Date { get; set; }
+    public DateTimeOffset? Date { get; set; }
 
     [Required(ErrorMessage = "Please enter volunteered hours!")]
     [Range(0, 23, ErrorMessage = "Hours must be between 0 to 23!")]

@@ -14,4 +14,7 @@ public interface IMissionRepository : IRepository<Mission>
     Task<Mission> FetchMissionWithMedia(long id);
     Task<Mission> FetchMissionWithMediaGoal(long id);
     Task<IEnumerable<Mission>> FetchMissionCardInformationAsync();
+    Task<int> UpdateMissionActiveStatus(long id, byte status);
+    Task<int> UpdateMissionCloseStatus(long id, int status);
+    void CloseGoalMission(long entryMissionId);
 }

@@ -78,7 +78,9 @@ public class MissionApplicationService : IMissionApplicationService
                 {
                     MissionId = application.MissionId,
                     Title = application.Mission.Title?? string.Empty,
-                    MissionType = application.Mission.MissionType ? MissionTypeEnum.TIME : MissionTypeEnum.GOAL
+                    MissionType = application.Mission.MissionType ? MissionTypeEnum.TIME : MissionTypeEnum.GOAL,
+                    StartDate = application.Mission.StartDate,
+                    EndDate = application.Mission.EndDate
                 });
         return userMissionList;
     }
@@ -110,6 +112,7 @@ public class MissionApplicationService : IMissionApplicationService
 
         return
             applications
+                .OrderByDescending(app => app.CreatedAt)
                 .Select(ConvertToApplicationVM);
     }
 
@@ -132,6 +135,19 @@ public class MissionApplicationService : IMissionApplicationService
         return
             applications
                 .Select(ConvertToApplicationVM);
+    }
+
+    public long UserMissionCount(long id, MissionTypeEnum type)
+    {
+        bool checkFor = type != MissionTypeEnum.GOAL;
+
+        var applications = unitOfWork.MissionApplicationRepo.FetchApplicationWithMission();
+
+        var count =
+            applications
+                .Where(app => (app.UserId == id && app.Mission.MissionType == checkFor && app.ApprovalStatus == 1))
+                .LongCount();
+        return count;
     }
 
 

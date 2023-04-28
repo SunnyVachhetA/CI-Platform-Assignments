@@ -236,6 +236,7 @@ public class StoryService : IStoryService
         var stories = _unitOfWork.StoryRepo.GetStoriesWithMissionAndUser();
         return
             stories
+                .OrderByDescending(story => story.CreatedAt)
                 .Select(ConvertStoryModelToAdminStoryVM);
     }
 

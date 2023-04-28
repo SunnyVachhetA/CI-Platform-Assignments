@@ -13,13 +13,13 @@
                 <div class="modal-body d-flex flex-column gap-3">
                     <div>
                         <label class="form-label" asp-for="MissionId"></label>
-                        <select class="form-select" asp-for="MissionId">
+                        <select class="form-select" asp-for="MissionId" id ="vol-msn">
                             <option value="" selected disabled>Select Mission</option>
                             @foreach (var mission in Model.MissionList)
                             {
                                 @if (mission.MissionType == MissionTypeEnum.GOAL)
                                 {
-                                    <option value="@mission.MissionId">@mission.Title</option>
+                                    <option value="@mission.MissionId" data-startdate="@mission.StartDate" data-enddate="@mission.EndDate">@mission.Title</option>
                                 }
                             }
                         </select>
@@ -27,7 +27,7 @@
                     </div>
                     <div>
                         <label class="form-label" asp-for="Date"></label>
-                        <input onfocus="(this.type='date')" asp-for="Date" class="form-control" placeholder="Date Volunteered">
+                        <input type = "date" asp-for="Date" class="form-control" id="vol-date">
                         <span class="text-danger font-xs" asp-validation-for="Date"></span>
                     </div>
                     <div>
@@ -51,4 +51,5 @@
     </div>
 </div>
 <!-- Add Volunteer Goal modal finish -->
-<partial name="_ValidationScriptsPartial"/>
+
+    <partial name="_ValidationScriptsPartial" />

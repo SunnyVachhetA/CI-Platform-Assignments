@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 [Area("Volunteer")]
 [Authentication]
-[AllowAnonymous]
 public class MissionController : Controller
 {
     private readonly IServiceUnit _serviceUnit;
@@ -15,7 +14,8 @@ public class MissionController : Controller
     {
         _serviceUnit = serviceUnit;
     }
-    
+
+    [AllowAnonymous]
     public IActionResult Index( long id )
     {
         MissionCardVM missionDetails = _serviceUnit.MissionService.LoadMissionDetails( id );

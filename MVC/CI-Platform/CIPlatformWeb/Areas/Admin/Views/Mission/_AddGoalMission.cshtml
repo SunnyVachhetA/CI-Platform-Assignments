@@ -31,14 +31,14 @@
             <div class="row g-3">
                 <div class="col-md-6">
                     <label asp-for="StartDate" class="form-label"></label>
-                    <input type="date" class="form-control" asp-for="StartDate">
-                    <span class="text-danger font-xs" asp-validation-for="StartDate"></span>
+                    <input type="date" class="form-control" asp-for="StartDate" id="start-date">
+                    <span class="text-danger font-xs" asp-validation-for="StartDate" id="err-start"></span>
 
                 </div>
                 <div class="col-md-6">
                     <label asp-for="EndDate" class="form-label"></label>
-                    <input type="date" class="form-control" asp-for="EndDate">
-                    <span class="text-danger font-xs" asp-validation-for="EndDate"></span>
+                    <input type="date" class="form-control" asp-for="EndDate" id="end-date">
+                    <span class="text-danger font-xs" asp-validation-for="EndDate" id="err-end"></span>
                 </div>
             </div>
             <div class="row g-3">
@@ -49,7 +49,8 @@
                 </div>
                 <div class="col-md-6">
                     <label asp-for="RegistrationDeadline" class="form-label"></label>
-                    <input type="date" class="form-control" asp-for="RegistrationDeadline">
+                    <input type="date" class="form-control" asp-for="RegistrationDeadline" id="reg-date">
+                    <span id="err-reg" class="text-danger font-xs"></span>
                 </div>
             </div>
             

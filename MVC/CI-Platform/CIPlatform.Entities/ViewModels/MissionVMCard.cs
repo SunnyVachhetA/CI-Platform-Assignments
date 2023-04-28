@@ -31,4 +31,6 @@ public class MissionVMCard
     public IEnumerable<long> ApprovedApplicationList = new List<long>();
     public IEnumerable<short> MissionSkill = new List<short>();
     public IEnumerable<long> ApplicationListId { get; set; } = new List<long>();
+
+    public DateTimeOffset CreatedAt { get; set; }
 }

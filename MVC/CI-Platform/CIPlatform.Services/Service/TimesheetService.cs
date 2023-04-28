@@ -9,9 +9,11 @@ namespace CIPlatform.Services.Service;
 public class TimesheetService: ITimesheetService
 {
     private readonly IUnitOfWork _unitOfWork;
-    public TimesheetService(IUnitOfWork unitOfWork)
+    private readonly IGoalMissionService _goalMissionService;
+    public TimesheetService(IUnitOfWork unitOfWork, IGoalMissionService goalMissionService)
     {
         _unitOfWork = unitOfWork;
+        _goalMissionService = goalMissionService;
     }
 
     private Func<Timesheet, bool> FilterUserTimesheet(long id)
@@ -161,13 +163,23 @@ public class TimesheetService: ITimesheetService
         
         return
             timesheet
+                .OrderByDescending(entry => entry.CreatedAt)
                 .Select(ConvertTimesheetToVolunteerTimesheetVM);
     }
 
-    public void UpdateTimesheetStatus(long timesheetId, byte status)
+    public void UpdateTimesheetStatus(long timesheetId, byte status, string type)
     {
+
         int result = _unitOfWork.TimesheetRepo.UpdateTimesheetApprovalStatus(timesheetId, status);
         if (result == 0) throw new Exception("Something went wrong during update timesheet status!");
+        
+        if (!type.EqualsIgnoreCase("goal")) return;
+        var entry = _unitOfWork.TimesheetRepo.TimesheetWithGoalMission(timesheetId);
+        int action = entry.Action ?? 0;
+
+        bool isGoalAchieved = _goalMissionService.UpdateGoalAction(entry.MissionId, action);
+        if (isGoalAchieved)
+            _unitOfWork.MissionRepo.CloseGoalMission(entry.MissionId);
     }
 
     public IEnumerable<VolunteerTimesheetVM> SearchTimesheet(string searchKey, MissionTypeEnum missionTypeEnum)

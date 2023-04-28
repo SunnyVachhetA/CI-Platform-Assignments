@@ -60,11 +60,20 @@ public class MissionApplicationRepository : Repository<MissionApplication>, IMis
                 .Where(filter)
                 .OrderBy(app => app.ApprovalStatus);
 
+    public IEnumerable<MissionApplication> FetchApplicationWithMission()
+    {
+        return
+            dbSet
+                .Include(app => app.Mission)
+                .ToList();
+    }
+
     private IEnumerable<MissionApplication> ApplicationWithUserAndMission() 
         => 
             dbSet
                 .Include(app => app.User)
                 .Include(app => app.Mission)
-                .OrderBy(app => app.ApprovalStatus);
+                .OrderBy(app => app.ApprovalStatus)
+                .ToList();
 
 }

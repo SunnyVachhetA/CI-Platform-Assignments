@@ -58,4 +58,13 @@ public class TimesheetRepository: Repository<Timesheet>, ITimesheetRepository
                 .AsEnumerable()
                 .FirstOrDefault(filter);
     }
+
+    public Timesheet TimesheetWithGoalMission(long timesheetId)
+    {
+        return
+            dbSet
+                .Include(entry => entry.Mission)
+                .ThenInclude(goal => goal.GoalMissions)
+                .FirstOrDefault(entry => entry.TimesheetId == timesheetId)!;
+    }
 }

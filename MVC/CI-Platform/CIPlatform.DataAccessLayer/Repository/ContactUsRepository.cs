@@ -15,7 +15,8 @@ public class ContactUsRepository: Repository<ContactU>, IContactUsRepository
     public IEnumerable<ContactU> FetchContactMessage()
         =>
             dbSet
-                .Include(contact => contact.User);
+                .Include(contact => contact.User)
+                .ToList();
 
     public int UpdateContactResponse(string response, long contactId)
     {

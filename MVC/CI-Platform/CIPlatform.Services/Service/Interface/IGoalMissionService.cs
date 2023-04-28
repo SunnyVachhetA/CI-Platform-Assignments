@@ -6,4 +6,5 @@ public interface IGoalMissionService
 {
     Task SaveMissionGoalDetails(GoalMissionVM mission, long entityMissionId);
     Task EditGoalMissionDetails(GoalMission first, int? missionGoalValue, string missionGoalObjective);
+    bool UpdateGoalAction(long missionId, int action);
 }

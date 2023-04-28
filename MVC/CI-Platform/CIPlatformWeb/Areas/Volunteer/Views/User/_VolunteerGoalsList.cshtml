@@ -9,9 +9,9 @@
         Add
     </button>
 </div>
+    <div class="table-responsive mt-3">
 @if (Model.Any())
 {
-    <div class="table-responsive mt-3">
     
         <table class="table table-borderless">
             <thead>
@@ -48,9 +48,9 @@
             </tbody>
         </table>
     
-    </div>
 }
 else
 {
     <p class="text-info-message p-2 mx-content my-auto mx-auto mb-0">There are no contribution at the moment.</p>
 }
+    </div>

@@ -12,7 +12,7 @@ public class VolunteerGoalVM
 
     [Required(ErrorMessage = "Please select volunteered date!")]
     [Display(Name = "Date Volunteered")]
-    public DateTimeOffset Date { get; set; }
+    public DateTimeOffset? Date { get; set; }
 
     [Required(ErrorMessage = "Please enter action!")]
     [Range(0, int.MaxValue, ErrorMessage = "Action value should be greater than 0!")]

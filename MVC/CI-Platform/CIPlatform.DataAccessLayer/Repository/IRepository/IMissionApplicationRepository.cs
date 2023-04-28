@@ -10,4 +10,5 @@ public interface IMissionApplicationRepository : IRepository<MissionApplication>
     IEnumerable<MissionApplication> LoadAllApplications();
     int UpdateApplicationStatus(long id, byte status);
     IEnumerable<MissionApplication> LoadApplications(Func<MissionApplication, bool> filter);
+    IEnumerable<MissionApplication> FetchApplicationWithMission();
 }

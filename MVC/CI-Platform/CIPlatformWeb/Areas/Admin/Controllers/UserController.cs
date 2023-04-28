@@ -107,7 +107,7 @@ public class UserController : Controller
             if (!ModelState.IsValid) return BadRequest();
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             string token = Guid.NewGuid().ToString();
-            var href = Url.Action("Login", "User", new { _email = user.Email.Trim().ToLower(), _token = token }, "https", "localhost", "Volunteer");
+            var href = Url.Action("Login", "User", new { area="Volunteer", _email = user.Email.Trim().ToLower(), _token = token }, "https");
             await _serviceUnit.UserService.AddUserByAdmin(user, wwwRootPath, href, token);
             return StatusCode(204);
         }

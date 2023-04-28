@@ -146,4 +146,25 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
             .Include(mission => mission.MissionSkills)
             .ToListAsync();
     }
+
+    public async Task<int> UpdateMissionActiveStatus(long id, byte status)
+    {
+        var query = "UPDATE mission SET is_active = {0}, updated_at = {1} WHERE mission_id = {2}";
+
+        return await _dbContext.Database.ExecuteSqlRawAsync(query, status, DateTimeOffset.Now, id);
+    }
+
+    public async Task<int> UpdateMissionCloseStatus(long id, int status)
+    {
+
+        var query = "UPDATE mission SET status = {0}, updated_at = {1} WHERE mission_id = {2}";
+
+        return await _dbContext.Database.ExecuteSqlRawAsync(query, status, DateTimeOffset.Now, id);
+    }
+
+    public void CloseGoalMission(long entryMissionId)
+    {
+        var query = "UPDATE mission SET status = {0}, updated_at = {1} WHERE mission_id = {2}";
+        _dbContext.Database.ExecuteSqlRaw(query, 0, DateTimeOffset.Now, entryMissionId);
+    }
 }

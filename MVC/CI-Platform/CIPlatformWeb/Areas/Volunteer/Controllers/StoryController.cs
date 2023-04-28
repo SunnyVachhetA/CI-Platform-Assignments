@@ -8,7 +8,6 @@ namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 
 [Area("Volunteer")]
 [Authentication]
-[AllowAnonymous]
 public class StoryController : Controller
 {
     private readonly IServiceUnit _serviceUnit;
@@ -18,25 +17,24 @@ public class StoryController : Controller
         _serviceUnit = serviceUnit;
         _webHostEnvironment = webHostEnvironment;   
     }
+
+    [AllowAnonymous]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Index()
     {
         IEnumerable< ShareStoryVM > storyList = new List<ShareStoryVM>();
         storyList = _serviceUnit.StoryService.FetchAllUserStories();
 
-        //ViewBag.MissionError = missionError ?? false;
-
-        //TempData["MissionError"] = missionError ?? false;
-
         return View("StoryListing", storyList);
     }
 
+    [AllowAnonymous]
     public IActionResult ShareStory()
     {
         return View();
     }
 
     [HttpGet]
-    [Authentication]
     public IActionResult AddStory(long userId)
     {
         long id = long.Parse(HttpContext.Session.GetString("UserId")!);
@@ -174,6 +172,7 @@ public class StoryController : Controller
 
 
     [HttpGet]
+    [AllowAnonymous]
     public IActionResult Story(long id)
     {
         ShareStoryVM storyVm = _serviceUnit.StoryService.LoadStoryDetails(id);

@@ -765,6 +765,10 @@
       "PackagePath": "staticwebassets\\images\\static\\img2.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\05f19127-3499-40e5-959c-167c45941d40.png",
+      "PackagePath": "staticwebassets\\images\\story\\05f19127-3499-40e5-959c-167c45941d40.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\17a79331-6bb0-4d40-8e69-0825bed9ccfa.png",
       "PackagePath": "staticwebassets\\images\\story\\17a79331-6bb0-4d40-8e69-0825bed9ccfa.png"
     },
@@ -805,6 +809,10 @@
       "PackagePath": "staticwebassets\\images\\story\\7a5524b6-42e0-4954-b188-be018fb5b0fc.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\7b87720f-ff8b-4c6b-853d-63ed13033438.png",
+      "PackagePath": "staticwebassets\\images\\story\\7b87720f-ff8b-4c6b-853d-63ed13033438.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\863fc221-f1e1-4d18-9d4b-bbf95865cf7b.png",
       "PackagePath": "staticwebassets\\images\\story\\863fc221-f1e1-4d18-9d4b-bbf95865cf7b.png"
     },
@@ -819,6 +827,10 @@
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\8e24ddb2-a21b-46d7-a68f-ccc980efe3b8.jpg",
       "PackagePath": "staticwebassets\\images\\story\\8e24ddb2-a21b-46d7-a68f-ccc980efe3b8.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\8e349aad-daef-4aa5-a1cc-a2b20884db03.png",
+      "PackagePath": "staticwebassets\\images\\story\\8e349aad-daef-4aa5-a1cc-a2b20884db03.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\story\\95804278-2828-4d0c-9812-f858067c022c.png",
@@ -913,8 +925,8 @@
       "PackagePath": "staticwebassets\\images\\user\\44439fd9-e9fc-4223-acf4-c29a48b97e21.png"
     },
     {
-      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\454d12bf-2cf3-459d-a2d1-ad5d90ec0e40.png",
-      "PackagePath": "staticwebassets\\images\\user\\454d12bf-2cf3-459d-a2d1-ad5d90ec0e40.png"
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\6b9efa39-9e61-4229-93b7-8b71b15b5d3e.png",
+      "PackagePath": "staticwebassets\\images\\user\\6b9efa39-9e61-4229-93b7-8b71b15b5d3e.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\user\\a66e5dc4-0f2a-4d97-b9a1-bd824c9926fb.jpg",

@@ -22,6 +22,9 @@ namespace CIPlatformWeb.Areas.Volunteer.Controllers
             _logger = logger;
             _serviceUnit = serviceUnit;
         }
+
+        
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index()
         {
             var missionLanding = _serviceUnit.MissionService.CreateMissionLanding();
@@ -57,11 +60,11 @@ namespace CIPlatformWeb.Areas.Volunteer.Controllers
 
         //New version of filtering mission: TestAjax()
         [HttpPost]
-        public IActionResult FilterMissions(FilterModel filterModel)
+        public async Task<IActionResult> FilterMissions(FilterModel filterModel)
         {
             try
             {
-                var missionList = _serviceUnit.MissionService.FilterMissionsCard(filterModel);
+                var missionList = await _serviceUnit.MissionService.FilterMissionsCard(filterModel);
                 ViewBag.MissionCount = missionList.Item2;
                 return PartialView("_MissionListing", missionList.Item1);
             }

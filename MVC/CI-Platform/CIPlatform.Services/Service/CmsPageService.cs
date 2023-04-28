@@ -22,6 +22,7 @@ public class CmsPageService: ICmsPageService
 
         IEnumerable<CMSPageVM> pagesVm =
             cmsPages
+                .OrderByDescending(page => page.CreatedAt)
                 .Select(ConvertCMSPageVM);
         return pagesVm;
     }
@@ -90,6 +91,7 @@ public class CmsPageService: ICmsPageService
         return
             pages
                 .Where( page => page.Status == true )
+                .OrderByDescending(page => page.CreatedAt)
                 .Select(ConvertCMSPageVM);
     }
 

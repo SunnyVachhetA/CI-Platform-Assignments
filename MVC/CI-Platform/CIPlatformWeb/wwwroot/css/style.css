@@ -35,7 +35,7 @@ a:hover {
 }
 
 body {
-    max-width: 1920px;
+    /*max-width: 1920px;*/
     color: var(--col-black);
 }
 
@@ -231,7 +231,7 @@ a {
 
 
 .carousel-item img {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
 }
 
@@ -556,6 +556,13 @@ form-subtitle,
 .c-pagination-item > button {
     border-radius: 3px;
     font-weight: 300;
+    transition: var(--transition);
+}
+
+.c-pagination-item > button:hover {
+    font-weight: 400 !important;
+    background-color: var(--col-orange) !important;
+    color: white;
 }
 
 .c-pagination-item .active {
@@ -1012,13 +1019,8 @@ form-subtitle,
 .vl-timesheet .vl-timesheet-action img {
     height: 19px;
     width: 15px;
-    cursor: pointer;
     transition: var(--transition);
 }
-
-    .vl-timesheet .vl-timesheet-action img:hover {
-        height: 21px;
-    }
 
 
 @media screen and (min-width: 576px) {
@@ -1031,12 +1033,12 @@ form-subtitle,
     border: 1px solid var(--col-brown);
 }
 
-#addVolunteerHourModal > div, #addVolunteerGoalModal > div {
+#addVolunteerHourModal > div, #addVolunteerGoalModal > div, #editVolunteerHourModal > div, #editVolunteerGoalModal > div {
     max-width: 50.875rem !important;
 }
 
 @media screen and (min-width: 1500px) {
-    #addVolunteerHourModal > div, #addVolunteerGoalModal > div {
+    #addVolunteerHourModal > div, #addVolunteerGoalModal > div, #editVolunteerHourModal > div, #editVolunteerGoalModal > div {
         max-width: 71.875rem !important;
     }
 }
@@ -1275,3 +1277,28 @@ form-subtitle,
 .cms-grid {
     grid-template-rows: auto 1fr auto;
 }
+
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 9999;
+}
+
+.timesheet-grid {
+    grid-template-rows: auto 1fr auto;
+}
+
+.btn-msn-close {
+    border: 1px solid red;
+    color: red;
+    background-color: red;
+    border-radius: 13px;
+    color: white;
+    transition: var(--transition);
+}
+.btn-msn-close:hover { box-shadow: 1px 1px 1px red; }
+

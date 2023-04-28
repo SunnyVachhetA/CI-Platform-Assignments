@@ -8,4 +8,5 @@ public interface ITimesheetRepository: IRepository<Timesheet>
     IEnumerable<Timesheet> LoadTimesheet(Func<Timesheet, bool> filter);
     int UpdateTimesheetApprovalStatus(long timesheetId, byte status);
     Timesheet? FetchTimesheetEntry(Func<Timesheet, bool> filter);
+    Timesheet TimesheetWithGoalMission(long timesheetId);
 }

@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 
 namespace CIPlatform.Services.Service.Interface;
 public interface IMissionApplicationService
@@ -11,4 +12,5 @@ public interface IMissionApplicationService
     IEnumerable<MissionApplicationVM> LoadApplications();
     void UpdateApplicationStatus(long id, byte status);
     IEnumerable<MissionApplicationVM> SearchApplication(string searchKey);
+    long UserMissionCount(long id, MissionTypeEnum type);
 }

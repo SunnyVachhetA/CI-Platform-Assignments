@@ -1,4 +1,5 @@
-﻿using CIPlatform.Entities.ViewModels;
+﻿using CIPlatform.Entities.DataModels;
+using CIPlatform.Entities.ViewModels;
 using CIPlatform.Services.Service.Interface;
 using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -172,6 +173,60 @@ public class MissionController : Controller
         catch (Exception e)
         {
             Console.WriteLine("Error while edit time mission[put]: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
+    [HttpPatch]
+    public async Task<IActionResult> DeActivate(long id)
+    {
+        try
+        {
+            if (id <= 0) return NotFound();
+
+            await _serviceUnit.MissionService.UpdateMissionActiveStatus(id, 0);
+            
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while de-activate mission[put]: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
+    [HttpPatch]
+    public async Task<IActionResult> Restore(long id)
+    {
+        try
+        {
+            if (id <= 0) return NotFound();
+
+            await _serviceUnit.MissionService.UpdateMissionActiveStatus(id, 1);
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while activate mission[put]: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return StatusCode(500);
+        }
+    }
+
+    [HttpPatch]
+    public async Task<IActionResult> Close(long id)
+    {
+        try
+        {
+            if (id <= 0) return NotFound();
+            await _serviceUnit.MissionService.UpdateMissionCloseStatus(id, 0);
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error while close mission[put]: " + e.Message);
             Console.WriteLine(e.StackTrace);
             return StatusCode(500);
         }

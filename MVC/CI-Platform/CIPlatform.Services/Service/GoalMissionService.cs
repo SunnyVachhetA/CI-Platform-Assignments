@@ -50,6 +50,17 @@ public class GoalMissionService : IGoalMissionService
         }
     }
 
+    public bool UpdateGoalAction(long missionId, int action)
+    {
+        var entry = _unitOfWork.GoalMissionRepo.GetFirstOrDefault(msn => msn.MissionId == missionId);
+        int goalValue = entry.GoalValue;
+
+        entry.GoalAchived += action;
+        _unitOfWork.GoalMissionRepo.Update(entry);
+        _unitOfWork.Save();
+        return entry.GoalAchived >= goalValue;
+    }
+
     private static GoalVM GetGoalDetails(GoalMissionVM mission, long missionId)
     {
         var goalDetails = new GoalVM()

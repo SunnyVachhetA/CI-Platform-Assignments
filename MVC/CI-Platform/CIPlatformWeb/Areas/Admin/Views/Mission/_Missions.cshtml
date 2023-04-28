@@ -68,14 +68,34 @@
                         }
                         <td>
                             <div class="d-flex gap-2">
-                                
                                 @if (mission.MissionStatus == MissionStatus.ONGOING)
                                 {
-                                    <img src="~/assets/editing.png" class="cursor-pointer msn-edit" data-type="@mission.MissionType" data-missionid = "@mission.MissionId" alt="Edit"/>
+                                    @if (mission.MissionStatus == MissionStatus.ONGOING)
+                                    {
+                                        <img src="~/assets/editing.png" class="cursor-pointer msn-edit" data-type="@mission.MissionType" data-missionid="@mission.MissionId" alt="Edit"/>
+                                    }
+                                    @if (mission.IsActive)
+                                    {
+                                        <img src="~/assets/delete.png" alt="Delete" class="cursor-pointer msn-delete" data-missionid="@mission.MissionId"/>
+                                    }
+                                    else
+                                    {
+                                        <img src="~/assets/restore.svg" alt="Restore" height="19px" width="18px" class="cursor-pointer msn-restore" data-missionid="@mission.MissionId"/>
+                                    }
+                                    <button class="cursor-pointer btn-msn-close font-13 px-2 text-center" data-missionid="@mission.MissionId">Close</button>
                                 }
-
-                                <img src="~/assets/delete.png" alt="Delete" class="cursor-pointer msn-delete" data-missionid="@mission.MissionId" />
-
+                                else
+                                {
+                                    <p class="mb-0 text-danger text-center">Closed</p>
+                                    @if (mission.IsActive)
+                                    {
+                                        <img src="~/assets/delete.png" alt="Delete" class="cursor-pointer msn-delete" height="19px" width="18px" data-missionid="@mission.MissionId" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/assets/restore.svg" alt="Restore" height="19px" width="18px" class="cursor-pointer msn-restore" data-missionid="@mission.MissionId" />
+                                    }
+                                }
                             </div>
                         </td>
                     </tr>
