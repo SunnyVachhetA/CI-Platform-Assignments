@@ -231,7 +231,7 @@ a {
 
 
 .carousel-item img {
-    min-height: 100vh;
+    height: 100vh;
     width: 100%;
 }
 
@@ -270,6 +270,8 @@ a {
     }
 }
 
+.input-label { font-size: 0.8rem; }
+
 @media (max-width: 992px) {
     #reg-form .input-label, #reg-form .custom-input {
         font-size: 1rem;
@@ -300,7 +302,6 @@ form-subtitle,
 }
 
     .login-link-text:hover {
-        font-size: 16px;
         color: var(--col-orange);
     }
 
@@ -349,7 +350,8 @@ form-subtitle,
 @media (min-width: 768px) and (max-width: 999px) {
 
     .carousel-item img {
-        height: 50vh;
+        min-height: 50vh !important;
+        height: 50vh !important;
         width: 100%;
     }
 
@@ -367,11 +369,18 @@ form-subtitle,
     }
 }
 
+@media (max-width: 768px) {
+    .carousel-item img {
+        min-height: 50vh !important;
+        height: 50vh !important;
+    }
+}
+
 @media (max-width: 576px) {
 
     .carousel-item img {
-        height: 50vh;
-        width: 100%;
+        min-height: 50vh !important;
+        height: 50vh !important;
     }
 
     .hero-title {
@@ -1265,7 +1274,11 @@ form-subtitle,
     top: 45%;
     /*transform: translate(-50%, -50%);*/
 }
-
+@media (max-width: 575px) {
+    #load-spinner {
+        left: 40%;
+    }
+}
 
 @keyframes spin {
     to {
@@ -1302,3 +1315,38 @@ form-subtitle,
 }
 .btn-msn-close:hover { box-shadow: 1px 1px 1px red; }
 
+.form-wrapper {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.login-help-text:last-child {
+    position: absolute;
+    bottom: 0;
+}
+
+#form-reg .form-group span { display: block; max-width: 250px; }
+
+.registration-page .carousel-item img { min-height: 100vh !important; width: 100%; height: auto !important;}
+
+@media (max-width: 992px) {
+    .registration-page .carousel-item img {
+        min-height: 50vh !important;
+        width: 100%;
+    }
+}
+
+/* Navbar */
+
+@media (max-width: 768px) {
+    #navbarSupportedContent.collapse:not(.show) {
+        display: none !important;
+    }
+    /* .navbar-nav .dropdown-menu { position: relative!important; } */
+    .navbar-nav .dropdown-menu {
+        position: absolute !important;
+    }
+}

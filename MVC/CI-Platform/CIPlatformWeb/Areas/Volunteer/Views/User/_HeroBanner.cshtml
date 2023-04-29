@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<BannerVM>
 
-<div class="bg-hero-login min-vh-100">
+<div class="bg-hero-login">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
         <div class="carousel-indicators">
             
@@ -29,7 +29,7 @@
             @foreach (var banner in Model)
             {
                 <div class="carousel-item @( (i==0) ? "active": "" )">
-                    <img src="@banner.Path" class="object-fit-cover min-vh-100" alt="hero-image@(i+1)">
+                    <img src="@banner.Path" class="object-fit-cover" alt="hero-image@(i+1)">
                     <div class="carousel-caption d-none d-md-block">
                         <h5 class="hero-title">@banner.Title</h5>
                         <p class="hero-text">@banner.Text</p>
