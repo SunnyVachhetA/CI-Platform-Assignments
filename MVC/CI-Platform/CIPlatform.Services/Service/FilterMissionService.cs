@@ -15,7 +15,7 @@ public class FilterMissionService
         this.filterModel = filterModel;
     }
 
-    public (IEnumerable<MissionVMCard>, long) Filter()
+    public Task<(IEnumerable<MissionVMCard>, long)> Filter()
     {
         missions = FilterBySearch();
         missions = FilterByCountry();
@@ -23,12 +23,12 @@ public class FilterMissionService
         missions = FilterByTheme();
         missions = FilterBySkill();
         missions = FilterBySortMenu();
+        missions = FilterByExploreMenu();
         var filterMissions =
             missions
-                .OrderByDescending(msn => msn.CreatedAt)
                 .Skip((filterModel.Page - 1) * 9)
                 .Take(9);
-        return (filterMissions, missions.LongCount());
+        return Task.Run(() => (filterMissions.AsEnumerable(), missions.LongCount()));
     }
 
     private IQueryable<MissionVMCard> FilterByCity()
@@ -110,6 +110,42 @@ public class FilterMissionService
 
             case SortByMenu.REGISTRATION_DEADLINE:
                 missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderBy(msn => msn.RegistrationDeadline.HasValue).OrderByDescending(msn => msn.RegistrationDeadline);
+                break;
+            default: throw new ArgumentOutOfRangeException();
+        }
+        return missions;
+    }
+
+    private IQueryable<MissionVMCard> FilterByExploreMenu()
+    {
+        if (!filterModel.ExploreBy.HasValue) return missions;
+        switch (filterModel.ExploreBy)
+        {
+            case ExploreMenu.MOST_RANKED:
+                missions =
+                    missions
+                        .OrderByDescending(msn => msn.Rating);
+                break;
+
+            case ExploreMenu.TOP_THEMES:
+                missions =
+                    missions
+                        .GroupBy(msn => msn.ThemeId)
+                        .OrderByDescending(group => group.Count())
+                        .SelectMany(msn => msn);
+                break;
+
+            case ExploreMenu.TOP_FAVOURITE:
+                missions =
+                    missions
+                        .OrderByDescending(msn => msn.FavoriteMissionList.LongCount());
+                break;
+
+            case ExploreMenu.RANDOM:
+                var random = new Random();
+                missions =
+                    missions
+                        .OrderBy(msn => random.Next());
                 break;
             default: throw new ArgumentOutOfRangeException();
         }

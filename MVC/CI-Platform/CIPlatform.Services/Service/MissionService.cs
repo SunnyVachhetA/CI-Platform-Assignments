@@ -202,7 +202,7 @@ public class MissionService : IMissionService
 
         FilterMissionService filter = new FilterMissionService(missionList.AsQueryable(), filterModel);
         
-        var filteredMissions =  filter.Filter();
+        var filteredMissions =  await filter.Filter();
 
         return (filteredMissions.Item1, filteredMissions.Item2);
     }
@@ -257,18 +257,14 @@ public class MissionService : IMissionService
 
 
     //Load related mission based on theme
-    public List<MissionCardVM> LoadRelatedMissionBasedOnTheme(short themeId, long missionId)
+    public async Task<IEnumerable<MissionVMCard>> LoadRelatedMissionBasedOnTheme(short themeId, long missionId)
     {
-        var missions =  unitOfWork.MissionRepo?.FetchMissionInformation()?
-            .Where( mission => ( mission.ThemeId == themeId && mission.MissionId != missionId) ).ToList();
-
-        List<MissionCardVM> result = new();
-        
-        foreach(var msn in missions)
-        {
-            result.Add( ConvertMissionToMissionCardVM(msn) );
-        }
-        return result;
+        var missions = await unitOfWork.MissionRepo.FetchMissionCardInformationAsync();
+        return
+            missions
+                .Where(mission => (mission.ThemeId == themeId && mission.MissionId != missionId))
+                .Take(3)
+                .Select(ConvertMissionToMissionVMCard);
     }
 
     /// <summary>

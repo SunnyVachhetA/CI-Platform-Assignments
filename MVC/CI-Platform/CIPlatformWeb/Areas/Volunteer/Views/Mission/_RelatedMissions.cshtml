@@ -1,4 +1,4 @@
-﻿@model List<MissionCardVM>
+﻿@model IEnumerable<MissionVMCard>
 @{
     var size = Model?.LongCount();
     var currentDateTime = DateTimeOffset.Now;
@@ -43,7 +43,7 @@ else
                             <img src="~/assets/pin.png" alt="Location" class="me-2">
                             @mission.CityName
                         </div>
-                        @if (userId != 0L && mission.FavrouriteMissionsId.Contains(userId))
+                        @if (userId != 0L && mission.FavoriteMissionList.Contains(userId))
                         {
                             <div class="position-absolute rounded-pill p-2 msn-favourite cursor-pointer bg-danger">
                                 <a href="#"><img src="~/assets/heart.png" alt="Add Favourite"></a>
@@ -187,7 +187,7 @@ else
                         }
 
                     </div>
-                    @if (mission.Status == MissionStatus.ONGOING && userId != 0L)
+                    @if (mission.Status == MissionStatus.ONGOING && userId != 0L && !mission.ApplicationListId.Any(id => id == userId))
                     {
                         <a class="my-2 my-md-3 mx-auto btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
                             Apply

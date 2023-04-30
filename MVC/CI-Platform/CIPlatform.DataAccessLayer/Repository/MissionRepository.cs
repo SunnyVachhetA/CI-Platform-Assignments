@@ -136,6 +136,8 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
     public async Task<IEnumerable<Mission>> FetchMissionCardInformationAsync()
     {
         return await dbSet
+            .AsSplitQuery()
+            .AsNoTracking()
             .Include(mission => mission.MissionMedia)
             .Include(mission => mission.MissionApplications)
             .Include(mission => mission.Theme)

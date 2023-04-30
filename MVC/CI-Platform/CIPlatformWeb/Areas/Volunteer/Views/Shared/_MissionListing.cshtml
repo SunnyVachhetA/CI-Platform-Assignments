@@ -9,7 +9,7 @@
 
 <input type="hidden" id="mission-count" value="@missionCount" />
 <!-- Grid View Begin -->
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-xl-4 mt-4 mt-md-2" id="grid-view-msn">
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-xl-4 mt-4 mt-md-0" id="grid-view-msn">
     @foreach (var mission in Model)
     {
         <!-- Upcoming Mission Listing Begin -->
@@ -226,14 +226,14 @@
         <article class="row">
             <div class="d-flex gap-3 border">
                 <div class="position-relative col-4">
-                    <img src="@mission.ThumbnailUrl" alt="Mission thumbnail" class="h-100 w-100">
-                    @if (mission.RegistrationDeadline > currentDateTime || mission.EndDate > currentDateTime)
+                    <img src="@mission.ThumbnailUrl" alt="Mission thumbnail" class="list-thumbnail">
+                    @if (mission.Status == MissionStatus.FINISHED || mission.RegistrationDeadline < currentDateTime || mission.EndDate < currentDateTime || mission.GoalAchieved >= mission.GoalValue)
                     {
                         <div class="msn-status-closed">
                             Closed
                         </div>
                     }
-                    @if (mission.ApprovedApplicationList.Any(id => id == userId))
+                    @if (mission.ApplicationListId.Any(id => id == userId))
                     {
                         <div class="msn-status-applied">
                             Applied
@@ -303,10 +303,37 @@
                                 </div>
                             </div>
 
-                            <button class="btn-g-orange mt-3">
-                                Apply
-                                <img src="~/assets/right-arrow.png" alt="Right Arrow">
-                            </button>
+                            @if (mission.Status == MissionStatus.ONGOING && userId != 0L)
+                            {   
+                                @if (mission.ApprovedApplicationList.Any(id => id == userId))
+                                {
+                                    <a class="mt-3 btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
+                                        View Details
+                                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                                    </a>
+                                }
+                                else if (mission.ApplicationListId.Any(id => id == userId))
+                                {
+                                    <a class="mt-3 btn-g-orange btn-app-cancel text-danger" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
+                                        Cancel Application
+                                        <img src = "~/assets/cancel-application.svg" height="15px" width="19px" alt="Cancel Application"/>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="mt-3 btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
+                                        Apply
+                                        <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                                    </a>
+                                }
+                            }
+                            else
+                            {
+                                <a class="mt-3 mx-content btn-g-orange" asp-controller="Mission" asp-action="Index" asp-route-id="@(mission.MissionId)">
+                                    View Details
+                                    <img src="~/assets/right-arrow.png" alt="Right Arrow">
+                                </a>
+                            }
                         </div>
 
                         @if (mission.Status == MissionStatus.ONGOING)

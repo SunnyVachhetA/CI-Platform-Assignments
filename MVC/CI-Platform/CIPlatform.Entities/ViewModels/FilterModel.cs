@@ -14,6 +14,7 @@ public class FilterModel
 
     public SortByMenu? SortBy { get; set; }
 
+    public ExploreMenu? ExploreBy { get; set; }
     public int Page { get; set; }
     public long? UserId { get; set; }
 }

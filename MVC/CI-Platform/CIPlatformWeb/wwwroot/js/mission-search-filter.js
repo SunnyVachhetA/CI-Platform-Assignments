@@ -211,6 +211,7 @@ function filterMissionCardAjax() {
         ThemeList: themeList,
         SkillList: skillList,
         SortBy: sortByOption,
+        ExploreBy: exploreBy,
         Page: currentPageNumber,
         UserId: userId
     };
@@ -272,4 +273,22 @@ $(document).ajaxStop(function () {
     $('#load-spinner').hide();
     $('.spinner-overlay').addClass('d-none');
 
+});
+
+//Explore Menu 
+let exploreBy = 0;
+
+const exploreMenu = $('#explore-menu li');
+let prev;
+let option = 0;
+$.each(exploreMenu, (_, item) => {
+    $(item).click(() => {
+        exploreBy = $(item).data('explore');
+        if (exploreBy == option && exploreBy != 4) return;
+        if (prev != null) $(prev).removeClass('cactive');
+        $(item).addClass('cactive');
+        prev = $(item);
+        filterMissionCardAjax();
+        option = exploreBy;
+    });
 });

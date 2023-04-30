@@ -24,7 +24,7 @@
 @Html.HiddenFor(model => loginSucess, new { id = "successful-login" })
 <nav class="container navbar navbar-expand-md navbar-light ">
     <div class="container-fluid">
-        <a class="navbar-brand" asp-controller="Home" asp-action="Index"><img src="./assets/logo.png" alt="CI" /></a>
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index"><img src="~/assets/logo.png" alt="CI" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,13 +33,13 @@
                 <li class="nav-item dropdown position-relative">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Explore
-                        <img src="./assets/drop-down.png" class="ms-2" alt="drop-down">
+                        <img src="~/assets/drop-down.png" class="ms-2" alt="drop-down">
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
-                        <li><span class="dropdown-item" data-explore="0">Top Themes</span></li>
-                        <li><span class="dropdown-item" data-explore="1">Most Ranked</span></li>
-                        <li><span class="dropdown-item" data-explore="1">Top Favourite</span></li>
-                        <li><span class="dropdown-item" data-explore="1">Random</span></li>
+                    <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown" id="explore-menu">
+                        <li class="dropdown-item" data-explore="1">Top Themes</li>
+                        <li class="dropdown-item" data-explore="2">Most Ranked</li>
+                        <li class="dropdown-item" data-explore="3">Top Favourite</li>
+                        <li class="dropdown-item" data-explore="4">Random</li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -48,7 +48,7 @@
                 <li class="nav-item dropdown" id="cms-drop">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         CMS Pages
-                        <img src="./assets/drop-down.png" class="ms-2" alt="drop-down">
+                        <img src="~/assets/drop-down.png" class="ms-2" alt="drop-down">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     </ul>

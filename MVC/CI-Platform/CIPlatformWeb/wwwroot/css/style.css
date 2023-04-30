@@ -1335,7 +1335,8 @@ form-subtitle,
 @media (max-width: 992px) {
     .registration-page .carousel-item img {
         min-height: 50vh !important;
-        width: 100%;
+        width: 100% !important;
+        height: auto !important;
     }
 }
 
@@ -1350,3 +1351,5 @@ form-subtitle,
         position: absolute !important;
     }
 }
+.list-thumbnail { height: 310px; }
+#explore-menu li.cactive { background-color: var(--col-orange); }

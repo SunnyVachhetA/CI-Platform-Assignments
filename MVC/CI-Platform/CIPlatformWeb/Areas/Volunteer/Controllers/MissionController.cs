@@ -75,6 +75,7 @@ public class MissionController : Controller
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> MissionRating(long missionId)
     {
         
@@ -87,13 +88,13 @@ public class MissionController : Controller
     }
 
     [HttpGet]
-    public IActionResult RelatedMissionByTheme(long missionId, short themeId)
+    [AllowAnonymous]
+    public async Task<IActionResult> RelatedMissionByTheme(long missionId, short themeId)
     {
         try
         {
-            var result = _serviceUnit.MissionService.LoadRelatedMissionBasedOnTheme(themeId, missionId).ToList();
+            var result = await _serviceUnit.MissionService.LoadRelatedMissionBasedOnTheme(themeId, missionId);
         
-            result = result.Take(3).ToList();
             return PartialView("_RelatedMissions", result);
         }
         catch(Exception e)
@@ -105,6 +106,7 @@ public class MissionController : Controller
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> MissionComments(long missionId, long userId, bool isCommentExists) //Load mission comments
     {
         var result = await _serviceUnit.CommentService.GetAllComments( missionId, userId, isCommentExists );
@@ -128,6 +130,7 @@ public class MissionController : Controller
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> RecentVolunteers(long missionId, int page)
     {
         try
