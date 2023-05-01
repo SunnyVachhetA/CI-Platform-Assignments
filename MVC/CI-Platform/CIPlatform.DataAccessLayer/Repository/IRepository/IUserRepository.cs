@@ -14,4 +14,5 @@ public interface IUserRepository : IRepository<User>
     int UpdateUserStatus(long userId, byte status);
     void SetUserStatusToActive(string email);
     Admin CheckAdminCredential(string credentialEmail, string credentialPassword);
+    int IsAdminEmail(string email);
 }

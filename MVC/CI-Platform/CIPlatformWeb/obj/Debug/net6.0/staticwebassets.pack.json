@@ -261,6 +261,14 @@
       "PackagePath": "staticwebassets\\assets\\empty-user.png"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\eye-cross.svg",
+      "PackagePath": "staticwebassets\\assets\\eye-cross.svg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\eye-open.svg",
+      "PackagePath": "staticwebassets\\assets\\eye-open.svg"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\assets\\eye.png",
       "PackagePath": "staticwebassets\\assets\\eye.png"
     },
@@ -629,12 +637,20 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\banner\\350b84fc-df40-487c-a0a5-8128abf10396.png",
+      "PackagePath": "staticwebassets\\images\\banner\\350b84fc-df40-487c-a0a5-8128abf10396.png"
+    },
+    {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\banner\\4d4db1ae-1bd8-4259-b962-38684995bbfd.png",
       "PackagePath": "staticwebassets\\images\\banner\\4d4db1ae-1bd8-4259-b962-38684995bbfd.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\banner\\6cb26513-454c-4847-96d6-0f19e644a10e.jpg",
       "PackagePath": "staticwebassets\\images\\banner\\6cb26513-454c-4847-96d6-0f19e644a10e.jpg"
+    },
+    {
+      "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\banner\\96fdc80c-ecaf-43f8-bc69-590e6f0ec305.png",
+      "PackagePath": "staticwebassets\\images\\banner\\96fdc80c-ecaf-43f8-bc69-590e6f0ec305.png"
     },
     {
       "Id": "F:\\Project\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatformWeb\\wwwroot\\images\\banner\\db9a25e0-eb09-4add-85f4-9bb377300e8d.jpg",

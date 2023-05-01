@@ -102,4 +102,9 @@ public class UserRepository : Repository<User>, IUserRepository
         return admin!;
     }
 
+    public int IsAdminEmail(string email)
+    {
+        var query = "SELECT COUNT(*) FROM admin WHERE email = {0}";
+        return _dbContext.Database.ExecuteSqlRaw(query, email);
+    }
 }

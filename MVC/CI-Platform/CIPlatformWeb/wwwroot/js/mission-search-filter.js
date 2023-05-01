@@ -190,6 +190,7 @@ function LoadMissionIndex() {
             missionDisplay();
             missionPagination();
             addToFavouriteHandler();
+            handleUserRecommendModal();
         },
         error: function (xhr, status, error) {
             console.log("Error sending data: " + error);
@@ -292,3 +293,71 @@ $.each(exploreMenu, (_, item) => {
         option = exploreBy;
     });
 });
+
+
+//Recommend 
+function handleUserRecommendModal() {
+    $('.msn-share').each((_, item) => {
+        $(item).click(() => {
+            if (loggedUserId == 0) {
+                loginRequiredSweetAlert(userLoginPageLink);
+                return;
+            }
+
+            let missionId = $(item).data('missionid');
+            handleRecommendToCoWorkerAjax(loggedUserId, missionId);
+        });
+    });
+}
+
+function handleRecommendToCoWorkerAjax(userId, missionId) {
+    $.ajax({
+        type: 'GET',
+        url: '/Volunteer/User/MissionUsersInvite',
+        data: { userId, missionId },
+        contentType: "application/json; charset=utf-8",
+        success: function (result) {
+            $('#recommend-msn-modal').html(result);
+            $('#recommendModal').modal('show');
+            modalEventListener(userId, missionId);
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function modalEventListener(userId, missionId) {
+    let recommendList = [];
+    $('#btn-recommend').on('click',
+        () => {
+            let count = $("input:checkbox[name='recommend-list']:checked").length;
+
+            if (count == 0) {
+                let title = 'No co-worker selected';
+                let subTitle = 'You need to select at least one co-worker!';
+                displayActionMessageSweetAlert(title, subTitle, 'info');
+                return;
+            }
+
+            $("input:checkbox[name='recommend-list']:checked").each(function () {
+                recommendList.push($(this).val());
+            });
+
+            handleUserRecommendAjax(userId, missionId, recommendList);
+        });
+}
+
+
+function handleUserRecommendAjax(userId, missionId, recommendList) {
+    $('#recommendModal').modal('hide');
+    displayActionMessageSweetAlert('Invite sent!', 'Mission invitation will be sent to your co-worker.', 'info');
+    $.ajax({
+        type: 'POST',
+        global: false,
+        data: { userId, missionId, recommendList },
+        url: '/Volunteer/User/SendMissionInvites',
+        success:
+            function (result) {
+            },
+        error: ajaxErrorSweetAlert
+    });
+}

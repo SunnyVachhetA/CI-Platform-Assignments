@@ -20,6 +20,7 @@
                     <input asp-for="Password" type="password" class="form-control custom-input" id="password" placeholder="Enter Password" value="$123Pass">
                     <span asp-validation-for="Password" class="text-danger font-10"></span>
                 </div>
+               
                 <button class="btn mx-auto mt-4 btn-login w-75" type="submit">Login</button>
             </form>
             <a asp-controller="User" asp-action="ForgotPassword" class="mt-3 login-link-text fw-light">Lost your password?</a>
@@ -35,4 +36,16 @@
     @{
         <partial name="_ValidationScriptsPartial"></partial>
     }
+    <script>
+        //$(document).on('click', '.toggle-password', function () {
+        //    var input = $($(this).parents('.input-group').find('input'));
+        //    if (input.attr('type') == 'password') {
+        //        input.attr('type', 'text');
+        //        $(this).find('img').attr('src', '/assets/eye-cross.svg');
+        //    } else {
+        //        input.attr('type', 'password');
+        //        $(this).find('img').attr('src', '/assets/eye-open.svg');
+        //    }
+        //});
+    </script>
 }

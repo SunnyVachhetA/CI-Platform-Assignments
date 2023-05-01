@@ -7,6 +7,8 @@ const btnList = document.querySelector('#list-view');
 
 const displayClass = "d-none";
 
+$('#exploreByMenu').removeClass(displayClass);
+
 
 $(btnGrid).on('click', () => {
     if ($('#grid-view-msn').hasClass(displayClass)) {

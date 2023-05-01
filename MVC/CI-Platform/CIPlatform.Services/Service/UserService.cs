@@ -35,10 +35,9 @@ public class UserService: IUserService
     }
     public bool IsEmailExists(string email)
     {
-        var result = _unitOfWork.UserRepo.GetFirstOrDefault(
-                user => user.Email == email
-            );
-        return (result != null);
+        var result = _unitOfWork.UserRepo.GetFirstOrDefault(user => user.Email == email);
+        var isAdminEmail = _unitOfWork.UserRepo.IsAdminEmail(email.ToLower());
+        return (result != null || isAdminEmail != 0);
     }
 
     
@@ -301,7 +300,7 @@ public class UserService: IUserService
     }
 
     public bool CheckIsEmailUnique(string email) => 
-        _unitOfWork.UserRepo.GetAll().FirstOrDefault(user => user.Email.EqualsIgnoreCase(email) ) == null;
+        _unitOfWork.UserRepo.GetAll().FirstOrDefault(user => user.Email.EqualsIgnoreCase(email) ) == null || _unitOfWork.UserRepo.IsAdminEmail(email.ToLower()) == 0;
 
     public async Task AddUserByAdmin(AdminUserInfoVM user, string wwwRootPath, string link, string token)
     {

@@ -370,7 +370,6 @@ $('#msn-recommend').on
 );
 
 function handleRecommendToCoWorkerAjax() {
-    console.log("Handle Recommend called!");
     $.ajax({
         type: 'GET',
         url: '/Volunteer/User/MissionUsersInvite',

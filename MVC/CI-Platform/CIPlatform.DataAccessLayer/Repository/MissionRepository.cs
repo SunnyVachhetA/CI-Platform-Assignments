@@ -146,6 +146,7 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
             .Include(mission => mission.MissionRatings)
             .Include(mission => mission.City)
             .Include(mission => mission.MissionSkills)
+            .Where(mission => mission.IsActive?? true)
             .ToListAsync();
     }
 
