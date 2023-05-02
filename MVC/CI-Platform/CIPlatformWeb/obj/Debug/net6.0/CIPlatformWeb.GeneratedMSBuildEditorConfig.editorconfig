@@ -8,301 +8,301 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CIPlatformWeb
 build_property.RootNamespace = CIPlatformWeb
-build_property.ProjectDir = D:\Assignments\CI-Platform-Assignments\MVC\CI-Platform\CIPlatformWeb\
+build_property.ProjectDir = D:\Assignments\CI-Platform-Assignments\MVC\CI-Platform\MVC\CI-Platform\CIPlatformWeb\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\Assignments\CI-Platform-Assignments\MVC\CI-Platform\CIPlatformWeb
+build_property.MSBuildProjectDirectory = D:\Assignments\CI-Platform-Assignments\MVC\CI-Platform\MVC\CI-Platform\CIPlatformWeb
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Banner/_AddBanner.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Banner/_AddBanner.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQmFubmVyXF9BZGRCYW5uZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Banner/_Banners.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Banner/_Banners.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQmFubmVyXF9CYW5uZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Banner/_EditBanner.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Banner/_EditBanner.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQmFubmVyXF9FZGl0QmFubmVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/CMSPage/_AddCMS.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/CMSPage/_AddCMS.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ01TUGFnZVxfQWRkQ01TLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/CMSPage/_CMSPages.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/CMSPage/_CMSPages.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ01TUGFnZVxfQ01TUGFnZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/CMSPage/_EditCMS.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/CMSPage/_EditCMS.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ01TUGFnZVxfRWRpdENNUy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/ContactUs/_ContactInquires.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/ContactUs/_ContactInquires.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ29udGFjdFVzXF9Db250YWN0SW5xdWlyZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/ContactUs/_ContactReply.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/ContactUs/_ContactReply.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ29udGFjdFVzXF9Db250YWN0UmVwbHkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Home/Index.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionApplication/_Applications.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionApplication/_Applications.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvbkFwcGxpY2F0aW9uXF9BcHBsaWNhdGlvbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionApplication/_UserProfile.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionApplication/_UserProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvbkFwcGxpY2F0aW9uXF9Vc2VyUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionSkill/_AddSkill.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionSkill/_AddSkill.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblNraWxsXF9BZGRTa2lsbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionSkill/_EditSkill.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionSkill/_EditSkill.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblNraWxsXF9FZGl0U2tpbGwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionSkill/_skills.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionSkill/_skills.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblNraWxsXF9za2lsbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionTheme/_AddTheme.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionTheme/_AddTheme.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblRoZW1lXF9BZGRUaGVtZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionTheme/_EditTheme.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionTheme/_EditTheme.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblRoZW1lXF9FZGl0VGhlbWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionTheme/_themes.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/MissionTheme/_themes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblRoZW1lXF90aGVtZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_AddGoalMission.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_AddGoalMission.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxfQWRkR29hbE1pc3Npb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_AddTimeMission.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_AddTimeMission.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxfQWRkVGltZU1pc3Npb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_EditGoalMission.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_EditGoalMission.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxfRWRpdEdvYWxNaXNzaW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_EditTimeMission.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_EditTimeMission.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxfRWRpdFRpbWVNaXNzaW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_Missions.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Mission/_Missions.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxfTWlzc2lvbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Story/StoryDetails.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Story/StoryDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU3RvcnlcU3RvcnlEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Story/_Stories.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Story/_Stories.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU3RvcnlcX1N0b3JpZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Timesheet/_TimesheetGoal.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Timesheet/_TimesheetGoal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGltZXNoZWV0XF9UaW1lc2hlZXRHb2FsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Timesheet/_TimesheetHour.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Timesheet/_TimesheetHour.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGltZXNoZWV0XF9UaW1lc2hlZXRIb3VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Timesheet/_ViewTimesheetEntry.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/Timesheet/_ViewTimesheetEntry.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGltZXNoZWV0XF9WaWV3VGltZXNoZWV0RW50cnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/User/_AddUser.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/User/_AddUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxfQWRkVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/User/_EditUser.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/User/_EditUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxfRWRpdFVzZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/User/_Users.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/User/_Users.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxfVXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/_ViewImports.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/_ViewStart.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Admin/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Home/Index.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Home/Privacy.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXEhvbWVcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Mission/Index.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Mission/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXE1pc3Npb25cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Mission/_Rating.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Mission/_Rating.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXE1pc3Npb25cX1JhdGluZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Mission/_RelatedMissions.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Mission/_RelatedMissions.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXE1pc3Npb25cX1JlbGF0ZWRNaXNzaW9ucy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_CmsPage.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_CmsPage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfQ21zUGFnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_CommentView.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_CommentView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfQ29tbWVudFZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_ContactUs.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_ContactUs.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfQ29udGFjdFVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_ErrorView.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_ErrorView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfRXJyb3JWaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_Footer.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_Footer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfRm9vdGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_FormMessage.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_FormMessage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfRm9ybU1lc3NhZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_MissionIndexListing.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_MissionIndexListing.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfTWlzc2lvbkluZGV4TGlzdGluZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_MissionListing.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_MissionListing.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfTWlzc2lvbkxpc3RpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_Navbar.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_Navbar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfTmF2YmFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_Navbar1.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_Navbar1.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfTmF2YmFyMS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_RecommendMission.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_RecommendMission.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfUmVjb21tZW5kTWlzc2lvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_SearchSection.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_SearchSection.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfU2VhcmNoU2VjdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Story/AddStory.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Story/AddStory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFN0b3J5XEFkZFN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Story/EditStory.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Story/EditStory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFN0b3J5XEVkaXRTdG9yeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Story/Story.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Story/Story.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFN0b3J5XFN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Story/StoryListing.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Story/StoryListing.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFN0b3J5XFN0b3J5TGlzdGluZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/ForgotPassword.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcRm9yZ290UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/Login.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/Registration.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/Registration.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcUmVnaXN0cmF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/ResetPassword.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcUmVzZXRQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/UserProfile.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/UserProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcVXNlclByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/VolunteerTimesheet.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/VolunteerTimesheet.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcVm9sdW50ZWVyVGltZXNoZWV0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_AddVolunteerGoalModal.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_AddVolunteerGoalModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcX0FkZFZvbHVudGVlckdvYWxNb2RhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_AddVolunteerHourModal.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_AddVolunteerHourModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcX0FkZFZvbHVudGVlckhvdXJNb2RhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_EditVolunteerGoalModal.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_EditVolunteerGoalModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcX0VkaXRWb2x1bnRlZXJHb2FsTW9kYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_EditVolunteerHourModal.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_EditVolunteerHourModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcX0VkaXRWb2x1bnRlZXJIb3VyTW9kYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_HeroBanner.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_HeroBanner.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcX0hlcm9CYW5uZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_VolunteerGoalsList.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_VolunteerGoalsList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcX1ZvbHVudGVlckdvYWxzTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_VolunteerHoursList.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/User/_VolunteerHoursList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcX1ZvbHVudGVlckhvdXJzTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/_ViewImports.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXF9WaWV3SW1wb3J0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/_ViewStart.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Views/Shared/Error.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Views/_ViewImports.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Views/_ViewStart.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Views/Shared/_Layout.cshtml]
+[D:/Assignments/CI-Platform-Assignments/MVC/CI-Platform/MVC/CI-Platform/CIPlatformWeb/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-32nbinzfc0
