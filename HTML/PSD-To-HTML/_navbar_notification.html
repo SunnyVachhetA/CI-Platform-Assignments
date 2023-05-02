@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navbar</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/bootstrap.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <style>
+    @media (min-width: 768px){
+      .notification-body-container {
+        right: -20%;
+        z-index: 999;
+      }
+    }
+    @media (max-width: 420px)
+    {
+      .notification-body-container {
+        left: 0;
+        z-index: 999;
+      }
+    }
+    #notification-settings .form-check-input:checked{
+      background-color: #f88634 !important;
+      color: #f88634 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container">
+    <nav class="navbar navbar-expand-md navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="./assets/logo.png" alt="CI" /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-black-1">
+            <li class="nav-item dropdown position-relative">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Explore
+                <img src="./assets/drop-down.png" class="ms-2" alt="drop-down" />
+              </a>
+              <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Stories</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                CMS Pages
+                <img src="./assets/drop-down.png" class="ms-2" alt="drop-down" />
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center gap-4">
+            <div class="notification-container position-relative">
+              <div class="notification position-relative">
+                <img src="./assets/bell.png" alt="Notifications" />
+                <span class="notification-badge">11</span>
+              </div>
+              <div class="notification-body-container position-absolute">
+                <!-- Notification Body Start  -->
+                <!-- Notification Listing Begin  -->
+                <div class="notification-body border d-none overflow-auto" id="notification-listing">
+                  <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
+                    <img src="./assets/gear-fill.svg" alt="Setting" id="notis-setting" class="cursor-pointer">
+                    <p class="mb-0 font-15">Notifications</p>
+                    <p class="mb-0 cursor-pointer" id="clear-all-notis">Clear All</p>
+                  </div>
+                  <div class="notis-listing">
+                    <div>
+                      <div class="d-flex align-items-center p-3 gap-2 border-bottom">
+                        <img src="./assets/add.png" alt="Add">
+                        <p class="mb-0">Plantation and afforestation programme</p>
+                        <div class="dot-orange rounded-circle ms-auto"></div>
+                      </div>
+                      <div class="d-flex align-items-center p-3 gap-2 border-bottom">
+                        <img src="./assets/volunteer5.png" alt="volunteer" height="35px" width="30px"
+                          class="object-fit-cover rounded-circle">
+                        <p class="mb-0">Your volunteer has recommended you this missions!</p>
+                        <img src="./assets/read.svg" class="ms-auto" alt="Read" height="10px" width="10px">
+                      </div>
+                    </div>
+                    <!-- Older notification start  -->
+                    <div class="bg-light text-center py-1 fw-light text-black-1">Older</div>
+                    <div>
+                      <div class="d-flex align-items-center p-3 gap-2 border-bottom">
+                        <img src="./assets/approve-check.svg" alt="Approved" class="align-self-start">
+                        <p class="mb-0">Volunteering request has been approved for this mission: missionName</p>
+                        <div class="dot-orange rounded-circle ms-auto flex-shrink-0"></div>
+                      </div>
+                      <div class="d-flex align-items-center p-3 gap-2 border-bottom">
+                        <img src="./assets/add.png" alt="Add">
+                        <p class="mb-0">New Mision: MissionAutomata</p>
+                        <div class="dot-orange rounded-circle ms-auto"></div>
+                      </div>
+                      <div class="d-flex align-items-center p-3 gap-2 border-bottom">
+                        <img src="./assets/decline-req.svg" alt="Decline" class="align-self-start">
+                        <p class="mb-0">Volunteering request has been declined for this mission: missionName</p>
+                        <div class="dot-orange rounded-circle ms-auto flex-shrink-0"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Older notification end  -->
+                </div>
+                <!-- Notification listing end  -->
+
+                <!-- Notification Settings Begin -->
+                <div class="notification-body border d-none overflow-auto" id="notification-settings">
+                  <div class="text-center py-2 border-bottom fw-400">Notificaiton Settings</div>
+                  <div class="p-2 px-3 bg-light border-bottom fw-400">Get a notification for</div>
+                  <div class="setting-list">
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      Recommended Missions
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      Volunteering Hours
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      Volunteering Goals
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      My Comments
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      My Stories
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      New Missions
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      New Messages
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      Recommended Story
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      Mission Application
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      News
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                    <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+                      Receive notifications by email
+                      <input type="checkbox" class="form-check-input">
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-center gap-4 align-items-center py-2 border-bottom flex-basis">
+                    <button class="btn-g-orange py-1" id="notis-save">Save</button>
+                    <button class="btn-g-cancel py-1" id="notis-cancel">Cancel</button>
+                  </div>
+                </div>
+                <!-- Notification Settings End -->
+
+                <!-- Notification body end -->
+              </div>
+            </div>
+
+            <div class="dropdown">
+              <a class="dropdown-toggle medium-text" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="./assets/volunteer3.png" alt="Profile Image" class="nav-profile-picture object-fit-cover"
+                  id="nav-profile-img" />
+                <span>Evan Donohue</span>
+                <img src="./assets/drop-down.png" class="ms-2" alt="Options" />
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" asp-area="Volunteer" asp-controller="User" asp-action="Index"
+                    asp-route-id="@userId">Profile</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" asp-controller="User" asp-action="VolunteerTimesheet"
+                    asp-route-id="@userId">Volunteering Timesheet</a>
+                </li>
+                <li><a class="dropdown-item" id="user-logout">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <body>
+    <section class="container">
+    </section>
+  </body>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready( () => {
+      $('.notification').click( () => { $('#notification-listing').toggleClass('d-none');
+      $('#notification-settings').addClass('d-none');
+     });
+    });
+
+    const notisListing = $('#notification-listing');
+    const notisSettings = $('#notification-settings');
+    const btnSetting = $('#notis-setting');
+    const unreadMessages = $('.dot-orange');
+    const clearAllNotis = $('#clear-all-notis');
+    handleMessageRead();
+    function handleMessageRead()
+    {
+      $('.dot-orange').click(function() {
+        var dataAttribute = $(this).data('id');
+        console.log(dataAttribute);
+        $(this).replaceWith('<img src="/assets/read.svg" alt="Read" class="ms-auto" height="10px" width="10px">');
+      });
+    }
+    btnSetting.click( () =>
+    {
+      notisListing.addClass('d-none');
+      notisSettings.removeClass('d-none');
+    });
+    $('#notis-cancel').click(() => {
+      notisSettings.addClass('d-none');
+      notisListing.removeClass('d-none');
+    });
+    let notificationsCount = 5;
+    clearAllNotis.click(() => {
+      if(notificationsCount == 0) return;
+      $('.notis-listing').remove();
+      let div = $("<div>").addClass("bg-light text-center py-1 fw-light text-black-1").text('Woohoo.. No notifications for now!');
+      notisListing.append(div);  
+      notificationsCount = 0;
+    });
+  </script>
+</body>
+
+</html>

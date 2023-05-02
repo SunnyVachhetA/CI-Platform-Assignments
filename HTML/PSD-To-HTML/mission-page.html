@@ -7,6 +7,9 @@
     <title>Volunteering Mission Page | CI</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <style>
+       
+    </style>
 </head>
 <body>
     <header>
@@ -105,9 +108,13 @@
                 </div>
                 <div class = "d-flex flex-column flex-md-row align-items-center justify-content-center 
                 justify-content-md-between gap-2">
-                    <button class = "flex-basis btn-favourite p-2 d-flex align-items-center justify-content-center text-brown gap-3 cursor-pointer font-xs">
+                    <button class = "d-none flex-basis btn-favourite p-2 d-flex align-items-center justify-content-center text-brown gap-3 cursor-pointer font-xs">
                         <img src="./assets/heart1.png" alt="Favourite">
                         Add to Favourite
+                    </button>
+                    <button class = "active-fav flex-basis p-2 d-flex align-items-center justify-content-center text-brown gap-3 cursor-pointer font-xs" id = "remove-from-favourite">
+                        <img src="./assets/heart1.png" alt="Favourite">
+                        Remove From Favourite
                     </button>
                     <button class = "flex-basis btn-share p-2 d-flex align-items-center justify-content-center text-brown gap-3 cursor-pointer font-xs">
                         <img src="./assets/add1.png" alt="Recommend">
@@ -340,7 +347,7 @@
                                 Recent Volunteers
                             </div>
                         </div>
-                        <div class = "d-flex flex-wrap small-light-text p-2 justify-content-around gap-5 gap-lg-5 ">
+                        <div class = "d-flex flex-wrap small-light-text p-2 justify-content-around gap-3">
                             <div class = "text-center">
                                 <img src="./assets/volunteer1.png" alt="Volunteer Image" class = "volunteer-img rounded-pill">
                                 <span class = "d-block">Andrew Johnson</span>

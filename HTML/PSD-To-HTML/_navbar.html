@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navbar</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/bootstrap.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header class="container">
+    <nav class="navbar navbar-expand-md navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="./assets/logo.png" alt="CI" /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-black-1">
+            <li class="nav-item dropdown position-relative">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Explore
+                <img src="./assets/drop-down.png" class="ms-2" alt="drop-down" />
+              </a>
+              <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Stories</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                CMS Pages
+                <img src="./assets/drop-down.png" class="ms-2" alt="drop-down" />
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center gap-4">
+            <div class="notification position-relative">
+              <img src="./assets/bell.png" alt="Notifications" />
+              <span class="notification-badge">11</span>
+            </div>
+
+            <div class="dropdown">
+              <a class="dropdown-toggle medium-text" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="./assets/volunteer3.png" alt="Profile Image" class="nav-profile-picture object-fit-cover"
+                  id="nav-profile-img" />
+                <span>Evan Donohue</span>
+                <img src="./assets/drop-down.png" class="ms-2" alt="Options" />
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" asp-area="Volunteer" asp-controller="User" asp-action="Index"
+                    asp-route-id="@userId">Profile</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" asp-controller="User" asp-action="VolunteerTimesheet"
+                    asp-route-id="@userId">Volunteering Timesheet</a>
+                </li>
+                <li><a class="dropdown-item" id="user-logout">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <body>
+    <section class="container">
+      <!-- Notification Body Start  -->
+      <div class="notification-body border">
+        <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
+          <img src="./assets/gear-fill.svg" alt="Setting">
+          <p class="mb-0 font-15">Notifications</p>
+          <p class="mb-0">Clear All</p>
+        </div>
+        <div>
+          <div class="d-flex align-items-center p-3 gap-2 border-bottom">
+            <img src="./assets/add.png" alt="Add">
+            <p class="mb-0">Plantation and afforestation programme</p>
+            <div class="dot-orange rounded-circle ms-auto"></div>
+          </div>
+          <div class="d-flex align-items-center p-3 gap-2 border-bottom">
+            <img src="./assets/volunteer5.png" alt="volunteer" height="35px" width="30px"
+              class="object-fit-cover rounded-circle">
+            <p class="mb-0">Your volunteer has recommended you this missions!</p>
+            <img src="./assets/read.svg" class="ms-auto" alt="Read" height="10px" width="10px">
+          </div>
+        </div>
+        <!-- Older notification start  -->
+        <div class="bg-light text-center py-1 fw-light text-black-1">Older</div>
+        <div>
+          <div class="d-flex align-items-center p-3 gap-2 border-bottom">
+            <img src="./assets/approve-check.svg" alt="Approved" class="align-self-start">
+            <p class="mb-0">Volunteering request has been approved for this mission: missionName</p>
+            <div class="dot-orange rounded-circle ms-auto flex-shrink-0"></div>
+          </div>
+          <div class="d-flex align-items-center p-3 gap-2 border-bottom">
+            <img src="./assets/add.png" alt="Add">
+            <p class="mb-0">New Mision: MissionAutomata</p>
+            <div class="dot-orange rounded-circle ms-auto"></div>
+          </div>
+          <div class="d-flex align-items-center p-3 gap-2 border-bottom">
+            <img src="./assets/decline-req.svg" alt="Decline" class="align-self-start">
+            <p class="mb-0">Volunteering request has been declined for this mission: missionName</p>
+            <div class="dot-orange rounded-circle ms-auto flex-shrink-0"></div>
+          </div>
+        </div>
+        <!-- Older notification end  -->
+      </div>
+      <!-- Notification body end -->
+    </section>
+  </body>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('.notification').click(function () {
+        $('.notification-body').toggle();
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Home</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.tiny.cloud/1/65uoj5j0yj8wczm8zlxtfxdyohqd2an347xkx0w3mm71vgu1/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
+
+<body>
+    <main class="d-flex">
+        <aside class="sidebar">
+            <div class="d-flex pt-5 px-3 justify-content-between">
+                <p class="text-white">Navigation</p>
+                <button id="sidebar-close" class="btn btn-close bg-white"></button>
+            </div>
+            <div class="px-4 d-flex flex-column gap-4 mt-2 admin-menu">
+                <div class="active" data-menu="user">
+                    <!-- <img src="./assets/empty-user.png" alt="User"> -->
+                    <img src="./assets/user-fill.svg" alt="">
+                    User
+                </div>
+                <div data-menu="cms">
+                    <!-- <img src="./assets/page.png" alt="CMS"> -->
+                    <img src="./assets/empty-page.svg" alt="">
+                    CMS Page
+                </div>
+                <div data-menu="mission">
+                    <img src="./assets/empty-target.png" alt="Mission">
+                    <!--  -->
+                    Mission
+                </div>
+                <div data-menu="theme">
+                    <img src="./assets/themes.png" alt="Theme">
+                    Mission Theme
+                </div>
+                <div data-menu="skill">
+                    <img src="./assets/tools-empty.svg" alt="Skills">
+                    Mission Skills
+                </div>
+                <div data-menu="application">
+                    <img src="./assets/folder-empty.svg" alt="Application">
+                    <!--  -->
+                    Mission Application
+                </div>
+                <div data-menu="story">
+                    <img src="./assets/tale.png" alt="Story">
+                    Story
+                </div>
+                <div data-menu="banner">
+                    <img src="./assets/banner-empty.svg" alt="Banner Management">
+                    Banner Management
+                </div>
+            </div>
+        </aside>
+        <section class="flex-grow-1">
+            <nav class="d-flex px-4 py-3 align-items-center shadow-sm">
+                <button id="btn-sidebar-hamburger" class="border-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+                </button>
+                <p class="mb-0 ms-1" id="current-date"></p>
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle medium-text" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <img src="./assets/user-img.png" alt="Profile Image" class="nav-profile-picture">
+                            <span class="d-none d-sm-inline">Evan Donohue</span>
+                            <img src="./assets/drop-down.png" class="ms-2" alt="Options">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Timesheet</a></li>
+                            <li><a class="dropdown-item" href="#">Favourites</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="px-4 mt-4 mb-5" id="admin-menu-content">
+                <div class="mt-4 border">
+                    <h4 class="px-4 mb-0 py-3 bg-tile fw-400">Add Mission</h4>
+
+                    <div class="px-4 mt-2 pb-4">
+                        <form id="form-add-msn-goal" class="admin-form d-flex flex-column gap-3" enctype="multipart/form-data">
+                            <div>
+                                <label for="" class="form-label">Mission Title</label>
+                                <input type="text" class="form-control">
+                                <span class="text-danger font-xs" asp-validation-for=""></span>
+                            </div>
+                            <div>
+                                <label for="" class="form-label">Short Description</label>
+                                <input type="text" class="form-control">
+                                <span class="text-danger font-xs" asp-validation-for=""></span>
+                            </div>
+                            <div>
+                                <label for="" class="form-label">Description</label>
+                                <textarea id="description"></textarea>
+                                <span class="text-danger font-xs" asp-validation-for=""></span>
+                            </div>
+                            <div>
+                                <label for="" class="form-label">Organization Name</label>
+                                <input class="form-control">
+                            </div>
+                            <div>
+                                <label for="" class="form-label">Organization Details</label>
+                                <textarea id="description1"></textarea>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="" class="form-label">Start Date</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="" class="form-label">End Date</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="" class="form-label">Total seats</label>
+                                    <input type="number" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="" class="form-label">Registration Deadline</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="" class="form-label">Country</label>
+                                    <select class = "form-select">
+                                        <option value="" disabled selected>Select Country</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="">City</label>
+                                    <select class="form-select">
+                                        <option value="" disabled selected>Select City</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="" class="form-label">Theme</label>
+                                    <select class="form-select">
+                                        <option value="" disabled selected>Select Theme</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="" class="form-label">Skill</label>
+                                    <select name="" id="" multiple class="form-select multi-select">
+                                        <option value="" disabled selected>Select Skills</option>
+                                        <option value="">Skill1</option>
+                                        <option value="">Skill1</option>
+                                        <option value="">Skill1</option>
+                                        <option value="">Skill1</option>
+                                        <option value="">Skill1</option>
+                                        <option value="">Skill1</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="form-label" >Upload Mission Photos</label>
+
+                                <div class="form-control-file d-flex justify-content-center align-items-center p-4 cursor-pointer"
+                                    id="upload-area">
+                                    <img src="./assets/drag-and-drop.png" alt="Drag and drop" for="file-upload" />
+                                    <input type="file" multiple id="file-upload" onchange="handleFiles(this.files)"
+                                        accept=".png, .jpg, .jpeg" hidden />
+                                </div>
+                                <span class="text-danger font-xs" id="err-media" asp-validation-for=""></span>
+
+                                <!-- Uploaded files  -->
+                                <div class="mt-2 uploaded-files">
+                                    <ul class="list-unstyled d-flex flex-wrap gap-4 gap-md-4 justify-content-md-start"
+                                        id="file-list">
+                                    </ul>
+                                </div>
+                                <!-- Uploaded Files Fin -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="" class="form-label">Mission Documents</label>
+                                <input type="file" class="form-control" accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple id="doc-upload" onchange="handleDocumentFiles(this.files)">
+                                <!-- Uploaded files  -->
+                                <div class="mt-2 uploaded-files">
+                                    <ul class="list-unstyled d-flex flex-wrap gap-4 gap-md-2 justify-content-md-start"
+                                        id="doc-list">
+                                    
+                                    </ul>
+                                </div>
+                                <!-- Uploaded Files Fin -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/upload-file.js"></script>
+    <script>
+
+        // Add user start
+        // const imgUpload = document.querySelector('#usr-profile-upload');
+        // const profileImgContainer = document.querySelector('#user-img-preview');
+
+        // imgUpload.addEventListener('change', () => {
+        //     const file = imgUpload.files[0];
+        //     const src = URL.createObjectURL(file);
+        //     const img = $('<img>', { src: src, height: '100px', width: '100px', class: 'object-fit-cover' });
+        //     $(profileImgContainer).empty().append(img);
+        // });
+        // Add user end
+
+        // const fileUpload = document.getElementById('banner');
+        // const previewContainer = document.getElementById("banner-preview");
+
+        // fileUpload.addEventListener('change', () =>
+        // {
+        //     $(previewContainer).empty();
+        //     const file = fileUpload.files[0];
+
+        //     let src = URL.createObjectURL(file);
+
+        //     let img = $('<img>');
+        //     img.attr('src', src);
+        //     img.attr('alt', 'Banner Image Preview');
+        //     previewContainer.append(img.get(0));
+        // });
+
+        const dateContainer = document.getElementById('current-date');
+        const btnHamburger = document.getElementById('btn-sidebar-hamburger');
+        const adminSidebar = document.querySelector('.sidebar');
+        const sidebarClose = document.querySelector('#sidebar-close');
+        let isSidebarOpen = true;
+        const formatter = new Intl.DateTimeFormat('en-US', {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        });
+        getCurrentDateTime();
+        function getCurrentDateTime() {
+            const date = new Date();
+            const formattedDate = formatter.format(date);
+            dateContainer.textContent = formattedDate;
+        }
+        setInterval(getCurrentDateTime, 1000);
+
+        btnHamburger.addEventListener('click', () => {
+            adminSidebar.classList.remove('hide');
+            adminSidebar.classList.add('show');
+        });
+
+        sidebarClose.addEventListener('click', () => {
+            adminSidebar.classList.remove('show');
+            adminSidebar.classList.add('hide');
+        });
+
+        //sidebar menu selection
+        let prevMenu = "user";
+        const sidebarMenu = document.querySelectorAll('.admin-menu div');
+
+        $(sidebarMenu).each((_, item) => {
+            $(item).click(() => {
+                let currentMenu = $(item).data('menu');
+
+                if (currentMenu === prevMenu)
+                    return;
+
+                toggleMenuActive(prevMenu, false);
+                toggleMenuActive(currentMenu, true);
+                prevMenu = currentMenu;
+            });
+        });
+
+        function toggleMenuActive(menu, isToggle) {
+            let src = '';
+            switch (menu) {
+                case "user":
+                    src = '';
+                    if (isToggle)
+                        src = './assets/user-fill.svg';
+                    else
+                        src = './assets/user-empty.svg';
+                    changeMenu(menu, src);
+                    break;
+
+                case "cms":
+                    src = '';
+                    if (isToggle)
+                        src = './assets/page.png';
+                    else
+                        src = './assets/empty-page.svg';
+                    changeMenu(menu, src);
+                    break;
+
+                case "mission":
+                    src = '';
+                    if (isToggle)
+                        src = './assets/target-fill.svg';
+                    else
+                        src = './assets/empty-target.png';
+                    changeMenu(menu, src);
+                    break;
+
+                case "application":
+                    src = '';
+                    if (isToggle)
+                        src = './assets/folder-fill.svg';
+                    else
+                        src = './assets/folder-empty.svg';
+                    changeMenu(menu, src);
+                    break;
+
+                case "banner":
+                    src = '';
+                    if (isToggle)
+                        src = './assets/banner-fill.svg';
+                    else
+                        src = './assets/banner-empty.svg';
+                    changeMenu(menu, src);
+                    break;
+
+                case "theme":
+                    src = '';
+                    if (isToggle)
+                        src = './assets/theme-fill.svg';
+                    else
+                        src = './assets/themes.png';
+                    changeMenu(menu, src);
+                    break;
+
+                case "story":
+                    src = '';
+                    if (isToggle)
+                        src = './assets/story-fill.svg';
+                    else
+                        src = './assets/tale.png';
+                    changeMenu(menu, src);
+                    break;
+
+                case "skill":
+                    src = '';
+                    if (isToggle)
+                        src = './assets/tools-fill.svg';
+                    else
+                        src = './assets/tools-empty.svg';
+                    changeMenu(menu, src);
+                    break;
+            }
+
+        }
+
+        function changeMenu(menu, imgSrc) {
+            let option = $('[data-menu=' + menu + ']');
+            $(option).toggleClass('active');
+            let img = $(option).children().closest('img');
+
+            $(img).attr('src', imgSrc);
+        }
+
+        //mission page js
+        uploadImages();
+    </script>
+
+    <!-- Tinymce editor -->
+    <script>
+        tinymce.init({
+
+            selector: 'textarea#description',
+            menubar: false,
+            plugins: [
+
+                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+
+                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+
+                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+
+            ],
+
+            toolbar: 'undo redo | bold italic strikethrough | superscript subscript | alignleft aligncenter alignright alignjustify |' +
+
+                'bullist numlist checklist outdent indent | removeformat | code',
+
+        })
+
+        tinymce.init({
+
+            selector: 'textarea#description1',
+            menubar: false,
+            plugins: [
+
+                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+
+                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+
+                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+
+            ],
+
+            toolbar: 'undo redo | bold italic strikethrough | superscript subscript | alignleft aligncenter alignright alignjustify |' +
+
+                'bullist numlist checklist outdent indent | removeformat | code'
+        })
+    </script>
+</body>
+
+</html>
+
+
+<!-- CMS Page table  -->
+<!-- <table class="table border">
+                        <thead class="">
+                            <tr class="border">
+                                <th class="font-22 fw-400">Title</th>
+                                <th class="font-22 fw-400">Status</th>
+                                <th class="font-22 fw-400">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-400">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non, fuga.
+                                </td>
+                                <td class="text-green fw-400">
+                                    Active
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        <img class= "cursor-pointer" src="./assets/editing.png" alt="Edit">
+                                        <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-400">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non, fuga.
+                                </td>
+                                <td class="text-green fw-400">
+                                    Active
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        <img class= "cursor-pointer" src="./assets/editing.png" alt="Edit">
+                                        <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-400">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non, fuga.
+                                </td>
+                                <td class="text-green fw-400">
+                                    Active
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        <img class= "cursor-pointer" src="./assets/editing.png" alt="Edit">
+                                        <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-400">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non, fuga.
+                                </td>
+                                <td class="text-green fw-400">
+                                    Active
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        <img class= "cursor-pointer" src="./assets/editing.png" alt="Edit">
+                                        <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            
+                            
+                        </tbody>
+                    </table> -->
+<!-- CMS Page Table fin  -->
+
+
+
+
+
+
+<!-- User table begin  -->
+<!-- <table class="table">
+                        <thead>
+                            <th class="font-22 fw-400">First Name</th>
+                            <th class="font-22 fw-400">Last Name</th>
+                            <th class="font-22 fw-400">Email</th>
+                            <th class="font-22 fw-400">Employee ID</th>
+                            <th class="font-22 fw-400">Department</th>
+                            <th class="font-22 fw-400">Status</th>
+                            <th class="font-22 fw-400">Action</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Gold
+                                </td>
+                                <td>
+                                    Roger
+                                </td>
+                                <td>
+                                    goldroger420@gmail.com
+                                </td>
+                                <td>
+                                    3498274
+                                </td>
+                                <td>
+                                    HR
+                                </td>
+                                <td class="text-green">
+                                    Active
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        <img class= "cursor-pointer" src="./assets/editing.png" alt="Edit">
+                                        <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Gold
+                                </td>
+                                <td>
+                                    Roger
+                                </td>
+                                <td>
+                                    goldroger420@gmail.com
+                                </td>
+                                <td>
+                                    3498274
+                                </td>
+                                <td>
+                                    HR
+                                </td>
+                                <td class="text-green">
+                                    Active
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        <img class= "cursor-pointer" src="./assets/editing.png" alt="Edit">
+                                        <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Gold
+                                </td>
+                                <td>
+                                    Roger
+                                </td>
+                                <td>
+                                    goldroger420@gmail.com
+                                </td>
+                                <td>
+                                    3498274
+                                </td>
+                                <td>
+                                    HR
+                                </td>
+                                <td class="text-green">
+                                    Active
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        <img class= "cursor-pointer" src="./assets/editing.png" alt="Edit">
+                                        <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Gold
+                                </td>
+                                <td>
+                                    Roger
+                                </td>
+                                <td>
+                                    goldroger420@gmail.com
+                                </td>
+                                <td>
+                                    3498274
+                                </td>
+                                <td>
+                                    HR
+                                </td>
+                                <td class="text-green">
+                                    Active
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        <img class= "cursor-pointer" src="./assets/editing.png" alt="Edit">
+                                        <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+<!-- USer table finish -->
+
+
+<!-- Story table begin -->
+<!-- <table class="table border">
+    <thead>
+        <tr>
+            <th class="font-22 fw-400">Story Title</th>
+            <th class="font-22 fw-400">Full Name</th>
+            <th class="font-22 fw-400">Mission Title</th>
+            <th class="font-22 fw-400">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Desktop publishing software also the leap into
+            </td>
+            <td>
+                Adam Baldwin
+            </td>
+            <td>
+                Desktop publishing software
+            </td>
+            <td>
+                <div class="d-flex gap-2 flex-wrap justify-content-center">
+                    <button class="cursor-pointer btn-story-view font-13 bg-transparent px-2 text-center">View</button>
+                    <img class="cursor-pointer" src="./assets/check-mark.svg" alt="Approve">
+                    <img class="cursor-pointer" src="./assets/x-circle.svg" alt="Decline">
+                    <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Desktop publishing software also the leap into
+            </td>
+            <td>
+                Adam Baldwin
+            </td>
+            <td>
+                Desktop publishing software
+            </td>
+            <td>
+                <div class="d-flex gap-2 flex-wrap justify-content-center">
+                    <button class="cursor-pointer btn-story-view font-13 bg-transparent px-2 text-center">View</button>
+                    <img class="cursor-pointer" src="./assets/check-mark.svg" alt="Approve">
+                    <img class="cursor-pointer" src="./assets/x-circle.svg" alt="Decline">
+                    <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Desktop publishing software also the leap into
+            </td>
+            <td>
+                Adam Baldwin
+            </td>
+            <td>
+                Desktop publishing software
+            </td>
+            <td>
+                <div class="d-flex gap-2 flex-wrap justify-content-center">
+                    <button class="cursor-pointer btn-story-view font-13 bg-transparent px-2 text-center">View</button>
+                    <img class="cursor-pointer" src="./assets/check-mark.svg" alt="Approve">
+                    <img class="cursor-pointer" src="./assets/x-circle.svg" alt="Decline">
+                    <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table> -->
+<!-- Story table fin -->
+
+
+
+<!-- Mission table begin -->
+<!-- <table class="table border">
+    
+    <thead>
+        <tr>
+            <th class="font-22 fw-400">Mission Title</th>
+            <th class="font-22 fw-400">Mission Type</th>
+            <th class="font-22 fw-400">Start Date</th>
+            <th class="font-22 fw-400">End Date</th>
+            <th class="font-22 fw-400">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Desktop publishing software</td>
+            <td>Time</td>
+            <td>05/02/2019</td>
+            <td>15/03/2019</td>
+            <td>
+                <div class="d-flex flex-wrap gap-3">
+                    <img class= "cursor-pointer" src="./assets/editing.png" alt="Edit">
+                    <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Various versions have evolved over Lorem ipsum dolor sit amet.</td>
+            <td>Time</td>
+            <td>05/02/2019</td>
+            <td>15/03/2019</td>
+            <td>
+                <div class="d-flex flex-wrap gap-3">
+                    <img class= "cursor-pointer" src="./assets/editing.png" alt="Edit">
+                    <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table> -->
+<!-- Mission table fin  -->
+
+<!-- Theme table start  -->
+<!-- <div class="mt-4 table-responsive admin-table">
+    <table class="table border">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Last Modification</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Environment</td>
+                <td class="text-green">Active</td>
+                <td>11/04/2023</td>
+                <td class="">
+                    <div class="d-flex gap-1 gap-md-4 mx-content">
+                        <img class="cursor-pointer" src="./assets/editing.png" alt="Edit">
+                        <img class="cursor-pointer" src="./assets/delete.png" alt="Delete">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div> -->
+
+<!-- theme table fin -->
+
+
+<!-- <div class="mt-4 d-flex justify-content-between">
+    <div class="border mx-content py-1 px-3 d-flex align-items-center" id="admin-search-container">
+        <img src="./assets/search.png" alt="Search Here" height="20px" width = "20px">
+        <input type="text" name="Search" id = "usr-search" placeholder="Search here" class="border-0 ms-2 form-control">
+    </div>          
+    <button class="btn-g-orange gap-0 px-2 py-0 pe-3" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f88634" class="bi bi-plus"
+            viewBox="0 0 16 16">
+            <path
+                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+        </svg>
+        Add
+    </button>
+</div>
+
+<div class="mt-4 border">
+    <h4 class="px-4 mb-0 py-3 bg-tile fw-400">Add Banner</h4>
+
+    <div class="px-4 mt-2 ">
+        <form id="form-add-cms" method="post" class="admin-form d-flex flex-column gap-4">
+
+            <div>
+                <label for="banner" class="form-label">Banner Image</label>
+                <input class="form-control form-control-md" id="banner" type="file">
+                <div class="mt-2" id="banner-preview">
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="" class="form-label">Title</label>
+                <input type="text" class="form-control" placeholder="Enter Title">
+                <span class="font-xs text-danger"></span>
+            </div>
+            <div>
+                <label for="" class="form-label">Banner Text</label>
+                <textarea class= "form-control" placeholder="Enter banner text" rows="4"></textarea>
+                <span class="font-xs text-danger"></span>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label for="" class="form-label">Sort Order</label>
+                    <input type="number" class="form-control" placeholder="Enter Sort Order">
+                    <span class="font-xs text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label for="" class="form-label">Status</label>
+                    <select name="" id="" class="form-select">
+                        <option value="Select Status" disabled selected>Select Status</option>
+                        <option value="true">Active</option>
+                        <option value="false">Deactivate</option>
+                    </select>
+                    <span class="font-xs text-danger"></span>
+                </div>
+            </div>
+            
+
+            <div class="d-flex justify-content-center justify-content-md-end gap-2">
+                <button class="btn-g-gray">Cancel</button>
+                <button class="btn-g-orange" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div> -->
+
+
+<!-- USer avatar -->
+<!-- <div class="text-center">
+    <input type="hidden" value="@Model.Avatar" id="user-avatar"/>
+    <input type="hidden" value="@Model.UserId" id="edit-user-id"/>
+    <img for="usr-profile-upload" src="./assets/volunteer3.png" class="rounded-circle cursor-pointer" alt="User image" id="usr-profile-img"
+         onclick="document.getElementById('usr-profile-upload').click();">
+    <input type="file" hidden id="usr-profile-upload" accept="image/*">
+    <p class="text-black-1 mb-0 font-22">John Doe</p>
+</div> -->

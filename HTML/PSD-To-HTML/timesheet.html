@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Volunteer Timesheet | CI</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar-home container d-flex gap-2 gap-md-5 navbar-light">
+            <img src="./assets/logo.png" alt="Logo" />
+            <div class="d-flex gap-2 gap-sm-5 align-items-center">
+                <a class="medium-text ">Stories</a>
+                <div class="dropdown">
+                    <a class="dropdown-toggle medium-text" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Policy
+                        <img src="./assets/drop-down.png" class="ms-2" alt="Options">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-2 ms-auto">
+                <div class="dropdown">
+                    <a class="dropdown-toggle medium-text " href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="./assets/user-img.png" alt="Profile Image" class="nav-profile-picture">
+                        <span class="d-none d-sm-inline">Evan Donohue</span>
+                        <img src="./assets/drop-down.png" class="ms-2" alt="Options">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Missions</a></li>
+                        <li><a class="dropdown-item" href="#">Favourites</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <hr class="m-0">
+    </header>
+    <section class="container mt-5">
+        <h1 class="font-black fw-light">Volunteering Timesheet</h1>
+        <div class="d-flex flex-column flex-lg-row vl-timesheet gap-4 mt-4">
+            <div class="vl-timesheet-hour px-3 py-4 flex-basis">
+                <div class="d-flex align-items-center justify-content-between">
+                    <p class="mb-0 text-black-1">Volunteering Hours</p>
+                    <button class="btn-g-orange gap-0 px-2 py-0 pe-3" data-bs-toggle="modal" data-bs-target="#addVolunteerHourModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f88634" class="bi bi-plus"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                        </svg>
+                        Add
+                    </button>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>Mission</th>
+                            <th>Date</th>
+                            <th>Hours</th>
+                            <th>Minutes</th>
+                        </tr>
+                        <tr>
+                            <td>Environment Conservation</td>
+                            <td>22/02/2022</td>
+                            <td>1h</td>
+                            <td>30min</td>
+                            <td class="d-flex gap-4 vl-timesheet-action">
+                                <img src="./assets/editing.png" alt="Edit">
+                                <img src="./assets/delete.png" alt="Delete">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="vl-timesheet-goal px-3 py-4 flex-basis">
+                <div class="d-flex align-items-center justify-content-between">
+                    <p class="mb-0 text-black-1">Volunteering Goals</p>
+                    <button class="btn-g-orange gap-1 px-2 py-0 pe-3" data-bs-toggle="modal" data-bs-target="#addVolunteerGoalModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#f88634" class="bi bi-plus"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                        </svg>
+                        Add
+                    </button>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>Mission</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Plantation Programme</td>
+                            <td>22/02/2022</td>
+                            <td>0</td>
+                            <td class="d-flex gap-4 vl-timesheet-action">
+                                <img src="./assets/editing.png" alt="Edit">
+                                <img src="./assets/delete.png" alt="Delete">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Plantation Programme</td>
+                            <td>22/02/2022</td>
+                            <td>0</td>
+                            <td class="d-flex gap-4 vl-timesheet-action">
+                                <img src="./assets/editing.png" alt="Edit">
+                                <img src="./assets/delete.png" alt="Delete">
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Volunteer Hours Modal Begin -->
+    <div class="modal" tabindex="-1" id="addVolunteerHourModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title font-22 text-black-1">Please input below Volunteering Hours</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" class="user-modal-form">
+                    <div class="modal-body d-flex flex-column gap-3">
+                        <div>
+                            <label class= "form-label" for="">Mission</label>
+                            <select class="form-select">
+                                <option value="" selected disabled>Select Mission</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="">Date Volunteered</label>
+                            <input type="text" onfocus="(this.type='date')" class="form-control" placeholder="Date Volunteered">
+                        </div>
+                        <div class="row gx-3">
+                            <div class="col-6">
+                                <label class="form-label" for="">Hours</label>
+                                <input type="number" class="form-control" placeholder="Enter Spent Hours">
+                                <span class="font-xs text-danger"></span>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" for="">Minutes</label>
+                                <input type="number" class="form-control" placeholder="Enter Spent Minutes">
+                                <span class="font-xs text-danger"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="" class="form-label">Message</label>
+                            <textarea class="form-control" rows="4" placeholder="Enter Your Message"></textarea>
+                            <span class="font-xs text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn-g-gray" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn-g-orange">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Add Volunteer Hours modal finish -->
+
+        <!-- Add Volunteer Goal Modal Begin -->
+        <div class="modal" tabindex="-1" id="addVolunteerGoalModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title font-22 text-black-1">Please input below Volunteering Hours</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" class="user-modal-form">
+                        <div class="modal-body d-flex flex-column gap-3">
+                            <div>
+                                <label class= "form-label" for="">Mission</label>
+                                <select class="form-select">
+                                    <option value="" selected disabled>Select Mission</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label" for="">Date Volunteered</label>
+                                <input type="text" onfocus="(this.type='date')" class="form-control" placeholder="Date Volunteered">
+                            </div>
+                            <div>
+                                <label class="form-label" for="">Actions</label>
+                                <input type="number" class="form-control" placeholder="Enter Actions">
+                            </div>
+                            <div>
+                                <label for="" class="form-label">Message</label>
+                                <textarea class="form-control" rows="4" placeholder="Enter Your Message"></textarea>
+                                <span class="font-xs text-danger"></span>
+                            </div>
+    
+                        </div>
+                        <div class="modal-footer border-0">
+                            <button type="button" class="btn-g-gray" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn-g-orange">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Add Volunteer Goal modal finish -->
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

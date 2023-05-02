@@ -1,221 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Story | CI</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <nav class="navbar-home container d-flex gap-2 gap-md-5 navbar-light">
-            <img src="./assets/logo.png" alt="Logo" />
-            <div class="d-flex gap-2 gap-sm-5 align-items-center">
-                <a class="medium-text ">Stories</a>
-                <div class="dropdown">
-                    <a class="dropdown-toggle medium-text" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Policy
-                        <img src="./assets/drop-down.png" class="ms-2" alt="Options">
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="d-flex align-items-center gap-2 ms-auto">
-                <div class="dropdown">
-                    <a class="dropdown-toggle medium-text " href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <img src="./assets/user-img.png" alt="Profile Image" class="nav-profile-picture">
-                        <span class="d-none d-sm-inline">Evan Donohue</span>
-                        <img src="./assets/drop-down.png" class="ms-2" alt="Options">
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Missions</a></li>
-                        <li><a class="dropdown-item" href="#">Favourites</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <hr class = "m-0">
+      <nav class="navbar-home container d-flex gap-2 gap-md-5 navbar-light">
+        <img src="./assets/logo.png" alt="Logo" />
+        <div class="d-flex gap-2 gap-sm-5 align-items-center">
+          <a class="medium-text">Stories</a>
+          <div class="dropdown">
+            <a
+              class="dropdown-toggle medium-text"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Policy
+              <img src="./assets/drop-down.png" class="ms-2" alt="Options" />
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2 ms-auto">
+          <div class="dropdown">
+            <a
+              class="dropdown-toggle medium-text"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="./assets/user-img.png"
+                alt="Profile Image"
+                class="nav-profile-picture"
+              />
+              <span class="d-none d-sm-inline">Evan Donohue</span>
+              <img src="./assets/drop-down.png" class="ms-2" alt="Options" />
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Missions</a></li>
+              <li><a class="dropdown-item" href="#">Favourites</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <hr class="m-0" />
     </header>
-    
+
     <main>
-        <section class = "container mt-4">
-            <h1 class = "font-40 text-black-1 text-light-custom">
-                Share Your Story
-            </h1>
+      <section class="container mt-4">
+        <h1 class="font-40 text-black-1 text-light-custom">Share Your Story</h1>
 
-            <div class = "mt-4">
-                <form action="#" method="post" class = "story-form d-flex flex-column gap-4" enctype="multipart/form-data">
-                    <div class = "row g-4">
-                        <div class = "form-group col-12 col-md-6 col-lg-4">
-                            <label for="MissionTitle">Mission Name</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Select Mission Name</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                              </select>
-                        </div>
-                        <div class="form-group col-12 col-md-6 col-lg-4">
-                            <label for="StoryTitle">StoryTitle</label>
-                            <input type="text" class="form-control custom-input" id="StoryTitle" placeholder="Enter story title">
-                        </div>
-                        <div class="form-group col-12 col-md-6 col-lg-4">
-                            <label for="Date">Date</label>
-                            <input type="date" class="form-control custom-input" id="Date" placeholder="Select Date">
-                        </div>
-                    </div>       
-                    <!-- Text Editor -->
-                    <div class = "form-group">
-                        <label for="description">My Story</label>
-                        <textarea name="editor" id="editor"></textarea>
-                    </div>
-                    <!-- Text Editor Fin -->
-
-                    <div class = "form-group">
-                        <label for="videoUrl">Enter Video URL</label>
-                        <input type="text" class = "form-control custom-input w-100">
-                    </div>
-
-                    <div class="form-group">
-                        <p class = "text-light-custom">Upload Your Photos</p>
-                        
-                            <div class = "form-control-file d-flex justify-content-center align-items-center p-4 cursor-pointer" id = "upload-area">
-                                <img src="./assets/drag-and-drop.png" alt="Drag and drop" for = "file-upload">
-                                <input type="file" multiple id = "file-upload" onchange="handleFiles(this.files)" accept=".png, .jpg, .jpeg" hidden>
-                            </div>
-                        
-                        
-                        
-                        <!-- Uploaded files  -->
-                        <div class = "mt-2 uploaded-files">
-                            <ul class = "list-unstyled d-flex flex-wrap gap-4 gap-md-4 justify-content-md-start" id = "file-list">
-                                <li class = "list">
-                                    <div class = "position-relative" >     
-                                        <img src="./assets/Animal-welfare-&-save-birds-campaign-1.png" alt="uploaded file" class = "upload-img">
-                                        <button class = "btn-cancel">
-                                            <img src="./assets/cross.png" alt="Cancel">
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Uploaded Files Fin -->
-                    </div>
-
-                    <div class = "d-flex justify-content-between">
-                        <button class = "btn-g-gray">
-                            Cancel 
-                        </button>
-                        <div class = "d-flex gap-2">
-                            <button class = "btn-g-orange">
-                                Save
-                            </button>
-                            <button class = "btn-g-orange">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </form>
+        <div class="mt-4">
+          <form
+            action="#"
+            method="post"
+            class="story-form d-flex flex-column gap-4"
+            enctype="multipart/form-data"
+          >
+            <div class="row g-4">
+              <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="MissionTitle">Mission Name</label>
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Select Mission Name</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+              <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="StoryTitle">StoryTitle</label>
+                <input
+                  type="text"
+                  class="form-control custom-input"
+                  id="StoryTitle"
+                  placeholder="Enter story title"
+                />
+              </div>
+              <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="Date">Date</label>
+                <input
+                  type="date"
+                  class="form-control custom-input"
+                  id="Date"
+                  placeholder="Select Date"
+                />
+              </div>
             </div>
-        </section>
+            <!-- Text Editor -->
+            <div class="form-group">
+              <label for="description">My Story</label>
+              <textarea name="editor" id="editor"></textarea>
+            </div>
+            <!-- Text Editor Fin -->
+
+            <div class="form-group">
+              <label for="videoUrl">Enter Video URL</label>
+              <input type="text" class="form-control custom-input w-100" />
+            </div>
+
+            <div class="form-group">
+              <p class="text-light-custom">Upload Your Photos</p>
+
+              <div
+                class="form-control-file d-flex justify-content-center align-items-center p-4 cursor-pointer"
+                id="upload-area"
+              >
+                <img
+                  src="./assets/drag-and-drop.png"
+                  alt="Drag and drop"
+                  for="file-upload"
+                />
+                <input
+                  type="file"
+                  multiple
+                  id="file-upload"
+                  onchange="handleFiles(this.files)"
+                  accept=".png, .jpg, .jpeg"
+                  hidden
+                />
+              </div>
+
+              <!-- Uploaded files  -->
+              <div class="mt-2 uploaded-files">
+                <ul
+                  class="list-unstyled d-flex flex-wrap gap-4 gap-md-4 justify-content-md-start"
+                  id="file-list"
+                >
+                
+                </ul>
+              </div>
+              <!-- Uploaded Files Fin -->
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <button class="btn-g-gray">Cancel</button>
+              <div class="d-flex gap-2">
+                <button class="btn-g-orange">Save</button>
+                <button class="btn-g-orange">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
     </main>
-    
+
     <!-- Footer(New) -->
-    <div class = "position-relative w-100 mt-4 bottom-0">
-        <footer class = "border">
-            <div class="container p-4">
-                <a href="#" class = "font-xs text-light-custom text-black-1">
-                    Privacy Policy
-                </a>
-            </div>
-        </footer>
+    <div class="position-relative w-100 mt-4 bottom-0">
+      <footer class="border">
+        <div class="container p-4">
+          <a href="#" class="font-xs text-light-custom text-black-1">
+            Privacy Policy
+          </a>
+        </div>
+      </footer>
     </div>
     <!-- Footer(New) Fin -->
 
     <script>
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-
-        //Script for Upload Files
-        const fileUpload = document.querySelector('#file-upload');
-        const fileList = document.querySelector('#file-list');
-        const uploadArea = document.querySelector('#upload-area');
-        const structure = `<div class = "position-relative" >     
+      //Script for Upload Files
+      const fileUpload = document.querySelector("#file-upload");
+      const fileList = document.querySelector("#file-list");
+      const uploadArea = document.querySelector("#upload-area");
+      const structure = `<div class = "position-relative" >     
                                         <img alt="uploaded file" class = "upload-img">
                                         <button class = "btn-cancel">
                                             <img src="./assets/cross.png" alt="Cancel">
                                         </button>
                                     </div>`;
-        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.png)$/;
- 
-        const addDom =  (imgSrc) =>
-        {
-                const template = document.createElement("li");
-                let tempStructure = structure;
+      var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.png)$/;
+      const validUploadFiles = [];
+      let fileIndex = 0;
+      const addDom = (imgSrc, fileIndex) => {
+        const template = document.createElement("li");
 
-                let replace = `<img alt="uploaded file" class = "upload-img">`;
-                let replaceBy = `<img src="${imgSrc}" alt = "uploaded file" class = "upload-img">`;
-                tempStructure = tempStructure.replace( 
-                    replace, replaceBy
-                );
-                console.log(tempStructure);
-                template.innerHTML = tempStructure.trim();
-                fileList.appendChild(template);
-        }
+        // create the div element
+        const div = document.createElement("div");
+        div.classList.add("position-relative");
 
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                uploadArea.addEventListener(eventName, preventDefaults, false)
-        });
-        uploadArea.addEventListener('click', () => fileUpload.click() );
-        function preventDefaults (e) {
+        // create the image element
+        const uploadImg = document.createElement("img");
+        uploadImg.src = imgSrc;
+        uploadImg.classList.add("upload-img");
+
+        // create the button element
+        const button = document.createElement("button");
+        button.classList.add("btn-cancel");
+        const crossImage = document.createElement("img");
+        crossImage.src = "./assets/cross.png";
+        button.append( crossImage );
+
+        button.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation();
-        }
+            console.log(fileIndex);
+            validUploadFiles.splice( fileIndex, 1 );
+            button.parentElement.parentElement.remove();
+        });
 
-        uploadArea.addEventListener('drop', handleDrop, false);
-        function handleDrop(e) 
-        {
-            let dt = e.dataTransfer;
-            let files = dt.files;
-            handleFiles(files);
-        }
-        fileUpload.addEventListener('change', handleFiles(fileUpload.files) );
-        function handleFiles(files)
-        {
-            if( files[0] )
-            {
-                let len = files.length;
-                for(let i = 0; i < len; i++)
-                {
-                    let file = files[i];
-                    if( ! regex.test( file.name.toLowerCase() ) )
-                    {
-                        alert("Invalid format!");
-                        return;
-                    }
+        // append the image and button elements to the div element
+        div.appendChild(uploadImg);
+        div.appendChild(button);
 
-                    let reader = new FileReader();
-                    reader.onload = function(evt)
-                    {
-                        addDom(evt.target.result);
-                    }
-                    reader.readAsDataURL(file);
-                }
+        // append the div element to the li element
+        template.appendChild(div);
+
+        fileList.appendChild(template);
+      };
+
+      ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+        uploadArea.addEventListener(eventName, preventDefaults, false);
+      });
+      uploadArea.addEventListener("click", () => fileUpload.click());
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      uploadArea.addEventListener("drop", handleDrop, false);
+      function handleDrop(e) {
+        let dt = e.dataTransfer;
+        let files = dt.files;
+        handleFiles(files);
+      }
+      fileUpload.addEventListener("change", handleFiles(fileUpload.files));
+      function handleFiles(files) {
+        if (files[0]) {
+          let len = files.length;
+          for (let i = 0; i < len; i++) {
+            let file = files[i];
+            if (!regex.test(file.name.toLowerCase())) {
+              alert("Invalid format!");
+              return;
             }
+
+            let reader = new FileReader();
+            reader.onload = function (evt) {
+                addDom(evt.target.result, fileIndex);
+                validUploadFiles.push( file );
+                fileIndex++;
+            };
+            reader.readAsDataURL(file);
+          }
         }
+        console.log( validUploadFiles );
+      }
     </script>
-</body>
+  </body>
 </html>
