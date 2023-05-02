@@ -1,6 +1,7 @@
 ﻿@{
     var userName = Context.Session.GetString("UserName");
     var msg = TempData["admin-login"];
+    ViewData["Title"] = "Admin Panel | CI Platform";
 }
 <input type="hidden" value = "@msg" id="admin-user"/>
 <main class="d-lg-flex">

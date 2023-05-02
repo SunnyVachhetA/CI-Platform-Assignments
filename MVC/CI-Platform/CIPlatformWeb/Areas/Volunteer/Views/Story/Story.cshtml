@@ -1,5 +1,6 @@
 ﻿@model ShareStoryVM
 @{
+    ViewData["Title"] = "User Story | CI Platform";
     var count = Model.MediaList.LongCount();
     var storyId = Model.StoryId;
 }
@@ -38,7 +39,7 @@
         </div>
         <div class="d-flex flex-column gap-2 gap-md-4 p-2 p-lg-4 my-4 flex-basis">
             <div>
-                <img src="~/assets/volunteer3.png" alt="volunteer" class="story-volunteer rounded-circle">
+                <img src="@Model.UserAvatar" alt="volunteer" class="story-volunteer rounded-circle">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="fw-light">@Model.UserName</div>
                     <button class="story-view d-flex gap-2 align-items-center">

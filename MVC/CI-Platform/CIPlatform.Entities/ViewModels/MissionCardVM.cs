@@ -42,4 +42,6 @@ public class MissionCardVM
     public List<MissionDocumentVM> MissionDocuments { get; set; } = new();
 
     public IEnumerable<long> ApplicationList { get; set; } = new List<long>();
+
+    public long TotalVolunteers { get; set; }
 }

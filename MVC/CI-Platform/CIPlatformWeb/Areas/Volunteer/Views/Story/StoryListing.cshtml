@@ -1,6 +1,8 @@
 ﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @model IEnumerable<ShareStoryVM>
 @{
+
+    ViewData["Title"] = "Stories | CI Platform";
     var userId = 0L;
     var addStoryPageUrl = string.Empty;
     if (Context.Session.GetString("UserId") != null)

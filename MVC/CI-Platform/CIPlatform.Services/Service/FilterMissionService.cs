@@ -91,7 +91,7 @@ public class FilterMissionService
                 break;
 
             case SortByMenu.LOWEST_SEAT_AVAILABLE:
-                missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderByDescending(msn => msn.SeatLeft.HasValue).OrderBy(msn => msn.SeatLeft);
+                missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING && msn.TotalSeat != null).OrderByDescending(msn => msn.SeatLeft.HasValue).OrderBy(msn => msn.SeatLeft);
                 break;
 
             case SortByMenu.HIGHEST_SEAT_AVAILABLE:
@@ -109,7 +109,7 @@ public class FilterMissionService
                 break;
 
             case SortByMenu.REGISTRATION_DEADLINE:
-                missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING).OrderBy(msn => msn.RegistrationDeadline.HasValue).OrderByDescending(msn => msn.RegistrationDeadline);
+                missions = missions.Where(msn => msn.Status == MissionStatus.ONGOING && msn.RegistrationDeadline != null).OrderByDescending(msn => msn.RegistrationDeadline.HasValue).OrderBy(msn => msn.RegistrationDeadline);
                 break;
             default: throw new ArgumentOutOfRangeException();
         }

@@ -20,7 +20,8 @@ public class MissionController : Controller
     {
         MissionCardVM missionDetails = _serviceUnit.MissionService.LoadMissionDetails( id );
 
-        ViewBag.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
+        //ViewBag.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
+        missionDetails.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
 
         return View( missionDetails );
     }

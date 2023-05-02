@@ -1,5 +1,6 @@
 ﻿@model MissionCardVM
 @{
+    ViewData["Title"] = "Mission Details | CI Platform";
     var userId = 0L;
     if (Context.Session.GetString("UserId") != null)
         userId = Convert.ToInt64(Context.Session.GetString("UserId"));
@@ -25,7 +26,7 @@
         isCommentExists = true;
     }
 
-    var totalVolunteers = ViewBag.TotalVolunteers;
+    var totalVolunteers = Model.TotalVolunteers;
     var volunteerCount = Model.RecentVolunteers.LongCount();
 
     var mediaCount = Model.MissionMedias?.LongCount();
@@ -250,7 +251,7 @@
             <div id="btnContainer">
             @if (userId != 0 && Model.ApplicationListId.Any(application => application == userId))
             {
-                <a asp-controller="User" asp-action="VolunteerTimesheet" asp-route-id="@userId" class="mx-auto">
+                <a asp-controller="User" asp-action="VolunteerTimesheet" asp-route-id="@userId" class="d-block mx-auto">
                     <button class="btn bg-orange px-4 py-2 my-2 my-md-3 rounded-pill cursor-pointer">
                         View Timesheet
                     </button>

@@ -290,10 +290,11 @@ function setDateRange() {
     let startDate;
     startDate = $('#vol-msn').find(':selected').data('startdate');
     let endDate = $('#vol-msn').find(':selected').data('enddate');
-
+   
     $('#vol-msn').on('change', function () {
         startDate = $('#vol-msn').find(':selected').data('startdate');
-        console.log(startDate);
+        endDate = $('#vol-msn').find(':selected').data('enddate');
+        
         setDate(startDate);
     });
     setDate(startDate, endDate);
@@ -307,11 +308,11 @@ function setDate(startDate, endDate) {
     
     var today = moment().startOf('day');
     var msnEnd = moment(endDate, 'DD-MM-YYYY HH:mm:ss Z');
-
+    
     if (msnEnd.isBefore(today))
     {
         $('#vol-date').attr('max', msnEnd.format('YYYY-MM-DD'));
-    } else if (msnEnd.isAfter(today))
+    } else if (msnEnd.isAfter(today) || endDate == undefined)
     {
         $('#vol-date').attr('max', current);
     }

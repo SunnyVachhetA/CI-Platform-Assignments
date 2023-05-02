@@ -1,4 +1,6 @@
-﻿using CIPlatform.Entities.DataModels;
+﻿using System;
+using System.Collections.Generic;
+using CIPlatform.Entities.DataModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.DataAccessLayer.Data;
@@ -48,6 +50,10 @@ public partial class CIDbContext : DbContext
 
     public virtual DbSet<MissionTheme> MissionThemes { get; set; }
 
+    public virtual DbSet<NotificationSetting> NotificationSettings { get; set; }
+
+    public virtual DbSet<NotificationType> NotificationTypes { get; set; }
+
     public virtual DbSet<PasswordReset> PasswordResets { get; set; }
 
     public virtual DbSet<Skill> Skills { get; set; }
@@ -62,13 +68,16 @@ public partial class CIDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserNotification> UserNotifications { get; set; }
+
+    public virtual DbSet<UserNotificationCheck> UserNotificationChecks { get; set; }
+
     public virtual DbSet<UserSkill> UserSkills { get; set; }
 
     public virtual DbSet<VerifyEmail> VerifyEmails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.;Database=CI_PLATFORM;Trusted_Connection=True;Encrypt=False");
+        => optionsBuilder.UseSqlServer("Server=PCT205\\SQL2019;Initial Catalog=CI_PLATFORM;Persist Security Info=False;User ID=sa;Password=Tatva@123;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False;Connection Timeout=30;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -159,7 +168,7 @@ public partial class CIDbContext : DbContext
         {
             entity.ToTable("cms_page");
 
-            entity.HasIndex(e => e.Slug, "UQ__cms_page__32DD1E4C53E1E875").IsUnique();
+            entity.HasIndex(e => e.Slug, "UQ__cms_page__32DD1E4C8B3C08B3").IsUnique();
 
             entity.Property(e => e.CmsPageId).HasColumnName("cms_page_id");
             entity.Property(e => e.CreatedAt)
@@ -552,6 +561,67 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
         });
 
+        modelBuilder.Entity<NotificationSetting>(entity =>
+        {
+            entity.HasKey(e => e.SettingId).HasName("PK__notifica__256E1E32BD0BBE95");
+
+            entity.ToTable("notification_setting");
+
+            entity.Property(e => e.SettingId).HasColumnName("setting_id");
+            entity.Property(e => e.IsEnabledComment).HasColumnName("is_enabled_comment");
+            entity.Property(e => e.IsEnabledEmail)
+                .IsRequired()
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_enabled_email");
+            entity.Property(e => e.IsEnabledMessage)
+                .IsRequired()
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_enabled_message");
+            entity.Property(e => e.IsEnabledMissionApplication)
+                .IsRequired()
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_enabled_mission_application");
+            entity.Property(e => e.IsEnabledNewMission).HasColumnName("is_enabled_new_mission");
+            entity.Property(e => e.IsEnabledNews).HasColumnName("is_enabled_news");
+            entity.Property(e => e.IsEnabledRecommendMission)
+                .IsRequired()
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_enabled_recommend_mission");
+            entity.Property(e => e.IsEnabledStory)
+                .IsRequired()
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_enabled_story");
+            entity.Property(e => e.IsEnabledVolunteerGoal)
+                .IsRequired()
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_enabled_volunteer_goal");
+            entity.Property(e => e.IsEnabledVolunteerHour)
+                .IsRequired()
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_enabled_volunteer_hour");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.NotificationSettings)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_notification_setting_user");
+        });
+
+        modelBuilder.Entity<NotificationType>(entity =>
+        {
+            entity.HasKey(e => e.TypeId).HasName("PK__notifica__2C0005984ABD86F5");
+
+            entity.ToTable("notification_type");
+
+            entity.Property(e => e.TypeId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("type_id");
+            entity.Property(e => e.TypeName)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("type_name");
+        });
+
         modelBuilder.Entity<PasswordReset>(entity =>
         {
             entity.HasKey(e => e.Email);
@@ -799,6 +869,51 @@ public partial class CIDbContext : DbContext
                 .HasConstraintName("FK_user_country");
         });
 
+        modelBuilder.Entity<UserNotification>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__user_not__3213E83F65F922AD");
+
+            entity.ToTable("user_notification");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.IsRead)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("is_read");
+            entity.Property(e => e.Message)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("message");
+            entity.Property(e => e.TypeId).HasColumnName("type_id");
+            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Type).WithMany(p => p.UserNotifications)
+                .HasForeignKey(d => d.TypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__user_noti__type___1F98B2C1");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserNotifications)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__user_noti__user___208CD6FA");
+        });
+
+        modelBuilder.Entity<UserNotificationCheck>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("user_notification_check");
+
+            entity.Property(e => e.LastCheck).HasColumnName("last_check");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany()
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__user_noti__user___2180FB33");
+        });
+
         modelBuilder.Entity<UserSkill>(entity =>
         {
             entity.ToTable("user_skill");
@@ -823,7 +938,7 @@ public partial class CIDbContext : DbContext
 
         modelBuilder.Entity<VerifyEmail>(entity =>
         {
-            entity.HasKey(e => e.Email).HasName("PK__verify_e__AB6E6165EB01DBAF");
+            entity.HasKey(e => e.Email).HasName("PK__verify_e__AB6E6165BC8779E2");
 
             entity.ToTable("verify_email");
 

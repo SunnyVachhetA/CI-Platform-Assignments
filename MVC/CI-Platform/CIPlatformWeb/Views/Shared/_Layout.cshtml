@@ -6,21 +6,22 @@
     <title>@ViewData["Title"] - CIPlatformWeb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
-    <link rel="stylesheet" href = "~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CIPlatformWeb.styles.css" asp-append-version="true" />
 </head>
 <body>
-     
-    
-        @RenderBody()
-    
+
+
+    @RenderBody()
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script src ="~/js/sweet-alert-notification.js"></script>
-    <partial name="_ValidationScriptsPartial"/>
+    <script src="~/js/sweet-alert-notification.js"></script>
+
+    <partial name="_ValidationScriptsPartial" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

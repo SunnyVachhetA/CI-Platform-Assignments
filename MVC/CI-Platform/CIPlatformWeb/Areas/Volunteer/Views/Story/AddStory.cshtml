@@ -1,6 +1,6 @@
 ﻿@model AddStoryVM
 @{
-
+    ViewData["Title"] = "Add Story | CI Platform";
     var userId = 0L;
     if (Context.Session.GetString("UserId") != null)
         userId = Convert.ToInt64(Context.Session.GetString("UserId")!);
