@@ -33,7 +33,7 @@ $(btnList).on('click', () => {
 
 function addToFavouriteHandler() {
     const favButtons = $('.msn-favourite');
-    const favListBtn = $('msn-list-favourite');
+    const favListBtn = $('.msn-list-favourite');
     handleFavouriteButtonClick(favButtons);
     handleFavouriteButtonClick(favListBtn);
 }
