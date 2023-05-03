@@ -83,6 +83,7 @@ public class MissionController : Controller
             if (!ModelState.IsValid) return NoContent();
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             await _serviceUnit.MissionService.CreateTimeMission(mission, wwwRootPath);
+
             return StatusCode(201);
         }
         catch (Exception e)

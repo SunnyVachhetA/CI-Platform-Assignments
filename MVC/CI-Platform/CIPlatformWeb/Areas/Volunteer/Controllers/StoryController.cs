@@ -71,6 +71,7 @@ public class StoryController : Controller
         return View();
     }
 
+    [ValidateAntiForgeryToken]
     [HttpPost]
     public IActionResult AddStory(AddStoryVM addStory, string storyAction)
     {
@@ -175,10 +176,19 @@ public class StoryController : Controller
     [AllowAnonymous]
     public IActionResult Story(long id)
     {
-        ShareStoryVM storyVm = _serviceUnit.StoryService.LoadStoryDetails(id);
-        storyVm.StoryViews++;
-        _serviceUnit.StoryService.UpdateStoryView(storyVm.StoryId, storyVm.StoryViews);
-        return View(storyVm);
+        try
+        {
+            ShareStoryVM storyVm = _serviceUnit.StoryService.LoadStoryDetails(id);
+            storyVm.StoryViews++;
+            _serviceUnit.StoryService.UpdateStoryView(storyVm.StoryId, storyVm.StoryViews);
+            return View(storyVm);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Something went during fetching story details: " + e.Message);
+            Console.WriteLine(e.StackTrace);
+            return View("_ErrorView");
+        }
     }
 
     public static void DeleteFileFromWebRoot(string filePath)
@@ -213,7 +223,7 @@ public class StoryController : Controller
     {
         try
         {
-            _serviceUnit.StoryInviteService.SaveUserInvite( userId, storyId, recommendList );
+            _ = _serviceUnit.StoryInviteService.SaveUserInvite(userId, storyId, recommendList);
             IEnumerable<string> userEmailList = 
                 await _serviceUnit
                 .UserService
@@ -221,9 +231,9 @@ public class StoryController : Controller
 
             string storyInviteLink = Url.Action("Story", "Story", new { id = storyId }, "https")?? string.Empty;
 
-            _serviceUnit
+            _ = _serviceUnit
                 .StoryInviteService
-                .SendStoryInviteToUsers( userEmailList, storyInviteLink, userName );
+                .SendStoryInviteToUsers(userEmailList, storyInviteLink, userName);
 
             return StatusCode(201);
         }

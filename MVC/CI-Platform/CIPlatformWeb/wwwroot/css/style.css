@@ -1171,7 +1171,7 @@ form-subtitle,
     background-color: var(--col-tile) !important;
 }
 
-.btn-story-view, .btn-user-view {
+.btn-story-view, .btn-user-view ,.btn-comment-view{
     border: 1px solid var(--col-orange);
     color: var(--col-orange);
     border-radius: 13px;

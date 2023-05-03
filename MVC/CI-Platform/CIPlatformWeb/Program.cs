@@ -15,6 +15,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IServiceUnit, ServiceUnit>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSingleton<CIPlatformWeb.Areas.Admin.Utilities.AjaxErrorFilter>();
 
 builder.Services.AddSession(); //Session Registration
 var app = builder.Build();

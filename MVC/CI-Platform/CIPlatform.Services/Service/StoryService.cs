@@ -222,6 +222,7 @@ public class StoryService : IStoryService
     {
         Func<Story, bool> filter = (story) => story.StoryId == id;
         Story story = _unitOfWork.StoryRepo.GetStoryDetails(filter);
+        if (story is null) throw new Exception("Story doesn't found: " + id);
         var storyVm = ConvertStoryModelToShareStoryVM(story);
         return storyVm;
     }

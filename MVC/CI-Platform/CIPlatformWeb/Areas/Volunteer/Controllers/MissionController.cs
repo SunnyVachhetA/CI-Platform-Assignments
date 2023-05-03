@@ -19,7 +19,7 @@ public class MissionController : Controller
     public IActionResult Index( long id )
     {
         MissionCardVM missionDetails = _serviceUnit.MissionService.LoadMissionDetails( id );
-
+        if (missionDetails is null) return View("_ErrorView");
         //ViewBag.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
         missionDetails.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
 

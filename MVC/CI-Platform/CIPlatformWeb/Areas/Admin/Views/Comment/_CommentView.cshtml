@@ -1,0 +1,36 @@
+﻿@model CommentAdminVM 
+
+<div class="modal" tabindex="-1" id="commentViewModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title font-22 text-black-1">Mission Comment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="user-modal-form" >
+                <div class="modal-body d-flex flex-column gap-3">
+                    <div class="text-center">
+                        <img src="@Model.Avatar" alt="User Avatar" class="rounded-circle" height="100px" width="100px"/>
+                    </div>
+                    <div>
+                        <label class="form-label" asp-for="UserName"></label>
+                        <input asp-for="UserName" class="form-control" value="@Model.UserName" disabled>
+                    </div>
+                    
+                    <div>
+                        <label class="form-label" asp-for="MissionTitle"></label>
+                        <input asp-for ="MissionTitle" class="form-control" disabled/>
+                    </div>
+                    <div>
+                        <label asp-for="CommentText" class="form-label"></label>
+                        <textarea class="form-control" asp-for="CommentText" rows="3" disabled></textarea>
+                    </div>
+
+                </div>
+           </div>     
+           <div class="modal-footer border-0">
+              <button type="button" class="btn-g-gray" data-bs-dismiss="modal">Cancel</button>
+           </div>
+        </div>
+    </div>
+</div>

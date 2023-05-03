@@ -11,7 +11,7 @@ public partial class Comment
 
     public long MissionId { get; set; }
 
-    public bool? ApprovalStatus { get; set; }
+    public byte ApprovalStatus { get; set; }
 
     public DateTimeOffset CreatedAt { get; set; }
 
@@ -20,6 +20,8 @@ public partial class Comment
     public DateTimeOffset? DeletedAt { get; set; }
 
     public string? CommentText { get; set; }
+
+    public bool? IsDeleted { get; set; }
 
     public virtual Mission Mission { get; set; } = null!;
 

@@ -192,6 +192,18 @@ function toggleMenuActive(menu, isToggle) {
             }
             changeMenu(menu, src);
             break;
+
+        case "comment":
+            src = '';
+            if (isToggle) {
+                src = '/assets/comment-fill.svg';
+                loadMissionCommentsAjax();
+            }
+            else {
+                src = '/assets/comment-empty.svg';
+            }
+            changeMenu(menu, src);
+            break;
     }
 
 }
@@ -419,7 +431,7 @@ function handleUserEdit(id) {
         data: { id },
         success: (result) => {
             $(adminMenuContent).html(result);
-            $('#btn-cancel').click(loadUsersAjax);
+            $('#btn-cancel').click((e) => { e.preventDefault(); loadUsersAjax() });
             editUserProfileImage();
             handleUserFormSubmitEvent('#form-edit-user', 'PUT', '/Admin/User/Edit', 'User profile updated successfully!', loadUsersAjax, false);
             registerCityAndCountryEvent();
@@ -495,6 +507,9 @@ function addAllEvents(action) {
 
         case "mission":
             loadMissionsOnDOM();
+            break;
+        case "comment":
+            loadMissionCommentsOnDOM();
             break;
     }
 }
@@ -2099,5 +2114,91 @@ function validateDates() {
 function registerDateValidation() {
     $('#start-date, #end-date, #reg-date').change(function () {
         validateDates();
+    });
+}
+
+//Mission Comments
+function loadMissionCommentsAjax() {
+    searchText = '';
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/Comment/Index',
+        success: (result) => {
+            adminMenuContent.html(result);
+            loadMissionCommentsOnDOM();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadMissionCommentsOnDOM() {
+    $('#comment-search').val('');
+    $('#comment-search').focus();
+    createPagination(5);
+    registerCommentEvents();
+}
+
+function registerCommentEvents() {
+    $('.btn-comment-view').each((_, item) => {
+        $(item).click(() => {
+            let commentId = $(item).data('commentid');
+            hanldeCommentView(commentId);
+        });
+    });
+    $('.comment-approve').each((_, item) => {
+        $(item).click(() => {
+            let commentId = $(item).data('commentid');
+            genericSweetPromptId('You will not be able to change approval status later.', 'Approve', approveCommentAjax, commentId);
+        });
+    });
+    $('.comment-decline').each((_, item) => {
+        $(item).click(() => {
+            let commentId = $(item).data('commentid');
+            genericSweetPromptId('You will not be able to change approval status later.', 'Decline', declineCommentAjax, commentId);
+
+        });
+    });
+    $('.comment-delete').each((_, item) => {
+        $(item).click(() => {
+            let commentId = $(item).data('commentid');
+            genericSweetPromptId('You will not be able to change approval status later.', 'Delete', deleteCommentAjax, commentId);
+
+        });
+    });
+}
+
+function approveCommentAjax(id) {
+    genericCommentAjax('/Admin/Comment/Approve', id, 'Comment approved!');
+}
+function declineCommentAjax(id) {
+    genericCommentAjax('/Admin/Comment/Decline', id, 'Comment declined!');
+}
+function deleteCommentAjax(id) {
+    genericCommentAjax('/Admin/Comment/Delete', id, 'Comment deleted!');
+}
+function genericCommentAjax(url, id, msg) {
+    $.ajax({
+        type: 'PATCH',
+        url: url,
+        data: { id },
+        success: (result) => {
+            successMessageSweetAlert(msg);
+            loadMissionCommentsAjax();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function hanldeCommentView(commentId) {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/Comment/View',
+        data: { commentId },
+        success: (result) => {
+            modalContainer.html(result);
+            console.log(result);
+            $('#commentViewModal').modal('show');
+        },
+        error: ajaxErrorSweetAlert
     });
 }

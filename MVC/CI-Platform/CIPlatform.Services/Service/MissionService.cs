@@ -173,6 +173,7 @@ public class MissionService : IMissionService
     public MissionCardVM LoadMissionDetails(long id)
     {
         var mission = unitOfWork.MissionRepo.FetchMissionDetailsById(id);
+        if (mission is null) return null!;
         MissionCardVM missionVM = ConvertMissionToMissionCardVM( mission );
         return missionVM; 
     }
