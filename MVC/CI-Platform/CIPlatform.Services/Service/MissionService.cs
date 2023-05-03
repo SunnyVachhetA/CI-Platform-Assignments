@@ -195,7 +195,7 @@ public class MissionService : IMissionService
 
         var missionList =
             result
-                .OrderBy(msn => msn.CreatedAt)
+                .OrderByDescending(msn => msn.CreatedAt)
                 .Select(ConvertMissionToMissionVMCard);
 
         if (missionList == null || !missionList.Any()) return (new List<MissionVMCard>(), 0);

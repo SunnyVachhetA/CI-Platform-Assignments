@@ -3160,11 +3160,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Assignments\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.DataAccessLayer\\CIPlatform.DataAccessLayer.csproj",
+      "projectUniqueName": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.DataAccessLayer\\CIPlatform.DataAccessLayer.csproj",
       "projectName": "CIPlatform.DataAccessLayer",
-      "projectPath": "D:\\Assignments\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.DataAccessLayer\\CIPlatform.DataAccessLayer.csproj",
+      "projectPath": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.DataAccessLayer\\CIPlatform.DataAccessLayer.csproj",
       "packagesPath": "C:\\Users\\pct205\\.nuget\\packages\\",
-      "outputPath": "D:\\Assignments\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.DataAccessLayer\\obj\\",
+      "outputPath": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.DataAccessLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -3186,8 +3186,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Assignments\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj": {
-              "projectPath": "D:\\Assignments\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj"
+            "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj": {
+              "projectPath": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj"
             }
           }
         }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oPhO0myxZz650LAUsIjdsbarDQ9cobVNQ7JXWiHB1JeHXMKZcP1tHb/45pXOxbg+K/mL2oMdqLTAP9r5+U5Kkw==",
+  "dgSpecHash": "tpC0+Mdw8WJrGpqGjVVdxakWZw44yX01xNymdQ/fU0I3MgJvI0U/4KX+BaVA8AG4zN+zZEo5PnhaZ4JXdnStXQ==",
   "success": true,
-  "projectFilePath": "D:\\Assignments\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.DataAccessLayer\\CIPlatform.DataAccessLayer.csproj",
+  "projectFilePath": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.DataAccessLayer\\CIPlatform.DataAccessLayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pct205\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\pct205\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

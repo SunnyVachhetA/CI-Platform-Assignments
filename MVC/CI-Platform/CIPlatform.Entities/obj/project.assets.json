@@ -3414,11 +3414,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Assignments\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj",
+      "projectUniqueName": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj",
       "projectName": "CIPlatform.Entities",
-      "projectPath": "D:\\Assignments\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj",
+      "projectPath": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\CIPlatform.Entities.csproj",
       "packagesPath": "C:\\Users\\pct205\\.nuget\\packages\\",
-      "outputPath": "D:\\Assignments\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\obj\\",
+      "outputPath": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-Platform\\CIPlatform.Entities\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
