@@ -37,7 +37,12 @@ public interface IServiceUnit
 
     IBannerService BannerService { get; }
 
-    IMissionDocumentService MissionDocumentService { get; }
+    IUserNotificationCheckService UserNotificationCheckService { get; }
+    INotificationSettingService NotificationSettingService { get; }
+
+    IMissionDocumentService MissionDocumentService { get; } 
+
+    IUserNotificationService UserNotificationService { get; }
 
     Task<IDbContextTransaction> BeginTransactionAsync();
     

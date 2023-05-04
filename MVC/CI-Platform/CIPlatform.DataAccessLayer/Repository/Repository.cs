@@ -13,69 +13,31 @@ public class Repository<T> : IRepository<T> where T : class
         _dbContext = dbContext;
         dbSet= _dbContext.Set<T>();
     }
-    public void Add(T entity)
-    {
-        Console.WriteLine("Adding Entity DB");
-        dbSet.Add(entity);
-    }
+    public void Add(T entity) => dbSet.Add(entity);
+    
+    public IEnumerable<T> GetAll() => dbSet.ToList();
 
-    public IEnumerable<T> GetAll()
-    {
-        IQueryable<T> query = dbSet;
-        return query.ToList();
-    }
+    public IEnumerable<T> GetAll(Func<T, bool> filter) => dbSet.Where(filter);
 
-    public IEnumerable<T> GetAll(Func<T, bool> filter)
-    {
+    public T GetFirstOrDefault(Expression<Func<T, bool>> filter) => dbSet.FirstOrDefault(filter)!;
 
-        var query = dbSet.Where(filter);
-        return query;
-    }
+    public async Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter) => await dbSet
+            .FirstOrDefaultAsync(filter);
 
-    public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
-    {
-        IQueryable<T> query = dbSet.Where(filter);
-        return query.FirstOrDefault();
-    }
+    public void Remove(T entity) => dbSet.Remove(entity);
 
-    public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter)
-    {
-        IQueryable<T> query = dbSet.Where(filter);
-        return await query.FirstOrDefaultAsync();
-    }
-    public void Remove(T entity)
-    {
-        dbSet.Remove(entity);
-    }
+    public void AddRange(IEnumerable<T> list) => dbSet.AddRange(list);
+    
 
-    public void AddRange(IEnumerable<T> list)
-    {
-        dbSet.AddRange(list);
-    }
+    public void RemoveRange(IEnumerable<T> list) => dbSet.RemoveRange(list);
 
-    public void RemoveRange(IEnumerable<T> list)
-    {
-        dbSet.RemoveRange(list);
-    }
+    public async Task AddRangeAsync(IEnumerable<T> list) => await dbSet
+                                                                    .AddRangeAsync(list);
 
-    public async Task AddRangeAsync(IEnumerable<T> list)
-    {
-        await 
-            dbSet
-            .AddRangeAsync(list);
-    }
+    public void Update(T entity) => dbSet.Update(entity);
 
-    public void Update(T entity)
-    {
-        dbSet.Update(entity);
-    }
-
-    public async Task<IEnumerable<T>> GetAllAsync()
-    {
-        IQueryable<T> query = dbSet;
-        return await query.ToListAsync();
-    }
-
+    public async Task<IEnumerable<T>> GetAllAsync() => await dbSet.ToListAsync();
+   
     public async Task<T> AddAsync(T entity)
     {
         await dbSet.AddAsync(entity);
@@ -87,4 +49,8 @@ public class Repository<T> : IRepository<T> where T : class
         dbSet.RemoveRange(list);
         return Task.CompletedTask;
     }
+
+    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter) => await dbSet
+            .Where(filter)
+            .ToListAsync();
 }

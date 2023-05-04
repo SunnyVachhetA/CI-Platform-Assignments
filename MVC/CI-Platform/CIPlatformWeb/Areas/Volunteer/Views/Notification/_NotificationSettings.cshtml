@@ -1,0 +1,56 @@
+﻿@model NotificationSettingVM
+
+<form id="form-notifs-settings">
+    <input type="hidden" asp-for="UserId"/>
+    <div class="setting-list">
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="RecommendMission"></label>
+            <input type="checkbox" class="form-check-input" asp-for="RecommendMission">
+        </div>
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="VolunteerHours"></label>
+            <input type="checkbox" class="form-check-input" asp-for="VolunteerHours">
+        </div>
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="VolunteerGoals"></label>
+            <input type="checkbox" class="form-check-input" asp-for="VolunteerGoals">
+        </div>
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="MyComment"></label>
+            <input type="checkbox" class="form-check-input" asp-for="MyComment">
+        </div>
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="MyStories"></label>
+            <input type="checkbox" class="form-check-input" asp-for="MyStories">
+        </div>
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="NewMissions"></label>
+            <input type="checkbox" class="form-check-input" asp-for="NewMissions">
+        </div>
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="NewMessages"></label>
+            <input type="checkbox" class="form-check-input" asp-for="NewMessages">
+        </div>
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="RecommendStory"></label>
+            <input type="checkbox" class="form-check-input" asp-for="RecommendStory">
+        </div>
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="MissionApplication"></label>
+            <input type="checkbox" class="form-check-input" asp-for="MissionApplication">
+        </div>
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="News"></label>
+            <input type="checkbox" class="form-check-input" asp-for="News">
+        </div>
+        <div class="d-flex justify-content-between px-3 p-2 border-bottom">
+            <label class="form-label" asp-for="ReceiveByEmail"></label>
+            <input type="checkbox" class="form-check-input" asp-for="ReceiveByEmail">
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center gap-4 align-items-center py-2 border-bottom flex-basis">
+        <button class="btn-g-orange py-1" id="notis-save" type="submit">Save</button>
+        <button class="btn-g-cancel py-1" id="notis-cancel">Cancel</button>
+    </div>
+</form>

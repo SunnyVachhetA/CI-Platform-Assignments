@@ -50,6 +50,8 @@ public partial class CIDbContext : DbContext
 
     public virtual DbSet<MissionTheme> MissionThemes { get; set; }
 
+    public virtual DbSet<Notification> Notifications { get; set; }
+
     public virtual DbSet<NotificationSetting> NotificationSettings { get; set; }
 
     public virtual DbSet<NotificationType> NotificationTypes { get; set; }
@@ -563,6 +565,20 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
         });
 
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.HasKey(e => e.NotificationId).HasName("PK__notifica__E059842FE3903CAF");
+
+            entity.ToTable("notification");
+
+            entity.Property(e => e.NotificationId).HasColumnName("notification_id");
+            entity.Property(e => e.Message)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("message");
+            entity.Property(e => e.NotificationType).HasColumnName("notification_type");
+        });
+
         modelBuilder.Entity<NotificationSetting>(entity =>
         {
             entity.HasKey(e => e.SettingId).HasName("PK__notifica__256E1E32BD0BBE95");
@@ -873,32 +889,30 @@ public partial class CIDbContext : DbContext
 
         modelBuilder.Entity<UserNotification>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__user_not__3213E83F65F922AD");
+            entity
+                .HasNoKey()
+                .ToTable("user_notification");
 
-            entity.ToTable("user_notification");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
-            entity.Property(e => e.IsRead)
-                .HasDefaultValueSql("((0))")
-                .HasColumnName("is_read");
-            entity.Property(e => e.Message)
-                .HasMaxLength(255)
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("created_at");
+            entity.Property(e => e.FromUserAvatar)
                 .IsUnicode(false)
-                .HasColumnName("message");
-            entity.Property(e => e.TypeId).HasColumnName("type_id");
+                .HasColumnName("from_user_avatar");
+            entity.Property(e => e.IsRead).HasColumnName("is_read");
+            entity.Property(e => e.NotificationId).HasColumnName("notification_id");
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.Type).WithMany(p => p.UserNotifications)
-                .HasForeignKey(d => d.TypeId)
+            entity.HasOne(d => d.Notification).WithMany()
+                .HasForeignKey(d => d.NotificationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__user_noti__type___1F98B2C1");
+                .HasConstraintName("FK__user_noti__notif__2BFE89A6");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UserNotifications)
+            entity.HasOne(d => d.User).WithMany()
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__user_noti__user___208CD6FA");
+                .HasConstraintName("FK__user_noti__user___2B0A656D");
         });
 
         modelBuilder.Entity<UserNotificationCheck>(entity =>

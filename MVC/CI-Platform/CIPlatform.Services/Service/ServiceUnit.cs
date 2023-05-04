@@ -47,6 +47,11 @@ public class ServiceUnit: IServiceUnit
     public IBannerService BannerService { get; private set; }
     public IMissionDocumentService MissionDocumentService { get; private set; }
 
+    public IUserNotificationCheckService UserNotificationCheckService { get; private set;}
+    public INotificationSettingService NotificationSettingService { get; private set; }
+
+    public IUserNotificationService UserNotificationService { get; private set; }
+
     public ServiceUnit(IUnitOfWork unitOfWork, IEmailService emailService)
 	{
 		_unitOfWork= unitOfWork;
@@ -74,6 +79,9 @@ public class ServiceUnit: IServiceUnit
         VerifyEmailService = new VerifyEmailService(_unitOfWork);
         BannerService = new BannerService(_unitOfWork);
         MissionDocumentService = new MissionDocumentService(_unitOfWork);
+        UserNotificationCheckService = new UserNotificationCheckService(_unitOfWork);
+        NotificationSettingService = new NotificationSettingService(_unitOfWork);
+        UserNotificationService = new UserNotificationService(_unitOfWork);
         MissionService = new MissionService(_unitOfWork, MissionMediaService, MissionDocumentService, MissionSkillService, GoalMissionService);
     }
     public async Task<IDbContextTransaction> BeginTransactionAsync()

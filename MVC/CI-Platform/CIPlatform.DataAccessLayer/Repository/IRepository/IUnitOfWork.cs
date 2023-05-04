@@ -38,6 +38,11 @@ public interface IUnitOfWork
     IBannerRepository BannerRepo { get; }
 
     IMissionDocumentRepository MissionDocumentRepo { get; } 
+
+    IUserNotificationCheckRepository UserNotificationCheckRepo { get; }
+    INotificationSettingRepository NotificationSettingRepo { get; }
+
+    IUserNotificationRepository UserNotificationRepo { get; }
     void Save();
 
     Task<IDbContextTransaction> BeginTransactionAsync();

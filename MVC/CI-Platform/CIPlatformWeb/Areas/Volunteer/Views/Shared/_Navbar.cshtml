@@ -54,14 +54,25 @@
                     </ul>
                 </li>
             </ul>
-            <div class="d-flex">
+            <div class="d-flex align-items-center gap-4">
                 @if (UserName != null)
                 {
+                    <div class="notification-container position-relative">
+                        <div class="notification position-relative">
+                            <img src="./assets/bell.png" alt="Notifications" />
+                            <span class="notification-badge"></span>
+                        </div>
+                        <!-- Notification Body Start  -->
+
+                        <div class="notification-body-container position-absolute">
+                        </div>
+                        <!-- Notification body end -->
+                   </div>
                     <div class="dropdown">
                         <a class="dropdown-toggle medium-text " href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                             <img src="@profileImage" alt="Profile Image" class="nav-profile-picture object-fit-cover" id="nav-profile-img">
-                            <span class="d-none d-sm-inline">@UserName</span>
+                            <span>@UserName</span>
                             <img src="~/assets/drop-down.png" class="ms-2" alt="Options">
                         </a>
                         <ul class="dropdown-menu">

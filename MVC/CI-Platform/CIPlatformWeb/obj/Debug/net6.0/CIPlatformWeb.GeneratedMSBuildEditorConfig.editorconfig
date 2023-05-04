@@ -171,6 +171,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXE1pc3Npb25cX1JlbGF0ZWRNaXNzaW9ucy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Notification/_Notifications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXE5vdGlmaWNhdGlvblxfTm90aWZpY2F0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Notification/_NotificationSettings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXE5vdGlmaWNhdGlvblxfTm90aWZpY2F0aW9uU2V0dGluZ3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-Platform/CIPlatformWeb/Areas/Volunteer/Views/Shared/_CmsPage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFNoYXJlZFxfQ21zUGFnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

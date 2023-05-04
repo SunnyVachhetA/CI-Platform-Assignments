@@ -1353,3 +1353,99 @@ form-subtitle,
 }
 .list-thumbnail { height: 310px; }
 #explore-menu li.cactive { background-color: var(--col-orange); }
+
+/*Notification styles begin */
+@media (min-width: 768px) {
+    .notification-body-container {
+        right: -20%;
+        z-index: 999;
+    }
+}
+
+@media (max-width: 420px) {
+    .notification-body-container {
+        left: 0;
+        z-index: 999;
+    }
+}
+
+#notification-settings .form-check-input:checked {
+    background-color: #f88634 !important;
+    color: #f88634 !important;
+}
+
+.notification {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+    .notification img {
+        width: 25px;
+        height: 25px;
+    }
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    padding: 3px;
+    border-radius: 50%;
+    background-color: #f88634;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.dot-orange {
+    height: 10px !important;
+    width: 10px !important;
+    background-color: var(--col-orange);
+    cursor: pointer;
+}
+
+.notification-body {
+    width: 30rem;
+}
+
+.notification-body-container {
+    margin-top: 0.6rem;
+    background-color: white;
+    z-index: 500;
+}
+
+.notification-body {
+    max-height: 80vh;
+}
+
+.setting-list > div {
+    font-weight: 400;
+}
+
+@media (max-width: 576px) {
+    .notification-body {
+        width: 90vw;
+    }
+
+        .notification-body p {
+            font-size: 0.8rem;
+        }
+
+    #notification-settings div {
+        font-size: 0.8rem;
+    }
+}
+
+.btn-g-cancel {
+    background-color: var(--col-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: .5rem 1.5rem;
+    border: 2px solid var(--col-secondary-brown);
+    border-radius: 24px;
+    color: var(--col-secondary-brown);
+    transition: var(--transition);
+}
+/*Notification styles end */

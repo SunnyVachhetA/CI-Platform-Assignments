@@ -5,7 +5,7 @@ namespace CIPlatform.DataAccessLayer.Repository.IRepository;
 public interface IRepository<T> where T: class
 {
     T GetFirstOrDefault(Expression<Func<T, bool>> filter);
-    Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter);
+    Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter);
     IEnumerable<T> GetAll();
     void Add(T entity);
     void Remove(T entity);
@@ -19,6 +19,8 @@ public interface IRepository<T> where T: class
     void Update(T entity);
 
     Task<IEnumerable<T>> GetAllAsync();
+
+    Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter);
 
     Task<T> AddAsync(T entity);
 

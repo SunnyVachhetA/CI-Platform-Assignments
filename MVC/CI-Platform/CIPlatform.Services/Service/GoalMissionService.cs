@@ -39,7 +39,7 @@ public class GoalMissionService : IGoalMissionService
             entity.GoalValue = goalValue?? 0;
             entity.GoalObjectiveText = goalObjective;
             entity.UpdatedAt = DateTimeOffset.Now;
-            _unitOfWork.GoalMissionRepo.Update(entity);
+           // _unitOfWork.GoalMissionRepo.Update(entity);
             await _unitOfWork.SaveAsync();
         }
         catch (Exception e)

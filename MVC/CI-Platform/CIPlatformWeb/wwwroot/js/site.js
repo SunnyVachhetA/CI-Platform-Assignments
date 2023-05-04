@@ -11,7 +11,7 @@ $(document).ready(() => {
         successMessageSweetAlert("You have been successfully logged out");
     }
 
- 
+
     let loginSuccessMessage = $('#successful-login').val();
 
     if (loginSuccessMessage !== undefined && loginSuccessMessage !== '') {
@@ -77,11 +77,10 @@ $('#btn-contact-us').click
                 error: ajaxErrorSweetAlert
             });
         }
-);
+    );
 
-function registerContactUsSubmit()
-{
-    $('#contact-form').on('submit', (event)=> handleContactUsFormSubmit(event));
+function registerContactUsSubmit() {
+    $('#contact-form').on('submit', (event) => handleContactUsFormSubmit(event));
 }
 
 function handleContactUsFormSubmit(event) {
@@ -95,7 +94,7 @@ function handleContactUsFormSubmit(event) {
             data: $('#contact-form').serialize(),
             success: function (_, _, status) {
                 $('#contactUsFormModal').modal('hide');
-                displayActionMessageSweetAlert('Thank You!', 'Your message has been received.', 'success');                
+                displayActionMessageSweetAlert('Thank You!', 'Your message has been received.', 'success');
             },
             error: ajaxErrorSweetAlert
         });
@@ -115,10 +114,10 @@ function handleCMSMenu() {
         success: (result) => {
             $('#cms-drop ul').empty();
             result.forEach(page => {
-                    var li = $('<li>');
-                    var link = $('<a>').addClass('dropdown-item').text(page.title).attr('href', '/volunteer/cmspage/get/' + page.id);
-                    li.append(link);
-                    $('#cms-drop ul').append(li);
+                var li = $('<li>');
+                var link = $('<a>').addClass('dropdown-item').text(page.title).attr('href', '/volunteer/cmspage/get/' + page.id);
+                li.append(link);
+                $('#cms-drop ul').append(li);
             });
         },
         error: ajaxErrorSweetAlert
@@ -126,3 +125,121 @@ function handleCMSMenu() {
 
 }
 
+const notificationBodyContainer = document.querySelector('.notification-body-container');
+let notisListing;
+let notisSettings;
+let btnSetting;
+let unreadMessages;
+let clearAllNotis;
+let notificationsCount;
+
+handleNotificationDisplay();
+
+function handleNotificationDisplay() {
+    if (notificationBodyContainer == null || notificationBodyContainer == undefined) return;
+
+    $.ajax({
+        type: 'GET',
+        url: '/Volunteer/Notification/Index',
+        data: { id: loggedUserId },
+        success: (result) => {
+            $(notificationBodyContainer).html(result);
+            loadNotificationOnDOM();
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
+function loadNotificationOnDOM() {
+    notificationsCount = $('#notification-count').val();
+    notisBadge = $(".notification-badge");
+    notisListing = $('#notification-listing');
+    notisSettings = $('#notification-settings');
+    btnSetting = $('#notis-setting');
+    unreadMessages = $('.dot-orange');
+    clearAllNotis = $('#clear-all-notis');
+
+    $('.notification').click(() => {
+        notisListing.toggleClass('d-none');
+        notisSettings.addClass('d-none');
+    });
+    handleMessageRead();
+    updateBadgeCount();
+    handleNotificationSettingFormSubmit();
+    registerNotificationEvents();
+}
+
+function updateBadgeCount() {
+    console.log(notificationsCount);
+    if (notificationsCount == 0) {
+        notisBadge.remove();
+        return;
+    }
+    notisBadge.text(notificationsCount);
+}
+function handleMessageRead() {
+    $('.dot-orange').click(function () {
+        var notifsId = $(this).data('id');
+        console.log(notifsId);
+        $(this).replaceWith('<img src="/assets/read.svg" alt="Read" class="ms-auto" height="10px" width="10px">');
+
+        genericNotificationAjax('PATCH', '/Volunteer/Notification/MarkAsRead', notifsId, 'Notification marked as read.');
+    });
+}
+function registerNotificationEvents() {
+    btnSetting.click(() => {
+        notisListing.addClass('d-none');
+        notisSettings.removeClass('d-none');
+    });
+
+    $('#notis-cancel').click((e) => {
+        e.preventDefault();
+        notisSettings.addClass('d-none');
+        notisListing.removeClass('d-none');
+    });
+
+    clearAllNotis.click(() => {
+        if (notificationsCount == 0) return;
+        $('.notis-listing').remove();
+        let div = $("<div>").addClass("bg-light text-center py-1 fw-light text-black-1").text('Woohoo.. No notifications for now!');
+        notisListing.append(div);
+        notificationsCount = 0;
+        genericNotificationAjax('DELETE', '/Volunteer/Notification/Delete', 0, 'Notifications removed!');
+    });
+}
+
+function genericNotificationAjax(type, url, notifsId, msg) {
+    if (notifsId != 0) {
+        $.ajax({
+            type: type,
+            url: url,
+            data: { userId: loggedUserId, id: notifsId },
+            success: (_) => successMessageSweetAlert(msg),
+            error: ajaxErrorSweetAlert
+        });
+    }
+    else {
+        $.ajax({
+            type: type,
+            url: url,
+            data: { userId: loggedUserId },
+            success: (_) => successMessageSweetAlert(msg),
+            error: ajaxErrorSweetAlert
+        });
+    }
+}
+
+function handleNotificationSettingFormSubmit() {
+    $('#form-notifs-settings').on('submit', e => {
+        e.preventDefault();
+        notisSettings.addClass('d-none');
+        notisListing.addClass('d-none');
+        $.ajax({
+            type: 'PUT',
+            url: '/Volunteer/Notification/Settings',
+            data: $('#form-notifs-settings').serialize(),
+            success: (_) => successMessageSweetAlert("Notification settings saved!"),
+            error: ajaxErrorSweetAlert
+        });
+    });
+}

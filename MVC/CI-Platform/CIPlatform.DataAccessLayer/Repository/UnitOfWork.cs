@@ -42,6 +42,12 @@ public class UnitOfWork : IUnitOfWork
     public IBannerRepository BannerRepo { get; private set; }
     public IMissionDocumentRepository MissionDocumentRepo { get; private set; }
 
+    public IUserNotificationCheckRepository UserNotificationCheckRepo { get; private set; }
+
+    public INotificationSettingRepository NotificationSettingRepo { get; private set; }
+
+    public IUserNotificationRepository UserNotificationRepo { get; private set; }
+
     public UnitOfWork(CIDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -70,6 +76,9 @@ public class UnitOfWork : IUnitOfWork
         VerifyEmailRepo = new VerifyEmailRepository(_dbContext);
         BannerRepo = new BannerRepository(_dbContext);
         MissionDocumentRepo = new MissionDocumentRepository(_dbContext);
+        UserNotificationCheckRepo = new UserNotificationCheckRepository(_dbContext);
+        NotificationSettingRepo = new NotificationSettingRepository(_dbContext);
+        UserNotificationRepo = new UserNotificationRepository(_dbContext);
     }
 
     public void Save()
