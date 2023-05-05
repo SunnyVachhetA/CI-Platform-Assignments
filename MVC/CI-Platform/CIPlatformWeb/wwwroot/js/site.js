@@ -115,7 +115,7 @@ function handleCMSMenu() {
             $('#cms-drop ul').empty();
             result.forEach(page => {
                 var li = $('<li>');
-                var link = $('<a>').addClass('dropdown-item').text(page.title).attr('href', '/volunteer/cmspage/get/' + page.id);
+                var link = $('<a>').addClass('dropdown-item').text(page.title).attr('href', '/Volunteer/CmsPage/Page/' + page.id);
                 li.append(link);
                 $('#cms-drop ul').append(li);
             });

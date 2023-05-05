@@ -38,7 +38,7 @@ public class CmsPageService: ICmsPageService
         return !result;
     }
 
-    public void AddCMSPage(CMSPageVM cmsPage)
+    public short AddCMSPage(CMSPageVM cmsPage)
     {
         CmsPage page = new()
         {
@@ -50,6 +50,7 @@ public class CmsPageService: ICmsPageService
         };
         _unitOfWork.CmsPageRepo.Add(page);
         _unitOfWork.Save();
+        return page.CmsPageId;
     }
 
     public IEnumerable<CMSPageVM> SearchCMSPageByKey(string searchKey)

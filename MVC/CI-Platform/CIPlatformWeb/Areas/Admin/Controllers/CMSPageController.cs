@@ -1,4 +1,6 @@
-﻿using CIPlatform.Entities.ViewModels;
+﻿using CIPlatform.Entities.DataModels;
+using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
 using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -27,13 +29,20 @@ public class CMSPageController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddCMS( CMSPageVM cmsPage )
+    public async Task<IActionResult> AddCMS( CMSPageVM cmsPage )
     {
         try
         {
-            _serviceUnit.CmsPageService.AddCMSPage(cmsPage);
+            short id = _serviceUnit.CmsPageService.AddCMSPage(cmsPage);
 
             var cmsPages = _serviceUnit.CmsPageService.LoadAllCmsPages();
+            string message = "Admin has added new CMS Page:  " + cmsPage.Title;
+
+            var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers( message, NotificationTypeEnum.NEW, NotificationTypeMenu.NEWS);
+
+            string link = Url.Action("Page", "CmsPage", new {area = "Volunteer" , id = id}, "https")!;
+
+            _ = _serviceUnit.PushNotificationService.PushEmailNotificationToSubscriberAsync(cmsPage.Title, link, emailSubscriptionList, NotificationTypeMenu.NEWS);
             return PartialView("_CMSPages", cmsPages);
         }
         catch (Exception e)

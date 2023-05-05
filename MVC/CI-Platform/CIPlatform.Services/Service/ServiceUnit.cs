@@ -52,6 +52,8 @@ public class ServiceUnit: IServiceUnit
 
     public IUserNotificationService UserNotificationService { get; private set; }
 
+    public IPushNotificationService PushNotificationService { get; private set; }
+
     public ServiceUnit(IUnitOfWork unitOfWork, IEmailService emailService)
 	{
 		_unitOfWork= unitOfWork;
@@ -83,6 +85,7 @@ public class ServiceUnit: IServiceUnit
         NotificationSettingService = new NotificationSettingService(_unitOfWork);
         UserNotificationService = new UserNotificationService(_unitOfWork);
         MissionService = new MissionService(_unitOfWork, MissionMediaService, MissionDocumentService, MissionSkillService, GoalMissionService);
+        PushNotificationService = new PushNotificationService(_unitOfWork);
     }
     public async Task<IDbContextTransaction> BeginTransactionAsync()
     {

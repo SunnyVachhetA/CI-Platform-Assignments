@@ -43,6 +43,8 @@ public interface IUnitOfWork
     INotificationSettingRepository NotificationSettingRepo { get; }
 
     IUserNotificationRepository UserNotificationRepo { get; }
+
+    INotificationRepository NotificationRepo { get; }
     void Save();
 
     Task<IDbContextTransaction> BeginTransactionAsync();

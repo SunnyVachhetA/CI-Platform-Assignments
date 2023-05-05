@@ -33,7 +33,7 @@ public class CmsPageController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get(short id)
+    public async Task<IActionResult> Page(short id)
     {
         try
         {

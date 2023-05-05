@@ -48,6 +48,8 @@ public class UnitOfWork : IUnitOfWork
 
     public IUserNotificationRepository UserNotificationRepo { get; private set; }
 
+    public INotificationRepository NotificationRepo { get; private set; }
+
     public UnitOfWork(CIDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -79,6 +81,7 @@ public class UnitOfWork : IUnitOfWork
         UserNotificationCheckRepo = new UserNotificationCheckRepository(_dbContext);
         NotificationSettingRepo = new NotificationSettingRepository(_dbContext);
         UserNotificationRepo = new UserNotificationRepository(_dbContext);
+        NotificationRepo = new NotificationRepository(_dbContext);
     }
 
     public void Save()

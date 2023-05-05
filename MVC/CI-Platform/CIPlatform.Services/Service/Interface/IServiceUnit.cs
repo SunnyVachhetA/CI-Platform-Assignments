@@ -44,6 +44,7 @@ public interface IServiceUnit
 
     IUserNotificationService UserNotificationService { get; }
 
+    IPushNotificationService PushNotificationService { get; }
     Task<IDbContextTransaction> BeginTransactionAsync();
     
 }
