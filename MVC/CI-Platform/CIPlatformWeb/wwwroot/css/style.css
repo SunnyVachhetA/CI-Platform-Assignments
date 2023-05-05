@@ -1388,8 +1388,8 @@ form-subtitle,
 .notification-badge {
     position: absolute;
     top: -5px;
-    right: -5px;
-    padding: 3px;
+    right: -3px;
+    padding: 1px 4px;
     border-radius: 50%;
     background-color: #f88634;
     color: white;

@@ -24,15 +24,14 @@ public class UserNotificationService : IUserNotificationService
         var lastCheckDate = userLastCheck?.LastCheck ?? DateTimeOffset.MinValue;
         vm.NewNotifications = notifications
                         .Where(notification => lastCheckDate < (notification.UpdatedAt ?? notification.CreatedAt))
-                        .Select(ConvertToUserNotificationVM)
-                        .ToList();
+                        .Select(ConvertToUserNotificationVM);
 
         vm.OldNotifications = notifications
                        .Where(notification => lastCheckDate > (notification.UpdatedAt ?? notification.CreatedAt))
-                       .Select(ConvertToUserNotificationVM)
-                       .ToList();
+                       .Select(ConvertToUserNotificationVM);
 
-        vm.UnreadCount = vm.NewNotifications.Count();
+        vm.UnreadCount = notifications.Count(notification => !notification.IsRead);
+
         vm.NotificationSetting = NotificationSettingService.ConvertModelToSettingVM(await _unitOfWork.NotificationSettingRepo.GetFirstOrDefaultAsync(setting => setting.UserId == id)!);
         return vm;
     }
@@ -49,7 +48,18 @@ public class UserNotificationService : IUserNotificationService
             FromUserAvatar = notification.FromUserAvatar,
             CreatedAt = notification.CreatedAt,
         };
-
         return vm;
+    }
+
+    public async Task MarkNotificationAsReadAsync(long userId, long notifsId)
+    {
+        int result = await _unitOfWork.UserNotificationRepo.UpdateReadStatus(userId, notifsId);
+        if (result == 0) throw new Exception("Something went during mark as read: " + userId);
+    }
+
+    public async Task DeleteAllNotification(long userId)
+    {
+        int result = await _unitOfWork.UserNotificationRepo.DeleteAllNotificationAsync(userId);
+        if(result == 0) throw new Exception("Something went wrong during delete all notification: " + nameof(userId));
     }
 }

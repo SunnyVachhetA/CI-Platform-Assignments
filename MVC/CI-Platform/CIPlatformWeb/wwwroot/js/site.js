@@ -132,7 +132,9 @@ let btnSetting;
 let unreadMessages;
 let clearAllNotis;
 let notificationsCount;
-
+let isBtnClearAllClicked = false;
+let isBellClicked = false;
+let msgCount = 0;
 handleNotificationDisplay();
 
 function handleNotificationDisplay() {
@@ -158,10 +160,13 @@ function loadNotificationOnDOM() {
     btnSetting = $('#notis-setting');
     unreadMessages = $('.dot-orange');
     clearAllNotis = $('#clear-all-notis');
+    msgCount = $('#msg-count').val();
 
     $('.notification').click(() => {
         notisListing.toggleClass('d-none');
         notisSettings.addClass('d-none');
+        if (!isBellClicked) genericNotificationAjax('PATCH', '/Volunteer/Notification/UpdateLastCheck', 0, '');
+        isBellClicked = true;
     });
     handleMessageRead();
     updateBadgeCount();
@@ -170,7 +175,6 @@ function loadNotificationOnDOM() {
 }
 
 function updateBadgeCount() {
-    console.log(notificationsCount);
     if (notificationsCount == 0) {
         notisBadge.remove();
         return;
@@ -179,11 +183,12 @@ function updateBadgeCount() {
 }
 function handleMessageRead() {
     $('.dot-orange').click(function () {
-        var notifsId = $(this).data('id');
-        console.log(notifsId);
+        var notifsId = $(this).data('notifsid');
         $(this).replaceWith('<img src="/assets/read.svg" alt="Read" class="ms-auto" height="10px" width="10px">');
 
         genericNotificationAjax('PATCH', '/Volunteer/Notification/MarkAsRead', notifsId, 'Notification marked as read.');
+        notificationsCount--;
+        updateBadgeCount();
     });
 }
 function registerNotificationEvents() {
@@ -199,12 +204,13 @@ function registerNotificationEvents() {
     });
 
     clearAllNotis.click(() => {
-        if (notificationsCount == 0) return;
+        if (isBtnClearAllClicked || msgCount == 0) return;
         $('.notis-listing').remove();
         let div = $("<div>").addClass("bg-light text-center py-1 fw-light text-black-1").text('Woohoo.. No notifications for now!');
         notisListing.append(div);
         notificationsCount = 0;
         genericNotificationAjax('DELETE', '/Volunteer/Notification/Delete', 0, 'Notifications removed!');
+        isBtnClearAllClicked = true;
     });
 }
 
@@ -222,8 +228,12 @@ function genericNotificationAjax(type, url, notifsId, msg) {
         $.ajax({
             type: type,
             url: url,
+            global: false,
             data: { userId: loggedUserId },
-            success: (_) => successMessageSweetAlert(msg),
+            success: (_) => {
+                if (msg === '') return;
+                successMessageSweetAlert(msg)
+            },
             error: ajaxErrorSweetAlert
         });
     }

@@ -40,3 +40,4 @@ public class NotificationSettingVM
     [Display(Name ="Receive Notifications By Email")]
     public bool ReceiveByEmail { get; set; }
 }
+

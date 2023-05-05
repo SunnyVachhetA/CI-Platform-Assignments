@@ -2,4 +2,5 @@
 
 public interface IUserNotificationCheckService
 {
+    Task UpdateLastCheckAsync(long userId);
 }

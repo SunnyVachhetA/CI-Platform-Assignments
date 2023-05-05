@@ -11,4 +11,10 @@ public class UserNotificationCheckService : IUserNotificationCheckService
     {
         _unitOfWork = unitOfWork;
     }
+
+    public async Task UpdateLastCheckAsync(long userId)
+    {
+        int result = await _unitOfWork.UserNotificationCheckRepo.UpdateUserLastCheckAsync(userId);
+        if (result == 0) throw new Exception("Something went wrong during user last check: " + nameof(userId));
+    }
 }
