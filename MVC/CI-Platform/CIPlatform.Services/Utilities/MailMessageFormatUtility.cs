@@ -69,6 +69,28 @@ public static class MailMessageFormatUtility
         </style>
     </head>";
 
+    public static string GenerateMessageForNewCMSPage(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has added new CMS page.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>Check out new CMS page <b>{title}</b> that has been added by admin.</p>
+                    <a href = '{pageLink}' class='button'> <button>CMS Page</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
     public static string GenerateMessageForAccountActivation(string userName, string link)
     {
 
@@ -89,7 +111,6 @@ public static class MailMessageFormatUtility
         return CreateEmailBody(bodySection);
 
     }
-
     public static string GenerateMessageForResetPassword(string link)
     {
         string bodySection = $@"
@@ -114,8 +135,6 @@ public static class MailMessageFormatUtility
 
         return CreateEmailBody(bodySection);
     }
-
-
     public static string GenerateStoryInviteMessage(string userName, string storyInviteLink)
     {
         string bodySection = $@"
@@ -139,7 +158,6 @@ public static class MailMessageFormatUtility
 
         return CreateEmailBody(bodySection);
     }
-
     private static string CreateEmailBody(string bodySection)
         =>
             $@"
@@ -147,7 +165,6 @@ public static class MailMessageFormatUtility
                 {HeadSection}
                 {bodySection}
             </html>";
-
     public static string GenerateMissionInviteMessage(string userName, string link)
     {
         string bodySection = $@"
@@ -171,7 +188,6 @@ public static class MailMessageFormatUtility
 
         return CreateEmailBody(bodySection);
     }
-
     public static string GenerateContactResponseMailMessage(string contactSubject, string contactResponse)
     {
         string bodySection = $@"
@@ -198,7 +214,6 @@ public static class MailMessageFormatUtility
 
         return CreateEmailBody(bodySection);
     }
-
     public static string GenerateAccountCreationMail(string userName, string email, string password, string link)
     {
         string bodySection = $@"
@@ -219,6 +234,28 @@ public static class MailMessageFormatUtility
                     <a href='{link}' class='button'><button>Login Here(Activate Your Account)</button></a>
                     <br>
                     <p>We are looking forward to work with you!</p>
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+    public static string GenerateMessageForNewMission(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has added new mission.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>Check out new mission <b>{title}</b> that has been added by admin.</p>
+                    <a href = '{pageLink}' class='button'> <button>CMS Page</button> </a>
+
                     <p>Regards,</p>
                     <p>CI Team</p>
                 </div>

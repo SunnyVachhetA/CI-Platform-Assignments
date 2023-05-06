@@ -11,15 +11,23 @@ public class PushNotificationService : IPushNotificationService
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public PushNotificationService(IUnitOfWork unitOfWork)
+    private readonly IEmailService _emailService;
+    public PushNotificationService(IUnitOfWork unitOfWork, IEmailService emailService)
     {
         _unitOfWork = unitOfWork;
+        _emailService = emailService;
     }
 
     public async Task PushEmailNotificationToSubscriberAsync(string title, string pageLink, List<UserContactVM> emailSubscriptionList, NotificationTypeMenu menu)
     {
         string subject = GetSubjectForMenu(menu);
-
+        foreach (var userContact in emailSubscriptionList)
+        {
+            string userName = userContact.UserName;
+            string email = userContact.Email;
+            string message = MailMessageFormatUtility.GenerateMessageForNewCMSPage(title, pageLink, userName);
+            _ = _emailService.EmailSendAsync(email, subject, message);
+        }
     }
 
     public async Task<List<UserContactVM>> PushNotificationToAllUsers(string message, NotificationTypeEnum notificationType, NotificationTypeMenu menu)
@@ -32,27 +40,24 @@ public class PushNotificationService : IPushNotificationService
         {
             if (user.IsOpenForEmail) emailSubsciptionList.Add( new UserContactVM() { UserId = user.UserId, UserName = user.UserName, Email = user.Email! } );
 
-            Notification notification_ = new()
-            {
-                Message = message,
-                NotificationType = (byte)notificationType,
-            };
-            _unitOfWork.NotificationRepo.Add(notification_);
             UserNotification userNotification = new()
             {
-                NotificationId = notification_.NotificationId,
+                Notification = new()
+                {
+                    Message = message,
+                    NotificationType = (byte)notificationType,
+                },
                 CreatedAt = DateTime.Now,
                 UserId = user.UserId,
                 IsRead = false,
             };  
 
-            _unitOfWork.UserNotificationRepo.Add(userNotification);
+            await _unitOfWork.UserNotificationRepo.AddAsync(userNotification);
         }
 
-        _unitOfWork.Save();
+        await _unitOfWork.SaveAsync();
         return emailSubsciptionList;
     }
-
 
     private async Task<IEnumerable<UserNotificationSettingPreferenceVM>> GetAllUserPreference(NotificationTypeMenu menu)
     {

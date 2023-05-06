@@ -1,9 +1,11 @@
 ﻿using CIPlatform.Services.Service.Interface;
+using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 [Area("Volunteer")]
+[Authentication]
 [AllowAnonymous]
 public class CmsPageController : Controller
 {

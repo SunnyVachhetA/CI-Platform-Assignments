@@ -22,7 +22,6 @@ public class MissionController : Controller
         if (missionDetails is null) return View("_ErrorView");
         //ViewBag.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
         missionDetails.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
-
         return View( missionDetails );
     }
 

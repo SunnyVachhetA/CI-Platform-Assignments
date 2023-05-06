@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CIPlatform.Entities.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CIPlatform.Entities.ViewModels;
@@ -6,23 +7,27 @@ public class UserRegistrationVM
 {
     public long? UserId { get; set; }
     
-    [Required(ErrorMessage = "Please enter first name!")]
+    [Required]
     [DisplayName("First Name")]
-    [StringLength(16, MinimumLength = 3, ErrorMessage = "Minimum 3 characters are required!")]
+    [MinLength(3, ErrorMessage = "First name should have at least 3 characters.")]
+    [MaxLength(16, ErrorMessage = "First name can have max 16 characters.")]
+    [NoWhiteSpace]
     public string FirstName { get; set; } = null!;
 
-    [Required(ErrorMessage = "Please enter last name!")]
+    [Required]
     [DisplayName("Last Name")]
-    [StringLength(16, MinimumLength = 3, ErrorMessage = "Minimum 3 characters are required!")]
+    [MinLength(3, ErrorMessage = "Last name should have at least 3 characters.")]
+    [MaxLength(16, ErrorMessage = "Last name can have max 16 characters.")]
+    [NoWhiteSpace(ErrorMessage = "Last name cannot have only spaces.")]
     public string LastName { get; set; } = null!;
 
-    [Required(ErrorMessage = "Please enter valid email ID!")]
+    [Required]
     [RegularExpression(@"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
 + "@"
 + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$", ErrorMessage = "Invalid Email ID!")]
     public string Email { get; set; } = null!;
 
-    [Required(ErrorMessage = "Password cannot be empty!")]
+    [Required]
     [StringLength(255, MinimumLength = 8, ErrorMessage = "Password must have at least 8 character!")]
     [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{8,}$", ErrorMessage = "Password have at least 8 character, 1 lower, 1 upper and special symbol!")]
 

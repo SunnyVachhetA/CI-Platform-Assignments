@@ -10,4 +10,6 @@ public partial class Notification
     public string Message { get; set; } = null!;
 
     public byte NotificationType { get; set; }
+
+    public virtual ICollection<UserNotification> UserNotifications { get; } = new List<UserNotification>();
 }

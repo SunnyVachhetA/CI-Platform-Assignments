@@ -889,10 +889,11 @@ public partial class CIDbContext : DbContext
 
         modelBuilder.Entity<UserNotification>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("user_notification");
+            entity.HasKey(e => e.Id).HasName("PK__user_not__3213E83FF55C2903");
 
+            entity.ToTable("user_notification");
+
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnName("created_at");
@@ -904,15 +905,15 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.Notification).WithMany()
+            entity.HasOne(d => d.Notification).WithMany(p => p.UserNotifications)
                 .HasForeignKey(d => d.NotificationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__user_noti__notif__2BFE89A6");
+                .HasConstraintName("FK__user_noti__notif__367C1819");
 
-            entity.HasOne(d => d.User).WithMany()
+            entity.HasOne(d => d.User).WithMany(p => p.UserNotifications)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__user_noti__user___2B0A656D");
+                .HasConstraintName("FK__user_noti__user___3587F3E0");
         });
 
         modelBuilder.Entity<UserNotificationCheck>(entity =>

@@ -5,6 +5,8 @@ namespace CIPlatform.Entities.DataModels;
 
 public partial class UserNotification
 {
+    public long Id { get; set; }
+
     public long UserId { get; set; }
 
     public long NotificationId { get; set; }

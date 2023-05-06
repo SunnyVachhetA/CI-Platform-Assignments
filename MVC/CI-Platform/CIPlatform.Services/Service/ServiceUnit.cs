@@ -85,7 +85,7 @@ public class ServiceUnit: IServiceUnit
         NotificationSettingService = new NotificationSettingService(_unitOfWork);
         UserNotificationService = new UserNotificationService(_unitOfWork);
         MissionService = new MissionService(_unitOfWork, MissionMediaService, MissionDocumentService, MissionSkillService, GoalMissionService);
-        PushNotificationService = new PushNotificationService(_unitOfWork);
+        PushNotificationService = new PushNotificationService(_unitOfWork, emailService);
     }
     public async Task<IDbContextTransaction> BeginTransactionAsync()
     {
