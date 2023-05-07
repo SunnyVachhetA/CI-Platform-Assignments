@@ -11,7 +11,7 @@ const btnPostComment = document.querySelector('#btn-comment-post');
 const commentBox = document.querySelector('#comment-text');
 const commentErr = document.querySelector('#err-comment');
 let isCommentExists = $('#isCommentExists').val() === 'True' ? true : false;
-
+let returnUrl = window.location.href;
 let currentVolunteerPage = 1;
 let totalVolunteersCount = $('#total-volunteer-count').val();
 let displayVolunteerCount = 2;
@@ -26,6 +26,8 @@ $(document).ready(
     () =>
     {
         missionId = $('#msn-details-id').val();
+        returnUrl = window.location.href;
+
         loggedUserRating = $('#logged-user-rating').val();
         starClickFlag = (loggedUserRating != 0) ? true : false;
         toggleBtnFavourite();
@@ -82,10 +84,9 @@ function toggleBtnFavourite() {
     }
 
 }
-
 btnFavourite.addEventListener('click', () => {
     if (userId == 0) {
-        loginRequiredSweetAlert(loginPageLink, 'You need to login before adding favourite!');
+        loginRequiredSweetAlert(loginPageLink, returnUrl, 'You need to login before adding favourite!');
     }
     else
     {
@@ -146,7 +147,7 @@ stars.forEach((star, starIndex1) => {
         'click',
         () => {
             if (userId == 0) {
-                loginRequiredSweetAlert(loginPageLink);
+                loginRequiredSweetAlert(loginPageLink, returnUrl);
                 return;
             }
             if (isLoggedUserVolunteer === 'False') {
@@ -247,7 +248,7 @@ function loadRelatedMissionsAjax( themeId ) {
 function handleCommentPost() {
 
     if (userId == 0) {
-        loginRequiredSweetAlert(loginPageLink);
+        loginRequiredSweetAlert(loginPageLink, returnUrl);
         return;
     }
     if (isLoggedUserVolunteer === 'False') {
@@ -362,7 +363,7 @@ $('#msn-recommend').on
     () =>
     {
         if (userId == 0) {
-            loginRequiredSweetAlert(loginPageLink);
+            loginRequiredSweetAlert(loginPageLink, returnUrl);
             return;
         }
         handleRecommendToCoWorkerAjax();
@@ -467,6 +468,10 @@ function buttonCancelEvent() {
 }
 
 function buttonApplyEvent() {
+    if (loggedUserId == 0) {
+        loginRequiredSweetAlert(userLoginPageLink, returnUrl);
+        return;
+    }
     const btnApplicationApply = document.querySelector('#btn-msn-apply');
     if (btnApplicationApply == undefined || btnApplicationApply == null) return;
 

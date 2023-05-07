@@ -6,6 +6,7 @@ using CIPlatform.Services.Service.Interface;
 using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CIPlatformWeb.Areas.Volunteer.Controllers;
 
@@ -91,7 +92,7 @@ public class UserController : Controller
 
     [Route("Login", Name = "Login")]
     [AllowAnonymous]
-    public IActionResult Login(string? _email, string? _token)
+    public IActionResult Login(string? _email, string? _token, string? returnUrl)
     {
         if (!string.IsNullOrEmpty(_email) && !string.IsNullOrEmpty(_token))
         {
@@ -106,6 +107,7 @@ public class UserController : Controller
         }
 
         UserLoginVM vm = new UserLoginVM();
+        vm.ReturnUrl = returnUrl;
         vm.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
         return View("Login", vm);
     }
@@ -135,6 +137,7 @@ public class UserController : Controller
             }
             CreateUserLoginSession(user);
             TempData["login-success"] = "Successfully logged in as " + user.FirstName + " " + user.LastName;
+            if (!credential.ReturnUrl.IsNullOrEmpty()) return Redirect(credential.ReturnUrl);
             return RedirectToAction("Index", "Home");
         }
 
@@ -292,7 +295,6 @@ public class UserController : Controller
             TempData["email-verification"] = "Check Your Email For Link To Activate Your Account!";
             return View("Login");
         }
-
         user.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
         return View(user);
     }

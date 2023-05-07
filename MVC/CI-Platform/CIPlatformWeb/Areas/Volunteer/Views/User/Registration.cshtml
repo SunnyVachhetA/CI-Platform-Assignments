@@ -4,7 +4,7 @@
 }
 
 <section class="d-flex flex-column flex-lg-row gap-2 gap-lg-0 registration-page">
-    <partial name="_HeroBanner" model = "Model.Banners"/>
+    <partial name="_HeroBanner" model="Model.Banners" />
     <div class="right-section d-flex flex-column justify-content-center align-items-center gap-2 flex-nowrap">
         <form class="d-grid gap-2" asp-action="Registration" method="POST" id="form-reg">
             <div class="form-group text-start">
@@ -47,33 +47,43 @@
             Lost your password?
         </a>
 
-            <span class="font-xs fw-light">
-                Already registered? <a asp-controller="User" asp-action="Login" class="login-link-text">Login now</a>
-            </span>
+        <span class="font-xs fw-light">
+            Already registered? <a asp-controller="User" asp-action="Login" class="login-link-text">Login now</a>
+        </span>
         <a asp-controller="Home" asp-action="Privacy" class="fw-light font-xs text-black-1">
             Privacy Policy
         </a>
-        </div>
-    
+    </div>
+
 </section>
+
+
 
 @section Scripts{
     @{
-        <partial name ="_ValidationScriptsPartial"></partial>
+    <partial name="_ValidationScriptsPartial"></partial>
     }
-    <script>
-        //$(document).on('click', '.toggle-password', function () {
-        //    var input = $($(this).parents('.input-group').find('input'));
-        //    if (input.attr('type') == 'password') {
-        //        input.attr('type', 'text');
-        //        $(this).find('i').removeClass('bi-eye-slash-fill').addClass('bi-eye-fill');
-        //    } else {
-        //        input.attr('type', 'password');
-        //        $(this).find('i').removeClass('bi-eye-fill').addClass('bi-eye-slash-fill');
-        //    }
-        //});
+<script>
 
-    </script>
+              const phoneNumber = document.getElementById('phone-number');
+              phoneNumber.addEventListener('keypress', restrictToDigit);
+              phoneNumber.addEventListener('input', restrictToDigit);
+
+              function restrictToDigit(event) {
+                  const charCode = (event.which) ? event.which : event.keyCode;
+
+                    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                      event.preventDefault(); // Cancel the input
+                    }
+                    const input = event.target.value;
+                    if (input.length >= 10) {
+                      event.preventDefault();
+                      return false;
+                    }
+                    return true;
+              }
+
+</script>
 }
 @*<script>
     const password = document.querySelector('#password');
@@ -82,13 +92,13 @@
 
     regForm.addEventListener
     (
-        'submit',
-        () =>
-        {
-            let pass = password.value;
-            let conf = cnfPassword.value;
-            console.log(pass === conf);
-            return (pass === conf)
-        }
+    'submit',
+    () =>
+    {
+    let pass = password.value;
+    let conf = cnfPassword.value;
+    console.log(pass === conf);
+    return (pass === conf)
+    }
     );
-</script>*@
+    </script>*@

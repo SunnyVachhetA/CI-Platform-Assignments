@@ -16,7 +16,7 @@ const countryList = [];
 const cityList = [];
 const themeList = [];
 const skillList = [];
-
+const returnUrl = window.location.href;
 let cities = document.querySelectorAll('#city-filter li');
 
 let totalPage;
@@ -258,7 +258,7 @@ $('#btn-msn-apply').click
     (
         () => {
             if (loggedUserId == undefined || loggedUserId == 0) {
-                loginRequiredSweetAlert(userLoginPageLink, 'You need to login before applying to missions!');
+                loginRequiredSweetAlert(userLoginPageLink, returnUrl, 'You need to login before applying to missions!');
                 return;
             }
         }
@@ -300,7 +300,7 @@ function handleUserRecommendModal() {
     $('.msn-share').each((_, item) => {
         $(item).click(() => {
             if (loggedUserId == 0) {
-                loginRequiredSweetAlert(userLoginPageLink);
+                loginRequiredSweetAlert(userLoginPageLink, returnUrl);
                 return;
             }
 

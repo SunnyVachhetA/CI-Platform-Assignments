@@ -9,6 +9,7 @@
         <div class="form-wrapper d-flex flex-column align-items-center justify-content-center mt-auto">
             <form class="d-grid gap-3" method="POST" asp-action="Login">
                 <partial name="_FormMessage"></partial>
+                <input type="hidden" asp-for="ReturnUrl"/>
                 <div class="font-15 text-danger" asp-validation-summary="All"></div>
                 <div class="form-group mx-4 text-start">
                     <label asp-for="Email" class="input-label text-light-custom"></label>

@@ -44,7 +44,7 @@ function handleFavouriteButtonClick(btnFav) {
             (
                 () => {
                     if (loggedUserId == 0) {
-                        loginRequiredSweetAlert(userLoginPageLink);
+                        loginRequiredSweetAlert(userLoginPageLink, window.location.href);
                         return;
                     }
                     let missionId = $(item).data('missionid');

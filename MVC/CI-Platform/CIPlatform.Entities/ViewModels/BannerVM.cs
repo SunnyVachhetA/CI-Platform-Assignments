@@ -6,11 +6,13 @@ public class BannerVM
 {
     public long BannerId { get; set; }
 
-    [Required(ErrorMessage = "Please enter title!")]
+    [Required]
     [Display(Name="Banner Title")]
+    [RegularExpression(@"^\S+$", ErrorMessage = "Banner title must not contain only whitespace characters.")]
     public string Title { get; set; } = string.Empty;
 
     [Display(Name="Banner Text")]
+    [RegularExpression(@"^\S+$", ErrorMessage = "Banner text must not contain only whitespace characters.")]
     public string? Text { get; set; } = string.Empty;
 
     [Display(Name="Sort Order")]
@@ -18,10 +20,10 @@ public class BannerVM
     
     public string Path { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Please select banner status!")]
+    [Required]
     public bool Status { get; set; } = false;
 
-    [Required(ErrorMessage = "Banner image is required!")]
+    [Required]
     [Display(Name="Banner Image")]
     public IFormFile File { get; set; } = null!;
 }

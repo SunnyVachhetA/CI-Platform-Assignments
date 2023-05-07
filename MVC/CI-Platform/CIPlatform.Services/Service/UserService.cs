@@ -37,7 +37,7 @@ public class UserService: IUserService
     {
         var result = _unitOfWork.UserRepo.GetFirstOrDefault(user => user.Email == email);
         var isAdminEmail = _unitOfWork.UserRepo.IsAdminEmail(email.ToLower());
-        return (result != null || isAdminEmail != 0);
+        return (result != null || isAdminEmail != -1);
     }
 
     

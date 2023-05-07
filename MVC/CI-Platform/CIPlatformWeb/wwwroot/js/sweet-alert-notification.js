@@ -22,7 +22,11 @@ function successMessageSweetAlert(message) {
     })
 }
 
-function loginRequiredSweetAlert(loginPageLink, text='You need to login before using this feature!') {
+function loginRequiredSweetAlert(loginPageLink, returnUrl = '', text = 'You need to login before using this feature!') {
+    if (returnUrl != '') {
+        const encodedReturnUrl = encodeURIComponent(returnUrl);
+        loginPageLink = `${loginPageLink}?returnUrl=${encodedReturnUrl}`;
+    }
     Swal.fire({
         icon: 'info',
         title: 'Login Required!',

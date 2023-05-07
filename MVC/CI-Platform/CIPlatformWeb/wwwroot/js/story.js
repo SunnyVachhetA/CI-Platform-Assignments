@@ -41,7 +41,7 @@ $('#btn-story-recommend').click
     () =>
     {
         if (loggedUserId == 0) {
-            loginRequiredSweetAlert(userLoginPageLink);
+            loginRequiredSweetAlert(userLoginPageLink, window.location.href);
             return;
         }
 

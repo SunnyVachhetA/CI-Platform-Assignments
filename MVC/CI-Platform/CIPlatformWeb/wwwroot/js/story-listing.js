@@ -32,7 +32,7 @@ let addStoryPageUrl = $('#add-story-page-url').val();
 $('#btn-share-story').on('click',
     () => {
         if (loggedUserId === undefined || loggedUserId == 0) {
-            loginRequiredSweetAlert(userLoginPageLink);
+            loginRequiredSweetAlert(userLoginPageLink, window.location.href);
             return;
         }
         
