@@ -411,4 +411,53 @@ public static class MailMessageFormatUtility
 
         return CreateEmailBody(bodySection);
     }
+
+    public static string GenerateMessageForStoryApproval(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has approved your story on CI Platform.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>Your story with tite <b>{title}</b> has been approved by admin. Thank you for your generous contribution on platform.</p>
+                    <p>Your story will encourage others to take part as well. </p>
+                    <p>Click on below button to see your story details on website.</p>
+                    <a href = '{pageLink}' class='button'> <button>View Story</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+
+    public static string GenerateMessageForStoryDecline(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has declined your story on CI Platform.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>You story with title <b>{title}</b> has been declined due to its content or some other reason that might not be appropriate for others.</p>
+                    <p>If you think this is a mistake please create your story again or contact admin. Click below to add new story.</p>
+                    <a href = '{pageLink}' class='button'> <button>Story Listing</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
 }   

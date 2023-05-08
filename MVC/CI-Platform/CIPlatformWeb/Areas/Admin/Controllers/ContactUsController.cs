@@ -45,8 +45,14 @@ public class ContactUsController : Controller
         {
             if ( contact == null || string.IsNullOrEmpty(contact.Response)) return NoContent();
 
-            await _serviceUnit.ContactUsService.SendContactResponseEmail(contact);
-            _serviceUnit.ContactUsService.UpdateContactResponse(contact.Response, contact.ContactId);
+            await _serviceUnit.ContactUsService.UpdateContactResponse(contact.Response, contact.ContactId);
+
+            UserNotificationTemplate template = UserNotificationTemplate.ConvertFromContact(contact);
+
+            var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+            if(isOpenForEmail)
+                _ = _serviceUnit.ContactUsService.SendContactResponseEmail(contact);
+
             return Ok();
         }
         catch (Exception e)

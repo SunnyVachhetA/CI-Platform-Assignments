@@ -110,17 +110,22 @@ public class PushNotificationService : IPushNotificationService
         {
             case NotificationTypeMenu.MISSION_APPLICATION:
                 vm = await _unitOfWork.NotificationSettingRepo.GetUserSettingAsync( setting => setting.UserId == template.UserId && (setting.IsEnabledMissionApplication?? false));
-                isOpenForNotification = vm.IsEnabledMissionApplication?? false;
+                isOpenForNotification = vm?.IsEnabledMissionApplication?? false;
                 break;
 
             case NotificationTypeMenu.VOLUNTEER_HOURS:
                 vm = await _unitOfWork.NotificationSettingRepo.GetUserSettingAsync(setting => setting.UserId == template.UserId && (setting.IsEnabledVolunteerHour ?? false));
-                isOpenForNotification = vm.IsEnabledVolunteerHour ?? false;
+                isOpenForNotification = vm?.IsEnabledVolunteerHour ?? false;
                 break;
 
             case NotificationTypeMenu.VOLUNTEER_GOALS:
                 vm = await _unitOfWork.NotificationSettingRepo.GetUserSettingAsync(setting => setting.UserId == template.UserId && (setting.IsEnabledVolunteerGoal ?? false));
-                isOpenForNotification = vm.IsEnabledVolunteerGoal ?? false;
+                isOpenForNotification = vm?.IsEnabledVolunteerGoal ?? false;
+                break;
+
+            case NotificationTypeMenu.MY_COMMENT:
+                vm = await _unitOfWork.NotificationSettingRepo.GetUserSettingAsync(setting => setting.UserId == template.UserId && (setting.IsEnabledMessage?? false));
+                isOpenForNotification= vm?.IsEnabledMessage ?? false;
                 break;
         }
         NotificationSettingVM result = null!;

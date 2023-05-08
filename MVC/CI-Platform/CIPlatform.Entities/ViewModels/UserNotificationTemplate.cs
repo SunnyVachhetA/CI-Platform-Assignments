@@ -9,7 +9,7 @@ public class UserNotificationTemplate
     public string UserName { get; set; } = string.Empty;
     public long UserId { get; set; }
     public string Email { get; set; } = string.Empty;
-    public NotificationTypeEnum? Type { get; set; }
+    public NotificationTypeEnum Type { get; set; }
     public NotificationTypeMenu NotificationFor { get; set; }
     public string Message { get; set; } = string.Empty;
 
@@ -45,6 +45,20 @@ public class UserNotificationTemplate
         return template;
     }
 
+    public static UserNotificationTemplate ConvertFromContact(ContactUsVM contact)
+    {
+        UserNotificationTemplate template = new()
+        {
+            UserId = contact.UserId,    
+            UserName = contact.UserName,
+            Message = "Admin has sent you contact response on email.",
+            NotificationFor = NotificationTypeMenu.MY_COMMENT,
+            Type = NotificationTypeEnum.NEW,
+            Email = contact.Email
+        };
+        return template;
+    }
+    #region Helper Methods
     private static string GetTimesheetMessage(VolunteerTimesheetVM timesheet)
     {
         string message = string.Empty;
@@ -62,4 +76,5 @@ public class UserNotificationTemplate
         }
         return message;
     }
+    #endregion 
 }

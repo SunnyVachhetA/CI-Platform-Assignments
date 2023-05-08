@@ -15,6 +15,10 @@
         @if (Model.NewNotifications.Any() || Model.OldNotifications.Any())
         {
             <div>
+                @if(!Model.NewNotifications.Any())
+                {
+                    <div class="border-bottom text-center py-3">No new notifications for now.</div>
+                }
                 @foreach (var notifs in Model.NewNotifications)
                 {
                     <div class="d-flex align-items-center p-3 gap-2 border-bottom">

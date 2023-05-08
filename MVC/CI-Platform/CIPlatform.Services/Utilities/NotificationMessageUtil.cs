@@ -12,4 +12,8 @@ public static class NotificationMessageUtil
 
     public static string VolunteerGoalSubject { get; private set; } = "CI Platform | Volunteer Goal Entry Notification";
 
+    public static string MyStoryApproval { get; private set; } = "CI Platform | Story Approval Notification";
+
+    public static string MyStoryDecline { get; private set; } = "CI Platform | Story Decline Notification";
+
 }

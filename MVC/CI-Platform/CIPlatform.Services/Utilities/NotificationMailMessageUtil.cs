@@ -14,7 +14,6 @@ public static class NotificationMailMessageUtil
             NotificationTypeMenu.MY_COMMENT => throw new NotImplementedException(),
             NotificationTypeMenu.MY_STORIES => throw new NotImplementedException(),
             NotificationTypeMenu.NEW_MISSIONS => NotificationMessageUtil.NewMissionSubject,
-            NotificationTypeMenu.NEW_MESSAGES => throw new NotImplementedException(),
             NotificationTypeMenu.RECOMMEND_STORY => throw new NotImplementedException(),
             NotificationTypeMenu.MISSION_APPLICATION => approvalStatus ? NotificationMessageUtil.MissionApplicationApprove : NotificationMessageUtil.MissionApplicationDecline,
             NotificationTypeMenu.RECEIVE_BY_EMAIL => throw new NotImplementedException(),
@@ -34,7 +33,10 @@ public static class NotificationMailMessageUtil
                                                         : MailMessageFormatUtility.GenerateMessageForVolunteerGoalDecline(title, pageLink, userName),
 
             NotificationTypeMenu.MY_COMMENT => throw new NotImplementedException(),
-            NotificationTypeMenu.MY_STORIES => throw new NotImplementedException(),
+
+            NotificationTypeMenu.MY_STORIES => approvalStatus ?
+                                                        MailMessageFormatUtility.GenerateMessageForStoryApproval(title, pageLink, userName)
+                                                        : MailMessageFormatUtility.GenerateMessageForStoryDecline(title, pageLink, userName),
 
             NotificationTypeMenu.NEW_MISSIONS => MailMessageFormatUtility.GenerateMessageForNewMission(title, pageLink, userName),
             NotificationTypeMenu.NEW_MESSAGES => throw new NotImplementedException(),
