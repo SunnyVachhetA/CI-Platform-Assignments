@@ -20,13 +20,12 @@ public class MissionController : Controller
     {
         MissionCardVM missionDetails = _serviceUnit.MissionService.LoadMissionDetails( id );
         if (missionDetails is null) return View("_ErrorView");
-        //ViewBag.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
         missionDetails.TotalVolunteers = missionDetails.RecentVolunteers.LongCount();
         return View( missionDetails );
     }
 
     [HttpPost]
-    public async Task<IActionResult> MissionRating( long missionId, long userId, byte rating )
+    public async Task<IActionResult> MissionRating(long missionId, long userId, byte rating)
     {
         try
         {

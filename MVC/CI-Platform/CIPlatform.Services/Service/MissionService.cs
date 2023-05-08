@@ -369,7 +369,7 @@ public class MissionService : IMissionService
                 .Select(ConvertToMissionAdminVM);
     }
 
-    public async Task CreateTimeMission(TimeMissionVM mission, string wwwRootPath)
+    public async Task<long> CreateTimeMission(TimeMissionVM mission, string wwwRootPath)
     {
         using (var transaction = await unitOfWork.BeginTransactionAsync())
         {
@@ -383,6 +383,7 @@ public class MissionService : IMissionService
                 await _missionMediaService.StoreMissionMedia(mission.Images, wwwRootPath, entity.MissionId);
                 await _missionDocumentService.StoreMissionDocument(mission.Documents!, wwwRootPath, entity.MissionId);
                 await transaction.CommitAsync();
+                return entity.MissionId;
             }
             catch (Exception e)
             {
@@ -395,7 +396,7 @@ public class MissionService : IMissionService
         
     }
 
-    public async Task CreateGoalMission(GoalMissionVM mission, string wwwRootPath)
+    public async Task<long> CreateGoalMission(GoalMissionVM mission, string wwwRootPath)
     {
         using (var transaction = await unitOfWork.BeginTransactionAsync())
         {
@@ -412,7 +413,7 @@ public class MissionService : IMissionService
 
                 await Task.WhenAll(saveMissionGoalDetails, saveMissionSkillsTask, storeMissionMediaTask, storeMissionDocumentTask);
                 await transaction.CommitAsync();
-
+                return entity.MissionId;
             }
             catch (Exception e)
             {
@@ -507,8 +508,6 @@ public class MissionService : IMissionService
             throw;
         }
     }
-
-    
 
     public async Task UpdateGoalMission(GoalMissionVM mission, IEnumerable<string> preloadedMediaList, IEnumerable<string> preloadedDocumentPathList,
         IEnumerable<short> preloadedSkill, string wwwRootPath)

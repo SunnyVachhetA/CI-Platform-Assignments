@@ -576,7 +576,12 @@ public partial class CIDbContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("message");
+            entity.Property(e => e.NotificationFor).HasColumnName("notification_for");
             entity.Property(e => e.NotificationType).HasColumnName("notification_type");
+
+            entity.HasOne(d => d.NotificationForNavigation).WithMany(p => p.Notifications)
+                .HasForeignKey(d => d.NotificationFor)
+                .HasConstraintName("FK__notificat__notif__395884C4");
         });
 
         modelBuilder.Entity<NotificationSetting>(entity =>
@@ -627,13 +632,11 @@ public partial class CIDbContext : DbContext
 
         modelBuilder.Entity<NotificationType>(entity =>
         {
-            entity.HasKey(e => e.TypeId).HasName("PK__notifica__2C0005984ABD86F5");
+            entity.HasKey(e => e.TypeId).HasName("PK__notifica__2C000598EDAE9908");
 
             entity.ToTable("notification_type");
 
-            entity.Property(e => e.TypeId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("type_id");
+            entity.Property(e => e.TypeId).HasColumnName("type_id");
             entity.Property(e => e.TypeName)
                 .HasMaxLength(50)
                 .IsUnicode(false)

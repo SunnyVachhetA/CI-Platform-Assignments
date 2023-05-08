@@ -3,6 +3,7 @@ using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class MissionApplicationRepository : Repository<MissionApplication>, IMissionApplicationRepository
@@ -46,10 +47,10 @@ public class MissionApplicationRepository : Repository<MissionApplication>, IMis
     }
 
     public IEnumerable<MissionApplication> LoadAllApplications() => ApplicationWithUserAndMission();
-    public int UpdateApplicationStatus(long id, byte status)
+    public async Task<int> UpdateApplicationStatus(long id, byte status)
     {
         var query = "UPDATE mission_application SET approval_status = {0} WHERE mission_application_id = {1}";
-        return _dbContext.Database.ExecuteSqlRaw(query, status, id);
+        return await _dbContext.Database.ExecuteSqlRawAsync(query, status, id);
     }
 
     public IEnumerable<MissionApplication> LoadApplications(Func<MissionApplication, bool> filter)
@@ -75,5 +76,14 @@ public class MissionApplicationRepository : Repository<MissionApplication>, IMis
                 .Include(app => app.Mission)
                 .OrderBy(app => app.ApprovalStatus)
                 .ToList();
+
+    public async Task<MissionApplication?> GetApplicationInformationAsync(Expression<Func<MissionApplication, bool>> filter)
+        =>
+        await
+            dbSet
+            .Include(app => app.User)
+            .Include(app => app.Mission)
+            .FirstOrDefaultAsync(filter);
+                
 
 }

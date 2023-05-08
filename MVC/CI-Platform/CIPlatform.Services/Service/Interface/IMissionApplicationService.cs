@@ -10,7 +10,8 @@ public interface IMissionApplicationService
     void DeleteMissionApplication(long missionId, long userId);
     void SaveApplication(long missionId, long userId);
     IEnumerable<MissionApplicationVM> LoadApplications();
-    void UpdateApplicationStatus(long id, byte status);
+    Task UpdateApplicationStatus(long id, byte status);
     IEnumerable<MissionApplicationVM> SearchApplication(string searchKey);
     long UserMissionCount(long id, MissionTypeEnum type);
+    Task<MissionApplicationVM> FetchUserMissionApplicationAsync(long id);
 }

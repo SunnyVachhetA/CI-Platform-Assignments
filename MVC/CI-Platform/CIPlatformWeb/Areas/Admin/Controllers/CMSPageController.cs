@@ -37,12 +37,14 @@ public class CMSPageController : Controller
 
             var cmsPages = _serviceUnit.CmsPageService.LoadAllCmsPages();
             string message = "Admin has added new CMS Page:  " + cmsPage.Title;
+            if (cmsPage.Status)
+            {
+                var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers(message, NotificationTypeEnum.NEW, NotificationTypeMenu.NEWS);
 
-            var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers( message, NotificationTypeEnum.NEW, NotificationTypeMenu.NEWS);
+                string link = Url.Action("Page", "CmsPage", new { area = "Volunteer", id = id }, "https")!;
 
-            string link = Url.Action("Page", "CmsPage", new {area = "Volunteer" , id = id}, "https")!;
-
-            _ = _serviceUnit.PushNotificationService.PushEmailNotificationToSubscriberAsync(cmsPage.Title, link, emailSubscriptionList, NotificationTypeMenu.NEWS);
+                _ = _serviceUnit.PushNotificationService.PushEmailNotificationToSubscriberAsync(cmsPage.Title, link, emailSubscriptionList, NotificationTypeMenu.NEWS);
+            }
             return PartialView("_CMSPages", cmsPages);
         }
         catch (Exception e)

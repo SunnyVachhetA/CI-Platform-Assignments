@@ -12,4 +12,6 @@ public class MissionApplicationVM
     public long MissionId { get; set; }
     public ApprovalStatus ApprovalStatus { get; set; }
 
+    public string Email { get; set; } = string.Empty;
+
 }

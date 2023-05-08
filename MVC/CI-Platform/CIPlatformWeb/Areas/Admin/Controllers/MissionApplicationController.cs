@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
 using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -32,12 +33,23 @@ public class MissionApplicationController : Controller
     }
 
     [HttpPatch]
-    public IActionResult ApplicationApproval(long id, byte status)
+    public async Task<IActionResult> ApplicationApproval(long id, byte status)
     {
         try
         {
             if (id == 0 || status == 0) return BadRequest();
-            _serviceUnit.MissionApplicationService.UpdateApplicationStatus(id, status);
+            await _serviceUnit.MissionApplicationService.UpdateApplicationStatus(id, status);
+            
+            MissionApplicationVM application = await _serviceUnit.MissionApplicationService.FetchUserMissionApplicationAsync(id);
+            
+            UserNotificationTemplate template = UserNotificationTemplate.ConvertFromMissionApplication(application);
+
+            var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+            if(isOpenForEmail)
+            {
+                string link = Url.Action("Index", "Mission", new { area = "Volunteer", id = application.MissionId }, "https")!;
+                _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
+            }
             return NoContent();
         }
         catch (Exception e)

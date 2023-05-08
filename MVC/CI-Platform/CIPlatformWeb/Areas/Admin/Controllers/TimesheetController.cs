@@ -52,11 +52,20 @@ public class TimesheetController : Controller
     }
 
     [HttpPatch]
-    public IActionResult Approve(long timesheetId, string type)
+    public async Task<IActionResult> Approve(long timesheetId, string type)
     {
         try
         {
             _serviceUnit.TimesheetService.UpdateTimesheetStatus(timesheetId, 1, type);
+            VolunteerTimesheetVM vm = await _serviceUnit.TimesheetService.ViewTimesheetEntryAsync(timesheetId);
+
+            UserNotificationTemplate template = UserNotificationTemplate.ConvertFromTimesheet(vm);
+            var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+            if(isOpenForEmail)
+            {
+                string link = Url.Action("VolunteerTimesheet", "User", new { area = "Volunteer", id = template.UserId }, "https")!;
+                _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
+            }
             return NoContent();
         }
         catch (Exception e)
@@ -68,11 +77,20 @@ public class TimesheetController : Controller
     }
 
     [HttpPatch]
-    public IActionResult Decline(long timesheetId, string? type)
+    public async Task<IActionResult> Decline(long timesheetId, string? type)
     {
         try
         {
             _serviceUnit.TimesheetService.UpdateTimesheetStatus(timesheetId, 2, string.Empty);
+            VolunteerTimesheetVM vm = await _serviceUnit.TimesheetService.ViewTimesheetEntryAsync(timesheetId);
+
+            UserNotificationTemplate template = UserNotificationTemplate.ConvertFromTimesheet(vm);
+            var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+            if (isOpenForEmail)
+            {
+                string link = Url.Action("VolunteerTimesheet", "User", new { area = "Volunteer", id = template.UserId }, "https")!;
+                _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
+            }
             return NoContent();
         }
         catch (Exception e)

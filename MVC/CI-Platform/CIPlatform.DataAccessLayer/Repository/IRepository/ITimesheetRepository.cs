@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entities.DataModels;
+using System.Linq.Expressions;
 
 namespace CIPlatform.DataAccessLayer.Repository.IRepository;
 public interface ITimesheetRepository: IRepository<Timesheet>
@@ -9,4 +10,5 @@ public interface ITimesheetRepository: IRepository<Timesheet>
     int UpdateTimesheetApprovalStatus(long timesheetId, byte status);
     Timesheet? FetchTimesheetEntry(Func<Timesheet, bool> filter);
     Timesheet TimesheetWithGoalMission(long timesheetId);
+    Task<Timesheet?> FetchTimesheetEntryAsync(Expression<Func<Timesheet, bool>> filter);
 }

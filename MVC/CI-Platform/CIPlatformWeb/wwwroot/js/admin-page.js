@@ -2100,7 +2100,7 @@ function validateDates() {
     }
 
     if (regDate != '') {
-        if (regDate >= startDate || regDate >= endDate) {
+        if (regDate >= startDate || regDate <= endDate) {
             $('#err-reg').text('Registration deadline must be between start and end date.');
             isValid = false;
         } else {

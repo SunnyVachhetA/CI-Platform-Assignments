@@ -3,11 +3,19 @@ using CIPlatform.DataAccessLayer.Repository;
 using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Services.Service;
 using CIPlatform.Services.Service.Interface;
+using CIPlatformWeb.Utilities;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new CleanDataModelBinderProvider());
+                });
 
 builder.Services.AddDbContext<CIDbContext>();
 

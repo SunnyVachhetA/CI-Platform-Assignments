@@ -13,7 +13,7 @@ public class AddStoryVM
     [Display(Name = "Story Title")]
     [Required]
     [MinLength(15, ErrorMessage = "Story title should have minimum 15 character.")]
-    [RegularExpression(@"^\S+$", ErrorMessage = "Title must not contain only whitespace characters.")]
+    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Title must not contain only whitespace characters.")]
     public string Title { get; set; } = string.Empty;
 
     [Required]
@@ -23,7 +23,8 @@ public class AddStoryVM
     [Display(Name = "My Story")]
     [Required]
     [MinLength(30, ErrorMessage = "My story should have contain minimum 30 characters.")]
-    [RegularExpression(@"^\S+$", ErrorMessage = "Description must not contain only whitespace characters.")]
+    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Description must not contain only whitespace characters.")]
+
     public string Description { get; set; } = string.Empty;
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 
@@ -43,6 +44,6 @@ public class AddStoryVM
     [Required]
     [MaxLength(255, ErrorMessage = "Only 255 characters are allowed.")]
     [MinLength(20, ErrorMessage = "Minimum 20 characters required.")]
-    [RegularExpression(@"^\S+$", ErrorMessage = "Short description must not contain only whitespace characters.")]
+    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Short description must not contain only whitespace characters.")]
     public string ShortDescription { get; set; } = string.Empty;
 }

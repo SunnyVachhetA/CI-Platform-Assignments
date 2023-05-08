@@ -58,13 +58,12 @@ public class TimesheetService: ITimesheetService
             Action = timesheet.Action,
             MissionType = (MissionTypeEnum)(timesheet.Mission.MissionType ? 1 : 0),
             UserName = $"{timesheet.User.FirstName} {timesheet.User.LastName}",
-            Message = timesheet.Notes?? string.Empty
+            Message = timesheet.Notes?? string.Empty,
+            Email = timesheet.User.Email
         };
 
         return timesheetVM;
     }
-
-
 
     public void SaveUserVolunteerHours(VolunteerHourVM volunteerHour)
     {
@@ -127,7 +126,6 @@ public class TimesheetService: ITimesheetService
         timesheet.Notes = vm.Message;
         _unitOfWork.Save();
     }
-
 
     private Timesheet FetchTimesheetById(long id) => 
         _unitOfWork.TimesheetRepo.GetFirstOrDefault(entry => entry.TimesheetId == id);
@@ -249,5 +247,14 @@ public class TimesheetService: ITimesheetService
             Message = timesheet.Notes?? string.Empty
         };
         return vm;
+    }
+
+    public async Task<VolunteerTimesheetVM> ViewTimesheetEntryAsync(long timesheetId)
+    {
+        var timesheet = await _unitOfWork.TimesheetRepo.FetchTimesheetEntryAsync(entry => entry.TimesheetId == timesheetId);
+
+        if (timesheet is null) throw new ArgumentNullException(nameof(timesheet));
+
+        return ConvertTimesheetToVolunteerTimesheetVM(timesheet);
     }
 }

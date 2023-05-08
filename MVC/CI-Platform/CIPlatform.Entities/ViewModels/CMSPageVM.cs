@@ -11,7 +11,7 @@ public class CMSPageVM
     public string Title { get; set; } = string.Empty;
 
     [Required]
-    [RegularExpression(@"^\S+$", ErrorMessage = "Description must not contain only whitespace characters.")]
+    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Title must not contain only whitespace characters.")]
     public string Description { get; set; } = string.Empty;
 
     [Required]

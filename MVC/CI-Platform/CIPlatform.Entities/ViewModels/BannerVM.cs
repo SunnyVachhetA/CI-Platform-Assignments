@@ -8,11 +8,11 @@ public class BannerVM
 
     [Required]
     [Display(Name="Banner Title")]
-    [RegularExpression(@"^\S+$", ErrorMessage = "Banner title must not contain only whitespace characters.")]
+    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Title must not contain only whitespace characters.")]
     public string Title { get; set; } = string.Empty;
 
     [Display(Name="Banner Text")]
-    [RegularExpression(@"^\S+$", ErrorMessage = "Banner text must not contain only whitespace characters.")]
+    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Banner text must not contain only whitespace characters.")]
     public string? Text { get; set; } = string.Empty;
 
     [Display(Name="Sort Order")]

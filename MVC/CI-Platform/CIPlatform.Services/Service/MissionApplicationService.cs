@@ -116,10 +116,10 @@ public class MissionApplicationService : IMissionApplicationService
                 .Select(ConvertToApplicationVM);
     }
 
-    public void UpdateApplicationStatus(long id, byte status)
+    public async Task UpdateApplicationStatus(long id, byte status)
     {
-        int result = unitOfWork.MissionApplicationRepo.UpdateApplicationStatus(id, status);
-        if (result == 0) throw new Exception("Application status could not be changed!");
+        int result = await unitOfWork.MissionApplicationRepo.UpdateApplicationStatus(id, status);
+        if (result == 0) throw new Exception(message: "Something went wrong during update mission applicatin status!");
     }
 
     public IEnumerable<MissionApplicationVM> SearchApplication(string searchKey)
@@ -161,8 +161,18 @@ public class MissionApplicationService : IMissionApplicationService
             ApprovalStatus = (ApprovalStatus) (app.ApprovalStatus ?? 0),
             AppliedAt = app.AppliedAt,
             MissionTitle = app.Mission.Title?? string.Empty,
-            UserName = $"{app.User.FirstName} {app.User.LastName}"
+            UserName = $"{app.User.FirstName} {app.User.LastName}",
+            Email = app.User.Email
         };
         return vm;
+    }
+
+    public async Task<MissionApplicationVM> FetchUserMissionApplicationAsync(long id)
+    {
+        var application = await unitOfWork.MissionApplicationRepo.GetApplicationInformationAsync(app => app.MissionApplicationId == id);
+
+        if (application is null) throw new Exception("Application record not found!");
+
+        return ConvertToApplicationVM(application);
     }
 }

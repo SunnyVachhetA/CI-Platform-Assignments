@@ -7,4 +7,6 @@ public interface IPushNotificationService
 {
     Task<List<UserContactVM>> PushNotificationToAllUsers(string message, NotificationTypeEnum notificationType, NotificationTypeMenu menu);
     Task PushEmailNotificationToSubscriberAsync(string title, string pageLink, List<UserContactVM> emailSubscriptionList, NotificationTypeMenu menu);
+    Task<bool> PushNotificationToUserAsync(UserNotificationTemplate template);
+    Task PushEmailNotificationToUserAsync(UserNotificationTemplate template, string link);
 }

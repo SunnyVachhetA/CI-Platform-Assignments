@@ -30,7 +30,6 @@ public class UserRegistrationVM
     [Required]
     [StringLength(255, MinimumLength = 8, ErrorMessage = "Password must have at least 8 character.")]
     [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{8,}$", ErrorMessage = "Password have at least 8 character, 1 lower, 1 upper and special symbol.")]
-
     public string Password { get; set; } = null!;
 
     [Required]

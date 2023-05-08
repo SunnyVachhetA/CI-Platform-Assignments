@@ -15,8 +15,8 @@ public interface IMissionService
     Task<(IEnumerable<MissionVMCard>, long)> FilterMissionsCard(FilterModel filterModel);
     IEnumerable<AdminMissionVM> LoadAllMissionsAdmin();
     IEnumerable<AdminMissionVM> SearchMission(string searchKey);
-    Task CreateTimeMission(TimeMissionVM mission, string wwwRootPath);
-    Task CreateGoalMission(GoalMissionVM mission, string wwwRootPath);
+    Task<long> CreateTimeMission(TimeMissionVM mission, string wwwRootPath);
+    Task<long> CreateGoalMission(GoalMissionVM mission, string wwwRootPath);
     Task<TimeMissionVM> LoadEditTimeMissionDetails(long id);
     Task UpdateTimeMission(TimeMissionVM mission, IEnumerable<string> preloadedMediaList,
         IEnumerable<string> preloadedDocumentPathList, IEnumerable<short> preloadedSkill, string wwwRootPath);

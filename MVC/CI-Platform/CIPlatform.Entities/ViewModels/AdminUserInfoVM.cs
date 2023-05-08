@@ -50,8 +50,7 @@ public class AdminUserInfoVM
     [Required]
     [MinLength(15, ErrorMessage = "At least 15 characters required.")]
     [Display(Name = "User Profile Text*")]
-    [RegularExpression(@"^\S+$", ErrorMessage = "Profile Text must not contain only whitespace characters.")]
-
+    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Profile must not contain only whitespace characters.")]
     public string Profile { get; set; } = string.Empty;
     
 

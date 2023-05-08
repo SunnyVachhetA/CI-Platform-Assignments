@@ -15,7 +15,7 @@ public class NotificationSettingRepository : Repository<NotificationSetting>, IN
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<UserNotificationSettingPreferenceVM>> GetUserListAsync(string columnName, Expression<Func<NotificationSetting, bool>> filter) 
+    public async Task<IEnumerable<UserNotificationSettingPreferenceVM>> GetUserListAsync(Expression<Func<NotificationSetting, bool>> filter) 
     {
         string query = $"SELECT * FROM notification_setting";
 
@@ -34,4 +34,10 @@ public class NotificationSettingRepository : Repository<NotificationSetting>, IN
 
         return result;
     }
+
+    public async Task<NotificationSetting?> GetUserSettingAsync(Expression<Func<NotificationSetting, bool>> filter) =>
+        await 
+            dbSet
+                .FirstOrDefaultAsync(filter);
+
 }

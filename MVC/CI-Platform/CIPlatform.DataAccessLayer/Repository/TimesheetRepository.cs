@@ -3,6 +3,7 @@ using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class TimesheetRepository: Repository<Timesheet>, ITimesheetRepository
@@ -67,4 +68,10 @@ public class TimesheetRepository: Repository<Timesheet>, ITimesheetRepository
                 .ThenInclude(goal => goal.GoalMissions)
                 .FirstOrDefault(entry => entry.TimesheetId == timesheetId)!;
     }
+
+    public async Task<Timesheet?> FetchTimesheetEntryAsync(Expression<Func<Timesheet, bool>> filter)
+        => await dbSet
+        .Include(timesheet => timesheet.User)
+        .Include(timesheet => timesheet.Mission)
+        .FirstOrDefaultAsync(filter);
 }

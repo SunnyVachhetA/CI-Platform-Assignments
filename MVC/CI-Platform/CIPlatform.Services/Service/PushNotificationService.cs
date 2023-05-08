@@ -20,14 +20,23 @@ public class PushNotificationService : IPushNotificationService
 
     public async Task PushEmailNotificationToSubscriberAsync(string title, string pageLink, List<UserContactVM> emailSubscriptionList, NotificationTypeMenu menu)
     {
-        string subject = GetSubjectForMenu(menu);
+        string subject = NotificationMailMessageUtil.GetSubjectForMenu(menu);
         foreach (var userContact in emailSubscriptionList)
         {
             string userName = userContact.UserName;
             string email = userContact.Email;
-            string message = MailMessageFormatUtility.GenerateMessageForNewCMSPage(title, pageLink, userName);
+            string message = NotificationMailMessageUtil.GetMessageForMenu(menu, title, pageLink, userName);
             _ = _emailService.EmailSendAsync(email, subject, message);
         }
+    }
+
+    public async Task PushEmailNotificationToUserAsync(UserNotificationTemplate template, string link)
+    {
+        bool notificationType = template.Type == NotificationTypeEnum.APPROVE;
+        string subject = NotificationMailMessageUtil.GetSubjectForMenu(template.NotificationFor, notificationType);
+        string message = NotificationMailMessageUtil.GetMessageForMenu(template.NotificationFor, template.Title, link, template.UserName, notificationType);
+
+        _ = _emailService.EmailSendAsync(template.Email, subject, message);
     }
 
     public async Task<List<UserContactVM>> PushNotificationToAllUsers(string message, NotificationTypeEnum notificationType, NotificationTypeMenu menu)
@@ -46,6 +55,7 @@ public class PushNotificationService : IPushNotificationService
                 {
                     Message = message,
                     NotificationType = (byte)notificationType,
+                    NotificationFor = (byte)menu
                 },
                 CreatedAt = DateTime.Now,
                 UserId = user.UserId,
@@ -59,75 +69,63 @@ public class PushNotificationService : IPushNotificationService
         return emailSubsciptionList;
     }
 
+    public async Task<bool> PushNotificationToUserAsync(UserNotificationTemplate template)
+    {
+        var userPreference = await GetUserPreference(template);
+        if (userPreference.Item1 is null || !userPreference.Item2) return false;
+        UserNotification userNotification = new()
+        {
+            Notification = new()
+            {
+                Message = template.Message,
+                NotificationType = (byte)template.Type,
+                NotificationFor = (byte)template.NotificationFor
+            },
+            CreatedAt = DateTime.Now,
+            UserId = template.UserId,
+            IsRead = false,
+        };
+        await _unitOfWork.UserNotificationRepo.AddAsync(userNotification);
+        await _unitOfWork.SaveAsync();
+        return userPreference.Item1.ReceiveByEmail;
+    }
+
     private async Task<IEnumerable<UserNotificationSettingPreferenceVM>> GetAllUserPreference(NotificationTypeMenu menu)
     {
         IEnumerable<UserNotificationSettingPreferenceVM> userList = new List<UserNotificationSettingPreferenceVM>();
-        switch (menu)
+        userList = menu switch
         {
-            case NotificationTypeMenu.NEWS:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_news", setting => setting.IsEnabledNews);
-                break;
-            case NotificationTypeMenu.NEW_MISSIONS:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_new_mission", setting => setting.IsEnabledNewMission);
-
-                break;
-            case NotificationTypeMenu.RECOMMEND_MISSION:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_recommend_mission", setting => setting.IsEnabledRecommendMission?? false);
-
-                break;
-            case NotificationTypeMenu.VOLUNTEER_HOURS:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_volunteer_hour", setting => setting.IsEnabledNews);
-
-                break;
-            case NotificationTypeMenu.VOLUNTEER_GOALS:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_comment", setting => setting.IsEnabledNews);
-
-                break;
-            case NotificationTypeMenu.MY_COMMENT:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_news", setting => setting.IsEnabledNews);
-
-                break;
-            case NotificationTypeMenu.MY_STORIES:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_story", setting => setting.IsEnabledNews);
-
-                break;
-            case NotificationTypeMenu.NEW_MESSAGES:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_message", setting => setting.IsEnabledNews);
-
-                break;
-            case NotificationTypeMenu.RECOMMEND_STORY:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_story", setting => setting.IsEnabledNews);
-
-                break;
-            case NotificationTypeMenu.MISSION_APPLICATION:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_mission_application", setting => setting.IsEnabledNews);
-
-                break;
-            case NotificationTypeMenu.RECEIVE_BY_EMAIL:
-                userList = await _unitOfWork.NotificationSettingRepo.GetUserListAsync("is_enabled_email", setting => setting.IsEnabledNews);
-
-                break;
-            default:
-                throw new KeyNotFoundException($"Notification type not found: {nameof(menu)}");
-        }
-
+            NotificationTypeMenu.NEWS => await _unitOfWork.NotificationSettingRepo.GetUserListAsync(setting => setting.IsEnabledNews),
+            NotificationTypeMenu.NEW_MISSIONS => await _unitOfWork.NotificationSettingRepo.GetUserListAsync(setting => setting.IsEnabledNewMission),
+            _ => throw new KeyNotFoundException($"Notification type not found: {nameof(menu)}"),
+        };
         return userList;
-
     }
 
-    private string GetSubjectForMenu(NotificationTypeMenu menu)
-        => menu switch
+    private async Task<(NotificationSettingVM?,  bool)> GetUserPreference(UserNotificationTemplate template)
+    {
+        NotificationSetting? vm = null;
+        bool isOpenForNotification = false;
+        switch(template.NotificationFor)
         {
-            NotificationTypeMenu.NEWS => NotificationMessageUtil.NewsSubject,
-            NotificationTypeMenu.RECOMMEND_MISSION => throw new NotImplementedException(),
-            NotificationTypeMenu.VOLUNTEER_HOURS => throw new NotImplementedException(),
-            NotificationTypeMenu.VOLUNTEER_GOALS => throw new NotImplementedException(),
-            NotificationTypeMenu.MY_COMMENT => throw new NotImplementedException(),
-            NotificationTypeMenu.MY_STORIES => throw new NotImplementedException(),
-            NotificationTypeMenu.NEW_MISSIONS => throw new NotImplementedException(),
-            NotificationTypeMenu.NEW_MESSAGES => throw new NotImplementedException(),
-            NotificationTypeMenu.RECOMMEND_STORY => throw new NotImplementedException(),
-            NotificationTypeMenu.MISSION_APPLICATION => throw new NotImplementedException(),
-            NotificationTypeMenu.RECEIVE_BY_EMAIL => throw new NotImplementedException()
-        };
+            case NotificationTypeMenu.MISSION_APPLICATION:
+                vm = await _unitOfWork.NotificationSettingRepo.GetUserSettingAsync( setting => setting.UserId == template.UserId && (setting.IsEnabledMissionApplication?? false));
+                isOpenForNotification = vm.IsEnabledMissionApplication?? false;
+                break;
+
+            case NotificationTypeMenu.VOLUNTEER_HOURS:
+                vm = await _unitOfWork.NotificationSettingRepo.GetUserSettingAsync(setting => setting.UserId == template.UserId && (setting.IsEnabledVolunteerHour ?? false));
+                isOpenForNotification = vm.IsEnabledVolunteerHour ?? false;
+                break;
+
+            case NotificationTypeMenu.VOLUNTEER_GOALS:
+                vm = await _unitOfWork.NotificationSettingRepo.GetUserSettingAsync(setting => setting.UserId == template.UserId && (setting.IsEnabledVolunteerGoal ?? false));
+                isOpenForNotification = vm.IsEnabledVolunteerGoal ?? false;
+                break;
+        }
+        NotificationSettingVM result = null!;
+        if(vm is not null)
+            result = NotificationSettingService.ConvertModelToSettingVM(vm);
+        return (result, isOpenForNotification);
+    }
 }

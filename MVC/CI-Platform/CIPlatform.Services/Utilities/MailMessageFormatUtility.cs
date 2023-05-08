@@ -69,18 +69,115 @@ public static class MailMessageFormatUtility
         </style>
     </head>";
 
+    public static string GenerateMessageForVolunteerHourApprove(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has approved your volunteer hour timesheet work entry on CI Platform.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>Your timesheet work hour entry for mission <b>{title}</b> has been approved by admin. Thank you for your contribution.</p>
+                    <p>Click on below button to see your updated timesheet details.</p>
+                    <a href = '{pageLink}' class='button'> <button>View Timesheet</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+
+    public static string GenerateMessageForVolunteerHourDecline(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has declined your volunteer hour timesheet work entry on CI Platform.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>Your timesheet work hour entry for mission <b>{title}</b> has been declined by admin for some reason.</p>
+                    <p>If you think this is a mistake please enter work hour entry again or contact admin. Click below to view your updated timesheet.</p>
+                    <a href = '{pageLink}' class='button'> <button>View Timesheet</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+
+    public static string GenerateMessageForVolunteerGoalApprove(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has approved your volunteer goal timesheet work entry on CI Platform.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>Your timesheet work goal entry for mission <b>{title}</b> has been approved by admin. Thank you for your contribution.</p>
+                    <p>Click on below button to see your updated timesheet details.</p>
+                    <a href = '{pageLink}' class='button'> <button>View Timesheet</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+
+    public static string GenerateMessageForVolunteerGoalDecline(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has declined your volunteer hour timesheet goal entry on CI Platform.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>Your timesheet goal hour entry for mission <b>{title}</b> has been declined by admin for some reason.</p>
+                    <p>If you think this is a mistake please enter work goal entry again or contact admin. Click below to view your updated timesheet.</p>
+                    <a href = '{pageLink}' class='button'> <button>View Timesheet</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+
     public static string GenerateMessageForNewCMSPage(string title, string pageLink, string userName)
     {
         string bodySection = $@"
         <body>
             <div class='container'>
                 <div class='header'>
-                    <h1>Admin has added new CMS page.</h1>
+                    <h1>Admin has added new CMS page on CI Platform.</h1>
                 </div>
                 <div class='body'>
                     <p>Dear {userName},</p>
 
                     <p>Check out new CMS page <b>{title}</b> that has been added by admin.</p>
+                    <p>Click on below button to see mission details.</p>
                     <a href = '{pageLink}' class='button'> <button>CMS Page</button> </a>
 
                     <p>Regards,</p>
@@ -91,6 +188,55 @@ public static class MailMessageFormatUtility
 
         return CreateEmailBody(bodySection);
     }
+
+    public static string GenerateMessageForMissionApplicationApprove(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has approved your mission application on CI Platform to participate as Volunteer.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>You are now registered as Volunteer for mission <b>{title}</b>. We are happy to have you as volunteer.</p>
+                    <p>Click on below button to see mission & timesheet details.</p>
+                    <a href = '{pageLink}' class='button'> <button>Mission</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+
+    public static string GenerateMessageForMissionApplicationDecline(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has declined your mission application on CI Platform to participate as Volunteer.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>You application for registering as volunteer for mission <b>{title}</b> has been declined by admin for some reason. If you think this is a mistake please try contact admin.</p>
+                    <p>Click on below button to see mission details or contact admin.</p>
+                    <a href = '{pageLink}' class='button'> <button>Mission</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+
     public static string GenerateMessageForAccountActivation(string userName, string link)
     {
 
@@ -248,13 +394,14 @@ public static class MailMessageFormatUtility
         <body>
             <div class='container'>
                 <div class='header'>
-                    <h1>Admin has added new mission.</h1>
+                    <h1>Admin has added new mission on CI Platform.</h1>
                 </div>
                 <div class='body'>
                     <p>Dear {userName},</p>
 
                     <p>Check out new mission <b>{title}</b> that has been added by admin.</p>
-                    <a href = '{pageLink}' class='button'> <button>CMS Page</button> </a>
+                    <p>Click on below button to see mission details.</p>
+                    <a href = '{pageLink}' class='button'> <button>Mission</button> </a>
 
                     <p>Regards,</p>
                     <p>CI Team</p>

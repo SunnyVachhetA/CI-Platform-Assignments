@@ -1,5 +1,6 @@
-﻿using CIPlatform.Entities.DataModels;
+﻿
 using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
 using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -82,8 +83,14 @@ public class MissionController : Controller
         {
             if (!ModelState.IsValid) return NoContent();
             string wwwRootPath = _webHostEnvironment.WebRootPath;
-            await _serviceUnit.MissionService.CreateTimeMission(mission, wwwRootPath);
-
+            var id = await _serviceUnit.MissionService.CreateTimeMission(mission, wwwRootPath);
+            if (mission.IsActive?? false)
+            {
+                string title = mission.Title;
+                string link = Url.Action("Index", "Mission", new { area = "Volunteer", id = id }, "https")!;
+                var emailList = await FetchEmailSubscriberList(title, NotificationTypeEnum.NEW, NotificationTypeMenu.NEW_MISSIONS);
+                _ = _serviceUnit.PushNotificationService.PushEmailNotificationToSubscriberAsync(title, link, emailList, NotificationTypeMenu.NEW_MISSIONS);
+            }
             return StatusCode(201);
         }
         catch (Exception e)
@@ -93,6 +100,7 @@ public class MissionController : Controller
             return StatusCode(500);
         }
     }
+
 
     [HttpGet]
     public async Task<IActionResult> GoalMission(long id)
@@ -129,7 +137,14 @@ public class MissionController : Controller
         {
             if (!ModelState.IsValid) return NoContent();
             string wwwRootPath = _webHostEnvironment.WebRootPath;
-            await _serviceUnit.MissionService.CreateGoalMission(mission, wwwRootPath);
+            var id = await _serviceUnit.MissionService.CreateGoalMission(mission, wwwRootPath);
+            if (mission.IsActive ?? false)
+            {
+                string title = mission.Title;
+                string link = Url.Action("Index", "Mission", new { area = "Volunteer", id = id }, "https")!;
+                var emailList = await FetchEmailSubscriberList(title, NotificationTypeEnum.NEW, NotificationTypeMenu.NEW_MISSIONS);
+                _ = _serviceUnit.PushNotificationService.PushEmailNotificationToSubscriberAsync(title, link, emailList, NotificationTypeMenu.NEW_MISSIONS);
+            }
             return StatusCode(201);
         }
         catch (Exception e)
@@ -232,4 +247,13 @@ public class MissionController : Controller
             return StatusCode(500);
         }
     }
+
+    #region Helper Methods
+    private async Task<List<UserContactVM>> FetchEmailSubscriberList(string title, NotificationTypeEnum type, NotificationTypeMenu notificationFor)
+    {
+        string message = $"New mission - {title}";
+        var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers(message, type, notificationFor);
+        return emailSubscriptionList;
+    }
+    #endregion
 }

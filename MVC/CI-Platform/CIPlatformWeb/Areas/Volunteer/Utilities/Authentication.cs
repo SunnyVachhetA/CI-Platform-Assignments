@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace CIPlatformWeb.Areas.Volunteer.Utilities;
 
-public class Authentication : ActionFilterAttribute
+public class AuthenticationAttribute : ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext filterContext)
     {
@@ -20,8 +20,6 @@ public class Authentication : ActionFilterAttribute
                 base.OnActionExecuting(filterContext);
                 return;
             }
-            //filterContext.Result = new RedirectToRouteResult(
-            //new RouteValueDictionary { { "Controller", "User" }, { "Action", "Login" }, { "Area", "Volunteer" } });
             var returnUrl = filterContext.HttpContext.Request.Path.Value + QueryHelpers.AddQueryString(filterContext.HttpContext.Request.QueryString.Value, "returnUrl", filterContext.HttpContext.Request.Path.Value);
             filterContext.Result = new RedirectToRouteResult(
                 new RouteValueDictionary {

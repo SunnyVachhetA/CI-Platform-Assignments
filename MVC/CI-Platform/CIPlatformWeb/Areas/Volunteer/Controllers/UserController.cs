@@ -4,6 +4,7 @@ using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service;
 using CIPlatform.Services.Service.Interface;
 using CIPlatformWeb.Areas.Volunteer.Utilities;
+using CIPlatformWeb.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -141,7 +142,7 @@ public class UserController : Controller
             return RedirectToAction("Index", "Home");
         }
 
-        ModelState.AddModelError("PasswordError", "Invalid Email ID or Password!");
+        ModelState.AddModelError("PasswordError", "Invalid Email ID or Password.");
         credential.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
         return View(credential);
     }
@@ -277,9 +278,9 @@ public class UserController : Controller
     [ValidateAntiForgeryToken]
     [Route("Registration")]
     [AllowAnonymous]
-    public IActionResult Registration(UserRegistrationVM user)
+    public IActionResult Registration([ModelBinder(BinderType = typeof(CleanDataModelBinder))]  UserRegistrationVM user)
     {
-        string email = user.Email.Trim().ToLower();
+        string email = user.Email;
         if (_serviceUnit.UserService.IsEmailExists(email))
         {
             ModelState.AddModelError("Email", "Given Email ID is Already Registered!");
@@ -292,7 +293,7 @@ public class UserController : Controller
             var href = Url.Action("Login", "User", new { _email = email, _token = token }, "https");
             _serviceUnit.VerifyEmailService.SaveUserActivationToken(email, token);
             _serviceUnit.UserService.GenerateEmailVerificationToken(user, href!, _emailService);
-            TempData["email-verification"] = "Check Your Email For Link To Activate Your Account!";
+            TempData["email-verification"] = "Check Your Email For Link To Activate Your Account.";
             return View("Login");
         }
         user.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
@@ -665,4 +666,5 @@ public class UserController : Controller
         }
     }
 
+  
 }
