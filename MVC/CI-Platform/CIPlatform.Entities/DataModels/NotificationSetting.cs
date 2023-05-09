@@ -29,5 +29,7 @@ public partial class NotificationSetting
 
     public bool? IsEnabledEmail { get; set; }
 
+    public bool? IsEnabledRecommendStory { get; set; }
+
     public virtual User User { get; set; } = null!;
 }

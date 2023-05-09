@@ -16,4 +16,10 @@ public static class NotificationMessageUtil
 
     public static string MyStoryDecline { get; private set; } = "CI Platform | Story Decline Notification";
 
+    public static string CommentApproval { get; private set; } = "CI Platform | Comment Approval Notification";
+    public static string CommentDecline { get; private set; } = "CI Platform | Comment Decline Notification";
+
+    public static string RecommendMissionSubject { get; private set; } = "CI Platform | Recommend Mission Notification";
+    public static string RecommendStorySubject { get; private set; } = "CI Platform | Recommend Story Notification";
+
 }

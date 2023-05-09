@@ -1258,8 +1258,7 @@ function handleStoryStatus(storyId, btnText, message, url) {
                 url: url,
                 data: { storyId },
                 success: (result) => {
-                    $('#admin-menu-content').html(result);
-                    loadStorysOnDOM();
+                    loadStoriesAjax();
                     successMessageSweetAlert(message);
                 },
                 error: ajaxErrorSweetAlert
@@ -2161,7 +2160,7 @@ function registerCommentEvents() {
     $('.comment-delete').each((_, item) => {
         $(item).click(() => {
             let commentId = $(item).data('commentid');
-            genericSweetPromptId('You will not be able to change approval status later.', 'Delete', deleteCommentAjax, commentId);
+            genericSweetPromptId('You will not be able to revert this action.', 'Delete', deleteCommentAjax, commentId);
 
         });
     });

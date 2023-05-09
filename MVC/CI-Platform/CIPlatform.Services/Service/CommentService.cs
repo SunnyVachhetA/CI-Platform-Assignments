@@ -103,7 +103,8 @@ public class CommentService : ICommentService
             MissionId = comment.MissionId,
             MissionTitle = comment.Mission.Title?? string.Empty,
             CommentText = comment.CommentText?? string.Empty,
-            Avatar = comment.User.Avatar?? string.Empty
+            Avatar = comment.User.Avatar?? string.Empty,
+            Email = comment.User.Email
         };
         return vm;
     }

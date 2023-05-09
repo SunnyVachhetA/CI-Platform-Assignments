@@ -36,6 +36,8 @@ scrollNext.addEventListener(
 
 //Recommend to Co-Worker
 
+const storyTitle = $('#story-title').val();
+
 $('#btn-story-recommend').click
 (
     () =>
@@ -56,7 +58,6 @@ function handleRecommendToCoWorkerModalAjax() {
         type: 'GET',
         url: '/Volunteer/Story/StoryUsersInvite',
         data: { userId:loggedUserId, storyId:storyId },
-        contentType: "application/json; charset=utf-8",
         success: function (result) {
             $('#story-recommend-modal').html(result);
             $('#recommendModal').modal('show');
@@ -95,10 +96,10 @@ function handleUserRecommendAjax(recommendList) {
         ({
             type: 'POST',
             url: '/Volunteer/Story/StoryUsersInvite',
-            data: { userId: loggedUserId, userName: loggedUserName, storyId: storyId, recommendList: recommendList },
+            data: { userId: loggedUserId, storyId: storyId, recommendList: recommendList, storyTitle: storyTitle },
             success: function (result) {
             },
-            error: function () { }
+            error: ajaxErrorSweetAlert
         });
 }
 

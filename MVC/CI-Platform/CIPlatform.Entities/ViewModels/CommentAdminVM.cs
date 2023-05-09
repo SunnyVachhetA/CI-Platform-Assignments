@@ -18,4 +18,6 @@ public class CommentAdminVM
     [Display(Name ="Comment")]
     public string CommentText { get; set; } = string.Empty;
     public string Avatar { get; set; } = string.Empty;
+
+    public string Email { get; set; } = string.Empty;
 }

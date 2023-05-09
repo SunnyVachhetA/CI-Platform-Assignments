@@ -219,22 +219,19 @@ public class StoryController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> StoryUsersInvite( long userId, string userName, long storyId, long[] recommendList )
+    public async Task<IActionResult> StoryUsersInvite( long userId, long storyId, long[] recommendList, string storyTitle )
     {
         try
         {
-            _ = _serviceUnit.StoryInviteService.SaveUserInvite(userId, storyId, recommendList);
-            IEnumerable<string> userEmailList = 
-                await _serviceUnit
-                .UserService
-                .GetUserEmailList(recommendList);
+            await _serviceUnit.StoryInviteService.SaveUserInvite(userId, storyId, recommendList);
+            UserRegistrationVM user = await _serviceUnit.UserService.LoadUserBasicInformationAsync(userId);
+            IEnumerable<UserNotificationSettingPreferenceVM> userPrefrence = await _serviceUnit.StoryInviteService.LoadUserStoryInvitePreference(userId, storyId, recommendList);
 
-            string storyInviteLink = Url.Action("Story", "Story", new { id = storyId }, "https")?? string.Empty;
+            string message = $"{user.FirstName} {user.LastName} - has recommend you this story: {storyTitle}";
+            await _serviceUnit.PushNotificationService.PushRecommendNotificationToUsersAsync(message, userPrefrence, user.Avatar, NotificationTypeEnum.RECOMMEND, NotificationTypeMenu.RECOMMEND_STORY);
+            string link = Url.Action("Story", "Story", new { area ="Volunteer", id = storyId }, "https")?? string.Empty;
 
-            _ = _serviceUnit
-                .StoryInviteService
-                .SendStoryInviteToUsers(userEmailList, storyInviteLink, userName);
-
+            _ = _serviceUnit.PushNotificationService.PushRecommendEmailNotificationToUsersAsync(userPrefrence, storyTitle, link, $"{user.FirstName} {user.LastName}", NotificationTypeMenu.RECOMMEND_STORY);
             return StatusCode(201);
         }
         catch (Exception e)
@@ -246,3 +243,17 @@ public class StoryController : Controller
     }
 
 }
+
+/*
+IEnumerable<string> userEmailList = 
+                await _serviceUnit
+                .UserService
+                .GetUserEmailList(recommendList);
+
+            string storyInviteLink = Url.Action("Story", "Story", new { id = storyId }, "https")?? string.Empty;
+
+            _ = _serviceUnit
+                .StoryInviteService
+                .SendStoryInviteToUsers(userEmailList, storyInviteLink, userName);
+
+ */

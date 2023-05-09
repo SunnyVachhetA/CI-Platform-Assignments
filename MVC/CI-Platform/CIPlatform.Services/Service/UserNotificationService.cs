@@ -45,7 +45,7 @@ public class UserNotificationService : IUserNotificationService
             Message = notification.Notification.Message,
             IsRead = notification.IsRead,
             NotificationType = (NotificationTypeEnum) notification.Notification.NotificationType,
-            FromUserAvatar = notification.FromUserAvatar,
+            FromUserAvatar = notification.Notification.FromUserAvatar,
             CreatedAt = notification.CreatedAt,
         };
         return vm;

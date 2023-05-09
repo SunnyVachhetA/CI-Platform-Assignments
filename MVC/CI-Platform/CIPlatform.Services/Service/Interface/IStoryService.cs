@@ -16,4 +16,5 @@ public interface IStoryService
     IEnumerable<AdminStoryVM> LoadAllStoriesAdmin();
     IEnumerable<AdminStoryVM> SearchByKey(string searchKey);
     void UpdateStoryDeletionStatus(long storyId, byte status = 0);
+    Task<AdminStoryVM> FetchUserStoryDetailsAsync(long storyId);
 }

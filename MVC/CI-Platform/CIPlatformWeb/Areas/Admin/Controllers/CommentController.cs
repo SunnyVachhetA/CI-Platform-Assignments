@@ -36,6 +36,7 @@ public class CommentController : Controller
     public async Task<IActionResult> Approve(long id)
     {
         await _serviceUnit.CommentService.UpdateApprovalStatus(id, 1);
+        await PushNotificationForComment(id);
         return NoContent();
     }
 
@@ -43,6 +44,7 @@ public class CommentController : Controller
     public async Task<IActionResult> Decline(long id)
     {
         await _serviceUnit.CommentService.UpdateApprovalStatus(id, 2);
+        await PushNotificationForComment(id);
         return NoContent();
     }
 
@@ -52,4 +54,19 @@ public class CommentController : Controller
         await _serviceUnit.CommentService.UpdateDeleteStatus(id, 1);
         return NoContent();
     }
-} 
+
+    #region Helper Methods
+
+    private async Task PushNotificationForComment(long id)
+    {
+        CommentAdminVM comment = await _serviceUnit.CommentService.LoadUserCommentAsync(id);
+
+        UserNotificationTemplate template = UserNotificationTemplate.ConvertFromComment(comment);
+        string link = Url.Action("Index", "Mission", new { area = "Volunteer", id = comment.MissionId }, "https")!;
+
+        bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+        if (isOpenForEmail)
+            _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
+    }
+    #endregion 
+}

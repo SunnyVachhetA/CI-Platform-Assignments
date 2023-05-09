@@ -5,6 +5,7 @@ using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
 using CIPlatform.Services.Utilities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.Services.Service;
 public class UserService: IUserService
@@ -128,7 +129,7 @@ public class UserService: IUserService
         return users;
     }
 
-    private Func<User, bool> ActiveUserFilter = (user) => user.Status ?? false;
+    private readonly Func<User, bool> ActiveUserFilter = (user) => user.Status ?? false;
 
 
     public Task<string> GetUserName(long userId)
@@ -138,18 +139,19 @@ public class UserService: IUserService
         return Task.Run( () => user.FirstName + " " + user.LastName ); 
     }
 
-    public async void SendUserMissionInviteService(IEnumerable<string> userEmailList, string senderUserName, string missionInviteLink, IEmailService _emailService)
+    public Task SendUserMissionInviteService(IEnumerable<string> userEmailList, string senderUserName, string missionInviteLink, IEmailService _emailService)
     {
         var inviteMessage = CreateMissionInviteMessage( senderUserName, missionInviteLink );
         var subject = "Mission Invitation From Co-Worker | CI Platform";
         foreach( var email in userEmailList )
         {
-            _emailService.EmailSend( email, subject, inviteMessage);
+            _ = _emailService.EmailSendAsync( email, subject, inviteMessage);
         }
+        return Task.CompletedTask;
     }
 
     private string CreateMissionInviteMessage(string senderUserName, string missionInviteLink) =>
-        MailMessageFormatUtility.GenerateMissionInviteMessage(senderUserName, missionInviteLink);
+      MailMessageFormatUtility.GenerateMissionInviteMessage(senderUserName, missionInviteLink);
     
     
     public UserProfileVM LoadUserProfile(long id)
@@ -447,4 +449,24 @@ public class UserService: IUserService
         };
         return vm;
     }
+
+    public async Task<IEnumerable<UserRegistrationVM>> LoadAllActiveUserForRecommendMissionAsync(long userId)
+    {
+        var users = await _unitOfWork.UserRepo.UserWithSettingsAsync(user => user.Status == true && user.UserId != userId);
+        
+        return users
+            .Where( user => user.NotificationSettings?.FirstOrDefault()?.IsEnabledRecommendMission?? false )
+            .Select(ConvertToRegistrationVM);
+    }
+
+    public async Task<IEnumerable<UserRegistrationVM>> LoadAllActiveUserForRecommendStoryAsync(long userId)
+    {
+        var users = await _unitOfWork.UserRepo.UserWithSettingsAsync(user => user.Status == true && user.UserId != userId);
+
+        return users
+            .Where(user => user.NotificationSettings?.FirstOrDefault()?.IsEnabledRecommendStory ?? false)
+            .Select(ConvertToRegistrationVM);
+    }
+    public async Task<UserRegistrationVM> LoadUserBasicInformationAsync(long userId)
+        => ConvertToRegistrationVM(await _unitOfWork.UserRepo.GetFirstOrDefaultAsync(user => user.UserId == userId));
 }

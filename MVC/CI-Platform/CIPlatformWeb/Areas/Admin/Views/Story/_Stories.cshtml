@@ -8,7 +8,7 @@
     <div class="border mx-content py-1 px-3 d-flex align-items-center" id="admin-search-container">
         <img src="~/assets/search.png" alt="Search Here" height="20px" width="20px">
         <input type="text" name="Search" id="story-search" placeholder="Search here" class="border-0 ms-2 form-control">
-    
+
         <div class="spinner-border opacity-0 spinner-control" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
@@ -51,23 +51,10 @@
                         </td>
                         <td>
                             <div class="d-flex gap-2 flex-wrap justify-content-center align-items-center">
-                                <a asp-area = "Admin" asp-controller="Story" asp-action = "StoryDetails" asp-route-id="@story.StoryId" target="_blank">
+                                <a asp-area="Admin" asp-controller="Story" asp-action="StoryDetails" asp-route-id="@story.StoryId" target="_blank">
                                     <button class="cursor-pointer btn-story-view font-13 bg-transparent px-2 text-center">View</button>
                                 </a>
-                                @if (story.StoryStatus == UserStoryStatus.PENDING)
-                                {
-                                    <img class="cursor-pointer story-approve" data-storyid="@story.StoryId" src="~/assets/check-mark.svg" height="19px" width="18px" alt="Approve">
-                                    <img class="cursor-pointer story-decline" data-storyid="@story.StoryId" src="~/assets/x-circle.svg" height="19px" width="18px" alt="Decline">
-                                }
-                                else if (story.StoryStatus == UserStoryStatus.APPROVED)
-                                {
-                                    <img class="cursor-pointer story-decline" data-storyid="@story.StoryId" src="~/assets/x-circle.svg" alt="Decline" height="19px" width="18px">
-                                }
-                                else
-                                {
-                                    <img class="cursor-pointer story-approve" data-storyid="@story.StoryId" src="~/assets/check-mark.svg" alt="Approve"height="19px" width="18px">
 
-                                }
 
                                 @if (story.IsDeleted)
                                 {
@@ -75,6 +62,20 @@
                                 }
                                 else
                                 {
+                                    @if (story.StoryStatus == UserStoryStatus.PENDING)
+                                    {
+                                        <img class="cursor-pointer story-approve" data-storyid="@story.StoryId" src="~/assets/check-mark.svg" height="19px" width="18px" alt="Approve">
+                                        <img class="cursor-pointer story-decline" data-storyid="@story.StoryId" src="~/assets/x-circle.svg" height="19px" width="18px" alt="Decline">
+                                    }
+                                    else if (story.StoryStatus == UserStoryStatus.APPROVED)
+                                    {
+                                        <img class="cursor-pointer story-decline" data-storyid="@story.StoryId" src="~/assets/x-circle.svg" alt="Decline" height="19px" width="18px">
+                                    }
+                                    else
+                                    {
+                                        <img class="cursor-pointer story-approve" data-storyid="@story.StoryId" src="~/assets/check-mark.svg" alt="Approve" height="19px" width="18px">
+
+                                    }
                                     <img class="cursor-pointer story-delete" data-storyid="@story.StoryId" src="~/assets/delete.png" alt="Delete">
                                 }
                             </div>

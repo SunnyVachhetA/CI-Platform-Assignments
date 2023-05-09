@@ -33,12 +33,14 @@ public class CommentRepository : Repository<Comment>, ICommentRepository
             .AsNoTracking()
             .Include(comment => comment.Mission)
             .Include(mission => mission.User)
-            .Where(comment => !(comment.IsDeleted?? false))
+            .OrderBy(comment => comment.ApprovalStatus)
+                .ThenByDescending(comment => comment.CreatedAt)
             .ToListAsync();
     }
 
     public async Task<Comment?> GetCommentsWithMissionAsync(Expression<Func<Comment, bool>> filter) => await
             dbSet
+            .AsNoTracking()
             .Include(comment => comment.Mission)
             .Include(comment => comment.User)
             .FirstOrDefaultAsync(filter);
@@ -51,7 +53,8 @@ public class CommentRepository : Repository<Comment>, ICommentRepository
 
     public async Task<int> UpdateDeleteStatus(long id, byte status)
     {
-        var query = "UPDATE comment SET is_deleted = {0}, deleted_at = {1} WHERE comment_id = {2}";
-        return await _dbContext.Database.ExecuteSqlRawAsync(query, status, DateTimeOffset.Now, id);
+        _ = await UpdateCommentStatus(id, status);  
+        var query = "DELETE FROM comment WHERE comment_id = {0}";
+        return await _dbContext.Database.ExecuteSqlRawAsync(query,id);
     }
 }

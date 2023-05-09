@@ -267,8 +267,18 @@ public class StoryService : IStoryService
             MissionTitle = story.Mission.Title?? string.Empty,
             UserName = $"{story.User.FirstName} {story.User.LastName}",
             StoryStatus = (UserStoryStatus)(story.Status ?? 1),
-            IsDeleted = story.IsDeleted ?? false
+            IsDeleted = story.IsDeleted ?? false,
+            Email = story.User.Email,
+            UserId = story.UserId,
         };
         return vm;
+    }
+
+    public async Task<AdminStoryVM> FetchUserStoryDetailsAsync(long storyId)
+    {
+        var story = await _unitOfWork.StoryRepo.FetchStoryDetailsByIdAsync(entry => entry.StoryId == storyId && entry.User.Status == true);
+        if (story is null) return null!;
+
+        return ConvertStoryModelToAdminStoryVM(story);
     }
 }

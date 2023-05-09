@@ -19,11 +19,13 @@ public class StoryInviteService: IStoryInviteService
     {
         Func<User, bool> filter = user => user.UserId != userId;
 
-        List<User> userList =
-            _unitOfWork
-                .UserRepo
-                .GetAll(filter)
-                .ToList();
+        //List<User> userList =
+        //    _unitOfWork
+        //        .UserRepo
+        //        .GetAll(filter)
+        //        .ToList();
+        var userList = _unitOfWork.UserRepo.UserWithSettings(user => user.Status == true && user.UserId != userId)
+                                .Where(user => user.NotificationSettings?.FirstOrDefault()?.IsEnabledRecommendStory ?? false);
 
         Func<StoryInvite, bool> storyFilter = invite => invite.FromUserId == userId && invite.StoryId == storyId;
 
@@ -103,5 +105,20 @@ public class StoryInviteService: IStoryInviteService
             Avatar = user.Avatar!,
             StoryId = storyId
         };
+    }
+
+    public async Task<IEnumerable<UserNotificationSettingPreferenceVM>> LoadUserStoryInvitePreference(long userId, long storyId, long[] recommendList)
+    {
+        var users = await _unitOfWork.UserRepo.UserWithSettingsAsync(user => user.Status == true && user.UserId != userId);
+        users = users.Where(user => recommendList.Any(id => id == user.UserId)).ToList();
+
+        return users
+            .Select(user => new UserNotificationSettingPreferenceVM()
+            {
+                UserId = user.UserId,
+                UserName = $"{user.FirstName} {user.LastName}",
+                Email = user.Email,
+                IsOpenForEmail = user.NotificationSettings?.FirstOrDefault()?.IsEnabledEmail ?? false,
+            });
     }
 }

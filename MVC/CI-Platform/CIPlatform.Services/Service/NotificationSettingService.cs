@@ -47,9 +47,10 @@ public class NotificationSettingService : INotificationSettingService
             VolunteerGoals = notification.IsEnabledVolunteerGoal?? false,
             VolunteerHours = notification.IsEnabledVolunteerHour?? false,
             RecommendMission = notification.IsEnabledRecommendMission ?? false,
-            RecommendStory = notification.IsEnabledStory ?? false,
+            RecommendStory = notification.IsEnabledRecommendStory ?? false,
             ReceiveByEmail = notification.IsEnabledEmail ?? false,
-            News = notification.IsEnabledNews
+            News = notification.IsEnabledNews,
+            MyStories = notification.IsEnabledStory ?? false
         };
         return vm;
     }

@@ -1,5 +1,6 @@
 ﻿using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
+using System.Linq.Expressions;
 
 namespace CIPlatform.DataAccessLayer.Repository.IRepository;
 public interface IUserRepository : IRepository<User>
@@ -15,4 +16,6 @@ public interface IUserRepository : IRepository<User>
     void SetUserStatusToActive(string email);
     Admin CheckAdminCredential(string credentialEmail, string credentialPassword);
     int IsAdminEmail(string email);
+    Task<List<User>> UserWithSettingsAsync(Expression<Func<User, bool>> filter);
+    List<User> UserWithSettings(Expression<Func<User, bool>> filter);
 }

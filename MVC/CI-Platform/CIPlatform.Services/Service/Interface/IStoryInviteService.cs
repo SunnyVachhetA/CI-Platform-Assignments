@@ -6,4 +6,5 @@ public interface IStoryInviteService
     IEnumerable<UserInviteVm> LoadAllUsersInviteList(long userId, long storyId);
     Task SaveUserInvite(long userId, long storyId, long[] recommendList);
     Task SendStoryInviteToUsers(IEnumerable<string> userEmailList, string storyInviteLink, string userName);
+    Task<IEnumerable<UserNotificationSettingPreferenceVM>> LoadUserStoryInvitePreference(long userId, long storyId, long[] recommendList);
 }

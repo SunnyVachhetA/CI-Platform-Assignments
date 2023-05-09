@@ -4,6 +4,7 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class UserRepository : Repository<User>, IUserRepository
@@ -107,4 +108,16 @@ public class UserRepository : Repository<User>, IUserRepository
         var query = "SELECT COUNT(*) FROM admin WHERE email = {0}";
         return _dbContext.Database.ExecuteSqlRaw(query, email);
     }
+
+    public async Task<List<User>> UserWithSettingsAsync(Expression<Func<User, bool>> filter) => await dbSet
+            .AsNoTracking()
+            .Include(user => user.NotificationSettings)
+            .Where(filter)
+            .ToListAsync();
+
+    public List<User> UserWithSettings(Expression<Func<User, bool>> filter) => dbSet
+            .AsNoTracking()
+            .Include(user => user.NotificationSettings)
+            .Where(filter)
+            .ToList();
 }

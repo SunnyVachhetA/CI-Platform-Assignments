@@ -11,8 +11,6 @@ public partial class UserNotification
 
     public long NotificationId { get; set; }
 
-    public string? FromUserAvatar { get; set; }
-
     public bool IsRead { get; set; }
 
     public DateTimeOffset CreatedAt { get; set; }

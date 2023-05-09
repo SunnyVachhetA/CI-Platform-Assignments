@@ -468,15 +468,16 @@ function buttonCancelEvent() {
 }
 
 function buttonApplyEvent() {
-    if (loggedUserId == 0) {
-        loginRequiredSweetAlert(userLoginPageLink, returnUrl);
-        return;
-    }
+    
     const btnApplicationApply = document.querySelector('#btn-msn-apply');
     if (btnApplicationApply == undefined || btnApplicationApply == null) return;
 
     btnApplicationApply.addEventListener('click', () => {
         let missionId = $('#btn-msn-apply').data('missionid');
+        if (loggedUserId == 0) {
+            loginRequiredSweetAlert(userLoginPageLink, returnUrl);
+            return;
+        }
         let userId = loggedUserId;    
 
         Swal.fire({

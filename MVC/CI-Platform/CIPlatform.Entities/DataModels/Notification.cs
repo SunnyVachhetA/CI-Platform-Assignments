@@ -13,6 +13,8 @@ public partial class Notification
 
     public byte? NotificationFor { get; set; }
 
+    public string? FromUserAvatar { get; set; }
+
     public virtual NotificationType? NotificationForNavigation { get; set; }
 
     public virtual ICollection<UserNotification> UserNotifications { get; } = new List<UserNotification>();

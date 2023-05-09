@@ -39,15 +39,14 @@ public class StoryController : Controller
         }
     }
 
-    
     [HttpPatch]
-    public IActionResult DeActivate(long storyId)
+    public async Task<IActionResult> DeActivate(long storyId)
     {
         try
         {
             _serviceUnit.StoryService.UpdateStoryDeletionStatus(storyId, 1);
-            var stories = _serviceUnit.StoryService.LoadAllStoriesAdmin();
-            return PartialView("_Stories", stories);
+            await PushStoryApprovalNotification(storyId);
+            return NoContent();
         }
         catch (Exception e)
         {
@@ -62,8 +61,9 @@ public class StoryController : Controller
         try
         {
             _serviceUnit.StoryService.UpdateStoryDeletionStatus(storyId);
-            var stories = _serviceUnit.StoryService.LoadAllStoriesAdmin();
-            return PartialView("_Stories", stories);
+            //var stories = _serviceUnit.StoryService.LoadAllStoriesAdmin();
+            //return PartialView("_Stories", stories);
+            return NoContent();
         }
         catch (Exception e)
         {
@@ -72,14 +72,15 @@ public class StoryController : Controller
             return StatusCode(500);
         }
     }
+    
     [HttpPatch]
-    public IActionResult ApproveStory(long storyId)
+    public async Task<IActionResult> ApproveStory(long storyId)
     {
         try
         {
             _serviceUnit.StoryService.UpdateUserStoryStatus(storyId, UserStoryStatus.APPROVED);
-            var stories = _serviceUnit.StoryService.LoadAllStoriesAdmin();
-            return PartialView("_Stories", stories);
+            await PushStoryApprovalNotification(storyId);
+            return NoContent();
         }
         catch (Exception e)
         {
@@ -88,14 +89,15 @@ public class StoryController : Controller
             return StatusCode(500);
         }
     }
+
     [HttpPatch]
-    public IActionResult DeclineStory(long storyId)
+    public async Task<IActionResult> DeclineStory(long storyId)
     {
         try
         {
             _serviceUnit.StoryService.UpdateUserStoryStatus(storyId, UserStoryStatus.DECLINED);
-            var stories = _serviceUnit.StoryService.LoadAllStoriesAdmin();
-            return PartialView("_Stories", stories);
+            await PushStoryApprovalNotification(storyId);
+            return NoContent();
         }
         catch (Exception e)
         {
@@ -111,4 +113,24 @@ public class StoryController : Controller
         ShareStoryVM vm = _serviceUnit.StoryService.LoadStoryDetails(id);
         return View(vm);
     }
+
+    #region HelperMethods
+
+    public async Task PushStoryApprovalNotification(long storyId)
+    {
+        AdminStoryVM vm = await _serviceUnit.StoryService.FetchUserStoryDetailsAsync(storyId);
+
+        if (vm is null || vm.StoryStatus == UserStoryStatus.PENDING) return;
+
+        UserNotificationTemplate template = UserNotificationTemplate.ConvertFromStory(vm);
+        bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+        if (isOpenForEmail)
+        {
+            string link = template.Type == NotificationTypeEnum.APPROVE ?
+                Url.Action("Story", "Story", new { area = "Volunteer", id = storyId }, "https")!
+                : Url.Action("Index", "Story", new { area = "Admin" }, "https")!;
+            _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
+        }
+    }
+    #endregion
 }

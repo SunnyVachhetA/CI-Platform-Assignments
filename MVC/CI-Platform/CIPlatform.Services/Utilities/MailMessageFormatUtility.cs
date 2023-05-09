@@ -281,7 +281,7 @@ public static class MailMessageFormatUtility
 
         return CreateEmailBody(bodySection);
     }
-    public static string GenerateStoryInviteMessage(string userName, string storyInviteLink)
+    public static string GenerateStoryInviteMessage(string senderUserName, string storyInviteLink, string toUserName = "", string title = "")
     {
         string bodySection = $@"
         <body>
@@ -290,8 +290,8 @@ public static class MailMessageFormatUtility
                     <h1>Story Invitation From Co-Worker</h1>
                 </div>
                 <div class='body'>
-                     
-                    <p>You got story invite from your co-worker {userName}</p>
+                    <p>Dear {toUserName},</p>
+                    <p>You got story invitation for <b>{title}</b> from your co-worker {senderUserName}.</p>
                     <p>Check Out Story Details By Clicking Below Button</p>
                     
                     <a href = '{storyInviteLink}' class='button'> <button>Story Information</button> </a>
@@ -311,7 +311,7 @@ public static class MailMessageFormatUtility
                 {HeadSection}
                 {bodySection}
             </html>";
-    public static string GenerateMissionInviteMessage(string userName, string link)
+    public static string GenerateMissionInviteMessage(string senderUserName, string link, string toUserName = "", string title = "")
     {
         string bodySection = $@"
         <body>
@@ -320,8 +320,8 @@ public static class MailMessageFormatUtility
                     <h1>Story Invitation From Co-Worker</h1>
                 </div>
                 <div class='body'>
-                     
-                    <p>You got mission invite from your co-worker {userName}.</p>
+                    <p>Dear {toUserName}, </p>
+                    <p>You got mission invitation for misison <b>{title}</b> from your co-worker {senderUserName}.</p>
                     <p>Check Out Mission Details By Clicking Below Button</p>
                     
                     <a href = '{link}' class='button'> <button>Mission Information</button> </a>
@@ -419,7 +419,7 @@ public static class MailMessageFormatUtility
             <div class='container'>
                 <div class='header'>
                     <h1>Admin has approved your story on CI Platform.</h1>
-                </div>
+                </div>+
                 <div class='body'>
                     <p>Dear {userName},</p>
 
@@ -451,6 +451,55 @@ public static class MailMessageFormatUtility
                     <p>You story with title <b>{title}</b> has been declined due to its content or some other reason that might not be appropriate for others.</p>
                     <p>If you think this is a mistake please create your story again or contact admin. Click below to add new story.</p>
                     <a href = '{pageLink}' class='button'> <button>Story Listing</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+
+    public static string GenerateMessageForCommentApproval(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has approved your comment on CI Platform.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>Your comment on mission tite <b>{title}</b> has been approved by admin. Thank you for your honest comment on mission.</p>
+                    <p>Your honest comments and remarks will help us improve.</p>
+                    <p>Click on below button to see your comment on website.</p>
+                    <a href = '{pageLink}' class='button'> <button>View Comment</button> </a>
+
+                    <p>Regards,</p>
+                    <p>CI Team</p>
+                </div>
+            </div>
+        </body>";
+
+        return CreateEmailBody(bodySection);
+    }
+
+    public static string GenerateMessageForCommentDecline(string title, string pageLink, string userName)
+    {
+        string bodySection = $@"
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>Admin has declined declined on CI Platform.</h1>
+                </div>
+                <div class='body'>
+                    <p>Dear {userName},</p>
+
+                    <p>You comment on mission title <b>{title}</b> has been declined due to its content or some other reason that might not be appropriate for others.</p>
+                    <p>If you think this is a mistake please create your comment again or contact admin. Click below to add new comment.</p>
+                    <a href = '{pageLink}' class='button'> <button>View Mission</button> </a>
 
                     <p>Regards,</p>
                     <p>CI Team</p>

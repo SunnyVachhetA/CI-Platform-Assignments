@@ -7,7 +7,7 @@ using CIPlatform.Services.Service.Interface;
 namespace CIPlatform.Services.Service;
 internal class MissionInviteService: IMissionInviteService
 {
-    private IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
     public MissionInviteService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
@@ -32,9 +32,13 @@ internal class MissionInviteService: IMissionInviteService
 
     public IEnumerable<UserInviteVm> fetchUserMissionInvites(IEnumerable<UserRegistrationVM> result, long userId, long missionId)
     {
-        Func<MissionInvite, bool> filter = (invite) =>  ( invite.FromUserId == userId && invite.MissionId == missionId); 
-        var inviteListOfUser = _unitOfWork.MissionInviteRepo.GetAll( filter );
+        if (!result.Any()) return new List<UserInviteVm>();
+
+        Func<MissionInvite, bool> filter = (invite) =>  ( invite.FromUserId == userId && invite.MissionId == missionId);
+        var inviteListOfUser = _unitOfWork.MissionInviteRepo.GetAll(filter);
+
         List<UserInviteVm> inviteList = new();
+
         if( inviteListOfUser.Any() ) //When user have already invited some co-worker
         {
             inviteList = FetchMissionInviteesWithOthers(result.ToList(), inviteListOfUser, missionId, userId);
@@ -103,16 +107,19 @@ internal class MissionInviteService: IMissionInviteService
         }
         return list;
     }
-}
 
-
-/*public static UserInviteVm ConvertUserToInviteVM(User user, long userId)
+    public async Task<IEnumerable<UserNotificationSettingPreferenceVM>> LoadUserMissionInvitePreference(long userId, long missionId, long[] recommendList)
     {
-        return new UserInviteVm()
-        {
-            Avatar = user.Avatar ?? string.Empty,
-            UserName = user.FirstName,
-            FromUserId = userId,
-            ToUserId = user.UserId
-        };
-    }*/
+        var users = await _unitOfWork.UserRepo.UserWithSettingsAsync(user => user.Status == true && user.UserId != userId);
+        users = users.Where(user => recommendList.Any(id => id == user.UserId)).ToList();
+
+        return users
+            .Select(user => new UserNotificationSettingPreferenceVM()
+            {
+                UserId = user.UserId,
+                UserName = $"{user.FirstName} {user.LastName}",
+                Email = user.Email,
+                IsOpenForEmail = user.NotificationSettings?.FirstOrDefault()?.IsEnabledEmail?? false,
+            });
+    }
+}

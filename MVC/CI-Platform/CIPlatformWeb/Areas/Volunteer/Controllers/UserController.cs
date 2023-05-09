@@ -412,8 +412,9 @@ public class UserController : Controller
                 await _serviceUnit.MissionInviteService.SaveMissionInviteFromUser(userId, missionId, recommendList);
             var senderUserName = await _serviceUnit.UserService.GetUserName(userId);
 
-            string missionInviteLink = Url.Action("Index", "Mission", new { id = missionId }, "https") ?? string.Empty;
-            _serviceUnit.UserService.SendUserMissionInviteService(userEmailList, senderUserName, missionInviteLink,
+            string missionInviteLink = Url.Action("Index", "Mission", new {area="Volunteer", id = missionId }, "https") ?? string.Empty;
+
+            _ = _serviceUnit.UserService.SendUserMissionInviteService(userEmailList, senderUserName, missionInviteLink,
                 _emailService);
             return StatusCode(201);
         }

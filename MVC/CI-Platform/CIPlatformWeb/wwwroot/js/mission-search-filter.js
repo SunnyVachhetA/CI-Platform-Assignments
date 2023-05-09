@@ -305,27 +305,28 @@ function handleUserRecommendModal() {
             }
 
             let missionId = $(item).data('missionid');
-            handleRecommendToCoWorkerAjax(loggedUserId, missionId);
+            let missionTitle = $(item).data('msntitle');
+            handleRecommendToCoWorkerAjax(loggedUserId, missionId, missionTitle);
         });
     });
 }
 
-function handleRecommendToCoWorkerAjax(userId, missionId) {
+function handleRecommendToCoWorkerAjax(userId, missionId, missionTitle) {
+ 
     $.ajax({
         type: 'GET',
-        url: '/Volunteer/User/MissionUsersInvite',
+        url: '/Volunteer/MissionInvite/MissionUsersInviteAsync',
         data: { userId, missionId },
-        contentType: "application/json; charset=utf-8",
         success: function (result) {
             $('#recommend-msn-modal').html(result);
             $('#recommendModal').modal('show');
-            modalEventListener(userId, missionId);
+            modalEventListener(userId, missionId, missionTitle);
         },
         error: ajaxErrorSweetAlert
     });
 }
 
-function modalEventListener(userId, missionId) {
+function modalEventListener(userId, missionId, missionTitle) {
     let recommendList = [];
     $('#btn-recommend').on('click',
         () => {
@@ -342,19 +343,19 @@ function modalEventListener(userId, missionId) {
                 recommendList.push($(this).val());
             });
 
-            handleUserRecommendAjax(userId, missionId, recommendList);
+            handleUserRecommendAjax(userId, missionId, recommendList, missionTitle);
         });
 }
 
 
-function handleUserRecommendAjax(userId, missionId, recommendList) {
+function handleUserRecommendAjax(userId, missionId, recommendList, missionTitle) {
     $('#recommendModal').modal('hide');
     displayActionMessageSweetAlert('Invite sent!', 'Mission invitation will be sent to your co-worker.', 'info');
     $.ajax({
         type: 'POST',
         global: false,
-        data: { userId, missionId, recommendList },
-        url: '/Volunteer/User/SendMissionInvites',
+        data: { userId, missionId, recommendList, missionTitle },
+        url: '/Volunteer/MissionInvite/SendMissionInviteAsync',
         success:
             function (result) {
             },

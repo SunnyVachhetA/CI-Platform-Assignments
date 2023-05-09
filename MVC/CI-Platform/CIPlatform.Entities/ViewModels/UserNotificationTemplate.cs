@@ -12,7 +12,7 @@ public class UserNotificationTemplate
     public NotificationTypeEnum Type { get; set; }
     public NotificationTypeMenu NotificationFor { get; set; }
     public string Message { get; set; } = string.Empty;
-
+    public string? FromUserAvatar { get; set; }
     public static UserNotificationTemplate ConvertFromMissionApplication(MissionApplicationVM application)
     {
         UserNotificationTemplate template = new()
@@ -45,6 +45,22 @@ public class UserNotificationTemplate
         return template;
     }
 
+    public static UserNotificationTemplate ConvertFromComment(CommentAdminVM comment)
+    {
+        UserNotificationTemplate template = new()
+        {
+            UserId = comment.UserId,
+            Message = comment.ApprovalStatus == ApprovalStatus.APPROVED ?
+            $"Your comment has been approved for mission : {comment.MissionTitle}" : $"Your comment has been declined for mission : {comment.MissionTitle}",
+            Title = comment.MissionTitle,
+            UserName = comment.UserName,
+            Email = comment.Email,
+            Type = comment.ApprovalStatus == ApprovalStatus.APPROVED ? NotificationTypeEnum.APPROVE : NotificationTypeEnum.DECLINE,
+            NotificationFor = NotificationTypeMenu.MY_COMMENT
+        };
+        return template;
+    }
+
     public static UserNotificationTemplate ConvertFromContact(ContactUsVM contact)
     {
         UserNotificationTemplate template = new()
@@ -52,17 +68,34 @@ public class UserNotificationTemplate
             UserId = contact.UserId,    
             UserName = contact.UserName,
             Message = "Admin has sent you contact response on email.",
-            NotificationFor = NotificationTypeMenu.MY_COMMENT,
+            NotificationFor = NotificationTypeMenu.NEW_MESSAGES,
             Type = NotificationTypeEnum.NEW,
             Email = contact.Email
         };
         return template;
     }
+    public static UserNotificationTemplate ConvertFromStory(AdminStoryVM story)
+    {
+        UserNotificationTemplate template = new()
+        {
+            Title = story.Title,
+            UserId = story.UserId,
+            UserName = story.UserName,
+            Message = story.StoryStatus == UserStoryStatus.APPROVED ?
+                    $"Story request has been approved for: {story.Title}"
+                    : $"Story request has been declined for: {story.Title}",
+            NotificationFor = NotificationTypeMenu.MY_STORIES,
+            Type = story.StoryStatus == UserStoryStatus.APPROVED ? NotificationTypeEnum.APPROVE : NotificationTypeEnum.DECLINE,
+            Email = story.Email 
+        };
+        return template;
+    }
+
     #region Helper Methods
     private static string GetTimesheetMessage(VolunteerTimesheetVM timesheet)
     {
-        string message = string.Empty;
-        if(timesheet.Status == ApprovalStatus.APPROVED)
+        string message;
+        if (timesheet.Status == ApprovalStatus.APPROVED)
         {
             message = timesheet.MissionType == MissionTypeEnum.TIME ?
                   $"Volunteer hour entry apprvoed for this mission: {timesheet.MissionTitle}"
@@ -76,5 +109,6 @@ public class UserNotificationTemplate
         }
         return message;
     }
-    #endregion 
+
+    #endregion
 }

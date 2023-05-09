@@ -572,6 +572,10 @@ public partial class CIDbContext : DbContext
             entity.ToTable("notification");
 
             entity.Property(e => e.NotificationId).HasColumnName("notification_id");
+            entity.Property(e => e.FromUserAvatar)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("from_user_avatar");
             entity.Property(e => e.Message)
                 .HasMaxLength(255)
                 .IsUnicode(false)
@@ -610,6 +614,9 @@ public partial class CIDbContext : DbContext
                 .IsRequired()
                 .HasDefaultValueSql("((1))")
                 .HasColumnName("is_enabled_recommend_mission");
+            entity.Property(e => e.IsEnabledRecommendStory)
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_enabled_recommend_story");
             entity.Property(e => e.IsEnabledStory)
                 .IsRequired()
                 .HasDefaultValueSql("((1))")
@@ -900,9 +907,6 @@ public partial class CIDbContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnName("created_at");
-            entity.Property(e => e.FromUserAvatar)
-                .IsUnicode(false)
-                .HasColumnName("from_user_avatar");
             entity.Property(e => e.IsRead).HasColumnName("is_read");
             entity.Property(e => e.NotificationId).HasColumnName("notification_id");
             entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");

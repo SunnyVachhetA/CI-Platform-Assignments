@@ -1,6 +1,7 @@
 ﻿
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.VMConstants;
+using System.Linq.Expressions;
 
 namespace CIPlatform.DataAccessLayer.Repository.IRepository;
 public interface IStoryRepository : IRepository<Story>
@@ -14,4 +15,5 @@ public interface IStoryRepository : IRepository<Story>
     void UpdateStoryView(long storyId, long storyViews);
     IEnumerable<Story> GetStoriesWithMissionAndUser();
     int UpdateStoryDeletionStatus(long storyId, byte status);
+    Task<Story?> FetchStoryDetailsByIdAsync(Expression<Func<Story, bool>> filter);
 }

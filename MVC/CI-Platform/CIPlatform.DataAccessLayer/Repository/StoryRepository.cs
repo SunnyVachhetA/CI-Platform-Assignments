@@ -4,6 +4,7 @@ using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.VMConstants;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 public class StoryRepository : Repository<Story>, IStoryRepository
@@ -103,14 +104,15 @@ public class StoryRepository : Repository<Story>, IStoryRepository
         _dbContext.Database.ExecuteSqlRaw("UPDATE story SET story_view = @storyView WHERE story_id = @storyId", storyViewParam, storyIdParam);
     }
 
-    
-    public IEnumerable<Story> GetStoriesWithMissionAndUser()
-    {
-        return dbSet
+
+    public IEnumerable<Story> GetStoriesWithMissionAndUser() =>
+    dbSet
+            .AsNoTracking()
             .Include(story => story.Mission)
             .Include(story => story.User)
+            .Where(story => story.Status != 0)
             .AsEnumerable();
-    }
+    
 
     public int UpdateStoryDeletionStatus(long storyId, byte status)
     {
@@ -120,4 +122,11 @@ public class StoryRepository : Repository<Story>, IStoryRepository
 
         return _dbContext.Database.ExecuteSqlRaw("UPDATE story SET is_deleted = @status WHERE story_id = @storyId", statusParam, storyIdParam);
     }
+
+    public async Task<Story?> FetchStoryDetailsByIdAsync(Expression<Func<Story, bool>> filter)
+        => await dbSet
+        .AsNoTracking()
+        .Include(story => story.User)
+        .Include(story => story.Mission)
+        .FirstOrDefaultAsync(filter);
 }

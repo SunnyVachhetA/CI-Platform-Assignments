@@ -29,7 +29,7 @@ public class CleanDataModelBinder: IModelBinder
             }
 
             var value = valueProviderResult.FirstValue;
-
+           
             // Clean the value and set the property on the model
             if (property.PropertyType == typeof(string))
             {
@@ -38,7 +38,31 @@ public class CleanDataModelBinder: IModelBinder
                     value = value?.ToLower();
                 }
                 var cleanedValue = CleanData(value);
-                property.SetValue(model, cleanedValue); 
+                property.SetValue(model, cleanedValue);
+            }
+            else if (property.PropertyType.IsNullableType())
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    // If the value is null or empty, set the property to null
+                    property.SetValue(model, null);
+                }
+                else
+                {
+                    // Get the underlying type of the nullable property
+                    var underlyingType = Nullable.GetUnderlyingType(property.PropertyType);
+
+                    try
+                    {
+                        // Attempt to convert the value to the underlying type
+                        var convertedValue = Convert.ChangeType(value, underlyingType);
+                        property.SetValue(model, convertedValue);
+                    }
+                    catch (Exception ex)
+                    {
+                        bindingContext.ModelState.AddModelError(property.Name, ex.Message);
+                    }
+                }
             }
             else
             {
@@ -68,4 +92,5 @@ public class CleanDataModelBinder: IModelBinder
 
         return cleanedValue;
     }
+
 }

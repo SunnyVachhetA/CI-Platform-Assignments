@@ -8,7 +8,8 @@ public interface IUserService
     IEnumerable<UserRegistrationVM> FetchAllUsers(bool isActiveFlag);
     Task<string> GetUserName(long userId);
     bool IsEmailExists(string email);
-    void SendUserMissionInviteService(IEnumerable<string> userEmailList, string senderUserName, string missionInviteLink, IEmailService _emailService);
+    Task SendUserMissionInviteService(IEnumerable<string> userEmailList, string senderUserName, string missionInviteLink, IEmailService _emailService);
+    Task<IEnumerable<UserRegistrationVM>> LoadAllActiveUserForRecommendMissionAsync(long userId);
     UserRegistrationVM UpdateUserPassword(string? email, string password);
     UserRegistrationVM ValidateUserCredential(UserLoginVM credential);
     Task<IEnumerable<string>> GetUserEmailList(long[] userId);
@@ -21,6 +22,7 @@ public interface IUserService
     int UpdateUserStatus(long userId, byte status);
     IEnumerable<UserRegistrationVM> FilterUserBySearchKey(string? key);
     void GenerateEmailVerificationToken(UserRegistrationVM user, string href, IEmailService emailService);
+    Task<UserRegistrationVM> LoadUserBasicInformationAsync(long userId);
     void SetUserStatusToActive(string email);
     bool CheckUserDetailsFilled(long userId);
     bool CheckIsEmailUnique(string email);

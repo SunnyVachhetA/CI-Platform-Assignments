@@ -15,4 +15,7 @@ public class AdminStoryVM
     public bool IsDeleted { get; set; }
 
     public bool  Status { get; set; }
+
+    public string Email { get; set; } = string.Empty;
+    public long UserId { get; set; }    
 }
