@@ -72,15 +72,15 @@
                                 {
                                     @if (mission.MissionStatus == MissionStatus.ONGOING)
                                     {
-                                        <img src="~/assets/editing.png" class="cursor-pointer msn-edit" data-type="@mission.MissionType" data-missionid="@mission.MissionId" alt="Edit"/>
+                                        <img src="~/assets/editing.png" class="cursor-pointer msn-edit" data-type="@mission.MissionType" data-missionid="@mission.MissionId" alt="Edit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Mission"/>
                                     }
                                     @if (mission.IsActive)
                                     {
-                                        <img src="~/assets/delete.png" alt="Delete" class="cursor-pointer msn-delete" data-missionid="@mission.MissionId"/>
+                                        <img src="~/assets/delete.png" alt="Delete" class="cursor-pointer msn-delete" data-missionid="@mission.MissionId" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="De-Activate Mission"/>
                                     }
                                     else
                                     {
-                                        <img src="~/assets/restore.svg" alt="Restore" height="19px" width="18px" class="cursor-pointer msn-restore" data-missionid="@mission.MissionId"/>
+                                        <img src="~/assets/restore.svg" alt="Restore" height="19px" width="18px" class="cursor-pointer msn-restore" data-missionid="@mission.MissionId" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore Mission"/>
                                     }
                                     <button class="cursor-pointer btn-msn-close font-13 px-2 text-center" data-missionid="@mission.MissionId">Close</button>
                                 }
@@ -89,11 +89,11 @@
                                     <p class="mb-0 text-danger text-center">Closed</p>
                                     @if (mission.IsActive)
                                     {
-                                        <img src="~/assets/delete.png" alt="Delete" class="cursor-pointer msn-delete" height="19px" width="18px" data-missionid="@mission.MissionId" />
+                                        <img src="~/assets/delete.png" alt="Delete" class="cursor-pointer msn-delete" height="19px" width="18px" data-missionid="@mission.MissionId" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Mission" />
                                     }
                                     else
                                     {
-                                        <img src="~/assets/restore.svg" alt="Restore" height="19px" width="18px" class="cursor-pointer msn-restore" data-missionid="@mission.MissionId" />
+                                        <img src="~/assets/restore.svg" alt="Restore" height="19px" width="18px" class="cursor-pointer msn-restore" data-missionid="@mission.MissionId" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore Mission"/>
                                     }
                                 }
                             </div>
@@ -106,5 +106,5 @@
     }
 </div>
 
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

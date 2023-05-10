@@ -60,8 +60,8 @@
                                 
                                 @if (application.ApprovalStatus == ApprovalStatus.PENDING)
                                 {
-                                    <img class="cursor-pointer app-approve" data-appid="@application.ApplicationId" src="~/assets/check-mark.svg" alt="Approve" height="19px" width="18px">
-                                    <img class="cursor-pointer app-decline" data-appid="@application.ApplicationId" src="~/assets/x-circle.svg" alt="Decline" height="19px" width="18px">
+                                    <img class="cursor-pointer app-approve" data-appid="@application.ApplicationId" src="~/assets/check-mark.svg" alt="Approve" height="19px" width="18px" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Approve Application">
+                                    <img class="cursor-pointer app-decline" data-appid="@application.ApplicationId" src="~/assets/x-circle.svg" alt="Decline" height="19px" width="18px" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Decline Application">
                                 }
                                 
                             </div>
@@ -72,6 +72,5 @@
         </table>
     }
 </div>
-
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

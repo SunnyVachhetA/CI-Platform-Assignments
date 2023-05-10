@@ -53,13 +53,13 @@
                             <div class="d-flex gap-3 justify-content-center">
                                 @if (contact.Status == ContactStatus.PENDING)
                                 {
-                                    <img class="cursor-pointer contact-reply" src="~/assets/reply.svg" width="18px" height = "19px" alt="Reply" data-contactid="@contact.ContactId"/>
+                                    <img class="cursor-pointer contact-reply" src="~/assets/reply.svg" width="18px" height = "19px" alt="Reply" data-contactid="@contact.ContactId" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reply"/>
                                 }    
                                 else if (contact.Status == ContactStatus.DECLINE)
                                 {
-                                    <img class="cursor-pointer contact-restore" src="~/assets/restore.svg" width="18px" height = "19px" alt="Restore" data-contactid="@contact.ContactId"/>
+                                    <img class="cursor-pointer contact-restore" src="~/assets/restore.svg" width="18px" height = "19px" alt="Restore" data-contactid="@contact.ContactId" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore"/>
                                 }
-                                <img class="cursor-pointer contact-delete" src="~/assets/delete.png" alt="Delete" data-contactid ="@contact.ContactId" />
+                                <img class="cursor-pointer contact-delete" src="~/assets/delete.png" alt="Delete" data-contactid ="@contact.ContactId" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Contact"/>
                             </div>
                         </td>
                     </tr>
@@ -68,6 +68,5 @@
         </table>
     }
 </div>
-
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

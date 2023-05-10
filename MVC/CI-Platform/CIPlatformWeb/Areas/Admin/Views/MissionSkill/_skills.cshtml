@@ -61,14 +61,14 @@
                     </td>
                     <td>
                         <div class="d-flex gap-3">
-                            <img class="cursor-pointer skill-edit" data-skillid="@skill.SkillId" data-skillname="@skill.Name" src="~/assets/editing.png" alt="Edit">
+                            <img class="cursor-pointer skill-edit" data-skillid="@skill.SkillId" data-skillname="@skill.Name" src="~/assets/editing.png" alt="Edit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Skill">
                             @if (skill.Status ?? false)
                             {
-                                    <img class="cursor-pointer skill-delete" data-skillid="@skill.SkillId" data-skillname="@skill.Name" src="~/assets/delete.png" alt="Delete">
+                                    <img class="cursor-pointer skill-delete" data-skillid="@skill.SkillId" data-skillname="@skill.Name" src="~/assets/delete.png" alt="Delete" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="De-Activate Skill">
                             }
                             else
                             {
-                                    <img class="cursor-pointer skill-restore" height="19px" width="18px" data-skillid="@skill.SkillId" data-skillname="@skill.Name" src="~/assets/restore.svg" alt="Restore">
+                                    <img class="cursor-pointer skill-restore" height="19px" width="18px" data-skillid="@skill.SkillId" data-skillname="@skill.Name" src="~/assets/restore.svg" alt="Restore" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore Skill">
                             }
                         </div>
                     </td>
@@ -78,6 +78,5 @@
         </table>
     }
 </div>
-
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

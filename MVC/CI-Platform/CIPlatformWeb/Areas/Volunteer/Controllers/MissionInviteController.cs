@@ -40,7 +40,7 @@ public class MissionInviteController : Controller
         await _serviceUnit.PushNotificationService.PushRecommendNotificationToUsersAsync(message, userPrefrence, user.Avatar, NotificationTypeEnum.RECOMMEND, NotificationTypeMenu.RECOMMEND_MISSION);
         string missionInviteLink = Url.Action("Index", "Mission", new { area = "Volunteer", id = missionId }, "https") ?? string.Empty;
 
-        _ = _serviceUnit.PushNotificationService.PushRecommendEmailNotificationToUsersAsync(userPrefrence, missionTitle,missionInviteLink, $"{user.FirstName} {user.LastName}", NotificationTypeMenu.RECOMMEND_MISSION);
+        _ = _serviceUnit.PushNotificationService.PushRecommendEmailNotificationToUsersAsync(userPrefrence, missionTitle, missionInviteLink, $"{user.FirstName} {user.LastName}", NotificationTypeMenu.RECOMMEND_MISSION);
 
         return StatusCode(201);
     }

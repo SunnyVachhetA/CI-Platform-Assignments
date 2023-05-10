@@ -58,25 +58,25 @@
 
                                 @if (story.IsDeleted)
                                 {
-                                    <img class="cursor-pointer story-restore" data-storyid="@story.StoryId" src="~/assets/restore.svg" alt="Restore" height="19px" width="18px">
+                                    <img class="cursor-pointer story-restore" data-storyid="@story.StoryId" src="~/assets/restore.svg" alt="Restore" height="19px" width="18px" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore Story">
                                 }
                                 else
                                 {
                                     @if (story.StoryStatus == UserStoryStatus.PENDING)
                                     {
-                                        <img class="cursor-pointer story-approve" data-storyid="@story.StoryId" src="~/assets/check-mark.svg" height="19px" width="18px" alt="Approve">
-                                        <img class="cursor-pointer story-decline" data-storyid="@story.StoryId" src="~/assets/x-circle.svg" height="19px" width="18px" alt="Decline">
+                                        <img class="cursor-pointer story-approve" data-storyid="@story.StoryId" src="~/assets/check-mark.svg" height="19px" width="18px" alt="Approve" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Approve Story">
+                                        <img class="cursor-pointer story-decline" data-storyid="@story.StoryId" src="~/assets/x-circle.svg" height="19px" width="18px" alt="Decline" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Decline Story">
                                     }
                                     else if (story.StoryStatus == UserStoryStatus.APPROVED)
                                     {
-                                        <img class="cursor-pointer story-decline" data-storyid="@story.StoryId" src="~/assets/x-circle.svg" alt="Decline" height="19px" width="18px">
+                                        <img class="cursor-pointer story-decline" data-storyid="@story.StoryId" src="~/assets/x-circle.svg" alt="Decline" height="19px" width="18px" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Decline Story">
                                     }
                                     else
                                     {
-                                        <img class="cursor-pointer story-approve" data-storyid="@story.StoryId" src="~/assets/check-mark.svg" alt="Approve" height="19px" width="18px">
+                                        <img class="cursor-pointer story-approve" data-storyid="@story.StoryId" src="~/assets/check-mark.svg" alt="Approve" height="19px" width="18px" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Approve Story">
 
                                     }
-                                    <img class="cursor-pointer story-delete" data-storyid="@story.StoryId" src="~/assets/delete.png" alt="Delete">
+                                    <img class="cursor-pointer story-delete" data-storyid="@story.StoryId" src="~/assets/delete.png" alt="Delete" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="De-Activate Story">
                                 }
                             </div>
                         </td>
@@ -86,6 +86,5 @@
         </table>
     }
 </div>
-
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

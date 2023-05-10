@@ -1449,3 +1449,15 @@ form-subtitle,
     transition: var(--transition);
 }
 /*Notification styles end */
+
+.skill-menu .dropdown-menu {
+    width: 100% !important;
+    max-height: 100px !important;
+    overflow: auto;
+}
+
+.skill-menu .dropdown-menu {
+    width: 100% !important;
+    max-height: 100px !important;
+    overflow: auto;
+}

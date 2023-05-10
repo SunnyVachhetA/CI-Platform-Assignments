@@ -54,14 +54,14 @@
                     </td>
                     <td>
                         <div class="d-flex gap-3 justify-content-center align-items-center">
-                            <img class="cursor-pointer banner-edit" data-bannerid="@banner.BannerId" src="~/assets/editing.png" alt="Edit">
+                            <img class="cursor-pointer banner-edit" data-bannerid="@banner.BannerId" src="~/assets/editing.png" alt="Edit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Banner">
                             @if (banner.Status)
                             {
-                                <img class="cursor-pointer banner-delete" data-bannerid="@banner.BannerId" src="~/assets/delete.png" alt="Delete">
+                                <img class="cursor-pointer banner-delete" data-bannerid="@banner.BannerId" src="~/assets/delete.png" alt="Delete" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="De-Activate Banner">
                             }
                             else
                             {
-                                <img class="cursor-pointer banner-restore" height="19px" width="18px" data-bannerid="@banner.BannerId" src="~/assets/restore.svg" alt="Delete">
+                                <img class="cursor-pointer banner-restore" height="19px" width="18px" data-bannerid="@banner.BannerId" src="~/assets/restore.svg" alt="Restore" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore Banner">
                             }
                         </div>
                     </td>
@@ -75,5 +75,5 @@
     }
 </div>
 
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

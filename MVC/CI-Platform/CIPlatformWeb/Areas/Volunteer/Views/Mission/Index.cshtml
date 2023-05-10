@@ -52,6 +52,7 @@
     @Html.HiddenFor(model => totalVolunteers, new { id = "total-volunteer-count" })
     @Html.HiddenFor( model => mediaCount, new { id="msn-media-count" })
     @Html.HiddenFor(model => editProfileLink, new { id="editProfileUrl" })
+    @Html.HiddenFor(model => Model.Title, new { id = "mission-title" })
     <!-- Mission Front Section Begin -->
     <section class="container d-flex flex-column flex-lg-row">
         <div class="d-flex flex-column gap-2 flex-basis my-auto">

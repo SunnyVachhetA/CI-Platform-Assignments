@@ -55,10 +55,10 @@
                                 <button class="cursor-pointer btn-comment-view font-13 bg-transparent px-2 text-center" data-commentid="@comment.CommentId">View</button>
                                 @if (comment.ApprovalStatus == ApprovalStatus.PENDING)
                                 {
-                                    <img class="cursor-pointer comment-approve" data-commentid="@comment.CommentId" src="~/assets/check-mark.svg" height="19px" width="18px" alt="Approve">
-                                    <img class="cursor-pointer comment-decline" data-commentid="@comment.CommentId" src="~/assets/x-circle.svg" height="19px" width="18px" alt="Decline">
+                                    <img class="cursor-pointer comment-approve" data-commentid="@comment.CommentId" src="~/assets/check-mark.svg" height="19px" width="18px" alt="Approve" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Approve Comment">
+                                    <img class="cursor-pointer comment-decline" data-commentid="@comment.CommentId" src="~/assets/x-circle.svg" height="19px" width="18px" alt="Decline" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Decline Comment">
                                 }
-                                <img class="cursor-pointer comment-delete" data-commentid="@comment.CommentId" src="~/assets/delete.png" alt="Delete">
+                                <img class="cursor-pointer comment-delete" data-commentid="@comment.CommentId" src="~/assets/delete.png" alt="Delete" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Comment">
 
                             </div>
                         </td>
@@ -69,5 +69,5 @@
     }
 </div>
 
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

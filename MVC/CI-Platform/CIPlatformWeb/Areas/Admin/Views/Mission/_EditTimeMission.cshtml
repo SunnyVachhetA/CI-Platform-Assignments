@@ -4,7 +4,7 @@
 
     <div class="px-4 mt-2 pb-4">
         <form id="form-edit-msn-time" class="admin-form d-flex flex-column gap-3" enctype="multipart/form-data">
-            <input type="hidden" asp-for="MissionId"/>
+            <input type="hidden" asp-for="MissionId" />
             <div>
                 <label asp-for="Title" class="form-label"></label>
                 <input class="form-control" asp-for="Title">
@@ -94,31 +94,59 @@
                     </select>
                     <span class="font-xs text-danger" asp-validation-for="ThemeId"></span>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 skill-menu">
                     @foreach (var id in Model.Skills)
                     {
                         <input type="hidden" value="@id" name="preloadedSkill">
                     }
-                    <label asp-for="Skills" class="form-label"></label>
-                    <select asp-for="Skills" multiple class="form-select multi-select" asp-items="@Model.SkillList.Select(s => new SelectListItem { Value = s.SkillId.ToString(), Text = s.Name })">
-                        <option value="" disabled selected>Select Skills</option>
-                    </select>
-                    <span class="font-xs text-danger" asp-validation-for="Skills"></span>
+                    <label class="form-label">
+                        Select Skills
+                    </label>
+                    <div class="dropdown">
+                        <div class="dropdown-toggle border w-100 font-15 p-2 d-flex justify-content-between align-items-center" href="#" role="button" data-bs-toggle="dropdown"
+                             aria-expanded="false">
+                            Select Skills
+                            <img src="./assets/drop-down.png" alt="Drop down" height="8px" width="10px">
+                        </div>
+                        <ul class="dropdown-menu">
+                            @foreach (var skill in Model.SkillList)
+                            {
+
+                                <li class="dropdown-item">
+                                    <div class="form-checkbox">
+                                        @if (Model.Skills.Any(id => id == skill.SkillId))
+                                        {
+                                            <input type="checkbox" name="Skills" id="@(" chk" + skill.SkillId)"
+                                           value="@skill.SkillId" checked/>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" name="Skills" id="@(" chk" + skill.SkillId)"
+                                           value="@skill.SkillId" />
+                                        }
+                                        <label for="@(" chk" + skill.SkillId)">@skill.Name</label>
+                                    </div>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                    <span class="font-xs text-danger" id="err-skill"></span>
                 </div>
             </div>
 
             <div>
                 @foreach (var image in Model.MediaList)
                 {
-                    <input type="hidden" data-media="@image.Path@image.Name@image.Type" value='@image.Name@image.Type' name="preloadedMediaList"/>
+                    <input type="hidden" data-media="@image.Path@image.Name@image.Type" value='@image.Name@image.Type' name="preloadedMediaList" />
                 }
                 <label class="form-label">Upload Mission Photos</label>
 
                 <div class="form-control-file d-flex justify-content-center align-items-center p-4 cursor-pointer"
                      id="upload-area">
-                    <img src="./assets/drag-and-drop.png" alt="Drag and drop" for="file-upload"/>
+                    <img src="./assets/drag-and-drop.png" alt="Drag and drop" for="file-upload" />
                     <input type="file" multiple id="file-upload" onchange="handleFiles(this.files)"
-                           accept=".png, .jpg, .jpeg" asp-for="Images" hidden/>
+                           accept=".png, .jpg, .jpeg" asp-for="Images" hidden />
                 </div>
                 <span class="text-danger font-xs" id="err-media" asp-validation-for="Images"></span>
 
@@ -134,7 +162,7 @@
             <div class="form-group">
                 @foreach (var doc in Model.DocumentList)
                 {
-                    <input type="hidden" data-title="@doc.Title@doc.Type" data-doc="@doc.Path@doc.Name@doc.Type" value = "@doc.Name@doc.Type" name="preloadedDocumentPathList">
+                    <input type="hidden" data-title="@doc.Title@doc.Type" data-doc="@doc.Path@doc.Name@doc.Type" value="@doc.Name@doc.Type" name="preloadedDocumentPathList">
                 }
                 <label for="" class="form-label">Mission Documents</label>
                 <input type="file" asp-for="Documents" class="form-control" accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple id="doc-upload" onchange="handleDocumentFiles(this.files)">
@@ -173,4 +201,4 @@
         </form>
     </div>
 </div>
-<partial name="_ValidationScriptsPartial"/>
+<partial name="_ValidationScriptsPartial" />

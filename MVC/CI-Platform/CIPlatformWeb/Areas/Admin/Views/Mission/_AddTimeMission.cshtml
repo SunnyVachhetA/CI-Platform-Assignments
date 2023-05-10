@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-md-6">
                     <label asp-for="EndDate" class="form-label"></label>
-                    <input type="date" class="form-control" asp-for="EndDate" id = "end-date">
+                    <input type="date" class="form-control" asp-for="EndDate" id="end-date">
                     <span class="text-danger font-xs" asp-validation-for="EndDate" id="err-end"></span>
                 </div>
             </div>
@@ -93,12 +93,34 @@
                     </select>
                     <span class="font-xs text-danger" asp-validation-for="ThemeId"></span>
                 </div>
-                <div class="col-md-6">
-                    <label asp-for="Skills" class="form-label"></label>
-                    <select asp-for="Skills" multiple class="form-select multi-select" asp-items="@Model.SkillList.Select(s => new SelectListItem { Value = s.SkillId.ToString(), Text = s.Name })">
-                        <option value="" disabled selected>Select Skills</option>
-                    </select>
-                    <span class="font-xs text-danger" asp-validation-for="Skills"></span>
+                <div class="col-md-6 skill-menu">
+
+                    <label class="form-label">
+                        Select Skills
+                    </label>
+                    <div class="dropdown">
+                        <div class="dropdown-toggle border w-100 font-15 p-2 d-flex justify-content-between align-items-center" href="#" role="button" data-bs-toggle="dropdown"
+                             aria-expanded="false">
+                            Select Skills
+                            <img src="./assets/drop-down.png" alt="Drop down" height="8px" width="10px">
+                        </div>
+                        <ul class="dropdown-menu">
+                            @foreach(var skill in Model.SkillList)
+                            {
+                                
+                            <li class="dropdown-item">
+                                <div class="form-checkbox">
+                                    <input type="checkbox" name="Skills" id="@(" chk" + skill.SkillId)"
+                                           value="@skill.SkillId" />
+                                    <label for="@(" chk" + skill.SkillId)">@skill.Name</label>
+                                </div>
+                            </li>
+                            }
+
+                        </ul>
+                    </div>
+                    <span class="font-xs text-danger" id="err-skill"></span>
+
                 </div>
             </div>
 
@@ -133,7 +155,7 @@
                 </div>
                 <!-- Uploaded Files Fin -->
             </div>
-            
+
             <div class="row g-3">
                 <div class="col-md-6">
                     <label asp-for="Availability" class="form-label"></label>
@@ -152,7 +174,7 @@
                     <span asp-validation-for="IsActive" class="font-xs text-danger"></span>
                 </div>
             </div>
-            
+
             <div class="d-flex justify-content-center justify-content-md-end gap-2">
                 <button class="btn-g-gray" type="button" id="btn-cancel">Cancel</button>
                 <button class="btn-g-orange" type="submit">Save</button>
@@ -160,4 +182,4 @@
         </form>
     </div>
 </div>
-<partial name="_ValidationScriptsPartial"/>
+<partial name="_ValidationScriptsPartial" />

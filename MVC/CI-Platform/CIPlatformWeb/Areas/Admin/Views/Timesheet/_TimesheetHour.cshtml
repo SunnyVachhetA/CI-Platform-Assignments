@@ -58,8 +58,8 @@
                                 <button class="cursor-pointer btn-story-view font-13 bg-transparent px-2 text-center" data-timesheetid="@entry.TimesheetId">View</button>
                                 @if (entry.Status == ApprovalStatus.PENDING)
                                 {
-                                    <img class="cursor-pointer entry-approve" data-timesheetid="@entry.TimesheetId" src="~/assets/check-mark.svg" height="19px" width="18px" alt="Approve">
-                                    <img class="cursor-pointer entry-decline" data-timesheetid="@entry.TimesheetId" src="~/assets/x-circle.svg" height="19px" width="18px" alt="Decline">
+                                    <img class="cursor-pointer entry-approve" data-timesheetid="@entry.TimesheetId" src="~/assets/check-mark.svg" height="19px" width="18px" alt="Approve" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Approve Entry">
+                                    <img class="cursor-pointer entry-decline" data-timesheetid="@entry.TimesheetId" src="~/assets/x-circle.svg" height="19px" width="18px" alt="Decline" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Decline Entry">
                                 }
                             </div>
                         </td>
@@ -70,6 +70,5 @@
         </table>
     }
 </div>
-
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

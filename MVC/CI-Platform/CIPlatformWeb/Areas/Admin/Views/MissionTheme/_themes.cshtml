@@ -61,14 +61,14 @@
                     </td>
                     <td>
                         <div class="d-flex gap-3">
-                            <img class="cursor-pointer theme-edit" data-themeid="@theme.ThemeId" src="~/assets/editing.png" alt="Edit">
+                            <img class="cursor-pointer theme-edit" data-themeid="@theme.ThemeId" src="~/assets/editing.png" alt="Edit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Theme">
                             @if (theme.Status ?? false)
                             {
-                                <img class="cursor-pointer theme-delete" data-themeid="@theme.ThemeId" src="~/assets/delete.png" alt="Delete">
+                                <img class="cursor-pointer theme-delete" data-themeid="@theme.ThemeId" src="~/assets/delete.png" alt="Delete" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="De-Activate Theme">
                             }
                             else
                             {
-                                <img class="cursor-pointer theme-restore" height="19px" width="18px" data-themeid="@theme.ThemeId" src="~/assets/restore.svg" alt="Restore">
+                                <img class="cursor-pointer theme-restore" height="19px" width="18px" data-themeid="@theme.ThemeId" src="~/assets/restore.svg" alt="Restore" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore Theme">
                             }
                         </div>
                     </td>
@@ -79,5 +79,5 @@
     }
 </div>
 
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

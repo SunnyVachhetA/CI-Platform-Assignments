@@ -298,7 +298,6 @@ $('#btn-vl-prev').on
         'click',
         () =>
         {
-            console.log("Total Page: " + totalVlPage);
             if (currentVolunteerPage == 1) return;
             currentVolunteerPage--;
             loadRecentVolunteers();
@@ -310,7 +309,6 @@ $('#btn-vl-next').on
     'click',
     () =>
     {
-        console.log("Total Page: " + totalVlPage);
         if (currentVolunteerPage == totalVlPage) return;
         currentVolunteerPage++;
         loadRecentVolunteers();
@@ -356,7 +354,7 @@ function loadRecentVolunteers() {
 }*/
 
 //Recommend to co-worker
-
+const missionTitle = $('#mission-title').val();
 $('#msn-recommend').on
 (
     'click',
@@ -373,9 +371,8 @@ $('#msn-recommend').on
 function handleRecommendToCoWorkerAjax() {
     $.ajax({
         type: 'GET',
-        url: '/Volunteer/User/MissionUsersInvite',
+        url: '/Volunteer/MissionInvite/MissionUsersInviteAsync',
         data: { userId, missionId },
-        contentType: "application/json; charset=utf-8",
         success: function (result) {
             $('#recommend-msn-modal').html(result);
             $('#recommendModal').modal('show');
@@ -413,7 +410,7 @@ function handleUserRecommendAjax(recommendList) {
     $.ajax({
         type: 'POST',
         data: {  userId, missionId, recommendList },
-        url: '/Volunteer/User/SendMissionInvites',
+        url: '/Volunteer/MissionInvite/SendMissionInviteAsync',
         success:
         function (result) 
         {

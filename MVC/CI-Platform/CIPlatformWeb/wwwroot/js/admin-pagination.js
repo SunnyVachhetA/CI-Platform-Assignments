@@ -1,9 +1,12 @@
 ﻿let totalRows, rowsPerPage, totalPage, currentPageSet, totalPageSet, currentPage, pageBtnDisplay = 2;
 let paginationContainer;
-function createPagination(row = 2) {
+let btnContainer = $('<div>', { 'class': 'pagination c-pagination-item d-flex gap-2' });
+function createPagination(row = 5) {
   
     paginationContainer = $('#pagination-container');
     $(paginationContainer).empty();
+    btnContainer.empty();
+    paginationContainer.append(btnContainer);
     currentPage = 1;
     rowsPerPage = row;
     totalRows = $('tbody > tr').length;
@@ -37,7 +40,7 @@ function createPrevButton(btnPrev) {
     var imgPrev = $('<img>');
     imgPrev.attr('src', '/assets/previous.png');
     btnPrev.append(imgPrev);
-    paginationContainer.append(btnPrev);
+    btnContainer.append(btnPrev);
     $(btnPrev).click(() => {
         if (currentPageSet == 1) return;
         $(`[data-page='${currentPage}'`).removeClass('active');
@@ -51,6 +54,7 @@ function handleButtonDisplayPagination() {
     let high = currentPageSet * pageBtnDisplay;
     let low = high - pageBtnDisplay + 1;
     currentPage = low;
+
     $.each($('[data-page]'), (_, item) => {
         let btnNumber = $(item).data('page');
         if (btnNumber >= low && btnNumber <= high) {
@@ -60,28 +64,44 @@ function handleButtonDisplayPagination() {
             $(item).addClass('d-none');
         }
     });
+
 }
 
 function handleDisplayTableRow() {
     let low = (currentPage - 1) * rowsPerPage;
     let high = (currentPage) * rowsPerPage;
-
+    let count = 0;
     $('tbody>tr').each((index, item) => {
-        if (index >= low && index < high)
+        if (index >= low && index < high) {
+            count++;
             $(item).removeClass('d-none');
+        }
         else
             $(item).addClass('d-none');
     });
 
     $(document).scrollTop(0);
+
+    $('#pg-entry').remove();
     $(`[data-page='${currentPage}'`).addClass('active');
+    if (count == 0) {
+        $('#pg-entry').remove();
+        return;
+    }
+    const entry = $('<div>', {
+        text: `${low + 1} - ${low + count} Entry of ${totalRows}`,
+        id: 'pg-entry',
+        class:  'fw-light text-black-1'
+    });
+
+    paginationContainer.prepend(entry);
 }
 
 function createLeftButton(btnLeft) {
     var imgLeft = $('<img>');
     imgLeft.attr('src', '/assets/left.png');
     btnLeft.append(imgLeft);
-    paginationContainer.append(btnLeft);
+    btnContainer.append(btnLeft);
     $(btnLeft).click(() => {
         if (currentPage == 1) return;
         $(`[data-page='${currentPage}'`).removeClass('active');
@@ -100,7 +120,7 @@ function createPageNumberedButton() {
         let btnPage = createHTMLPageButton();
         btnPage.text(i);
         btnPage.attr('data-page', i);
-        paginationContainer.append(btnPage);
+        btnContainer.append(btnPage);
         $(btnPage).click(onPageNumberButtonClick);
     }
 }
@@ -117,7 +137,7 @@ function createRightButton(btnRight) {
     var imgLeft = $('<img>');
     imgLeft.attr('src', '/assets/right-arrow1.png');
     btnRight.append(imgLeft);
-    paginationContainer.append(btnRight);
+    btnContainer.append(btnRight);
     $(btnRight).click(() => {
         if (currentPage == totalPage) return;
         console.log(currentPage);
@@ -135,7 +155,7 @@ function createNextButton(btnNext) {
     var imgNext = $('<img>');
     imgNext.attr('src', '/assets/next.png');
     btnNext.append(imgNext);
-    paginationContainer.append(btnNext);
+    btnContainer.append(btnNext);
     $(btnNext).click(() => {
         if (currentPageSet == totalPageSet) return;
         $(`[data-page='${currentPage}'`).removeClass('active');

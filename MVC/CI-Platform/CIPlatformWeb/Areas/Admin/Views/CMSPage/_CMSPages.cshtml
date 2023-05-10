@@ -35,6 +35,7 @@
             <thead class="">
             <tr class="border">
                 <th class="font-22 fw-400">Title</th>
+                <th>Slug</th>
                 <th class="font-22 fw-400">Status</th>
                 <th class="font-22 fw-400">Action</th>
             </tr>
@@ -47,6 +48,7 @@
                     <td>
                         @cmsPage.Title
                     </td>
+                    <td>@cmsPage.Slug</td>
                     <td>
                         @if (cmsPage.Status)
                         {
@@ -59,14 +61,14 @@
                     </td>
                     <td>
                         <div class="d-flex gap-3">
-                            <img class="cursor-pointer cms-edit" data-cmsid="@cmsPage.CmsPageId" src="~/assets/editing.png" alt="Edit">
+                            <img class="cursor-pointer cms-edit" data-cmsid="@cmsPage.CmsPageId" src="~/assets/editing.png" alt="Edit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Page"/>
                             @if (cmsPage.Status)
                             {
-                                <img class="cursor-pointer cms-delete" data-cmsid="@cmsPage.CmsPageId" src="~/assets/delete.png" alt="Delete">
+                                <img class="cursor-pointer cms-delete" data-cmsid="@cmsPage.CmsPageId" src="~/assets/delete.png" alt="Delete" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="De-Active Page"/>
                             }
                             else
                             {
-                                <img class="cursor-pointer cms-restore" height="19px" width="18px" data-cmsid="@cmsPage.CmsPageId" src="~/assets/restore.svg" alt="Delete">
+                                <img class="cursor-pointer cms-restore" height="19px" width="18px" data-cmsid="@cmsPage.CmsPageId" src="~/assets/restore.svg" alt="Restore" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore Page"/>
                             }
                         </div>
                     </td>
@@ -76,6 +78,5 @@
         </table>
     }
 </div>
-
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

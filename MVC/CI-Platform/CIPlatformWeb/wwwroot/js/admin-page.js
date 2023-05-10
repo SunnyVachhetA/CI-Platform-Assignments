@@ -251,11 +251,12 @@ function registerCityAndCountryEvent() {
 
 function loadUsersOnDOM(result) {
     $('#admin-menu-content').html(result);
-    createPagination(5);
+    createPagination();
     registerUserDeleteAndRestoreClickEvents();
     registerUserSearchEvent();
     $('#usr-search').val(searchText);
     $('#btn-user-add').click(handleUserAdd);
+    registerToolTips();
 }
 function showSpinner() {
     $("#spinner").removeClass('d-none');
@@ -553,8 +554,9 @@ function loadCMSAjax() {
 function loadCMSPagesonDOM(result) {
     removeTiny()
     $('#admin-menu-content').html(result);
-    createPagination(5);
+    createPagination();
     registerCmsEditAndDeleteButton();
+    registerToolTips();
 }
 
 function registerCmsEditAndDeleteButton() {
@@ -651,7 +653,7 @@ function handleCmsPageEditAjax(cmsId) {
         });
 }
 function cmsEditFormEvents() {
-    $.getScript('/js/rich-editor-tiny.js');
+    $.getScript('/js/rich-cms-editor.js');
     cmsEditFormSubmitEvent();
     registerCancelButton();
 }
@@ -666,7 +668,7 @@ function registerCmsAddAndSearchEvent() {
 }
 
 function cmsAddFormEvents() {
-    $.getScript('/js/rich-editor-tiny.js');
+    $.getScript('/js/rich-cms-editor.js');
     registerAddCmsFormSubmitEvent();
     registerCancelButton();
 }
@@ -790,6 +792,7 @@ function loadThemesAjax() {
         url: '/Admin/MissionTheme/Index',
         success: function (result) {
             $('#admin-menu-content').html(result);
+            registerToolTips();
             loadThemesOnDOM(result);
         },
         error: ajaxErrorSweetAlert
@@ -799,7 +802,7 @@ function loadThemesAjax() {
 function loadThemesOnDOM() {
     $('#msn-theme-search').val(searchText);
     $('#msn-theme-search').focus();
-    createPagination(5);
+    createPagination();
     registerThemeSearchAndAdd();
     registerThemeEditAndDelete();
 }
@@ -824,6 +827,7 @@ function handleThemeAddEvent() {
         success: function (result) {
             modalContainer.html(result);
             $('#addThemeModal').modal('show');
+            registerToolTips();
             registerThemeFormSubmitEvent('#form-add-theme', 'POST', '/Admin/MissionTheme/AddTheme', '#addThemeModal', 'added successfully!');
         },
         error: ajaxErrorSweetAlert
@@ -852,6 +856,7 @@ function registerThemeFormSubmitEvent(form, type, url, bModal, message,themeId =
                 data: $(form).serialize(),
                 success: function (result) {
                     $('#admin-menu-content').html(result);
+                    registerToolTips();
                     loadThemesOnDOM();
                     $(form)[0].reset();
                     successMessageSweetAlert(themeName + " " + message);
@@ -953,6 +958,7 @@ function handleThemeEdit(themeId) {
         data: { themeId },
         success: (result) => {
             modalContainer.html(result);
+            registerToolTips();
             $('#editThemeModal').modal('show');
             registerThemeFormSubmitEvent('#form-edit-theme', 'PUT', '/Admin/MissionTheme/Edit', '#editThemeModal', 'updated successfully', themeId);
         },
@@ -971,6 +977,7 @@ function handleThemeDeleteMenuAjax(themeId, type, url, message) {
                 return;
             }
             $('#admin-menu-content').html(result);
+            registerToolTips();
             loadThemesOnDOM();
             successMessageSweetAlert(message);
         },
@@ -998,7 +1005,7 @@ function loadSkillsAjax() {
 function loadSkillsOnDOM() {
     $('#msn-skill-search').val(searchText);
     $('#msn-skill-search').focus();
-    createPagination(5);
+    createPagination();
     registerSkillSearchAndAdd();
     registerSkillEditAndDelete();
 }
@@ -1193,6 +1200,7 @@ function loadStoriesAjax() {
         url: '/Admin/Story/Index',
         success: (result) => {
             $('#admin-menu-content').html(result);
+            registerToolTips();
             loadStorysOnDOM();
         },
         error: ajaxErrorSweetAlert
@@ -1202,7 +1210,7 @@ function loadStoriesAjax() {
 function loadStorysOnDOM() {
     $('#story-search').val(searchText);
     $('#story-search').focus();
-    createPagination(5);
+    createPagination();
     registerAllStoryEvents();
 }
 
@@ -1279,6 +1287,7 @@ function loadContactUsAjax() {
         url: '/Admin/ContactUs/Index',
         success: (result) => {
             adminMenuContent.html(result);
+            registerToolTips();
             loadContactUsOnDOM();
         },
         error: ajaxErrorSweetAlert
@@ -1288,7 +1297,7 @@ function loadContactUsAjax() {
 function loadContactUsOnDOM() {
     $('#contact-us-search').val('');
     $('#contact-us-search').focus();
-    createPagination(5);
+    createPagination();
     registerAllContactUsEvents();
 }
 
@@ -1398,6 +1407,7 @@ function loadBannersAjax() {
         url: '/Admin/Banner/Index',
         success: (result) => {
             adminMenuContent.html(result);
+            registerToolTips();
             loadBannerOnDOM();
         },
         error: ajaxErrorSweetAlert
@@ -1406,7 +1416,7 @@ function loadBannersAjax() {
 function loadBannerOnDOM() {
     $('#banner-search').val(searchText);
     $('#banner-search').focus();
-    createPagination(5);
+    createPagination();
     $('#btn-banner-add').click(handleBannerAdd);
     registerBannerListEvents();
 }
@@ -1590,6 +1600,7 @@ function loadHourTimesheetAjax() {
         url: '/Admin/Timesheet/LoadHourTimesheet',
         success: (result) => {
             adminMenuContent.html(result);
+            registerToolTips();
             loadHourTimesheetOnDOM();
         },
         error: ajaxErrorSweetAlert
@@ -1603,6 +1614,7 @@ function loadGoalTimesheetAjax() {
             url: '/Admin/Timesheet/LoadGoalTimesheet',
             success: (result) => {
                 adminMenuContent.html(result);
+                registerToolTips();
                 loadGoalTimesheetOnDOM();
             },
             error: ajaxErrorSweetAlert
@@ -1619,7 +1631,7 @@ function loadGoalTimesheetOnDOM() {
 
     toggleTimesheetButton('#btn-goal-entry', '#btn-hour-entry');
     $('#timesheet-goal-search').val(searchText);
-    createPagination(5);
+    createPagination();
     registerTimesheetHourGoalEvents('goal');
     registerTimesheetSearch('timesheet-goal-search', 'Goal');
 }
@@ -1629,7 +1641,7 @@ function loadHourTimesheetOnDOM() {
     
     $('#timesheet-hour-search').focus();
     $('#timesheet-hour-search').val(searchText);
-    createPagination(5);
+    createPagination();
     registerTimesheetHourGoalEvents('hour');
     registerTimesheetSearch('timesheet-hour-search', 'Hour');
 }
@@ -1756,6 +1768,7 @@ function loadApplicationsAjax() {
         url: '/Admin/MissionApplication/Index',
         success: function (result) {
             $(adminMenuContent).html(result);
+            registerToolTips();
             loadApplciationsOnDOM();
         },
         error: ajaxErrorSweetAlert
@@ -1763,7 +1776,7 @@ function loadApplicationsAjax() {
 }
 
 function loadApplciationsOnDOM() {
-    createPagination(5);
+    createPagination();
     $('#msn-app-search').focus();
     $('#msn-app-search').val(searchText);
     registerApplicationEvents();
@@ -1860,6 +1873,7 @@ function loadMissionsAjax() {
         url: '/Admin/Mission/Index',
         success: (result) => {
             $(adminMenuContent).html(result);
+            registerToolTips();
             loadMissionsOnDOM();
         },
         error: ajaxErrorSweetAlert
@@ -1869,7 +1883,7 @@ function loadMissionsAjax() {
 function loadMissionsOnDOM() {
     $('#msn-search').focus();
     $('#msn-search').val(searchText);
-    createPagination(5);
+    createPagination();
     registerAddMissionEvent();
     adminSearch('msn-search', '/Admin/Mission/Search', "mission");
     registerMissionListEvents();
@@ -1959,14 +1973,19 @@ function handleAddMissionFormSubmit(form, url, message, type) {
     $(form).on('submit', e => {
         e.preventDefault();
 
+
         fileUpload.files = new FileListItems(validUploadFiles);
         docUpload.files = new FileListItems(documentList);
         let fileResult = fileErrorOutput();
         let descResult = tinyDescriptionError(tinymce.get('description').getContent());
-        let dateResult = validateDates();
-        if (fileResult || descResult || !dateResult) return;
-        $(form).valid();
+        let skillResult = skillValidation();
         if (!$(form).valid()) return;
+        if (fileResult || descResult || skillResult) return;
+        let dateResult = validateDates();
+        if (!dateResult) return;
+
+
+        $(form).valid();
         const formData = new FormData($(form)[0]);
         formData.set("Description", tinymce.get('description').getContent());
         formData.set("OrganizationDetail", tinymce.get('description1').getContent());
@@ -1979,6 +1998,7 @@ function handleAddMissionFormSubmit(form, url, message, type) {
             processData: false,
             contentType: false,
             success: (_, __, xhr) => {
+                if (xhr.status == 204) return;
                 successMessageSweetAlert(message);
                 loadMissionsAjax();
             },
@@ -1988,11 +2008,17 @@ function handleAddMissionFormSubmit(form, url, message, type) {
     });
 }
 
+function skillValidation() {
+    var count = $("ul.dropdown-menu input[type='checkbox']:checked").length;
+    $('#err-skill').text('Please select at least 1 skill.');
+    return count == 0;
+}
+
 function tinyDescriptionError(text) {
 
     const err = text.length < 25;
     if (err) {
-        $('#err-desc').text('Description should have at least 25 character!');
+        $('#err-desc').text('Description should have at least 25 character.');
     }
     else {
         $('#err-desc').text('');
@@ -2079,9 +2105,10 @@ function validateDates() {
     var startDate = new Date($('#start-date').val());
     var endDate = new Date($('#end-date').val());
     var regDate = new Date($('#reg-date').val());
-
-    $('#end-date').attr('min', startDate.toISOString().split('T')[0]);
-    $('#reg-date').attr('min', startDate.toISOString().split('T')[0]);
+    if (endDate != undefined)
+        $('#end-date').attr('min', startDate.toISOString().split('T')[0]);
+    if (regDate != undefined)
+        $('#reg-date').attr('min', startDate.toISOString().split('T')[0]);
     var isValid = true;
 
     if (startDate >= endDate) {
@@ -2099,7 +2126,7 @@ function validateDates() {
     }
 
     if (regDate != '') {
-        if (regDate >= startDate || regDate <= endDate) {
+        if (!(regDate >= startDate && regDate <= endDate)) {
             $('#err-reg').text('Registration deadline must be between start and end date.');
             isValid = false;
         } else {
@@ -2124,6 +2151,7 @@ function loadMissionCommentsAjax() {
         url: '/Admin/Comment/Index',
         success: (result) => {
             adminMenuContent.html(result);
+            registerToolTips();
             loadMissionCommentsOnDOM();
         },
         error: ajaxErrorSweetAlert
@@ -2133,7 +2161,7 @@ function loadMissionCommentsAjax() {
 function loadMissionCommentsOnDOM() {
     $('#comment-search').val('');
     $('#comment-search').focus();
-    createPagination(5);
+    createPagination();
     registerCommentEvents();
 }
 
@@ -2200,4 +2228,10 @@ function hanldeCommentView(commentId) {
         },
         error: ajaxErrorSweetAlert
     });
+}
+
+
+function registerToolTips(){
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }

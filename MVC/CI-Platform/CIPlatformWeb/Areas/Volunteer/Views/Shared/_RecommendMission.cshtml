@@ -7,6 +7,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                @if( !Model.Any() )
+                {
+                    <div class="text-info-message p-2 mx-content mx-auto mb-0">No user found for recommendation!</div>
+                }
+
                 @foreach(var user in Model)
                 {
                     @if( user.IsInvited )

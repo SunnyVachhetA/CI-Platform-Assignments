@@ -8,15 +8,15 @@ public class GoalMissionVM
 {
     public long MissionId { get; set; }
 
-    [Required(ErrorMessage = "Please enter mission title!")]
-    [MinLength(15, ErrorMessage = "Title should have at least 15 characters!")]
-    [NoWhiteSpace(ErrorMessage = "Title cannot be empty or contain only whitespace.")]
+    [Required]
+    [MinLength(15, ErrorMessage = "Title should have at least 15 characters.")]
+    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Title must not contain only whitespace characters.")]
+
     public string Title { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Please enter mission short description!")]
-    [MinLength(20, ErrorMessage = "Short Description should have at least 15 characters!")]
-    [NoWhiteSpace(ErrorMessage = "Title field cannot be empty or contain only whitespace.")]
+    [Required]
     [Display(Name = "Short Description")]
+    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Short description must not contain only whitespace characters.")]
     public string ShortDescription { get; set; } = string.Empty;
 
     public string Description { get; set; } = string.Empty;
@@ -42,11 +42,11 @@ public class GoalMissionVM
     public long? TotalSeats { get; set; }
 
     [Display(Name = "City")]
-    [Required(ErrorMessage = "Please select mission city!")]
+    [Required(ErrorMessage = "Please select mission city.")]
     public int CityId { get; set; }
 
     [Display(Name = "Country")]
-    [Required(ErrorMessage = "Please select mission country!")]
+    [Required(ErrorMessage = "Please select mission country.")]
     public byte CountryId { get; set; }
 
     [Display(Name = "Mission Availability")]
@@ -56,12 +56,12 @@ public class GoalMissionVM
     [Required][Display(Name = "Status")] public bool? IsActive { get; set; }
 
     [Display(Name = "Mission Theme")]
-    [Required(ErrorMessage = "Please select mission theme!")]
+    [Required(ErrorMessage = "Please select mission theme.")]
     public short? ThemeId { get; set; }
 
     [Display(Name = "Goal Value")]
     [Required]
-    [Range(0, int.MaxValue, ErrorMessage = "The value must be greater than zero.")]
+    [Range(1, int.MaxValue)]
     public int? GoalValue { get; set; }
     
     [Display(Name = "Goal Objective")]
@@ -69,10 +69,10 @@ public class GoalMissionVM
     public string GoalObjective { get; set; } = string.Empty;
 
     [Display(Name = "Select Skills")]
-    [Required(ErrorMessage = "Please select at least one skill!")]
+    [Required(ErrorMessage = "Please select at least one skill.")]
     public IEnumerable<short> Skills { get; set; } = new List<short>();
 
-    [Required(ErrorMessage = "Please upload mission photos!")]
+    [Required(ErrorMessage = "Please upload mission photos.")]
     public IEnumerable<IFormFile> Images { get; set; }
 
     public IEnumerable<IFormFile>? Documents { get; set; } = new List<IFormFile>();

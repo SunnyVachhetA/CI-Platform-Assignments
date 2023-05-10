@@ -8,14 +8,12 @@ public class TimeMissionVM
 {
     public long MissionId { get; set; }
 
-    [Required(ErrorMessage = "Please enter mission title!")]
-    [MinLength(15, ErrorMessage = "Title should have at least 15 characters!")]
-    [NoWhiteSpace(ErrorMessage = "Title cannot be empty or contain only whitespace.")]
+    [Required(ErrorMessage = "Please enter mission title.")]
+    [MinLength(15, ErrorMessage = "Title should have at least 15 characters.")]
     public string Title { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Please enter mission short description!")]
-    [MinLength(20, ErrorMessage = "Short Description should have at least 15 characters!")]
-    [NoWhiteSpace(ErrorMessage = "Title field cannot be empty or contain only whitespace.")]
+    [Required(ErrorMessage = "Please enter mission short description.")]
+    [MinLength(20, ErrorMessage = "Short Description should have at least 15 characters.")]
     [Display(Name="Short Description")]
     public string ShortDescription { get; set; } = string.Empty;
 
@@ -43,11 +41,11 @@ public class TimeMissionVM
     public long? TotalSeats { get; set; }
 
     [Display(Name="City")]
-    [Required(ErrorMessage = "Please select mission city!")]
+    [Required(ErrorMessage = "Please select mission city.")]
     public int CityId { get; set; }
 
     [Display(Name="Country")]
-    [Required(ErrorMessage = "Please select mission country!")]
+    [Required(ErrorMessage = "Please select mission country.")]
     public byte CountryId { get; set; }
 
     [Display(Name="Mission Availability")]
@@ -57,11 +55,11 @@ public class TimeMissionVM
     [Required] [Display(Name = "Status")] public bool? IsActive { get; set; }
 
     [Display(Name="Mission Theme")]
-    [Required(ErrorMessage = "Please select mission theme!")]
+    [Required(ErrorMessage = "Please select mission theme.")]
     public short? ThemeId { get; set; }
 
-    [Display(Name = "Select Skills")] 
-    [Required(ErrorMessage = "Please select at least one skill!")]
+    [Display(Name = "Select Skills")]
+    [Required(ErrorMessage = "Please select at least one skill.")]
     public IEnumerable<short> Skills { get; set; } = new List<short>();
 
     [Required(ErrorMessage = "Please upload mission photos!")]

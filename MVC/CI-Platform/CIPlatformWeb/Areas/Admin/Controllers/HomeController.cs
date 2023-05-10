@@ -14,6 +14,7 @@ public class HomeController : Controller
     {
         _serviceUnit = serviceUnit;
     }
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Index()
     {
         return View();

@@ -89,14 +89,14 @@
                         </td>
                         <td>
                             <div class="d-flex gap-3">
-                                <img class="cursor-pointer usr-edit" data-userid="@user.UserId" src="~/assets/editing.png" alt="Edit"/>
+                                <img class="cursor-pointer usr-edit" data-userid="@user.UserId" src="~/assets/editing.png" height= "19px" width= "18px" alt="Edit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit User"/>
                                 @if (user.Status)
                                 {
-                                    <img class="cursor-pointer usr-delete" data-userid="@user.UserId" src="~/assets/delete.png" alt="Delete">
+                                    <img class="cursor-pointer usr-delete" data-userid="@user.UserId" src="~/assets/delete.png" height= "19px" width= "18px" alt="Delete" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete User">
                                 }
                                 else
                                 {
-                                    <img class="cursor-pointer usr-restore" data-userid="@user.UserId" src="~/assets/restore.svg" alt="Restore"/>
+                                    <img class="cursor-pointer usr-restore" data-userid="@user.UserId" src="~/assets/restore.svg" alt="Restore" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore User"/>
                                 }
                             </div>
                         </td>
@@ -107,7 +107,7 @@
         </table>
     }
 </div>
-<!-- USer table finish -->
+<!-- User table finish -->
 
-<div class="pagination c-pagination-item mt-2 d-flex justify-content-center justify-content-md-end gap-2" id="pagination-container">
+<div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>

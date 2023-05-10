@@ -27,9 +27,9 @@ public class MissionVMCard
     public byte? CountryId { get; set; }
     public string? Description { get; set; }
 
-    public IEnumerable<long> FavoriteMissionList = new List<long>();
-    public IEnumerable<long> ApprovedApplicationList = new List<long>();
-    public IEnumerable<short> MissionSkill = new List<short>();
+    public IEnumerable<long> FavoriteMissionList { get; set; } = new List<long>();
+    public IEnumerable<long> ApprovedApplicationList { get; set; }  = new List<long>();
+    public IEnumerable<short> MissionSkill { get; set; } = new List<short>();
     public IEnumerable<long> ApplicationListId { get; set; } = new List<long>();
 
     public DateTimeOffset CreatedAt { get; set; }

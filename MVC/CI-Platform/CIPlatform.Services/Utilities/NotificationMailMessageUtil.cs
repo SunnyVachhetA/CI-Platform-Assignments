@@ -19,16 +19,16 @@ public static class NotificationMailMessageUtil
             NotificationTypeMenu.MY_STORIES => approvalStatus ? NotificationMessageUtil.MyStoryApproval : NotificationMessageUtil.MyStoryDecline,
 
             NotificationTypeMenu.NEW_MISSIONS => NotificationMessageUtil.NewMissionSubject,
-            
+
             NotificationTypeMenu.MISSION_APPLICATION => approvalStatus ? NotificationMessageUtil.MissionApplicationApprove : NotificationMessageUtil.MissionApplicationDecline,
-            
+
             _ => throw new NotImplementedException()
         };
     public static string GetMessageForMenu(NotificationTypeMenu menu, string title, string pageLink, string userName, bool approvalStatus = false)
         => menu switch
         {
             NotificationTypeMenu.NEWS => MailMessageFormatUtility.GenerateMessageForNewCMSPage(title, pageLink, userName),
-           
+
             NotificationTypeMenu.VOLUNTEER_HOURS => approvalStatus ?
                                                         MailMessageFormatUtility.GenerateMessageForVolunteerHourApprove(title, pageLink, userName)
                                                         : MailMessageFormatUtility.GenerateMessageForVolunteerHourDecline(title, pageLink, userName),
@@ -38,7 +38,7 @@ public static class NotificationMailMessageUtil
                                                         : MailMessageFormatUtility.GenerateMessageForVolunteerGoalDecline(title, pageLink, userName),
 
             NotificationTypeMenu.MY_COMMENT => approvalStatus ?
-                                                        MailMessageFormatUtility.GenerateMessageForCommentApproval(title, pageLink, userName) 
+                                                        MailMessageFormatUtility.GenerateMessageForCommentApproval(title, pageLink, userName)
                                                         : MailMessageFormatUtility.GenerateMessageForCommentDecline(title, pageLink, userName),
 
             NotificationTypeMenu.MY_STORIES => approvalStatus ?
@@ -46,13 +46,14 @@ public static class NotificationMailMessageUtil
                                                         : MailMessageFormatUtility.GenerateMessageForStoryDecline(title, pageLink, userName),
 
             NotificationTypeMenu.NEW_MISSIONS => MailMessageFormatUtility.GenerateMessageForNewMission(title, pageLink, userName),
-            
+
 
             NotificationTypeMenu.MISSION_APPLICATION => approvalStatus ?
                                                         MailMessageFormatUtility.GenerateMessageForMissionApplicationApprove(title, pageLink, userName)
                                                         : MailMessageFormatUtility.GenerateMessageForMissionApplicationDecline(title, pageLink, userName),
 
-           
+
             _ => throw new NotImplementedException()
         };
+
 }

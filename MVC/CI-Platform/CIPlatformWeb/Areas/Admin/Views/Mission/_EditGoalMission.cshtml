@@ -108,27 +108,46 @@
                     </select>
                     <span class="font-xs text-danger" asp-validation-for="ThemeId"></span>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 skill-menu">
                     @foreach (var id in Model.Skills)
                     {
                         <input type="hidden" value="@id" name="preloadedSkill">
                     }
-                    <label asp-for="Skills" class="form-label"></label>
-                    <select asp-for="Skills" multiple class="form-select multi-select" >
-                        <option value="" disabled selected>Select Skills</option>
-                        @foreach (var sk in Model.SkillList)
-                        {
-                            if (Model.Skills.Any(id => sk.SkillId == id))
+                    
+                    <label class="form-label">
+                        Select Skills
+                    </label>
+                    <div class="dropdown">
+                        <div class="dropdown-toggle border w-100 font-15 p-2 d-flex justify-content-between align-items-center" href="#" role="button" data-bs-toggle="dropdown"
+                             aria-expanded="false">
+                            Select Skills
+                            <img src="./assets/drop-down.png" alt="Drop down" height="8" width="10">
+                        </div>
+                        <ul class="dropdown-menu">
+                            @foreach (var skill in Model.SkillList)
                             {
-                                <option value="@sk.SkillId" selected>@sk.Name</option>
+
+                                <li class="dropdown-item">
+                                    <div class="form-checkbox">
+                                        @if (Model.Skills.Any(id => id == skill.SkillId))
+                                        {
+                                            <input type="checkbox" name="Skills" id="@(" chk" + skill.SkillId)"
+                                           value="@skill.SkillId" checked/>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" name="Skills" id="@(" chk" + skill.SkillId)"
+                                           value="@skill.SkillId" />
+                                        }
+                                        <label for="@(" chk" + skill.SkillId)">@skill.Name</label>
+                                    </div>
+                                </li>
                             }
-                            else
-                            {
-                                <option value="@sk.SkillId">@sk.Name</option>
-                            }
-                        }
-                    </select>
-                    <span class="font-xs text-danger" asp-validation-for="Skills"></span>
+
+                        </ul>
+                    </div>
+                    <span class="font-xs text-danger" id="err-skill"></span>
+
                 </div>
             </div>
 

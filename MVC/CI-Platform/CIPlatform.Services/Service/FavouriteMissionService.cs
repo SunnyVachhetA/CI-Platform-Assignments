@@ -4,7 +4,7 @@ using CIPlatform.Services.Service.Interface;
 namespace CIPlatform.Services.Service;
 public class FavouriteMissionService : IFavouriteMissionService
 {
-    private IUnitOfWork unitOfWork;
+    private readonly IUnitOfWork unitOfWork;
 
     public FavouriteMissionService(IUnitOfWork unitOfWork)
     {
@@ -13,6 +13,8 @@ public class FavouriteMissionService : IFavouriteMissionService
     //Adding Mission To User favourite
     public Task AddMissionToUserFavourite(long userId, long missionId)
     {
+        bool isAlreadyFav = unitOfWork.FavouriteMissionRepo.GetFirstOrDefault( msn => msn.UserId == userId && msn.MissionId == missionId ) != null;
+        if (isAlreadyFav) return Task.CompletedTask;
         unitOfWork.FavouriteMissionRepo.Add
             (
                 new()
@@ -31,10 +33,11 @@ public class FavouriteMissionService : IFavouriteMissionService
         
         var favMission = unitOfWork.FavouriteMissionRepo.GetFirstOrDefault( favMission => (favMission.UserId == userId && favMission.MissionId == missionId ) );
         
-        if( favMission != null )
+        if( favMission is not null )
             unitOfWork.FavouriteMissionRepo.Remove( favMission );
         unitOfWork.Save();
 
         return Task.CompletedTask;
     }
+
 }
