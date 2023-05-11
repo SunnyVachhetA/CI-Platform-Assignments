@@ -1,10 +1,11 @@
-﻿using CIPlatform.Entities.DataModels;
+﻿
 using CIPlatform.Entities.VMConstants;
 
 namespace CIPlatform.Entities.ViewModels;
 
 public class UserNotificationTemplate
 {
+    #region Properties
     public string Title { get; set; } = string.Empty;
     public string UserName { get; set; } = string.Empty;
     public long UserId { get; set; }
@@ -13,14 +14,13 @@ public class UserNotificationTemplate
     public NotificationTypeMenu NotificationFor { get; set; }
     public string Message { get; set; } = string.Empty;
     public string? FromUserAvatar { get; set; }
+
+    #endregion 
     public static UserNotificationTemplate ConvertFromMissionApplication(MissionApplicationVM application)
     {
         UserNotificationTemplate template = new()
         {
             UserId = application.UserId,
-            Message = application.ApprovalStatus == ApprovalStatus.APPROVED ? 
-                      $"Volunteering request has been approved for this mission: {application.MissionTitle}" 
-                      : $"Volunteering request has been declined for this mission: {application.MissionTitle}",
             Type = application.ApprovalStatus == ApprovalStatus.APPROVED ? NotificationTypeEnum.APPROVE : NotificationTypeEnum.DECLINE,
             NotificationFor = NotificationTypeMenu.MISSION_APPLICATION,
             Email = application.Email,
@@ -50,8 +50,6 @@ public class UserNotificationTemplate
         UserNotificationTemplate template = new()
         {
             UserId = comment.UserId,
-            Message = comment.ApprovalStatus == ApprovalStatus.APPROVED ?
-            $"Your comment has been approved for mission : {comment.MissionTitle}" : $"Your comment has been declined for mission : {comment.MissionTitle}",
             Title = comment.MissionTitle,
             UserName = comment.UserName,
             Email = comment.Email,
@@ -81,9 +79,6 @@ public class UserNotificationTemplate
             Title = story.Title,
             UserId = story.UserId,
             UserName = story.UserName,
-            Message = story.StoryStatus == UserStoryStatus.APPROVED ?
-                    $"Story request has been approved for: {story.Title}"
-                    : $"Story request has been declined for: {story.Title}",
             NotificationFor = NotificationTypeMenu.MY_STORIES,
             Type = story.StoryStatus == UserStoryStatus.APPROVED ? NotificationTypeEnum.APPROVE : NotificationTypeEnum.DECLINE,
             Email = story.Email 

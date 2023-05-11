@@ -23,11 +23,11 @@ public class UserNotificationService : IUserNotificationService
 
         var lastCheckDate = userLastCheck?.LastCheck ?? DateTimeOffset.MinValue;
         vm.NewNotifications = notifications
-                        .Where(notification => lastCheckDate < (notification.UpdatedAt ?? notification.CreatedAt))
+                        .Where(notification => lastCheckDate < notification.CreatedAt)
                         .Select(ConvertToUserNotificationVM);
 
         vm.OldNotifications = notifications
-                       .Where(notification => lastCheckDate > (notification.UpdatedAt ?? notification.CreatedAt))
+                       .Where(notification => lastCheckDate > notification.CreatedAt)
                        .Select(ConvertToUserNotificationVM);
 
         vm.UnreadCount = notifications.Count(notification => !notification.IsRead);

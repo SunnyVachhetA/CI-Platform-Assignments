@@ -108,7 +108,9 @@ public class UserController : Controller
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             string token = Guid.NewGuid().ToString();
             var href = Url.Action("Login", "User", new { area="Volunteer", _email = user.Email.Trim().ToLower(), _token = token }, "https");
-            await _serviceUnit.UserService.AddUserByAdmin(user, wwwRootPath, href, token);
+            var userId = await _serviceUnit.UserService.AddUserByAdmin(user, wwwRootPath, href, token);
+            _serviceUnit.NotificationSettingService.CreateUserSetting(userId);
+            _serviceUnit.UserNotificationCheckService.CreateUserLastCheck(userId);
             return StatusCode(204);
         }
         catch (Exception e)

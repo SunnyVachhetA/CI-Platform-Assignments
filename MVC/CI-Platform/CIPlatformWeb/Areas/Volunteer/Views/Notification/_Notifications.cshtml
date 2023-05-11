@@ -39,7 +39,7 @@
                         {
                             <img src="~/assets/decline-req.svg" alt="Decline" class="align-self-start">
                         }
-                        <p class="mb-0">@notifs.Message</p>
+                        <p class="mb-0">@Html.Raw(@notifs.Message)</p>
                         @if (notifs.IsRead)
                         {
                             <img src="~/assets/read.svg" class="ms-auto" alt="Read" height="10px" width="10px">
@@ -77,8 +77,9 @@
                             else
                             {
                                 <img src="~/assets/decline-req.svg" alt="Decline" class="align-self-start">
-                            }
-                            <p class="mb-0">@notifs.Message</p>
+                            }                        
+                            <p class="mb-0">@Html.Raw(@notifs.Message)</p>
+
                             @if (notifs.IsRead)
                             {
                                 <img src="~/assets/read.svg" class="ms-auto" alt="Read" height="10px" width="10px">

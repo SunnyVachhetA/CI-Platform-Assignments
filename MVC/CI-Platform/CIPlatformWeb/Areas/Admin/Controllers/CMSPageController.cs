@@ -1,4 +1,4 @@
-﻿using CIPlatform.Entities.DataModels;
+﻿
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
@@ -23,10 +23,7 @@ public class CMSPageController : Controller
     }
 
     [HttpGet]
-    public IActionResult AddCMS()
-    {
-        return PartialView("_AddCMS");
-    }
+    public IActionResult AddCMS() => PartialView("_AddCMS");
 
     [HttpPost]
     public async Task<IActionResult> AddCMS( CMSPageVM cmsPage )
@@ -36,12 +33,11 @@ public class CMSPageController : Controller
             short id = _serviceUnit.CmsPageService.AddCMSPage(cmsPage);
 
             var cmsPages = _serviceUnit.CmsPageService.LoadAllCmsPages();
-            string message = "Admin has added new CMS Page:  " + cmsPage.Title;
             if (cmsPage.Status)
             {
-                var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers(message, NotificationTypeEnum.NEW, NotificationTypeMenu.NEWS);
-
                 string link = Url.Action("Page", "CmsPage", new { area = "Volunteer", id = id }, "https")!;
+                string message = $"News : <a href='{link}' class='text-black-1'>{cmsPage.Title}</a>";
+                var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers(message, NotificationTypeEnum.NEW, NotificationTypeMenu.NEWS);
 
                 _ = _serviceUnit.PushNotificationService.PushEmailNotificationToSubscriberAsync(cmsPage.Title, link, emailSubscriptionList, NotificationTypeMenu.NEWS);
             }

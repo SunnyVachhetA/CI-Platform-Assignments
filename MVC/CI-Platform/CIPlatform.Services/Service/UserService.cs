@@ -18,10 +18,10 @@ public class UserService: IUserService
         _emailService = emailService;
 	}
 
-    public void Add(UserRegistrationVM user)
+    public long Add(UserRegistrationVM user)
     {
         string encryptedPassword = EncryptionService.EncryptAES(user.Password);
-        User obj = new User()
+        User obj = new()
         {
             FirstName = user.FirstName,
             LastName = user.LastName,
@@ -33,6 +33,7 @@ public class UserService: IUserService
         };
         _unitOfWork.UserRepo.Add(obj);
         _unitOfWork.Save();
+        return obj.UserId;
     }
     public bool IsEmailExists(string email)
     {
@@ -284,8 +285,9 @@ public class UserService: IUserService
     {
         string message = MailMessageFormatUtility.GenerateMessageForAccountActivation(user.FirstName, href);
         string subject = "Account Activation Email - CI Platform";
-        
-        emailService.EmailSend(user.Email, subject, message);
+
+        //emailService.EmailSend(user.Email, subject, message);
+        emailService.EmailSendAsync(user.Email, subject, message);
     }
 
     public void SetUserStatusToActive(string email)
@@ -304,20 +306,22 @@ public class UserService: IUserService
     public bool CheckIsEmailUnique(string email) => 
         _unitOfWork.UserRepo.GetAll().FirstOrDefault(user => user.Email.EqualsIgnoreCase(email) ) == null || _unitOfWork.UserRepo.IsAdminEmail(email.ToLower()) == 0;
 
-    public async Task AddUserByAdmin(AdminUserInfoVM user, string wwwRootPath, string link, string token)
+    public async Task<long> AddUserByAdmin(AdminUserInfoVM user, string wwwRootPath, string link, string token)
     {
         using (var transaction = await _unitOfWork.BeginTransactionAsync())
         {
             try
             {
-                var entity = user.UserAvatar == null
+                var entity = user.UserAvatar is null
                     ? ConvertAdminUserVMToUser(user)
                     : await AddUserAvatarAsync(wwwRootPath, user);
+
                 _unitOfWork.UserRepo.Add(entity);
                 _unitOfWork.VerifyEmailRepo.Add( new VerifyEmail() { Email= entity.Email, Token = token});
                 await SendUserAccountCreationEmailByAdmin(user, link);
                 await _unitOfWork.SaveAsync();
                 await transaction.CommitAsync();
+                return entity.UserId;
             }
             catch (Exception ex)
             {

@@ -226,10 +226,10 @@ public class StoryController : Controller
             await _serviceUnit.StoryInviteService.SaveUserInvite(userId, storyId, recommendList);
             UserRegistrationVM user = await _serviceUnit.UserService.LoadUserBasicInformationAsync(userId);
             IEnumerable<UserNotificationSettingPreferenceVM> userPrefrence = await _serviceUnit.StoryInviteService.LoadUserStoryInvitePreference(userId, storyId, recommendList);
-
-            string message = $"{user.FirstName} {user.LastName} - has recommend you this story: {storyTitle}";
-            await _serviceUnit.PushNotificationService.PushRecommendNotificationToUsersAsync(message, userPrefrence, user.Avatar, NotificationTypeEnum.RECOMMEND, NotificationTypeMenu.RECOMMEND_STORY);
             string link = Url.Action("Story", "Story", new { area ="Volunteer", id = storyId }, "https")?? string.Empty;
+
+            string message = $"{user.FirstName} {user.LastName} - has recommend you this story: <a class='text-black-1' href='{link}'>{storyTitle}</a>";
+            await _serviceUnit.PushNotificationService.PushRecommendNotificationToUsersAsync(message, userPrefrence, user.Avatar, NotificationTypeEnum.RECOMMEND, NotificationTypeMenu.RECOMMEND_STORY);
 
             _ = _serviceUnit.PushNotificationService.PushRecommendEmailNotificationToUsersAsync(userPrefrence, storyTitle, link, $"{user.FirstName} {user.LastName}", NotificationTypeMenu.RECOMMEND_STORY);
             return StatusCode(201);

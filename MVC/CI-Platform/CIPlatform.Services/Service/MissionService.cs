@@ -76,7 +76,7 @@ public class MissionService : IMissionService
             ApplicationListId = mission.MissionApplications?.Where(application => application.ApprovalStatus == 1).Select(application => (long)application.UserId).ToList(),
             MissionRating = MissionRatingService.ConvertMissionToRatingVM(mission),
             MissionAvailability = SetMissionAvailability(mission.Availability),
-            CommentList = mission.Comments?.Select(comment => comment.UserId).ToList(),
+            CommentList = mission.Comments?.Where(comment => comment.ApprovalStatus == 0)?.Select(comment => comment.UserId).ToList(),
             RecentVolunteers = GetRecentVolunteers(mission),
             MissionDocuments = GetMissionDocuments(mission.MissionDocuments),
             ApplicationList = mission.MissionApplications!.Select( app => app.UserId )

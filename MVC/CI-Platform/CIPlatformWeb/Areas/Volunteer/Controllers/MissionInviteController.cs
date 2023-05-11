@@ -36,10 +36,12 @@ public class MissionInviteController : Controller
         UserRegistrationVM user = await _serviceUnit.UserService.LoadUserBasicInformationAsync(userId);
         IEnumerable<UserNotificationSettingPreferenceVM> userPrefrence = await _serviceUnit.MissionInviteService.LoadUserMissionInvitePreference(userId, missionId, recommendList);
 
-        string message = $"{user.FirstName} {user.LastName} - has recommend you this mission: {missionTitle}";
-        await _serviceUnit.PushNotificationService.PushRecommendNotificationToUsersAsync(message, userPrefrence, user.Avatar, NotificationTypeEnum.RECOMMEND, NotificationTypeMenu.RECOMMEND_MISSION);
         string missionInviteLink = Url.Action("Index", "Mission", new { area = "Volunteer", id = missionId }, "https") ?? string.Empty;
 
+        string message = $"{user.FirstName} {user.LastName} - has recommend you this mission: <a href='{missionInviteLink}' class='text-black-1'>{missionTitle}</a>";
+
+        await _serviceUnit.PushNotificationService.PushRecommendNotificationToUsersAsync(message, userPrefrence, user.Avatar, NotificationTypeEnum.RECOMMEND, NotificationTypeMenu.RECOMMEND_MISSION);
+        
         _ = _serviceUnit.PushNotificationService.PushRecommendEmailNotificationToUsersAsync(userPrefrence, missionTitle, missionInviteLink, $"{user.FirstName} {user.LastName}", NotificationTypeMenu.RECOMMEND_MISSION);
 
         return StatusCode(201);

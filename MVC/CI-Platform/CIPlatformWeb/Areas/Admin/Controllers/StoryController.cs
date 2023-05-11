@@ -55,6 +55,7 @@ public class StoryController : Controller
             return StatusCode(500);
         }
     }
+
     [HttpPatch]
     public IActionResult Restore(long storyId)
     {
@@ -123,14 +124,21 @@ public class StoryController : Controller
         if (vm is null || vm.StoryStatus == UserStoryStatus.PENDING) return;
 
         UserNotificationTemplate template = UserNotificationTemplate.ConvertFromStory(vm);
-        bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
-        if (isOpenForEmail)
-        {
-            string link = template.Type == NotificationTypeEnum.APPROVE ?
+
+        string link = template.Type == NotificationTypeEnum.APPROVE ?
                 Url.Action("Story", "Story", new { area = "Volunteer", id = storyId }, "https")!
                 : Url.Action("Index", "Story", new { area = "Admin" }, "https")!;
+
+        template.Message = template.Type == NotificationTypeEnum.APPROVE ?
+            $"Story request has been approved for <a href='{link}'>{template.Title}</a>"
+            : $"Story request has been declined for {template.Title}";
+
+
+        bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+        if (isOpenForEmail)
             _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
-        }
+        
     }
+
     #endregion
 }

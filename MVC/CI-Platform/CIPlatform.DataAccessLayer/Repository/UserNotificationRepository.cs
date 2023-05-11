@@ -22,6 +22,7 @@ public class UserNotificationRepository : Repository<UserNotification>, IUserNot
     public async Task<IEnumerable<UserNotification>> FetchAllUserNotification(long id) => await dbSet
             .Include(notification => notification.Notification)
             .Where(notification => notification.UserId == id)
+            .OrderByDescending(notification => notification.CreatedAt)
             .ToListAsync();
 
     public async Task<int> UpdateReadStatus(long userId, long notifsId)

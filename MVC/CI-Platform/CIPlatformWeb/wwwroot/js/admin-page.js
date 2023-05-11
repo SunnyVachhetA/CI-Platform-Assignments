@@ -2010,7 +2010,10 @@ function handleAddMissionFormSubmit(form, url, message, type) {
 
 function skillValidation() {
     var count = $("ul.dropdown-menu input[type='checkbox']:checked").length;
-    $('#err-skill').text('Please select at least 1 skill.');
+    if (count == 0)
+        $('#err-skill').text('Please select at least 1 skill.');
+    else
+        $('#err-skill').text('');
     return count == 0;
 }
 
@@ -2107,8 +2110,13 @@ function validateDates() {
     var regDate = new Date($('#reg-date').val());
     if (endDate != undefined)
         $('#end-date').attr('min', startDate.toISOString().split('T')[0]);
+
     if (regDate != undefined)
         $('#reg-date').attr('min', startDate.toISOString().split('T')[0]);
+
+    if (!isNaN(endDate.getTime()))
+        $('#reg-date').attr('max', endDate.toISOString().split('T')[0]);
+
     var isValid = true;
 
     if (startDate >= endDate) {
@@ -2125,7 +2133,7 @@ function validateDates() {
         $('#err-end').text('');
     }
 
-    if (regDate != '') {
+    if (regDate != '' && !isNaN(regDate.getTime())) {
         if (!(regDate >= startDate && regDate <= endDate)) {
             $('#err-reg').text('Registration deadline must be between start and end date.');
             isValid = false;

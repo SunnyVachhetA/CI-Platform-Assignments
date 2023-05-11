@@ -2,7 +2,9 @@
 const profileImg = document.querySelector('#usr-profile-img');
 const navProfileImg = document.querySelector('#nav-profile-img');
 
-
+let cityList = $('[data-countryid]')
+let countryId = $('#country-menu').find(':selected').val();
+handleCityDisplayOption(countryId);
 imgUpload.addEventListener
     (
         'change',
@@ -37,17 +39,15 @@ function handleProfileImageUpload(file) {
     });
 }
 
-$('#country-menu option').click
+$('#country-menu').change
     (
         () => {
-            let countryId = $('#country-menu').find(':selected').val();
+            countryId = $('#country-menu').find(':selected').val();
             handleCityDisplayOption(countryId);
         }
     );
 
-let cityList = $('[data-countryid]')
 function handleCityDisplayOption(countryId) {
-
     if ($('#city-menu').find(':selected').data('countryid') != countryId) {
         $('#city-menu option[value=""]').prop('selected', true);
     }

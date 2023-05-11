@@ -21,8 +21,10 @@ public class NotificationSettingRepository : Repository<NotificationSetting>, IN
 
         var result = await _dbContext.NotificationSettings
                     .FromSqlRaw(query)
-                    .Include( notification => notification.User )
+                    .AsNoTracking()
+                    .Include(notification => notification.User)
                     .Where(filter)
+                    .Where(notification => notification.User.Status?? false)
                     .Select(notification => new UserNotificationSettingPreferenceVM()
                     {
                         UserId = notification.UserId,

@@ -54,4 +54,19 @@ public class NotificationSettingService : INotificationSettingService
         };
         return vm;
     }
+
+    public void CreateUserSetting(long userId)
+    {
+        NotificationSetting notificationSetting = new()
+        {
+            UserId = userId,
+            IsEnabledMissionApplication = true,
+            IsEnabledEmail = true,
+            IsEnabledNewMission = true,
+            IsEnabledRecommendMission = true,
+            IsEnabledRecommendStory = true
+        };
+        _unitOfWork.NotificationSettingRepo.Add(notificationSetting);
+        _unitOfWork.Save();
+    }
 }

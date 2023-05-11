@@ -16,6 +16,7 @@ public class MissionApplicationController : Controller
         _serviceUnit = serviceUnit;
     }
 
+    #region Methods
     [HttpGet]
     public IActionResult Index()
     {
@@ -39,17 +40,8 @@ public class MissionApplicationController : Controller
         {
             if (id == 0 || status == 0) return BadRequest();
             await _serviceUnit.MissionApplicationService.UpdateApplicationStatus(id, status);
-            
-            MissionApplicationVM application = await _serviceUnit.MissionApplicationService.FetchUserMissionApplicationAsync(id);
-            
-            UserNotificationTemplate template = UserNotificationTemplate.ConvertFromMissionApplication(application);
 
-            var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
-            if(isOpenForEmail)
-            {
-                string link = Url.Action("Index", "Mission", new { area = "Volunteer", id = application.MissionId }, "https")!;
-                _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
-            }
+            await PushMissionApplicationNotification(id);
             return NoContent();
         }
         catch (Exception e)
@@ -99,4 +91,28 @@ public class MissionApplicationController : Controller
             return StatusCode(500);
         }
     }
+
+    #endregion
+
+    #region Helper methods
+    private async Task PushMissionApplicationNotification(long id)
+    {
+        MissionApplicationVM application = await _serviceUnit.MissionApplicationService.FetchUserMissionApplicationAsync(id);
+
+        UserNotificationTemplate template = UserNotificationTemplate.ConvertFromMissionApplication(application);
+
+        string link = Url.Action("Index", "Mission", new { area = "Volunteer", id = application.MissionId }, "https")!;
+        string inAppLink = $"<a href='{link}' class='text-black-1'>{application.MissionTitle}</a>";
+
+        template.Message = application.ApprovalStatus == ApprovalStatus.APPROVED ?
+                  $"Volunteering request has been approved for this mission: {inAppLink}"
+                  : $"Volunteering request has been declined for this mission: {inAppLink}";
+
+        var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+
+        if (isOpenForEmail)
+            _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
+        
+    }
+    #endregion
 }

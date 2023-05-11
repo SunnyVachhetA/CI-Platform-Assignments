@@ -148,7 +148,8 @@ clearAllFilter.addEventListener(
         skillList.splice(0, skillList.length);
         userFilterList.innerHTML = '';
         currentPageNumber = 1;
-        displayCityOption();
+        //displayCityOption();
+        hideCityOption();
         LoadMissionIndex();    
     }
 );
@@ -200,6 +201,7 @@ function LoadMissionIndex() {
 
 $(document).ready(() => {
     userId = loggedUser.value;
+    hideCityOption();
 });
 LoadMissionIndex();
 

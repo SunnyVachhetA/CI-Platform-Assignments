@@ -14,42 +14,42 @@
 @Html.HiddenFor(model => isRegister, new { id = "is-registered" })
 @Html.HiddenFor(model => updateProfile, new { id = "update-profile-success" })
 <main class="index-grid d-grid min-vh-100">
-<header>
-    <partial name = "_Navbar" ></partial>
-    <hr class ="m-0"/>
-    <partial name="_SearchSection" model="Model"></partial>
-</header>
+    <header class="position-sticky top-0 z-index-pos bg-white">
+        <partial name="_Navbar"></partial>
+        <hr class="m-0" />
+        <partial name="_SearchSection" model="Model"></partial>
+    </header>
 
     <div class="spinner-overlay">
         <div id="load-spinner">
         </div>
     </div>
+
     <section class="container mt-2 mb-4" id="partial-mission-listing">
-    @*<partial name="_MissionIndexListing" model="Model"></partial>*@
-</section>
+        @*<partial name="_MissionIndexListing" model="Model"></partial>*@
+    </section>
 
 
-<!-- Pagination Begin  -->
-<section class="container my-2 my-md-5 d-flex justify-content-center gap-2 text-light-custom c-pagination-item" id="msn-pagination">
-  
-</section>
-<!-- Pagination End  -->
+    <!-- Pagination Begin  -->
+    <section class="container my-2 my-md-5 d-flex justify-content-center gap-2 text-light-custom c-pagination-item" id="msn-pagination">
+    </section>
+    <!-- Pagination End  -->
 
-<partial name = "_Footer"></partial>
+    <partial name="_Footer"></partial>
 </main>
 @section Scripts{
 
-    <script src="~/js/site.js"></script>
-    <script src = "~/js/mission-view-toggler.js"></script>
-    <script src = "~/js/mission-search-filter.js"></script>
-    <script src="~/js/mission-pagination.js"></script>
-    <script>
+<script src="~/js/site.js"></script>
+<script src="~/js/mission-view-toggler.js"></script>
+<script src="~/js/mission-search-filter.js"></script>
+<script src="~/js/mission-pagination.js"></script>
+<script>
 
-        var updateSuccess = $('#update-profile-success').val();
-        
-        if(updateSuccess !== undefined && updateSuccess !== '')
-            displayActionMessageSweetAlert('Profile Updated', 'You changes has been saved!', 'success');
+    var updateSuccess = $('#update-profile-success').val();
 
-    </script>
+    if(updateSuccess !== undefined && updateSuccess !== '')
+        displayActionMessageSweetAlert('Profile Updated', 'You changes has been saved!', 'success');
+
+</script>
 }
 

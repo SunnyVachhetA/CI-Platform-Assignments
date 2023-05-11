@@ -17,6 +17,7 @@ public class TimesheetController : Controller
         _serviceUnit = serviceUnit;
     }
 
+    #region Methods
     [HttpGet]
     public IActionResult LoadHourTimesheet()
     {
@@ -57,15 +58,7 @@ public class TimesheetController : Controller
         try
         {
             _serviceUnit.TimesheetService.UpdateTimesheetStatus(timesheetId, 1, type);
-            VolunteerTimesheetVM vm = await _serviceUnit.TimesheetService.ViewTimesheetEntryAsync(timesheetId);
-
-            UserNotificationTemplate template = UserNotificationTemplate.ConvertFromTimesheet(vm);
-            var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
-            if(isOpenForEmail)
-            {
-                string link = Url.Action("VolunteerTimesheet", "User", new { area = "Volunteer", id = template.UserId }, "https")!;
-                _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
-            }
+            await PushTimesheetNotificationAsync(timesheetId);
             return NoContent();
         }
         catch (Exception e)
@@ -82,15 +75,7 @@ public class TimesheetController : Controller
         try
         {
             _serviceUnit.TimesheetService.UpdateTimesheetStatus(timesheetId, 2, string.Empty);
-            VolunteerTimesheetVM vm = await _serviceUnit.TimesheetService.ViewTimesheetEntryAsync(timesheetId);
-
-            UserNotificationTemplate template = UserNotificationTemplate.ConvertFromTimesheet(vm);
-            var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
-            if (isOpenForEmail)
-            {
-                string link = Url.Action("VolunteerTimesheet", "User", new { area = "Volunteer", id = template.UserId }, "https")!;
-                _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
-            }
+            await PushTimesheetNotificationAsync(timesheetId);
             return NoContent();
         }
         catch (Exception e)
@@ -132,7 +117,6 @@ public class TimesheetController : Controller
         }
     }
 
-
     [HttpGet]
     public IActionResult View(long timesheetId)
     {
@@ -150,4 +134,39 @@ public class TimesheetController : Controller
             return StatusCode(500);
         }
     }
+
+    #endregion
+
+    #region Helper Methods
+    private async Task PushTimesheetNotificationAsync(long timesheetId)
+    {
+        VolunteerTimesheetVM vm = await _serviceUnit.TimesheetService.ViewTimesheetEntryAsync(timesheetId);
+
+        UserNotificationTemplate template = UserNotificationTemplate.ConvertFromTimesheet(vm);
+        string link = Url.Action("VolunteerTimesheet", "User", new { area = "Volunteer", id = template.UserId }, "https")!;
+        template.Message = GetTimesheetMessage(vm, link);
+        var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+        if (isOpenForEmail)
+            _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
+    }
+
+    private string GetTimesheetMessage(VolunteerTimesheetVM timesheet, string link)
+    {
+        string message;
+        string inAppMessage = $"<a class='text-black-1' href = '{link}'>{timesheet.MissionTitle}</a>";
+        if (timesheet.Status == ApprovalStatus.APPROVED)
+        {
+            message = timesheet.MissionType == MissionTypeEnum.TIME ?
+                  $"Volunteer hour entry apprvoed for this mission: {inAppMessage}"
+                : $"Volunteer goal entry approved for this mission: {inAppMessage}";
+        }
+        else
+        {
+            message = timesheet.MissionType == MissionTypeEnum.GOAL ?
+                  $"Volunteer goal entry declined for this mission: {inAppMessage}"
+                : $"Volunteer hour entry declined for this mission: {inAppMessage}";
+        }
+        return message;
+    }
+    #endregion
 }

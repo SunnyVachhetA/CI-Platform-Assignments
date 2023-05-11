@@ -209,6 +209,7 @@ function registerNotificationEvents() {
         let div = $("<div>").addClass("bg-light text-center py-1 fw-light text-black-1").text('Woohoo.. No notifications for now!');
         notisListing.append(div);
         notificationsCount = 0;
+        updateBadgeCount();
         genericNotificationAjax('DELETE', '/Volunteer/Notification/Delete', 0, 'Notifications removed!');
         isBtnClearAllClicked = true;
     });

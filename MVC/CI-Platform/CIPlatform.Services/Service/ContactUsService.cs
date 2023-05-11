@@ -74,6 +74,7 @@ public class ContactUsService: IContactUsService
         return new ContactUsVM()
         {
             ContactId = contact.ContactId,
+            UserId = contact.UserId,
             UserName = $"{contact.User.FirstName} {contact.User.LastName}",
             Email = $"{contact.User.Email}",
             Status = (ContactStatus)(contact.Status ?? 0),

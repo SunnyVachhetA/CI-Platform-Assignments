@@ -50,7 +50,8 @@ public class PushNotificationService : IPushNotificationService
             NotificationType = (byte)notificationType,
             NotificationFor = (byte)menu
         };
-        notification = await _unitOfWork.NotificationRepo.AddAsync(notification);
+        await _unitOfWork.NotificationRepo.AddAsync(notification);
+        await _unitOfWork.SaveAsync();
         foreach (var user in userList)
         {
             if (user.IsOpenForEmail) emailSubsciptionList.Add( new UserContactVM() { UserId = user.UserId, UserName = user.UserName, Email = user.Email! } );
@@ -74,14 +75,17 @@ public class PushNotificationService : IPushNotificationService
     {
         var userPreference = await GetUserPreference(template);
         if (userPreference.Item1 is null || !userPreference.Item2) return false;
+        Notification notification = new()
+        {
+            Message = template.Message,
+            NotificationType = (byte)template.Type,
+            NotificationFor = (byte)template.NotificationFor
+        };
+        await _unitOfWork.NotificationRepo.AddAsync(notification);
+        await _unitOfWork.SaveAsync();
         UserNotification userNotification = new()
         {
-            Notification = new()
-            {
-                Message = template.Message,
-                NotificationType = (byte)template.Type,
-                NotificationFor = (byte)template.NotificationFor
-            },
+            NotificationId = notification.NotificationId,
             CreatedAt = DateTime.Now,
             UserId = template.UserId,
             IsRead = false,

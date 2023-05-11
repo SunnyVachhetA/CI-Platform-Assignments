@@ -1,4 +1,5 @@
 ﻿using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
 using CIPlatformWeb.Areas.Admin.Utilities;
 using CIPlatformWeb.Areas.Volunteer.Utilities;
@@ -17,6 +18,8 @@ public class CommentController : Controller
     {
         _serviceUnit = serviceUnit;
     }
+
+    #region Methods
 
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -54,6 +57,8 @@ public class CommentController : Controller
         await _serviceUnit.CommentService.UpdateDeleteStatus(id, 1);
         return NoContent();
     }
+    #endregion 
+
 
     #region Helper Methods
 
@@ -63,7 +68,11 @@ public class CommentController : Controller
 
         UserNotificationTemplate template = UserNotificationTemplate.ConvertFromComment(comment);
         string link = Url.Action("Index", "Mission", new { area = "Volunteer", id = comment.MissionId }, "https")!;
-
+        
+        template.Message = comment.ApprovalStatus == ApprovalStatus.APPROVED ?
+           $"Your comment has been approved for mission : <a class='text-black-1' href='{link}'>{comment.MissionTitle}</a>" 
+           : $"Your comment has been declined for mission : <a class='text-black-1' href='{link}'>{comment.MissionTitle}</a>";
+        
         bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
         if (isOpenForEmail)
             _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);

@@ -39,7 +39,6 @@ $(document).ready(
     }
 );
 function loadMissionCommentsAjax() {
-    console.log(isCommentExists);
     $.ajax({
         type: 'GET',
         data: { missionId, userId, isCommentExists},

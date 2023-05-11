@@ -3,4 +3,5 @@
 public interface IUserNotificationCheckService
 {
     Task UpdateLastCheckAsync(long userId);
+    void CreateUserLastCheck(long userId);
 }

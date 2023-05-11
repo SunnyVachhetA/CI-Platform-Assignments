@@ -2,6 +2,7 @@
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
 using CIPlatform.Services.Service.Interface;
+using CIPlatformWeb.Areas.Admin.Utilities;
 using CIPlatformWeb.Areas.Volunteer.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,7 +59,7 @@ public class MissionController : Controller
             var vm = id == 0 ? new TimeMissionVM() : await _serviceUnit.MissionService.LoadEditTimeMissionDetails(id);
 
             vm.CityList = await _serviceUnit.CityService.GetAllCitiesAsync();
-            vm.CountryList = await _serviceUnit.CountryService.GetAllCountriesAsync(); 
+            vm.CountryList = await _serviceUnit.CountryService.GetAllCountriesAsync();
             vm.SkillList = (id == 0)
                 ? await _serviceUnit.SkillService.GetAllActiveSkillsAsync()
                 : await _serviceUnit.SkillService.GetAllSkillsAsync();
@@ -84,11 +85,11 @@ public class MissionController : Controller
             if (!ModelState.IsValid) return NoContent();
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             var id = await _serviceUnit.MissionService.CreateTimeMission(mission, wwwRootPath);
-            if (mission.IsActive?? false)
+            if (mission.IsActive ?? false)
             {
                 string title = mission.Title;
                 string link = Url.Action("Index", "Mission", new { area = "Volunteer", id = id }, "https")!;
-                var emailList = await FetchEmailSubscriberList(title, NotificationTypeEnum.NEW, NotificationTypeMenu.NEW_MISSIONS);
+                var emailList = await FetchEmailSubscriberList(link, title, NotificationTypeEnum.NEW, NotificationTypeMenu.NEW_MISSIONS);
                 _ = _serviceUnit.PushNotificationService.PushEmailNotificationToSubscriberAsync(title, link, emailList, NotificationTypeMenu.NEW_MISSIONS);
             }
             return StatusCode(201);
@@ -130,33 +131,27 @@ public class MissionController : Controller
         }
     }
 
+    [ServiceFilter(typeof(AjaxErrorFilter))]
     [HttpPost]
     public async Task<IActionResult> GoalMission(GoalMissionVM mission)
     {
-        try
+
+        if (!ModelState.IsValid) return NoContent();
+        string wwwRootPath = _webHostEnvironment.WebRootPath;
+        var id = await _serviceUnit.MissionService.CreateGoalMission(mission, wwwRootPath);
+        if (mission.IsActive ?? false)
         {
-            if (!ModelState.IsValid) return NoContent();
-            string wwwRootPath = _webHostEnvironment.WebRootPath;
-            var id = await _serviceUnit.MissionService.CreateGoalMission(mission, wwwRootPath);
-            if (mission.IsActive ?? false)
-            {
-                string title = mission.Title;
-                string link = Url.Action("Index", "Mission", new { area = "Volunteer", id = id }, "https")!;
-                var emailList = await FetchEmailSubscriberList(title, NotificationTypeEnum.NEW, NotificationTypeMenu.NEW_MISSIONS);
-                _ = _serviceUnit.PushNotificationService.PushEmailNotificationToSubscriberAsync(title, link, emailList, NotificationTypeMenu.NEW_MISSIONS);
-            }
-            return StatusCode(201);
+            string title = mission.Title;
+            string link = Url.Action("Index", "Mission", new { area = "Volunteer", id = id }, "https")!;
+            var emailList = await FetchEmailSubscriberList(link, title, NotificationTypeEnum.NEW, NotificationTypeMenu.NEW_MISSIONS);
+            _ = _serviceUnit.PushNotificationService.PushEmailNotificationToSubscriberAsync(title, link, emailList, NotificationTypeMenu.NEW_MISSIONS);
         }
-        catch (Exception e)
-        {
-            Console.WriteLine("Error while time mission[post]: " + e.Message);
-            Console.WriteLine(e.StackTrace);
-            return StatusCode(500);
-        }
+        return StatusCode(201);
+
     }
 
     [HttpPut]
-    public async Task<IActionResult> EditTimeMission(TimeMissionVM mission, IEnumerable<string> preloadedMediaList, 
+    public async Task<IActionResult> EditTimeMission(TimeMissionVM mission, IEnumerable<string> preloadedMediaList,
         IEnumerable<string> preloadedDocumentPathList, IEnumerable<short> preloadedSkill)
     {
         try
@@ -202,7 +197,7 @@ public class MissionController : Controller
             if (id <= 0) return NotFound();
 
             await _serviceUnit.MissionService.UpdateMissionActiveStatus(id, 0);
-            
+
             return NoContent();
         }
         catch (Exception e)
@@ -249,9 +244,9 @@ public class MissionController : Controller
     }
 
     #region Helper Methods
-    private async Task<List<UserContactVM>> FetchEmailSubscriberList(string title, NotificationTypeEnum type, NotificationTypeMenu notificationFor)
+    private async Task<List<UserContactVM>> FetchEmailSubscriberList(string link, string title, NotificationTypeEnum type, NotificationTypeMenu notificationFor)
     {
-        string message = $"New mission - {title}";
+        string message = @$"New mission - <a href='{link}' class='text-black-1'>{title}</a>";
         var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers(message, type, notificationFor);
         return emailSubscriptionList;
     }

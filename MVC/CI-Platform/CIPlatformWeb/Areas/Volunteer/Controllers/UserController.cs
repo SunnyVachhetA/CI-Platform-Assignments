@@ -126,7 +126,7 @@ public class UserController : Controller
             return View(credential);
         }
 
-        if (CheckUserAdmin(credential)) return RedirectToAction("Index", "Home", new { area = "Admin" }); 
+        if (CheckUserAdmin(credential)) return RedirectToAction("Index", "Home", new { area = "Admin" });
 
         UserRegistrationVM user = _serviceUnit.UserService.ValidateUserCredential(credential);
         if (user != null)
@@ -134,7 +134,8 @@ public class UserController : Controller
             if (!user.Status)
             {
                 TempData["login-block"] = "Your account is in-active! Please contact Admin for Activation.";
-                return View();
+                credential.Banners = _serviceUnit.BannerService.LoadAllActiveBanners();
+                return View(credential);
             }
             CreateUserLoginSession(user);
             TempData["login-success"] = "Successfully logged in as " + user.FirstName + " " + user.LastName;
@@ -283,12 +284,13 @@ public class UserController : Controller
         string email = user.Email;
         if (_serviceUnit.UserService.IsEmailExists(email))
         {
-            ModelState.AddModelError("Email", "Given Email ID is Already Registered!");
+            ModelState.AddModelError("Email", "Given Email ID is Already Registered.");
         }
         else if (ModelState.IsValid)
         {
-            _serviceUnit.UserService.Add(user);
-
+            var userId = _serviceUnit.UserService.Add(user);
+            _serviceUnit.NotificationSettingService.CreateUserSetting(userId);
+            _serviceUnit.UserNotificationCheckService.CreateUserLastCheck(userId);
             string token = Guid.NewGuid().ToString();
             var href = Url.Action("Login", "User", new { _email = email, _token = token }, "https");
             _serviceUnit.VerifyEmailService.SaveUserActivationToken(email, token);

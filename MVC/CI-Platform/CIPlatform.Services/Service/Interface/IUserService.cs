@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 namespace CIPlatform.Services.Service.Interface;
 public interface IUserService
 {
-    void Add(UserRegistrationVM user);
+    long Add(UserRegistrationVM user);
     IEnumerable<UserRegistrationVM> FetchAllUsers(bool isActiveFlag);
     Task<string> GetUserName(long userId);
     bool IsEmailExists(string email);
