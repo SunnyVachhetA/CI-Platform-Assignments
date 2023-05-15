@@ -282,14 +282,12 @@ public class MissionService : IMissionService
         start.Stop();
         var elapsed = start.ElapsedMilliseconds;
         Console.WriteLine("Elapsed1: " + elapsed);
-        //if (!missions.Any()) return (new List<MissionVMCard>(), 0);
         start.Reset();
         start.Start();
         long totalMissionCount = missions.LongCount();
         start.Stop();
         elapsed = start.ElapsedMilliseconds;
         Console.WriteLine("Elapsed2: " + elapsed);
-
 
         IEnumerable<MissionVMCard> missionList =
             missions

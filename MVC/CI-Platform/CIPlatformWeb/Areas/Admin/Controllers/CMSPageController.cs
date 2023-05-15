@@ -37,8 +37,8 @@ public class CMSPageController : Controller
             {
                 string link = Url.Action("Page", "CmsPage", new { area = "Volunteer", id = id }, "https")!;
                 string message = $"News : <a href='{link}' class='text-black-1'>{cmsPage.Title}</a>";
-                var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers(message, NotificationTypeEnum.NEW, NotificationTypeMenu.NEWS);
-
+                //var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers(message, NotificationTypeEnum.NEW, NotificationTypeMenu.NEWS);
+                var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsersSPAsync(message, NotificationTypeEnum.NEW, NotificationTypeMenu.NEWS);
                 _ = _serviceUnit.PushNotificationService.PushEmailNotificationToSubscriberAsync(cmsPage.Title, link, emailSubscriptionList, NotificationTypeMenu.NEWS);
             }
             return PartialView("_CMSPages", cmsPages);

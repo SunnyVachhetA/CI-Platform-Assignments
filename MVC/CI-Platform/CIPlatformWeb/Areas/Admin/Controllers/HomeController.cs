@@ -9,11 +9,6 @@ namespace CIPlatformWeb.Areas.Admin.Controllers;
 [AdminAuthentication]
 public class HomeController : Controller
 {
-    private readonly IServiceUnit _serviceUnit;
-    public HomeController(IServiceUnit serviceUnit)
-    {
-        _serviceUnit = serviceUnit;
-    }
     [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Index()
     {

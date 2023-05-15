@@ -104,7 +104,8 @@ public class UserService: IUserService
                 _unitOfWork
                 .UserRepo
                 .GetUserEmailList( filter );
-        return userEmailList;
+
+        return userEmailList.ToList();
     }
 
 
@@ -286,7 +287,6 @@ public class UserService: IUserService
         string message = MailMessageFormatUtility.GenerateMessageForAccountActivation(user.FirstName, href);
         string subject = "Account Activation Email - CI Platform";
 
-        //emailService.EmailSend(user.Email, subject, message);
         emailService.EmailSendAsync(user.Email, subject, message);
     }
 

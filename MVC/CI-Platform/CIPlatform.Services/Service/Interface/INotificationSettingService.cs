@@ -6,4 +6,5 @@ public interface INotificationSettingService
 {
     Task UpdateNotificationSettingsAsync(NotificationSettingVM vm);
     void CreateUserSetting(long userId);
+    Task<bool> IsUserOpenForContact(long userId);
 }

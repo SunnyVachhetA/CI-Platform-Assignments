@@ -69,7 +69,11 @@ $('#btn-contact-us').click
                 type: 'GET',
                 url: '/Volunteer/User/ContactUs',
                 data: { userId: loggedUserId, userName: loggedUserName, userEmail: loggedUserEmail },
-                success: function (result) {
+                success: function (result, _, xhr) {
+                    if (xhr.status === 204) {
+                        displayActionMessageSweetAlert('Enable Message Setting', 'Enable receive message and email before contacting admin.', 'info');
+                        return;
+                    }
                     $('#partial-contact-form').html(result);
                     $('#contactUsFormModal').modal('show');
                     registerContactUsSubmit();

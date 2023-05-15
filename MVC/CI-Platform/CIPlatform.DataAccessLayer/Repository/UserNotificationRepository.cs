@@ -1,6 +1,8 @@
 ﻿using CIPlatform.DataAccessLayer.Data;
 using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
+using CIPlatform.Entities.ViewModels;
+using CIPlatform.Entities.VMConstants;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIPlatform.DataAccessLayer.Repository;
@@ -29,5 +31,16 @@ public class UserNotificationRepository : Repository<UserNotification>, IUserNot
     {
         var query = "UPDATE user_notification SET is_read = {0}, updated_at = {1} WHERE user_id = {2} AND notification_id = {3}";
         return await _dbContext.Database.ExecuteSqlRawAsync(query, true, DateTimeOffset.Now, userId, notifsId);
+    }
+
+    public async Task<List<NotificationSetting>> SaveNotificaitonUsingSPAsync(string message, NotificationTypeEnum notificationType, NotificationTypeMenu menu, string columnName)
+    {
+        string query = @$"EXEC usp_Notification_PushNotificationToAllUsers @Message = '{message}', @NotificationType = {(int)notificationType}, @NotificationFor = {(int)menu}, @Column = {columnName}";
+
+        var result = await _dbContext.Set<NotificationSetting>()
+            .FromSqlRaw(query)
+            .ToListAsync();
+
+        return result;
     }
 }

@@ -142,7 +142,6 @@ public class UserController : Controller
         }
     }
 
-
     [HttpPut]
     public async Task<IActionResult> Edit(AdminUserInfoVM user)
     {

@@ -279,7 +279,7 @@ public class UserController : Controller
     [ValidateAntiForgeryToken]
     [Route("Registration")]
     [AllowAnonymous]
-    public IActionResult Registration([ModelBinder(BinderType = typeof(CleanDataModelBinder))]  UserRegistrationVM user)
+    public IActionResult Registration([ModelBinder(BinderType = typeof(CleanDataModelBinder))] UserRegistrationVM user)
     {
         string email = user.Email;
         if (_serviceUnit.UserService.IsEmailExists(email))
@@ -413,11 +413,11 @@ public class UserController : Controller
             var userEmailList =
                 await _serviceUnit.MissionInviteService.SaveMissionInviteFromUser(userId, missionId, recommendList);
             var senderUserName = await _serviceUnit.UserService.GetUserName(userId);
-
             string missionInviteLink = Url.Action("Index", "Mission", new {area="Volunteer", id = missionId }, "https") ?? string.Empty;
-
+            
             _ = _serviceUnit.UserService.SendUserMissionInviteService(userEmailList, senderUserName, missionInviteLink,
                 _emailService);
+           
             return StatusCode(201);
         }
         catch (Exception e)
@@ -461,8 +461,11 @@ public class UserController : Controller
 
     [HttpGet]
     [Route("ContactUs", Name = "ContactUs")]
-    public IActionResult ContactUs(long userId, string userName, string userEmail)
+    public async Task<IActionResult> ContactUs(long userId, string userName, string userEmail)
     {
+        bool isUserOpenForMessage = await _serviceUnit.NotificationSettingService.IsUserOpenForContact(userId);
+        if (!isUserOpenForMessage) return NoContent();
+
         ContactUsVM contactUsVm = new()
         {
             UserId = userId,

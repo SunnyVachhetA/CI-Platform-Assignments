@@ -43,13 +43,14 @@ public class UserRepository : Repository<User>, IUserRepository
         return result;
     }
 
-    public Task<IEnumerable<string>> GetUserEmailList(Func<User, bool> filter)
+    public Task<IQueryable<string>> GetUserEmailList(Func<User, bool> filter)
     {
-          return Task.Run(  () =>     
-              dbSet
-              .Where(filter)?
-              .Select(user => user.Email.ToLower())
-          )!;
+        return Task.Run(() =>
+          dbSet
+          .Where(filter)?
+          .Select(user => user.Email.ToLower())
+          .AsQueryable()
+        )!;
     }
 
     private IEnumerable<User> FetchUserDetails( Func<User, bool> filter)

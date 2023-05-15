@@ -27,7 +27,7 @@ public class CountryService: ICountryService
     {
         var result = await _unitOfWork.CountryRepo.GetAllAsync();
         return
-            result
+            result 
                 .Select(ConvertCountryToViewModel);
     }
 

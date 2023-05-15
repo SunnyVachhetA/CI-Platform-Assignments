@@ -190,4 +190,28 @@ public class PushNotificationService : IPushNotificationService
             _ = _emailService.EmailSendAsync(email, subject, message);
         }
     }
+
+
+    #region Push notification using user stored procedure
+    public async Task<List<UserContactVM>> PushNotificationToAllUsersSPAsync(string message, NotificationTypeEnum notificationType, NotificationTypeMenu menu)
+    {
+        string columnName = GetColumnNameFromMenu(menu);
+        var result = await _unitOfWork.UserNotificationRepo.SaveNotificaitonUsingSPAsync(message, notificationType, menu, columnName);
+
+        return result.Select( userPref => new UserContactVM()
+        {
+            UserName = userPref.User.FirstName + " " + userPref.User.LastName,
+            UserId = userPref.UserId,
+            Email = userPref.User.Email,
+        }).ToList();
+    }
+
+    private static string GetColumnNameFromMenu(NotificationTypeMenu menu) =>
+        menu switch
+        {
+            NotificationTypeMenu.NEWS => "is_enabled_news",
+
+            _ => throw new NotImplementedException()
+        };
+    #endregion
 }

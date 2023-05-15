@@ -26,7 +26,7 @@ public interface IUserService
     void SetUserStatusToActive(string email);
     bool CheckUserDetailsFilled(long userId);
     bool CheckIsEmailUnique(string email);
-    Task AddUserByAdmin(AdminUserInfoVM user, string rootPath, string link, string token);
+    Task<long> AddUserByAdmin(AdminUserInfoVM user, string rootPath, string link, string token);
     AdminUserInfoVM LoadUserProfileEdit(long id);
     Task UpdateUserByAdmin(AdminUserInfoVM user, string wwwRootPath);
     UserRegistrationVM CheckAdminCredential(UserLoginVM credential);

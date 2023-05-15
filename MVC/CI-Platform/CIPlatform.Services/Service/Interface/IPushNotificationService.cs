@@ -11,4 +11,7 @@ public interface IPushNotificationService
     Task PushEmailNotificationToUserAsync(UserNotificationTemplate template, string link);
     Task PushRecommendNotificationToUsersAsync(string message, IEnumerable<UserNotificationSettingPreferenceVM> userPrefrence, string avatar, NotificationTypeEnum type, NotificationTypeMenu menu);
     Task PushRecommendEmailNotificationToUsersAsync(IEnumerable<UserNotificationSettingPreferenceVM> userPrefrence, string title, string link, string senderUserName, NotificationTypeMenu menu);
+
+    Task<List<UserContactVM>> PushNotificationToAllUsersSPAsync(string message, NotificationTypeEnum notificationType, NotificationTypeMenu menu);
+
 }

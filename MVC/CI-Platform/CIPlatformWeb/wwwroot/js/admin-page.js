@@ -7,14 +7,6 @@ const overlayContainer = document.querySelector('#admin-overlay');
 const modalContainer = $('#partial-modal-container');
 const adminMenuContent = $('#admin-menu-content');
 
-//const resizeObserver = new ResizeObserver(entries => {
-//    for (let entry of entries) {
-//        updateSidebarHeight();
-//    }
-//});
-
-// Start observing the element
-//resizeObserver.observe(rightContent);
 let isSidebarOpen = true;
 let searchText = '';
 function vhToPixels(vh) {

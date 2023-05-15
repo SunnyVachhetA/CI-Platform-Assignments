@@ -228,6 +228,8 @@ function filterMissionCardAjax() {
             $('.spinner-control').addClass('opacity-0');
             missionDisplay();
             missionPagination();
+            addToFavouriteHandler();
+            handleUserRecommendModal();
         },
         error: ajaxErrorSweetAlert
     });
@@ -348,7 +350,6 @@ function modalEventListener(userId, missionId, missionTitle) {
             handleUserRecommendAjax(userId, missionId, recommendList, missionTitle);
         });
 }
-
 
 function handleUserRecommendAjax(userId, missionId, recommendList, missionTitle) {
     $('#recommendModal').modal('hide');

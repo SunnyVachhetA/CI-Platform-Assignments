@@ -9,7 +9,7 @@ public interface IUserRepository : IRepository<User>
     IEnumerable<User> FetchUserInformationWithMissionInvite();
 
     User ValidateUserCredentialRepo(UserLoginVM credential);
-    Task<IEnumerable<string>> GetUserEmailList(Func<User, bool> filter);
+    Task<IQueryable<string>> GetUserEmailList(Func<User, bool> filter);
     User FetchUserProfile(Func<User, bool> filter);
     void UpdateUserAvatar(string filePath, long userId);
     int UpdateUserStatus(long userId, byte status);

@@ -17,7 +17,6 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
 
     public List<Mission> GetAllMissions()
     {
-
         var result = FetchMissionInformation().ToList();
 
         return result;
@@ -135,7 +134,11 @@ public class MissionRepository : Repository<Mission>, IMissionRepository
 
     public async Task<IEnumerable<Mission>> FetchMissionCardInformationAsync()
     {
+      
+        var count = dbSet.LongCount();
+
         return await dbSet
+            .AsQueryable()
             .AsNoTracking()
             .AsSplitQuery()
             .Include(mission => mission.MissionMedia)

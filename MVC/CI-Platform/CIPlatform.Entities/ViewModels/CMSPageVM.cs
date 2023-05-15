@@ -7,11 +7,10 @@ public class CMSPageVM
     public long CmsPageId { get; set; }
     [Required]
     [MaxLength(255, ErrorMessage = "Title can only contain 255 characters.")]
-    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Title must not contain only whitespace characters.")]
     public string Title { get; set; } = string.Empty;
 
     [Required]
-    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Title must not contain only whitespace characters.")]
+    [RegularExpression(@"^\S+(\s*\S+)*$", ErrorMessage = "Description must not contain only whitespace characters.")]
     public string Description { get; set; } = string.Empty;
 
     [Required]

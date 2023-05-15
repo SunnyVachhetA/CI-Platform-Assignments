@@ -69,4 +69,12 @@ public class NotificationSettingService : INotificationSettingService
         _unitOfWork.NotificationSettingRepo.Add(notificationSetting);
         _unitOfWork.Save();
     }
+
+    public async Task<bool> IsUserOpenForContact(long userId)
+    {
+        var settings = await _unitOfWork.NotificationSettingRepo.GetUserSettingAsync( setting => setting.UserId == userId && (setting.IsEnabledMessage?? false) );
+        if (settings is null) return false;
+
+        return settings.IsEnabledMessage ?? false;
+    }
 }
