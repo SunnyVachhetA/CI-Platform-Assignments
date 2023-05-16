@@ -145,7 +145,8 @@ public class TimesheetController : Controller
         UserNotificationTemplate template = UserNotificationTemplate.ConvertFromTimesheet(vm);
         string link = Url.Action("VolunteerTimesheet", "User", new { area = "Volunteer", id = template.UserId }, "https")!;
         template.Message = GetTimesheetMessage(vm, link);
-        var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+        //var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+        var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserSPAsync(template);
         if (isOpenForEmail)
             _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
     }

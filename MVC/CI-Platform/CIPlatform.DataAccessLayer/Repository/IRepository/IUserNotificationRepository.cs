@@ -11,4 +11,5 @@ public interface IUserNotificationRepository : IRepository<UserNotification>
     Task<int> DeleteAllNotificationAsync(long userId);
 
     Task<List<NotificationSetting>> SaveNotificaitonUsingSPAsync(string message, NotificationTypeEnum notificationType, NotificationTypeMenu menu, string columnName);
+    Task<bool> SaveUserNotificationUsingSPAsync(UserNotificationTemplate template, string columnName);
 }

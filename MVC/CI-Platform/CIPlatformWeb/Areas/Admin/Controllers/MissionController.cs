@@ -247,7 +247,8 @@ public class MissionController : Controller
     private async Task<List<UserContactVM>> FetchEmailSubscriberList(string link, string title, NotificationTypeEnum type, NotificationTypeMenu notificationFor)
     {
         string message = @$"New mission - <a href='{link}' class='text-black-1'>{title}</a>";
-        var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers(message, type, notificationFor);
+        //var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsers(message, type, notificationFor);
+        var emailSubscriptionList = await _serviceUnit.PushNotificationService.PushNotificationToAllUsersSPAsync(message, type, notificationFor);
         return emailSubscriptionList;
     }
     #endregion

@@ -134,7 +134,8 @@ public class StoryController : Controller
             : $"Story request has been declined for {template.Title}";
 
 
-        bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+        //bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+        bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserSPAsync(template);
         if (isOpenForEmail)
             _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
         

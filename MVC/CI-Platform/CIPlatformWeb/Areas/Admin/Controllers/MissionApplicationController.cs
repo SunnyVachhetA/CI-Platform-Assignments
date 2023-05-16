@@ -108,8 +108,8 @@ public class MissionApplicationController : Controller
                   $"Volunteering request has been approved for this mission: {inAppLink}"
                   : $"Volunteering request has been declined for this mission: {inAppLink}";
 
-        var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
-
+        //var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+        var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserSPAsync(template);    
         if (isOpenForEmail)
             _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
         

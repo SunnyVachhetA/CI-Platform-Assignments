@@ -210,8 +210,22 @@ public class PushNotificationService : IPushNotificationService
         menu switch
         {
             NotificationTypeMenu.NEWS => "is_enabled_news",
-
+            NotificationTypeMenu.VOLUNTEER_HOURS => "is_enabled_volunteer_hour",
+            NotificationTypeMenu.VOLUNTEER_GOALS => "is_enabled_volunteer_goal",
+            NotificationTypeMenu.MY_COMMENT => "is_enabled_comment",
+            NotificationTypeMenu.MY_STORIES => "is_enabled_story",
+            NotificationTypeMenu.NEW_MESSAGES => "is_enabled_message",
+            NotificationTypeMenu.MISSION_APPLICATION => "is_enabled_mission_application",
+            NotificationTypeMenu.NEW_MISSIONS => "is_enabled_new_mission",
             _ => throw new NotImplementedException()
         };
+
+    public async Task<bool> PushNotificationToUserSPAsync(UserNotificationTemplate template)
+    {
+        string columnName = GetColumnNameFromMenu(template.NotificationFor);
+        bool result = await _unitOfWork.UserNotificationRepo.SaveUserNotificationUsingSPAsync(template, columnName);
+        return result;
+    }
+
     #endregion
 }

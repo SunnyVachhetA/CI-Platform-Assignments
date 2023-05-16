@@ -14,4 +14,6 @@ public interface IPushNotificationService
 
     Task<List<UserContactVM>> PushNotificationToAllUsersSPAsync(string message, NotificationTypeEnum notificationType, NotificationTypeMenu menu);
 
+    Task<bool> PushNotificationToUserSPAsync(UserNotificationTemplate template);
+
 }

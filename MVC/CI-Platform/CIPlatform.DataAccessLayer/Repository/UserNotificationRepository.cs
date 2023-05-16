@@ -3,7 +3,9 @@ using CIPlatform.DataAccessLayer.Repository.IRepository;
 using CIPlatform.Entities.DataModels;
 using CIPlatform.Entities.ViewModels;
 using CIPlatform.Entities.VMConstants;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace CIPlatform.DataAccessLayer.Repository;
 
@@ -35,12 +37,52 @@ public class UserNotificationRepository : Repository<UserNotification>, IUserNot
 
     public async Task<List<NotificationSetting>> SaveNotificaitonUsingSPAsync(string message, NotificationTypeEnum notificationType, NotificationTypeMenu menu, string columnName)
     {
-        string query = @$"EXEC usp_Notification_PushNotificationToAllUsers @Message = '{message}', @NotificationType = {(int)notificationType}, @NotificationFor = {(int)menu}, @Column = {columnName}";
 
-        var result = await _dbContext.Set<NotificationSetting>()
-            .FromSqlRaw(query)
+        var result = await _dbContext.Database.ExecuteSqlRawAsync("EXEC usp_Notification_PushNotificationToAllUsers @Message, @NotificationType, @NotificationFor, @Column, @CreatedAt",
+        new SqlParameter("@Message", message),
+                    new SqlParameter("@NotificationType", (int)notificationType),
+                    new SqlParameter("@NotificationFor", (int)menu),
+                    new SqlParameter("@Column", columnName),
+                    new SqlParameter("@CreatedAt", DateTimeOffset.Now));
+
+        string query = $"SELECT * FROM notification_setting WHERE {columnName} = 1";
+
+        var usersOpenForEmail = await _dbContext.NotificationSettings.FromSqlRaw(query)
+            .Include(user => user.User)
+            .Where(setting => setting.User.Status ?? false)
             .ToListAsync();
 
-        return result;
+        return usersOpenForEmail;
     }
+
+    public async Task<bool> SaveUserNotificationUsingSPAsync(UserNotificationTemplate template, string columnName)
+    {
+        var result = await _dbContext.Database.ExecuteSqlRawAsync(
+           "EXEC usp_UserNotification_SaveUserNotification " +
+           "@Message, @NotificationType, @NotificationFor, @UserId, @Column, @CreatedAt",
+           new SqlParameter("@Message", template.Message),
+           new SqlParameter("@NotificationType", (int)template.Type),
+           new SqlParameter("@NotificationFor", (int)template.NotificationFor),
+           new SqlParameter("@UserId", template.UserId),
+           new SqlParameter("@Column", columnName),
+           new SqlParameter("@CreatedAt", DateTimeOffset.Now));
+
+
+        string query = $"SELECT * FROM notification_setting WHERE {columnName} = 1 AND is_enalbed_email = 1 AND user_id = {template.UserId}";
+        NotificationSetting setting = _dbContext.NotificationSettings.FromSqlRaw(query)?.FirstOrDefault()!;
+
+        return setting is not null;
+    }
+
+
 }
+
+/*
+ 
+        string query = $"SELECT * FROM notification_settings WHERE {columnName} = 1";
+
+        var usersOpenForEmail = await _dbContext.NotificationSettings.FromSqlRaw(query)
+            .Include(user => user)
+            .Where(setting => setting.User.Status?? false)
+            .ToListAsync();
+ */

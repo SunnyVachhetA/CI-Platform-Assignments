@@ -72,8 +72,9 @@ public class CommentController : Controller
         template.Message = comment.ApprovalStatus == ApprovalStatus.APPROVED ?
            $"Your comment has been approved for mission : <a class='text-black-1' href='{link}'>{comment.MissionTitle}</a>" 
            : $"Your comment has been declined for mission : <a class='text-black-1' href='{link}'>{comment.MissionTitle}</a>";
-        
-        bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+
+        //bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+        bool isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserSPAsync(template);
         if (isOpenForEmail)
             _ = _serviceUnit.PushNotificationService.PushEmailNotificationToUserAsync(template, link);
     }

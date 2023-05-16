@@ -49,7 +49,8 @@ public class ContactUsController : Controller
 
             UserNotificationTemplate template = UserNotificationTemplate.ConvertFromContact(contact);
 
-            var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+            //var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserAsync(template);
+            var isOpenForEmail = await _serviceUnit.PushNotificationService.PushNotificationToUserSPAsync(template);
             if(isOpenForEmail)
                 _ = _serviceUnit.ContactUsService.SendContactResponseEmail(contact);
 
