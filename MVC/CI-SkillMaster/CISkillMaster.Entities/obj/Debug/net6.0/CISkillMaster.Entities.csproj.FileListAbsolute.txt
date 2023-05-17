@@ -1,0 +1,14 @@
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\bin\Debug\net6.0\CISkillMaster.Entities.deps.json
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\bin\Debug\net6.0\CISkillMaster.Entities.runtimeconfig.json
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\bin\Debug\net6.0\CISkillMaster.Entities.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\bin\Debug\net6.0\ref\CISkillMaster.Entities.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\bin\Debug\net6.0\CISkillMaster.Entities.pdb
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\obj\Debug\net6.0\CISkillMaster.Entities.csproj.AssemblyReference.cache
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\obj\Debug\net6.0\CISkillMaster.Entities.GeneratedMSBuildEditorConfig.editorconfig
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\obj\Debug\net6.0\CISkillMaster.Entities.AssemblyInfoInputs.cache
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\obj\Debug\net6.0\CISkillMaster.Entities.AssemblyInfo.cs
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\obj\Debug\net6.0\CISkillMaster.Entities.csproj.CoreCompileInputs.cache
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\obj\Debug\net6.0\CISkillMaster.Entities.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\obj\Debug\net6.0\ref\CISkillMaster.Entities.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\obj\Debug\net6.0\CISkillMaster.Entities.pdb
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Entities\obj\Debug\net6.0\CISkillMaster.Entities.genruntimeconfig.cache

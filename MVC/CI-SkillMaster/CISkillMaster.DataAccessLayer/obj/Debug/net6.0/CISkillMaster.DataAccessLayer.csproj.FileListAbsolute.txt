@@ -1,0 +1,15 @@
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\bin\Debug\net6.0\CISkillMaster.DataAccessLayer.deps.json
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\bin\Debug\net6.0\CISkillMaster.DataAccessLayer.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\bin\Debug\net6.0\ref\CISkillMaster.DataAccessLayer.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\bin\Debug\net6.0\CISkillMaster.DataAccessLayer.pdb
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\bin\Debug\net6.0\CISkillMaster.Entities.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\bin\Debug\net6.0\CISkillMaster.Entities.pdb
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\obj\Debug\net6.0\CISkillMaster.DataAccessLayer.csproj.AssemblyReference.cache
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\obj\Debug\net6.0\CISkillMaster.DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\obj\Debug\net6.0\CISkillMaster.DataAccessLayer.AssemblyInfoInputs.cache
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\obj\Debug\net6.0\CISkillMaster.DataAccessLayer.AssemblyInfo.cs
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\obj\Debug\net6.0\CISkillMaster.DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\obj\Debug\net6.0\CISkillMaster.DataAccessLayer.csproj.CopyComplete
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\obj\Debug\net6.0\CISkillMaster.DataAccessLayer.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\obj\Debug\net6.0\ref\CISkillMaster.DataAccessLayer.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.DataAccessLayer\obj\Debug\net6.0\CISkillMaster.DataAccessLayer.pdb

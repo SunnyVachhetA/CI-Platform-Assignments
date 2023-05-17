@@ -1,0 +1,94 @@
+﻿<main class="d-lg-flex">
+    <div class="overlay d-none d-lg-none position-absolute" id="admin-overlay"></div>
+    <aside class="sidebar flex-shrink-0 min-vh-100">
+        <div class="d-flex pt-2 pt-4 px-3 justify-content-between">
+            <p class="text-white">Navigation</p>
+            <button id="sidebar-close" class="btn btn-close bg-white"></button>
+        </div>
+        <div class="px-4 d-flex flex-column gap-4 mt-2 admin-menu">
+            <div class="active" data-menu="user">
+                <img src="~/assets/user-fill.svg" alt="">
+                User
+            </div>
+            <div data-menu="cms">
+                <img src="~/assets/empty-page.svg" alt="">
+                CMS Page
+            </div>
+            <div data-menu="mission">
+                <img src="~/assets/empty-target.png" alt="Mission">
+                <!--  -->
+                Mission
+            </div>
+            <div data-menu="theme">
+                <img src="~/assets/themes.png" alt="Theme">
+                Mission Theme
+            </div>
+            <div data-menu="skill">
+                <img src="~/assets/tools-empty.svg" alt="Skills">
+                Mission Skills
+            </div>
+            <div data-menu="application">
+                <img src="~/assets/folder-empty.svg" alt="Application"/>
+                Mission Application
+            </div>
+            <div data-menu="timesheet">
+                <img src="~/assets/timesheet-empty.svg" alt="Timesheet"/>
+                Volunteer Timesheet
+            </div>
+            <div data-menu="story">
+                <img src="~/assets/tale.png" alt="Story">
+                Story
+            </div>
+            <div data-menu="banner">
+                <img src="~/assets/banner-empty.svg" height="24px" width="24px" alt="Banner Management">
+                Banner Management
+            </div>
+            <div data-menu="contact">
+                <img src="~/assets/contact-empty.svg" height="24px" width="24px" alt="Contact Us">
+                Contact Us
+            </div>
+            <div data-menu = "comment">
+                <img src="~/assets/comment-empty.svg" height="24px" width="24px" alt="Mission Comments">
+                Mission Comments
+            </div>
+        </div>
+    </aside>
+    <section class="flex-grow-1 position-relative min-vh-100" id="admin-right-content">
+        <nav class="d-flex px-4 py-3 align-items-center shadow-sm">
+            <button id="btn-sidebar-hamburger" class="border-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+            </button>
+            <p class="mb-0 ms-1" id="current-date"></p>
+            <div class="d-flex align-items-center gap-2 ms-auto">
+                <div class="dropdown">
+                    <a class="dropdown-toggle medium-text" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <img src="~/assets/user-img.png" alt="Profile Image" class="nav-profile-picture object-fit-cover">
+                        <span class="d-none d-sm-inline">UserName</span>
+                        <img src="~/assets/drop-down.png" class="ms-2" alt="Options">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" id="admin-logout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="px-4 mt-4 mb-5" id="admin-menu-content">
+        </div>
+        <div id="load-spinner">
+        </div>
+    </section>
+</main>
+
+
+
+<div id="partial-modal-container">
+</div>
+
+<div id="spinner" class="d-flex justify-content-center align-items-center d-none">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>

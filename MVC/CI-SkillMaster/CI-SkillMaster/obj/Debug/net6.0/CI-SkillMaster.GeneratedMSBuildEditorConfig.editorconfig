@@ -1,0 +1,72 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = CI_SkillMaster
+build_property.RootNamespace = CI_SkillMaster
+build_property.ProjectDir = D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CI-SkillMaster\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CI-SkillMaster
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Admin/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Admin/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Admin/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Volunteer/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Volunteer/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXEhvbWVcUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Volunteer/Views/User/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Volunteer/Views/User/_HeroBanner.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXFVzZXJcX0hlcm9CYW5uZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Volunteer/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXF9WaWV3SW1wb3J0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Volunteer/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVm9sdW50ZWVyXFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-ds8zczhr1z

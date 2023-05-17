@@ -1,0 +1,17 @@
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\bin\Debug\net6.0\CISkillMaster.Services.deps.json
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\bin\Debug\net6.0\CISkillMaster.Services.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\bin\Debug\net6.0\ref\CISkillMaster.Services.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\bin\Debug\net6.0\CISkillMaster.Services.pdb
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\bin\Debug\net6.0\CISkillMaster.DataAccessLayer.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\bin\Debug\net6.0\CISkillMaster.Entities.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\bin\Debug\net6.0\CISkillMaster.DataAccessLayer.pdb
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\bin\Debug\net6.0\CISkillMaster.Entities.pdb
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\obj\Debug\net6.0\CISkillMaster.Services.csproj.AssemblyReference.cache
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\obj\Debug\net6.0\CISkillMaster.Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\obj\Debug\net6.0\CISkillMaster.Services.AssemblyInfoInputs.cache
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\obj\Debug\net6.0\CISkillMaster.Services.AssemblyInfo.cs
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\obj\Debug\net6.0\CISkillMaster.Services.csproj.CoreCompileInputs.cache
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\obj\Debug\net6.0\CISkillMaster.Services.csproj.CopyComplete
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\obj\Debug\net6.0\CISkillMaster.Services.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\obj\Debug\net6.0\ref\CISkillMaster.Services.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CISkillMaster.Service\obj\Debug\net6.0\CISkillMaster.Services.pdb

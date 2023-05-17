@@ -1,0 +1,35 @@
+﻿@model UserLoginDTO
+@{
+    ViewData["Title"] = "Login | CI Platform";
+}
+<section class="d-flex flex-column flex-lg-row gap-2 gap-lg-0">
+    <partial name="_HeroBanner" />
+    <div class="right-section d-flex flex-column justify-content-between flex-shrink-0 p-0 p-md-5 flex-nowrap">
+        <div class="form-wrapper d-flex flex-column align-items-center justify-content-center mt-auto">
+            <form class="d-flex flex-column gap-4 user-form" method="POST" asp-action="Login">
+                <div class="validation-err-summary" asp-validation-summary="All"></div>
+                <div class="">
+                    <label class="form-label" asp-for="Email"></label>
+                    <input type="email" asp-for="Email" class="form-control" id="email" placeholder="Enter email" value="sunnyvachheta26@gmail.com">
+                    <span class="text-danger font-xs" asp-validation-for="Email"></span>
+                </div>
+
+                <div class="">
+                    <label class="form-label" asp-for="Password"></label>
+                    <input type="password" asp-for = "Password" class="form-control" id="password" placeholder="Enter Password">
+                    <span class="text-danger font-xs" asp-validation-for="Password"></span>
+                </div>
+               
+                <button class="btn-login py-1" type="submit">Login</button>
+            </form>
+            @*<span class="mt-3 font-15 fw-light">Don’t have an account? <a asp-controller="User" asp-action="Registration" class="">Create an account</a>
+                </span>*@
+        </div>
+        <a class="fw-light text-center" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+    </div>
+</section>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"></partial>
+}
