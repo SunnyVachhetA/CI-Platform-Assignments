@@ -1,11 +1,14 @@
 using CI_SkillMaster.Utility.Extension;
 using CISkillMaster.DataAccessLayer.Data;
+using CISkillMaster.Services.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CIDbContext>();
+
+builder.Services.AddScoped(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 
 //Service Dependency Helper 
 builder.Services.ServiceDependencyHelper();

@@ -8,6 +8,7 @@ public static class ServiceDependencyInjector
     public static void ServiceDependencyHelper(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IUserService, UserService>();
+        serviceCollection.AddScoped<ISkillService, SkillService>();
     }
 
 }

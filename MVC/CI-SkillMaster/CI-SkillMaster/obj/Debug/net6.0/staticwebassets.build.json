@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rIQu9Hll/NorsiFs0G8UFWjQoTLueJ3D3iXQcnU54h4=",
+  "Hash": "ogFXCM+FYL821P9FAVs7lo/Vil1KqP00CNAz/hy8qB4=",
   "Source": "CI-SkillMaster",
   "BasePath": "_content/CI-SkillMaster",
   "Mode": "Default",
@@ -2737,6 +2737,23 @@
       "OriginalItemSpec": "wwwroot\\js\\admin-page.js"
     },
     {
+      "Identity": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-SkillMaster\\CI-SkillMaster\\wwwroot\\js\\admin-pagination.js",
+      "SourceId": "CI-SkillMaster",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-SkillMaster\\CI-SkillMaster\\wwwroot\\",
+      "BasePath": "_content/CI-SkillMaster",
+      "RelativePath": "js/admin-pagination.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\admin-pagination.js"
+    },
+    {
       "Identity": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-SkillMaster\\CI-SkillMaster\\wwwroot\\js\\site.js",
       "SourceId": "CI-SkillMaster",
       "SourceType": "Discovered",
@@ -2752,6 +2769,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-SkillMaster\\CI-SkillMaster\\wwwroot\\js\\sweet-alert.js",
+      "SourceId": "CI-SkillMaster",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-SkillMaster\\CI-SkillMaster\\wwwroot\\",
+      "BasePath": "_content/CI-SkillMaster",
+      "RelativePath": "js/sweet-alert.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\sweet-alert.js"
     },
     {
       "Identity": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-SkillMaster\\CI-SkillMaster\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

@@ -8,5 +8,6 @@ public static class RepositoryDependencyInjector
     public static void RepositoryDependencyHelper(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IUserRepository, UserRepository>();
+        serviceCollection.AddScoped<ISkillRepository, SkillRepository>();
     }
 }

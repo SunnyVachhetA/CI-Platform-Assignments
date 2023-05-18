@@ -31,6 +31,8 @@ public partial class CIDbContext : DbContext
 
             entity.HasIndex(e => e.Title, "UQ__skill__E52A1BB336693E12").IsUnique();
 
+            entity.HasIndex(e => e.Title, "UQ_skill_title").IsUnique();
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")

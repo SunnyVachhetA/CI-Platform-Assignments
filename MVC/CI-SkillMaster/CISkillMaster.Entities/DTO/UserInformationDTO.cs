@@ -8,5 +8,5 @@ public class UserInformationDTO
     public Guid Id { get; set; }
     public string Email { get; set; } = string.Empty;
     public UserRole Role { get; set; }
-    public UserStatus Status { get; set; }  
+    public Status Status { get; set; }  
 }

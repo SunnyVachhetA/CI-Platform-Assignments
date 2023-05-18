@@ -1,0 +1,49 @@
+﻿@model PagedResponse<SkillDTO>
+<div class="mt-4 table-responsive admin-table">
+    @if (Model.Count == 0)
+    {
+        <p class="text-info-message p-2 mx-content mx-auto">There are no mission skills available at the moment!</p>
+    }
+    else
+    {
+        <table class="table border">
+            <thead class="">
+                <tr class="border">
+                    <th>Skill Name</th>
+                    <th>Last Modified</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var skill in Model.Data)
+                {
+                    <tr>
+                        <td>
+                            @skill.Title
+                        </td>
+                        <td>
+                            @skill.LastModified.ToString("dd/MM/yyyy")
+                        </td>
+                        <td class="@skill.Status">
+                            @skill.Status
+                        </td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <img class="cursor-pointer skill-edit" data-skillid="@skill.Id" data-skillname="@skill.Title" src="~/assets/editing.png" alt="Edit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Skill">
+                                @if (skill.Status == Status.Active)
+                                {
+                                    <img class="cursor-pointer skill-delete" data-skillid="@skill.Id" data-skillname="@skill.Title" src="~/assets/delete.png" alt="Delete" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="De-Activate Skill">
+                                }
+                                else
+                                {
+                                    <img class="cursor-pointer skill-restore" height="19px" width="18px" data-skillid="@skill.Id" data-skillname="@skill.Title" src="~/assets/restore.svg" alt="Restore" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Restore Skill">
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

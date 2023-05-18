@@ -197,11 +197,13 @@ body {
     font-weight: 300 !important;
     margin-bottom: 0;
 }
-    .user-form .form-control:focus {
-        border-radius: 3px !important;
-        border-color: #2b64b1 !important;
-        box-shadow: none !important;
-    }
+
+.user-modal-form .form-control:focus,
+.user-form .form-control:focus {
+    border-radius: 3px !important;
+    border-color: #2b64b1 !important;
+    box-shadow: none !important;
+}
 
 .validation-err-summary {
     background-color: #f8d7da;
@@ -380,7 +382,7 @@ body {
 }
 
 .admin-search-container {
-    max-width: 20rem;
+    width: 20rem;
 }
 
 .admin-menu > div:hover {
@@ -394,3 +396,93 @@ body {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
     inset: 0;
 }
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+.navbar-home {
+    padding: 1rem;
+}
+
+.nav-profile-picture {
+    border-radius: 50%;
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+.search-input {
+    border: none !important;
+}
+
+    .search-input:focus {
+        outline: none !important;
+        border: none !important;
+    }
+
+    .Active 
+    {
+        color: var(--col-green) !important;
+    }
+    .InActive {
+        color: var(--col-red) !important;
+    }
+
+#msn-skill-search:focus
+{
+    border-bottom: 1px solid black !important;
+    box-shadow: none !important;
+}
+
+.btn-g-orange, .btn-g-white {
+    background-color: var(--col-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: .5rem 1.5rem;
+    border: 2px solid var(--col-orange);
+    border-radius: 24px;
+    color: var(--col-orange);
+    transition: var(--transition);
+}
+    .btn-g-orange:hover, .btn-g-white:hover {
+        box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--col-orange);
+        color: var(--col-orange);
+    }
+
+    .btn-g-orange:hover {
+        color: var(--col-orange) !important;
+    }
+
+.text-info-message {
+    border-radius: 10px;
+    border: 1px solid var(--col-gray);
+    background-color: var(--col-orange);
+    color: white;
+}
+
+.mx-content {
+    max-width: max-content;
+}
+.btn-g-gray {
+    border-radius: 1.5rem;
+    cursor: pointer;
+    border: 2px solid var(--col-secondary-brown);
+    border-color: var(--col-secondary-brown);
+    font-size: 1.0625rem;
+    color: var(--col-secondary-brown);
+    padding: 0.5rem 1rem;
+    background-color: white;
+    transition: var(--transition);
+}
+
+    .btn-g-gray:hover {
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        border: 1px solid black;
+        color: black;
+    }

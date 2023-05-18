@@ -19,6 +19,22 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Admin/Views/Skill/_AddSkill.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2tpbGxcX0FkZFNraWxsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Admin/Views/Skill/_EditSkill.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2tpbGxcX0VkaXRTa2lsbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Admin/Views/Skill/_SkillList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2tpbGxcX1NraWxsTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Admin/Views/Skill/_Skills.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2tpbGxcX1NraWxscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/AssignmentProjects/CI-Platform-Assignments/MVC/CI-SkillMaster/CI-SkillMaster/Areas/Admin/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

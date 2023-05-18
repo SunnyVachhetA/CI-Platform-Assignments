@@ -1,6 +1,6 @@
 ﻿namespace CISkillMaster.Entities.Enum;
 
-public enum UserStatus
+public enum Status
 {
     Deleted,
     Active,

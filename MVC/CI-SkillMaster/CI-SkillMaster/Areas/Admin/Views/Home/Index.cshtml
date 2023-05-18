@@ -6,8 +6,8 @@
             <button id="sidebar-close" class="btn btn-close bg-white"></button>
         </div>
         <div class="px-4 d-flex flex-column gap-4 mt-2 admin-menu">
-            <div class="active" data-menu="user">
-                <img src="~/assets/user-fill.svg" alt="">
+            <div class="" data-menu="user">
+                <img src="~/assets/user-empty.svg" alt="">
                 User
             </div>
             <div data-menu="cms">
@@ -23,8 +23,8 @@
                 <img src="~/assets/themes.png" alt="Theme">
                 Mission Theme
             </div>
-            <div data-menu="skill">
-                <img src="~/assets/tools-empty.svg" alt="Skills">
+            <div data-menu="skill" class="active">
+                <img src="~/assets/tools-fill.svg" alt="Skills">
                 Mission Skills
             </div>
             <div data-menu="application">
@@ -77,13 +77,15 @@
         </nav>
         <div class="px-4 mt-4 mb-5" id="admin-menu-content">
         </div>
-        <div id="load-spinner">
-        </div>
+        
     </section>
 </main>
 
-
-
+@*<div class="spinner-overlay">
+    <div id="load-spinner">
+    </div>
+</div>
+*@
 <div id="partial-modal-container">
 </div>
 
@@ -92,3 +94,9 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src ="~/js/admin-page.js"></script>
+    <script src="~/js/sweet-alert.js"></script>
+}

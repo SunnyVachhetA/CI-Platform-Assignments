@@ -14,7 +14,7 @@ public static class UserMapper
             Email = user.Email,
             Id = user.Id,
             Role = user.Role == 0 ? UserRole.User : UserRole.Admin,
-            Status = (UserStatus) user.Status
+            Status = (Status) user.Status
         };
         return dto;
     }
