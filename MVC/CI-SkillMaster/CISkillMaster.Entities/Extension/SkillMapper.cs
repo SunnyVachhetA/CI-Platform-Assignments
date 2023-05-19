@@ -17,4 +17,18 @@ public static class SkillMapper
         };
         return skillDTO;
     }
+
+    public static SkillFormDTO ToSkillFormDTO(this Skill skill) => new()
+    {
+        Id = skill.Id,
+        Status = (Status)skill.Status,
+        Title = skill.Title,
+    };
+
+    public static Skill ToSkillModel(this SkillFormDTO skill) => new()
+    {
+        Title = skill.Title,
+        Status = (byte)skill.Status,
+        CreatedAt = DateTimeOffset.Now,
+    };
 }

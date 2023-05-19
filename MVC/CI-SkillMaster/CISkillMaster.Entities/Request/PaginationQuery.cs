@@ -5,6 +5,7 @@ public class PaginationQuery
     public int PageSize { get; set; }
     public int PageNumber { get; set; }
 
+    public bool IsPaging { get; set; }  
     public string? Key { get; set; }
     public PaginationQuery()
     {

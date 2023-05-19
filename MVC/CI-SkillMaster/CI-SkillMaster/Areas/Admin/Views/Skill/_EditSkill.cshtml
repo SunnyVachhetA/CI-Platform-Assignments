@@ -1,4 +1,4 @@
-﻿@model SkillDTO
+﻿@model SkillFormDTO
 <!-- Add Theme Form Modal Begin -->
 <div class="modal" tabindex="-1" id="editSkillModal">
     <div class="modal-dialog modal-dialog-centered">
@@ -8,19 +8,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="user-modal-form" id="form-edit-skill">
+                <input type ="hidden" asp-for="Id"/>
                 <div class="modal-body d-flex flex-column gap-3">
                     <div>
                         <label class="form-label" asp-for="Title"></label>
-                        <input asp-for="Title" class="form-control" placeholder="Enter Skill Title">
+                        <input asp-for="Title" class="form-control" placeholder="Enter Skill Title" id = "title">
                         <span id="err-title" asp-validation-for="Title" class="text-danger font-xs"></span>
                         <span class="text-danger font-xs" id="skill-title-err"></span>
                     </div>
                     <div>
                         <label class="form-label" asp-for="Status"></label>
-                        <select class="form-select" asp-for="Status">
+                        <select class="form-select" asp-for="Status" asp-items="Html.GetEnumSelectList<Status>().Where(x => int.Parse(x.Value) != 0)">
                             <option value="" selected disabled>Select Status</option>
-                            <option value="1">Active</option>
-                            <option value="2">In Active</option>
+                            
                         </select>
                         <span id="err-status" class="text-danger font-xs" asp-validation-for="Status"></span>
                     </div>

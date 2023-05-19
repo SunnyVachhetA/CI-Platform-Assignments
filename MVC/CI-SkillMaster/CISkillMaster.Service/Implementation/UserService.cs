@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace CISkillMaster.Services.Implementation;
 
-public sealed class UserService : IUserService
+public sealed class UserService : Service<User>, IUserService
 {
     #region Property
     private readonly IUserRepository _userRepository;
@@ -16,7 +16,7 @@ public sealed class UserService : IUserService
     #endregion
 
     #region Constructor
-    public UserService(IUserRepository userRepository, ILoggerAdapter<UserService> logger)
+    public UserService(IUserRepository userRepository, ILoggerAdapter<UserService> logger): base(userRepository)
     {
         Console.WriteLine("here user service;");
         _userRepository = userRepository;
@@ -28,14 +28,15 @@ public sealed class UserService : IUserService
     public async Task<UserInformationDTO?> SignInUser(UserLoginDTO credential)
     {
         _logger.LogInformation("Executing {Action}", nameof(SignInUser));
-        var user = await _userRepository.GetFirstOrDefaultAsync(IsValidCredential(credential.Email, credential.Password));
+
+        var user = await GetFirstOrDefaultAsync(IsValidCredential(credential.Email, credential.Password));
         if (user is null)
         {
             _logger.LogWarning("Invalid user credential for {Param}", credential.Email);
             return null;
         }
-        return user.ToUserInformationDTO();
 
+        return user.ToUserInformationDTO();
     }
     #endregion 
 

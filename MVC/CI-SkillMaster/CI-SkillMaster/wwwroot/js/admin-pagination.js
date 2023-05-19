@@ -1,21 +1,28 @@
-﻿let totalRows, rowsPerPage, totalPage, currentPageSet, totalPageSet, currentPage, pageBtnDisplay = 2;
+﻿let totalRows, rowsPerPage, totalPage, currentPageSet, totalPageSet, currentPage, pageBtnDisplay = 5;
+let callbackFunction;
 let paginationContainer;
 let btnContainer = $('<div>', { 'class': 'pagination c-pagination-item d-flex gap-2' });
-function createPagination(row = 5) {
-
+let prevPageNumber;
+function createPagination(totalRecordCount, cb, row = 5) {
+   
+    callbackFunction = cb;
     paginationContainer = $('#pagination-container');
     $(paginationContainer).empty();
     btnContainer.empty();
+    $('#pg-entry').remove();
     paginationContainer.append(btnContainer);
     currentPage = 1;
+    prevPageNumber = 1;
     rowsPerPage = row;
-    totalRows = $('tbody > tr').length;
+
+    paginationQuery.PageSize = rowsPerPage;
+
+    totalRows = totalRecordCount;
     totalPage = Math.ceil(totalRows / rowsPerPage);
     currentPageSet = 1;
     totalPageSet = Math.ceil(totalPage / pageBtnDisplay);
 
     createPaginationButton();
-
     handleDisplayTableRow();
     if (totalPageSet > 1) handleButtonDisplayPagination();
 }
@@ -54,7 +61,7 @@ function handleButtonDisplayPagination() {
     let high = currentPageSet * pageBtnDisplay;
     let low = high - pageBtnDisplay + 1;
     currentPage = low;
-
+   
     $.each($('[data-page]'), (_, item) => {
         let btnNumber = $(item).data('page');
         if (btnNumber >= low && btnNumber <= high) {
@@ -68,33 +75,25 @@ function handleButtonDisplayPagination() {
 }
 
 function handleDisplayTableRow() {
+    
     let low = (currentPage - 1) * rowsPerPage;
-    let high = (currentPage) * rowsPerPage;
-    let count = 0;
-    $('tbody>tr').each((index, item) => {
-        if (index >= low && index < high) {
-            count++;
-            $(item).removeClass('d-none');
-        }
-        else
-            $(item).addClass('d-none');
-    });
-
+    let high = Math.min(currentPage * rowsPerPage, totalRows);
     $(document).scrollTop(0);
 
     $('#pg-entry').remove();
     $(`[data-page='${currentPage}'`).addClass('active');
-    if (count == 0) {
-        $('#pg-entry').remove();
-        return;
-    }
+
+    if (high == 0) return;
     const entry = $('<div>', {
-        text: `${low + 1} - ${low + count} Entry of ${totalRows}`,
+        text: `${low + 1} - ${high} Entry of ${totalRows}`,
         id: 'pg-entry',
         class: 'fw-light text-black-1'
     });
 
     paginationContainer.prepend(entry);
+    if (currentPage == prevPageNumber) return;
+    handleCurrentPageEntryDisplay();
+    prevPageNumber = currentPage;
 }
 
 function createLeftButton(btnLeft) {
@@ -140,7 +139,6 @@ function createRightButton(btnRight) {
     btnContainer.append(btnRight);
     $(btnRight).click(() => {
         if (currentPage == totalPage) return;
-        console.log(currentPage);
         $(`[data-page='${currentPage}'`).removeClass('active');
         currentPage++;
         if (totalPageSet > 1 && currentPage > (currentPageSet * pageBtnDisplay)) {
@@ -162,5 +160,20 @@ function createNextButton(btnNext) {
         currentPageSet++;
         handleButtonDisplayPagination();
         handleDisplayTableRow();
+    });
+}
+
+function handleCurrentPageEntryDisplay() {
+    paginationQuery.PageNumber = currentPage;
+    paginationQuery.IsPaging = true;
+    $.ajax({
+        type: 'GET',
+        url: loadAllSkillUrl,
+        data: paginationQuery,
+        success: (result) => {
+            $('#table-data').html(result);
+            callbackFunction();
+        },
+        error: ajaxErrorSweetAlert
     });
 }

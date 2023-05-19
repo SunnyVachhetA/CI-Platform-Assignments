@@ -2,7 +2,6 @@
 using CISkillMaster.DataAccessLayer.Data;
 using CISkillMaster.DataAccessLayer.Extension;
 using CISkillMaster.Entities.DataModels;
-using CISkillMaster.Entities.DTO;
 using CISkillMaster.Entities.Request;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -22,22 +21,13 @@ public class SkillRepository : Repository<Skill>, ISkillRepository
     #region Methods
     public async Task<(int totalSkillCount, IEnumerable<Skill> skills)> GetPaginatedSkills(PaginationQuery query)
     {
-        Stopwatch timer = new Stopwatch();
-        timer.Start();
-        var count = await _dbSet.CountAsync();
-        timer.Stop();
+        var count = await _dbSet.AsQueryable().CountAsync();
 
-        Console.WriteLine(timer.ElapsedMilliseconds/1000.0);
-
-        timer.Start();
         var result = await _dbSet.AsQueryable()
                                         .AsNoTracking()
                                         .OrderBy(skill => skill.Title)
                                         .ApplyPagination(query)
                                         .ToListAsync();
-        timer.Stop();
-
-        Console.WriteLine(timer.ElapsedMilliseconds/1000.0);
         return (count, result);
     }
 

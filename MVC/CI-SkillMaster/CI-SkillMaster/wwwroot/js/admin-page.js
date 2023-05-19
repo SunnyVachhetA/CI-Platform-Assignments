@@ -1,6 +1,4 @@
-﻿const { Modal } = require("../lib/bootstrap/dist/js/bootstrap.esm");
-
-const dateContainer = document.getElementById('current-date');
+﻿const dateContainer = document.getElementById('current-date');
 const btnHamburger = document.getElementById('btn-sidebar-hamburger');
 const adminSidebar = document.querySelector('.sidebar');
 const sidebarClose = document.querySelector('#sidebar-close');
@@ -56,25 +54,26 @@ sidebarClose.addEventListener('click', () => {
 //    adminSidebar.classList.add('hide');
 //});
 
-//function hideSpinner() {
-//    $("#spinner").addClass('d-none');
-//    $('#loader').addClass('d-none');
-//}
+function hideSpinner() {
+    $(".spinner-overlay").addClass('d-none');
+    $('#load-spinner').addClass('d-none');
+}
 
-//function showSpinner() {
-//    $("#spinner").removeClass('d-none');
-//    $('#loader').addClass('d-none');
-//}
+function showSpinner() {
+    $(".spinner-overlay").removeClass('d-none');
+    $('#load-spinner').removeClass('d-none');
+}
 
 
 
 const genericSearch = debounce(
-    (pagedQuery, url, action) => {
-        console.log(pagedQuery);
+    (url, action) => {
+        paginationQuery.PageNumber = 1;
+        currentPage = 1;
         $.ajax({
             type: 'GET',
             url: url,
-            data: pagedQuery,
+            data: paginationQuery,
             success: function (result) {
                 $('#table-data').html(result);
                 $('.spinner-control').removeClass('opacity-1');
@@ -101,9 +100,15 @@ function debounce(cb, delay = 1000) {
 }
 
 function addAllEvents(menu) {
-    loadSkillOnDOM();
-    registerEditAndDeleteEvents();
+    const skillCount = $('#skill-count').val();
+    registerSkillTableEvent();
+    
+    createPagination(skillCount, registerSkillTableEvent);
+}
+
+function registerSkillTableEvent() {
     registerToolTips();
+    registerEditAndDeleteEvents();
 }
 
 //Skill Ajax
@@ -112,17 +117,27 @@ const loadAllSkillUrl = '/Admin/Skill/Index';
 const addSkillUrl = '/Admin/Skill/Add';
 const editSkillUrl = '/Admin/Skill/Edit';
 const checkUniqueSkillTitleUrl = '/Admin/Skill/UniqueSkill';
-loadSkillsAjax();
 
+const paginationQuery = {
+    PageNumber: 1,
+    PageSize: 5
+};
+loadSkillsAjax();
 function loadSkillsAjax() {
+    paginationQuery.IsPaging = false;
+    paginationQuery.PageNumber = 1;
+    currentPage = 1;
     $.ajax(
         {
             type: 'GET',
             url: loadAllSkillUrl,
+            data: paginationQuery,
+            beforeSend: showSpinner,
             success: (result) => {
                 adminMenuContent.html(result);
                 loadSkillOnDOM();
-            }
+            },
+            complete: hideSpinner
         });
 }
 
@@ -132,6 +147,7 @@ function loadSkillOnDOM() {
     //    $('#msn-skill-search').prop('readonly', true);
     //    return;
     //}
+    createPagination(skillCount, registerSkillTableEvent);
     registerToolTips();
     registerSkillSearchEvent('msn-skill-search');
     registerBtnAddSkill();
@@ -140,13 +156,12 @@ function loadSkillOnDOM() {
 
 function registerSkillSearchEvent(id) {
     let searchBox = document.getElementById(id);
-    const pagedQuery = {};
     searchBox.addEventListener('input', e => {
         searchText = e.target.value;
         $('.spinner-control').removeClass('opacity-0');
         $('.spinner-control').addClass('opacity-1');
-        pagedQuery.Key = searchText.trim();
-        genericSearch(pagedQuery, '/Admin/Skill/Search', 'skill');
+        paginationQuery.Key = searchText.trim();
+        genericSearch('/Admin/Skill/Search', 'skill');
     });
 }
 
@@ -169,7 +184,6 @@ function registerEditAndDeleteEvents() {
     $('.skill-edit').each((_, item) => {
         $(item).click(() => {
             const skillId = $(item).data('skillid');
-            
             $.ajax({
                 type: 'GET',
                 url: editSkillUrl,
@@ -189,33 +203,35 @@ function registerSkillFormSubmit(form, type, url, bModal, message, skillId = 0) 
     $(form).on('submit', (e) => {
         e.preventDefault();
         $(form).validate();
-        if ($(form).valid()) {
+        if (!$(form).valid()) return;
 
-            let skillVm = new URLSearchParams($(form).serialize());
+        let skillVm = new URLSearchParams($(form).serialize());
 
-            let skillName = skillVm.get('Title');
+        console.log(skillVm);
+        let skillName = skillVm.get('Title').trim();
 
-            let isSkillUnique = checkIsSkillNameUnique(skillName, skillId);
+        let isSkillUnique = checkIsSkillNameUnique(skillName, skillId);
 
-            if (isSkillUnique) {
-                $('#skill-title-err').text(`${skillName} already exists. Enter unique skill.`).show();
-                //displayActionMessageSweetAlert(`Skill '${skillName}' Already Exists!`, 'Please enter unique skill name.', 'error');
-                return;
-            }
-            $(bModal).modal('hide');
-            $.ajax({
-                type: type,
-                url: url,
-                data: $(form).serialize(),
-                success: function (result) {
-                    adminMenuContent.html(result);
-                    loadSkillsOnDOM();
-                    $(form)[0].reset();
-                    successMessageSweetAlert(skillName + " " + message);
-                },
-                error: ajaxErrorSweetAlert
-            });
+        if (!isSkillUnique) {
+            $('#skill-title-err').text(`${skillName} already exists. Enter unique skill.`).show();
+            $('#title').val(skillName);
+            //displayActionMessageSweetAlert(`Skill '${skillName}' Already Exists!`, 'Please enter unique skill name.', 'error');
+            return;
         }
+        skillVm.set('Title', skillName);
+        $(bModal).modal('hide');
+        $.ajax({
+            type: type,
+            url: url,
+            data: skillVm.toString(),
+            success: function (result) {
+                $(form)[0].reset();
+                successMessageSweetAlert(skillName + " " + message);
+                loadSkillsAjax();
+            },
+            error: ajaxErrorSweetAlert
+        });
+
     });
 }
 
@@ -224,7 +240,7 @@ function checkIsSkillNameUnique(skillName, skillId = 0) {
     $.ajax({
         async: false,
         type: 'GET',
-        data: { skillName: skillName, skillId: skillId },
+        data: { title: skillName, id: skillId },
         url: checkUniqueSkillTitleUrl,
         success: function (result) {
             isSkillUnique = result;

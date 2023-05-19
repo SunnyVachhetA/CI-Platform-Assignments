@@ -1,5 +1,4 @@
 ﻿@model PagedResponse<SkillDTO>
-@Html.HiddenFor(model => Model.Count, new { id = "skill-count" })
 <div class="border-bottom mb-2">
     <div class="border-bottom-1 mx-content pb-2 font-30">
         Mission Skill
@@ -27,6 +26,7 @@
     <partial name="_SkillList" model = "Model"></partial>
 </div>
 
-
 <div class="pagination c-pagination-item mt-2 d-flex flex-column flex-md-row gap-2 align-items-center justify-content-between" id="pagination-container">
 </div>
+
+
