@@ -11,5 +11,5 @@ public class SkillFormDTO
     public string Title { get; set; } = string.Empty;
 
     [Required]
-    public Status Status { get; set; }  
+    public bool? Status { get; set; }  
 }

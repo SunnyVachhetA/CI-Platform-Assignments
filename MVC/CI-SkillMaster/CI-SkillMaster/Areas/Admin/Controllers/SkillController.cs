@@ -1,4 +1,5 @@
-﻿using CISkillMaster.Entities.DTO;
+﻿using CI_SkillMaster.Authentication;
+using CISkillMaster.Entities.DTO;
 using CISkillMaster.Entities.Request;
 using CISkillMaster.Entities.Response;
 using CISkillMaster.Services.Abstract;
@@ -8,6 +9,7 @@ using System.Text.Json;
 
 namespace CI_SkillMaster.Areas.Admin.Controllers;
 [Area("Admin")]
+[AdminAuthentication]
 public class SkillController : Controller
 {
     #region Properties
@@ -59,16 +61,16 @@ public class SkillController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Edit(int skillId)
+    public async Task<IActionResult> Edit(int id)
     {
-        if(skillId <= 0) return NotFound();
+        if(id <= 0) return NotFound();
 
-        _logger.LogInformation("Executing {Action} with {Param}", nameof(Edit), nameof(skillId));
+        _logger.LogInformation("Executing {Action} with {Param}", nameof(Edit), nameof(id));
 
-        SkillFormDTO? editSkill = await _skillService.LoadSkillInformationAsync( skillId );
+        SkillFormDTO? editSkill = await _skillService.LoadSkillInformationAsync( id );
         if (editSkill is null)
         {
-            _logger.LogWarning( "Skill Not Found {Param}", nameof(skillId) );
+            _logger.LogWarning( "Skill Not Found {Param}", nameof(id) );
             return NotFound();
         }
 
@@ -94,6 +96,33 @@ public class SkillController : Controller
         if (string.IsNullOrWhiteSpace(title)) return false;
 
         return await _skillService.CheckIsSkillUniqueAsync(title, id);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete(int id)
+    {
+        _logger.LogInformation("Executing {Action} with {Param}", nameof(Delete), id);
+        await _skillService.Delete(id);
+
+        return NoContent();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Activate(int id)
+    {
+        _logger.LogInformation("Executing {Action} with {Param}", nameof(Delete), id);
+
+        await _skillService.ActiveAsync(id);
+        return NoContent();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> DeActivate(int id)
+    {
+        _logger.LogInformation("Executing {Action} with {Param}", nameof(DeActivate), id);
+
+        await _skillService.DeActiveAsync(id);
+        return NoContent();
     }
     #endregion
 }

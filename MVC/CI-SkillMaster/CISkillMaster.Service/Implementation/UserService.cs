@@ -1,6 +1,7 @@
 ﻿using CISkillMaster.DataAccessLayer.Abstract;
 using CISkillMaster.Entities.DataModels;
 using CISkillMaster.Entities.DTO;
+using CISkillMaster.Entities.Exceptions;
 using CISkillMaster.Entities.Extension;
 using CISkillMaster.Services.Abstract;
 using CISkillMaster.Services.Logging;
@@ -33,6 +34,7 @@ public sealed class UserService : Service<User>, IUserService
         if (user is null)
         {
             _logger.LogWarning("Invalid user credential for {Param}", credential.Email);
+            throw new ResourceNotFoundException($"User not found with data: {credential.Email}");
             return null;
         }
 

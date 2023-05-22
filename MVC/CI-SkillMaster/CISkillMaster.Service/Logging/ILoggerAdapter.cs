@@ -14,4 +14,6 @@ public interface ILoggerAdapter<T> where T : class
     void LogError(string message);
     void LogError<T0>(string message, T0 arg1);
     void LogError<T0, T1>(string message, T0 arg1, T1 arg2);
+
+    void LogError(Exception? exception, string message);
 }

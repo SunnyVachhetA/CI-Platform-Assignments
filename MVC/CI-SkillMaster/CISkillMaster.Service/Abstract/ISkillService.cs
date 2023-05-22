@@ -13,4 +13,7 @@ public interface ISkillService: IService<Skill>
     Task<SkillFormDTO?> LoadSkillInformationAsync(int skillId);
     Task AddAsync(SkillFormDTO skill);
     Task UpdateAsync(SkillFormDTO skill);
+    Task ActiveAsync(int id);
+    Task Delete(int id);
+    Task DeActiveAsync(int id);
 }

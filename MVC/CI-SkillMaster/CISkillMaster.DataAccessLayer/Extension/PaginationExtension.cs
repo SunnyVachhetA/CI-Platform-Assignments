@@ -8,6 +8,7 @@ public static class PaginationExtension
     {
         int pageSize = paginationQuery.PageSize;
         int pageNumber = paginationQuery.PageNumber;
+
         if (pageSize < 1) throw new ArgumentOutOfRangeException(nameof(pageSize), "Page size must be greater than or equal to 1.");
         if (pageNumber < 1) throw new ArgumentOutOfRangeException(nameof(pageNumber), "Page number must be greater than or equal to 1.");
 

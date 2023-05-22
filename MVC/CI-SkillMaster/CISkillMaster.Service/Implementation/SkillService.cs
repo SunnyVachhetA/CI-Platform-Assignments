@@ -1,6 +1,7 @@
 ﻿using CISkillMaster.DataAccessLayer.Abstract;
 using CISkillMaster.Entities.DataModels;
 using CISkillMaster.Entities.DTO;
+using CISkillMaster.Entities.Exceptions;
 using CISkillMaster.Entities.Extension;
 using CISkillMaster.Entities.Request;
 using CISkillMaster.Entities.Response;
@@ -76,20 +77,54 @@ public class SkillService : Service<Skill>, ISkillService
     {
         _logger.LogInformation("Executing {Action} with {Param}", nameof(UpdateAsync), JsonSerializer.Serialize(skill));
 
-        var entity = await _skillRepository.GetFirstOrDefaultAsync( FindSkillByIdFilter(skill.Id) );
+        Skill? entity = await FindSkillByIdAsync(skill.Id);
 
-        if(entity is null) throw new ArgumentException(nameof(entity), JsonSerializer.Serialize(skill));
-
-        entity.Status = (byte) skill.Status;
+        entity.Status = skill.Status;
         entity.Title = skill.Title;
         entity.UpdatedAt = DateTimeOffset.Now;
 
+        await UpdateAsync(entity);
+        await SaveAsync();
+    }
+
+    public async Task Delete(int id)
+    {
+        Skill? skill = await FindSkillByIdAsync(id);
+
+        _logger.LogInformation("Executing {Action} with {Param}", nameof(Delete), id);
+        await RemoveAsync(skill);
+        await SaveAsync();
+    }
+
+    public async Task ActiveAsync(int id)
+    {
+        Skill? skill = await FindSkillByIdAsync(id);
+
+        _logger.LogInformation("Executing {Action} with {Param}", nameof(ActiveAsync), id);
+        skill.Status = true;
+        skill.UpdatedAt = DateTimeOffset.Now;   
+        await UpdateAsync(skill);
+        await SaveAsync();
+    }
+
+    private async Task<Skill> FindSkillByIdAsync(int id) =>
+        await GetFirstOrDefaultAsync(FindSkillByIdFilter(id))?? throw new ResourceNotFoundException($"Skill not found for ID: {id}");
+    
+    public async Task DeActiveAsync(int id)
+    {
+        Skill? skill = await FindSkillByIdAsync(id);
+
+        _logger.LogInformation("Executing {Action} with {Param}", nameof(DeActiveAsync), id);
+        skill.Status = false;
+        skill.UpdatedAt = DateTimeOffset.Now;
+        await UpdateAsync(skill);
         await SaveAsync();
     }
     #endregion
 
     #region Helper Filters
-    private static Expression<Func<Skill, bool>> SearchFilter(string key) => skill => skill.Title.Contains(key) && skill.Status != 0;
+    private static Expression<Func<Skill, bool>> SearchFilter(string key) => skill => skill.Title.Contains(key);
+
     private static Expression<Func<Skill, bool>> TitleFilter(string title) => skill => skill.Title.Equals(title);
 
     private static Expression<Func<Skill, bool>> TitleFilter(string title, int id) => skill => skill.Title.Equals(title) && skill.Id != id;
@@ -97,10 +132,11 @@ public class SkillService : Service<Skill>, ISkillService
     private static Expression<Func<Skill, bool>> FindSkillByIdFilter(int id) => skill => skill.Id == id;
 
     public static Expression<Func<Skill, string>> OrderByTitle() => skill => skill.Title;
+
     #endregion
 
     #region Helper Methods
-    private PagedResponse<SkillDTO> GetPagedResult((int count, IEnumerable<Skill> skills) result, PaginationQuery query)
+    private static PagedResponse<SkillDTO> GetPagedResult((int count, IEnumerable<Skill> skills) result, PaginationQuery query)
     {
         var skillList = result.skills
                                         .Select(skill => skill.ToSkillDTO());
@@ -116,3 +152,10 @@ public class SkillService : Service<Skill>, ISkillService
 
     #endregion
 }
+
+
+/*
+ //Skill? skill = await GetFirstOrDefaultAsync(FindSkillByIdFilter(id));
+    //if (skill is null) throw new ResourceNotFoundException($"Skill not found for ID: {id}");
+    //return skill;
+ */ 

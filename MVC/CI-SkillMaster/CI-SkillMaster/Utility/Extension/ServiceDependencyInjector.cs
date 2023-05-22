@@ -9,9 +9,6 @@ public static class ServiceDependencyInjector
     {
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<ISkillService, SkillService>();
-
-        //serviceCollection.AddScoped(typeof(IService<>), typeof(Service<>));
-
     }
 
 }

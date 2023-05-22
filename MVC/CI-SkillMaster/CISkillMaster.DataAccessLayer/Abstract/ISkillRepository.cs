@@ -1,5 +1,4 @@
 ﻿using CISkillMaster.Entities.DataModels;
-using CISkillMaster.Entities.DTO;
 using CISkillMaster.Entities.Request;
 using System.Linq.Expressions;
 

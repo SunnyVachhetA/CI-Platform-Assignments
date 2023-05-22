@@ -116,6 +116,10 @@ function registerSkillTableEvent() {
 const loadAllSkillUrl = '/Admin/Skill/Index';
 const addSkillUrl = '/Admin/Skill/Add';
 const editSkillUrl = '/Admin/Skill/Edit';
+const deleteSkillUrl = '/Admin/Skill/Delete';
+const restoreSkillUrl = '/Admin/Skill/Activate';
+const deActivateSkillUrl = '/Admin/Skill/DeActivate';
+
 const checkUniqueSkillTitleUrl = '/Admin/Skill/UniqueSkill';
 
 const paginationQuery = {
@@ -136,6 +140,9 @@ function loadSkillsAjax() {
             success: (result) => {
                 adminMenuContent.html(result);
                 loadSkillOnDOM();
+            },
+            error: (xhr, _, status) => {
+                window.location.href = "/Volunteer/Home/Error";
             },
             complete: hideSpinner
         });
@@ -181,13 +188,19 @@ function registerBtnAddSkill() {
 }
 
 function registerEditAndDeleteEvents() {
+    editSkill();
+    restoreSkill();
+    deleteSkill();
+}
+
+function editSkill() {
     $('.skill-edit').each((_, item) => {
         $(item).click(() => {
             const skillId = $(item).data('skillid');
             $.ajax({
                 type: 'GET',
                 url: editSkillUrl,
-                data: { skillId },
+                data: { id: skillId },
                 success: (result) => {
                     modalContainer.html(result);
                     $('#editSkillModal').modal('show');
@@ -199,6 +212,74 @@ function registerEditAndDeleteEvents() {
     });
 }
 
+function deleteSkill() {
+    $('.skill-delete').each((_, item) => {
+        $(item).click(() => {
+            const id = $(item).data('skillid');
+            const name = $(item).data('skillname');
+            Swal.fire({
+                title: `Do you want to delete skill ${name}?`,
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Delete',
+                denyButtonText: `De-Activate Instead`,
+                confirmButtonColor: '#dc3741',
+                denyButtonColor: '#f88634'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    genericAjaxCall(id, 'DELETE', deleteSkillUrl, `Skill ${name} deleted.`, loadSkillsAjax);
+                } else if (result.isDenied) {
+                    genericAjaxCall(id, 'PUT', deleteSkillUrl, `Skill ${name} set to in-active.`, handleCurrentPageEntryDisplay);
+                }
+            })
+        });
+    });
+}
+function restoreSkill() {
+    $('.skill-restore').each((_, item) => {
+        $(item).click(() => {
+            const id = $(item).data('skillid');
+            const name = $(item).data('skillname');
+
+            handleRestoreSkillAjax(id, name);
+        });
+    });
+}
+
+function handleRestoreSkillAjax(id, name)
+{
+    Swal.fire({
+        title: 'Activate Skill',
+        text: `Do you want to active skill ${name}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f88634',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Activate'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            genericAjaxCall(id, 'PUT', restoreSkillUrl, `Skill ${name} set to active.`, handleCurrentPageEntryDisplay);
+        }
+    })
+}
+
+function genericAjaxCall(id, type, url, message, cb) {
+    $.ajax({
+        type: type,
+        url: url,
+        data: { id },
+        success: (result, _, xhr) => {
+            if (xhr.status === 204) {
+                displayActionMessageSweetAlert('Task Complete', message, 'success');
+                cb();
+                return;
+            }
+            errorMessageSweetAlert('Something went wrong during update skill status.');
+        },
+        error: ajaxErrorSweetAlert
+    });
+}
+
 function registerSkillFormSubmit(form, type, url, bModal, message, skillId = 0) {
     $(form).on('submit', (e) => {
         e.preventDefault();
@@ -207,7 +288,6 @@ function registerSkillFormSubmit(form, type, url, bModal, message, skillId = 0) 
 
         let skillVm = new URLSearchParams($(form).serialize());
 
-        console.log(skillVm);
         let skillName = skillVm.get('Title').trim();
 
         let isSkillUnique = checkIsSkillNameUnique(skillName, skillId);
@@ -253,3 +333,42 @@ function registerToolTips() {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
+
+function genericSweetPromptId(title, text, cnfButtonText, cb, id) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f88634',
+        cancelButtonColor: '#d33',
+        confirmButtonText: cnfButtonText
+    }).then((result) => {
+        if (result.isConfirmed) {
+            cb(id);
+        }
+    })
+}
+
+$('#admin-logout').click(() => {
+    Swal.fire({
+        title: 'Logout',
+        text: 'Do you want to Logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#f88634',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Logout'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'GET',
+                url: '/Volunteer/User/Logout',
+                success: (result) => {
+                    window.location.href = result.redirectToUrl;
+                },
+                error: ajaxErrorSweetAlert
+            });
+        }
+    })
+});

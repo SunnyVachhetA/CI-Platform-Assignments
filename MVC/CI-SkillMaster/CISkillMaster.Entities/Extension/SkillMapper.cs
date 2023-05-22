@@ -1,6 +1,5 @@
 ﻿using CISkillMaster.Entities.DataModels;
 using CISkillMaster.Entities.DTO;
-using CISkillMaster.Entities.Enum;
 
 namespace CISkillMaster.Entities.Extension;
 
@@ -10,10 +9,10 @@ public static class SkillMapper
     {
         SkillDTO skillDTO = new()
         {
-            Id = skill.Id,  
-            Status = (Status)skill.Status,
-            LastModified = skill.UpdatedAt?? skill.CreatedAt,
-            Title = skill.Title,    
+            Id = skill.Id,
+            Status = skill.Status ?? true,
+            LastModified = skill.UpdatedAt ?? skill.CreatedAt,
+            Title = skill.Title,
         };
         return skillDTO;
     }
@@ -21,14 +20,14 @@ public static class SkillMapper
     public static SkillFormDTO ToSkillFormDTO(this Skill skill) => new()
     {
         Id = skill.Id,
-        Status = (Status)skill.Status,
+        Status = skill.Status,
         Title = skill.Title,
     };
 
     public static Skill ToSkillModel(this SkillFormDTO skill) => new()
     {
         Title = skill.Title,
-        Status = (byte)skill.Status,
+        Status = skill.Status,
         CreatedAt = DateTimeOffset.Now,
     };
 }

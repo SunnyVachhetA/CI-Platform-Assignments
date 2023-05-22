@@ -23,4 +23,7 @@ public class LoggerAdapter<T>: ILoggerAdapter<T> where T : class
     public void LogError(string message) => _logger.LogError(message);
     public void LogError<T0>(string message, T0 arg1) => _logger.LogError(message, arg1);
     public void LogError<T0, T1>(string message, T0 arg1, T1 arg2) => _logger.LogError(message, arg1, arg2);
+
+
+    public void LogError(Exception? exception, string message) => _logger.LogError(exception, message);
 }

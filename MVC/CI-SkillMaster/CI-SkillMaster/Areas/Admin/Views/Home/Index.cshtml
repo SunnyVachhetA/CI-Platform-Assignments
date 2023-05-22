@@ -1,4 +1,9 @@
-﻿<main class="d-lg-flex">
+﻿@{
+    ViewData["Title"] = "Home | Admin";
+    var userName = Context.Session.GetString("UserName");
+    var role = Context.Session.GetString("Role");
+}
+<main class="d-lg-flex">
     <div class="overlay d-none d-lg-none position-absolute" id="admin-overlay"></div>
     <aside class="sidebar flex-shrink-0 min-vh-100">
         <div class="d-flex pt-2 pt-4 px-3 justify-content-between">
@@ -66,7 +71,7 @@
                     <a class="dropdown-toggle medium-text" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         <img src="~/assets/user-img.png" alt="Profile Image" class="nav-profile-picture object-fit-cover">
-                        <span class="d-none d-sm-inline">UserName</span>
+                        <span class="d-none d-sm-inline">@userName</span>
                         <img src="~/assets/drop-down.png" class="ms-2" alt="Options">
                     </a>
                     <ul class="dropdown-menu">

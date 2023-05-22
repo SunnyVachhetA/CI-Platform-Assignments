@@ -26,13 +26,22 @@
                         <td>
                             @skill.LastModified.ToString("dd/MM/yyyy")
                         </td>
-                        <td class="@skill.Status">
-                            @Html.DisplayFor(_ => skill.Status)
-                        </td>
+                        @if (skill.Status)
+                        {
+                            <td>
+                                Active
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                In Active
+                            </td>
+                        }
                         <td>
                             <div class="d-flex gap-3">
                                 <img class="cursor-pointer skill-edit" data-skillid="@skill.Id" data-skillname="@skill.Title" src="~/assets/editing.png" alt="Edit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Skill">
-                                @if (skill.Status == Status.Active)
+                                @if (skill.Status)
                                 {
                                     <img class="cursor-pointer skill-delete" data-skillid="@skill.Id" data-skillname="@skill.Title" src="~/assets/delete.png" alt="Delete" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="De-Activate Skill">
                                 }

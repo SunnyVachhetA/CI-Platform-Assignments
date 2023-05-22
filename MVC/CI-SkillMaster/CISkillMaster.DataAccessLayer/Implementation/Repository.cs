@@ -44,12 +44,16 @@ public class Repository<T> : IRepository<T>  where T : class
             query = query.OrderBy(orderBy);
 
         int count = await query.CountAsync();
+
         query = query.ApplyPagination(pageQuery);
 
         return (count, query.AsEnumerable());
     }
 
-
-
+    public Task UpdateAsync(T entity)
+    {
+        _dbSet.Update(entity);
+        return Task.CompletedTask;
+    }
     #endregion
 }

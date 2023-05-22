@@ -3,7 +3,7 @@ let callbackFunction;
 let paginationContainer;
 let btnContainer = $('<div>', { 'class': 'pagination c-pagination-item d-flex gap-2' });
 let prevPageNumber;
-function createPagination(totalRecordCount, cb, row = 5) {
+function createPagination(totalRecordCount, cb, row = paginationQuery.PageSize) {
    
     callbackFunction = cb;
     paginationContainer = $('#pagination-container');
@@ -92,6 +92,7 @@ function handleDisplayTableRow() {
 
     paginationContainer.prepend(entry);
     if (currentPage == prevPageNumber) return;
+
     handleCurrentPageEntryDisplay();
     prevPageNumber = currentPage;
 }

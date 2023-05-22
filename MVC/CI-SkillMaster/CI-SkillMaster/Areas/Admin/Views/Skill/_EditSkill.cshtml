@@ -18,9 +18,10 @@
                     </div>
                     <div>
                         <label class="form-label" asp-for="Status"></label>
-                        <select class="form-select" asp-for="Status" asp-items="Html.GetEnumSelectList<Status>().Where(x => int.Parse(x.Value) != 0)">
+                        <select class="form-select" asp-for="Status">
                             <option value="" selected disabled>Select Status</option>
-                            
+                            <option value="true">Active</option>
+                            <option value = "false">In Active</option>
                         </select>
                         <span id="err-status" class="text-danger font-xs" asp-validation-for="Status"></span>
                     </div>

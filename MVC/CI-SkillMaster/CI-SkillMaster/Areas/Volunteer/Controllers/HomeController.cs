@@ -1,10 +1,11 @@
 ﻿using CI_SkillMaster.Models;
+using CI_SkillMaster.Utility.Filter;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace CI_SkillMaster.Controllers;
 
 [Area("Volunteer")]
+[ServiceFilter(typeof(GlobalExceptionAttribute))]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -26,10 +27,9 @@ public class HomeController : Controller
         return View();
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    public IActionResult Error(ErrorViewModel model)
     {
         _logger.LogInformation("Executing {Action}", nameof(Error));
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(model);
     }
 }
