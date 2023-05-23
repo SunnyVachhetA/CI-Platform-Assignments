@@ -1,4 +1,3 @@
-using CI_SkillMaster.Utility;
 using CI_SkillMaster.Utility.Extension;
 using CI_SkillMaster.Utility.Filter;
 using CISkillMaster.DataAccessLayer.Data;
@@ -20,6 +19,7 @@ builder.Services.ServiceDependencyHelper();
 builder.Services.RepositoryDependencyHelper();
 builder.Services.AddSession();
 builder.Services.AddTransient<GlobalExceptionAttribute>();
+builder.Services.AddTransient<AjaxExceptionAttribute>();
 //builder.Services.AddScoped<AppExceptionMiddleware>();
 
 //Repository Service Helper

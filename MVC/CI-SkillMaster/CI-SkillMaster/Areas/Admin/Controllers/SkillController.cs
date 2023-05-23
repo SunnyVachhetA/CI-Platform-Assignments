@@ -1,4 +1,5 @@
 ﻿using CI_SkillMaster.Authentication;
+using CI_SkillMaster.Utility.Filter;
 using CISkillMaster.Entities.DTO;
 using CISkillMaster.Entities.Request;
 using CISkillMaster.Entities.Response;
@@ -10,6 +11,7 @@ using System.Text.Json;
 namespace CI_SkillMaster.Areas.Admin.Controllers;
 [Area("Admin")]
 [AdminAuthentication]
+[ServiceFilter(typeof(AjaxExceptionAttribute))]
 public class SkillController : Controller
 {
     #region Properties
@@ -30,7 +32,6 @@ public class SkillController : Controller
     public async Task<IActionResult> Index(PaginationQuery query)
     {
         _logger.LogInformation("Executing {Action}", nameof(Index));
-
         var result = await _skillService.GetAllAsync(query);
 
         return (query.IsPaging) ? PartialView("_SkillList", result) : PartialView("_Skills", result);

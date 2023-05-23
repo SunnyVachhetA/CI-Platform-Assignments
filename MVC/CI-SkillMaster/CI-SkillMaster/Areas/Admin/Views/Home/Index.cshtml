@@ -3,6 +3,7 @@
     var userName = Context.Session.GetString("UserName");
     var role = Context.Session.GetString("Role");
 }
+@Html.HiddenFor(_ => userName, new { id = "user-name" } )
 <main class="d-lg-flex">
     <div class="overlay d-none d-lg-none position-absolute" id="admin-overlay"></div>
     <aside class="sidebar flex-shrink-0 min-vh-100">

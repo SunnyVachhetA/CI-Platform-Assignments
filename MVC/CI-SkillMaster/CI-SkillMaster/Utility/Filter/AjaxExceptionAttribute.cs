@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CI_SkillMaster.Utility.Filter;
 
-public class GlobalExceptionAttribute : ExceptionFilterAttribute
+public class AjaxExceptionAttribute: ExceptionFilterAttribute
 {
-    private readonly ILoggerAdapter<GlobalExceptionAttribute> _logger;
-    public GlobalExceptionAttribute(ILoggerAdapter<GlobalExceptionAttribute> logger)
+    private readonly ILoggerAdapter<AjaxExceptionAttribute> _logger;
+    public AjaxExceptionAttribute(ILoggerAdapter<AjaxExceptionAttribute> logger)
     {
         _logger = logger;
     }
@@ -20,10 +20,14 @@ public class GlobalExceptionAttribute : ExceptionFilterAttribute
         ErrorViewModel errorViewModel = new();
         errorViewModel.Message = context.Exception.Message;
         errorViewModel.Type = context.Exception.GetType().Name;
-        
-        ErrorViewModel model = errorViewModel;
 
+        ErrorViewModel model = errorViewModel;
         model.ErrorCode = context.Exception is ResourceNotFoundException ? 404 : 500;
-        context.Result = new RedirectToActionResult("Error", "Home", model);
+
+        model.Link = "/Volunteer/Home/Error";
+
+        var jsonResult = new JsonResult(model);
+        context.HttpContext.Response.StatusCode = model.ErrorCode;
+        context.Result = jsonResult;
     }
 }

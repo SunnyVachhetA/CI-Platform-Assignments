@@ -1,5 +1,8 @@
 ﻿function ajaxErrorSweetAlert(xhr, status, error) {
-    console.log("Error: " + status + " - " + error);
+    var errorResponse = xhr.responseJSON;
+    var errorPageLink = errorResponse.errorPageLink;
+
+    console.error(`Error occured: ${errorResponse.message} with Status Code ${errorResponse.errorCode}`);
     errorMessageSweetAlert();
 }
 

@@ -23,6 +23,7 @@ public class UserController : Controller
     [HttpGet]
     public IActionResult Login() => View();
     
+    
     [HttpPost]
     public async Task<IActionResult> Login([ModelBinder(BinderType = typeof(CleanDataModelBinder))] UserLoginDTO credential)
     {

@@ -141,9 +141,7 @@ function loadSkillsAjax() {
                 adminMenuContent.html(result);
                 loadSkillOnDOM();
             },
-            error: (xhr, _, status) => {
-                window.location.href = "/Volunteer/Home/Error";
-            },
+            error: ajaxErrorSweetAlert,
             complete: hideSpinner
         });
 }
@@ -372,3 +370,10 @@ $('#admin-logout').click(() => {
         }
     })
 });
+
+//Admin login sweet alert
+var userName = $('#user-name').val();
+
+if (userName != '' && userName != undefined) {
+    successMessageSweetAlert(`Logged in as ${userName}`);
+}

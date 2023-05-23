@@ -2,10 +2,11 @@
 @{
     ViewData["Title"] = "Error";
 }
+<div class="container">
+    <h1 class="text-danger">Error.</h1>
+    <h2 class="text-danger">@Model.Type occurred while processing your request.</h2>
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">@Model.Type occurred while processing your request.</h2>
 
-
-<h3>@Model.ErrorCode - @Model.Message</h3>
+    <h3>@Model.ErrorCode - @Model.Message</h3>
+</div>
 

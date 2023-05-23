@@ -17,7 +17,7 @@ public sealed class UserService : Service<User>, IUserService
     #endregion
 
     #region Constructor
-    public UserService(IUserRepository userRepository, ILoggerAdapter<UserService> logger): base(userRepository)
+    public UserService(IUserRepository userRepository, ILoggerAdapter<UserService> logger) : base(userRepository)
     {
         Console.WriteLine("here user service;");
         _userRepository = userRepository;
@@ -31,14 +31,14 @@ public sealed class UserService : Service<User>, IUserService
         _logger.LogInformation("Executing {Action}", nameof(SignInUser));
 
         var user = await GetFirstOrDefaultAsync(IsValidCredential(credential.Email, credential.Password));
-        if (user is null)
-        {
-            _logger.LogWarning("Invalid user credential for {Param}", credential.Email);
-            throw new ResourceNotFoundException($"User not found with data: {credential.Email}");
-            return null;
-        }
 
-        return user.ToUserInformationDTO();
+        if (user is not null) return user.ToUserInformationDTO();
+
+        _logger.LogWarning("Invalid user credential for {Param}", credential.Email);
+        //throw new ResourceNotFoundException($"User not found with data: {credential.Email}");
+        return null;
+
+
     }
     #endregion 
 

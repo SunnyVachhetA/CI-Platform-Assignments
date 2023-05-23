@@ -11,6 +11,5 @@ public class ErrorViewModel
     public int ErrorCode { get; set; }
 
     public string? Link { get; set; } = string.Empty;
-    public string? Action { get; set; }
     public string Type { get; set; } = string.Empty;
 }
