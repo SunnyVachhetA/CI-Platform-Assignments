@@ -288,14 +288,14 @@ function registerSkillFormSubmit(form, type, url, bModal, message, skillId = 0) 
 
         let skillName = skillVm.get('Title').trim();
 
-        let isSkillUnique = checkIsSkillNameUnique(skillName, skillId);
+        //let isSkillUnique = checkIsSkillNameUnique(skillName, skillId);
 
-        if (!isSkillUnique) {
-            $('#skill-title-err').text(`${skillName} already exists. Enter unique skill.`).show();
-            $('#title').val(skillName);
-            //displayActionMessageSweetAlert(`Skill '${skillName}' Already Exists!`, 'Please enter unique skill name.', 'error');
-            return;
-        }
+        //if (!isSkillUnique) {
+        //    $('#skill-title-err').text(`${skillName} already exists. Enter unique skill.`).show();
+        //    $('#title').val(skillName);
+        //    //displayActionMessageSweetAlert(`Skill '${skillName}' Already Exists!`, 'Please enter unique skill name.', 'error');
+        //    return;
+        //}
         skillVm.set('Title', skillName);
         $(bModal).modal('hide');
         $.ajax({

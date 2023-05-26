@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace CISkillMaster.DataAccessLayer.Implementation;
 
-public class Repository<T> : IRepository<T>  where T : class
+public class Repository<T> : IRepository<T> where T : class
 {
     #region Properties
     protected readonly CIDbContext _dbContext;
@@ -18,7 +18,7 @@ public class Repository<T> : IRepository<T>  where T : class
     public Repository(CIDbContext dbContext)
     {
         _dbContext = dbContext;
-        _dbSet = _dbContext.Set<T>();   
+        _dbSet = _dbContext.Set<T>();
     }
     #endregion
 
@@ -40,10 +40,10 @@ public class Repository<T> : IRepository<T>  where T : class
         if (filter is not null)
             query = query.Where(filter);
 
+        int count = await query.CountAsync();
+
         if (orderBy is not null)
             query = query.OrderBy(orderBy);
-
-        int count = await query.CountAsync();
 
         query = query.ApplyPagination(pageQuery);
 
@@ -55,5 +55,7 @@ public class Repository<T> : IRepository<T>  where T : class
         _dbSet.Update(entity);
         return Task.CompletedTask;
     }
+
+    public async Task<bool> AnyAsync(Expression<Func<T, bool>> filter) => await _dbSet.AnyAsync(filter);
     #endregion
 }

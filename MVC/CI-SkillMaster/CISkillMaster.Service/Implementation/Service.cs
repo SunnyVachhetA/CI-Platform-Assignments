@@ -32,4 +32,6 @@ public class Service<T> : IService<T> where T : class
     public async Task UpdateAsync(T entity) => await _repository.UpdateAsync(entity);
 
     public async Task RemoveAsync(T entity) => await _repository.RemoveAsync(entity);
+
+    public async Task<bool> AnyAsync(Expression<Func<T, bool>> filter) => await _repository.AnyAsync(filter);   
 }

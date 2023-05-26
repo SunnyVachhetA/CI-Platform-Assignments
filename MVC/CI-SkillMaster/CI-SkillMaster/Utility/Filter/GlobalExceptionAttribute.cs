@@ -20,10 +20,9 @@ public class GlobalExceptionAttribute : ExceptionFilterAttribute
         ErrorViewModel errorViewModel = new();
         errorViewModel.Message = context.Exception.Message;
         errorViewModel.Type = context.Exception.GetType().Name;
-        
-        ErrorViewModel model = errorViewModel;
+  
 
-        model.ErrorCode = context.Exception is ResourceNotFoundException ? 404 : 500;
-        context.Result = new RedirectToActionResult("Error", "Home", model);
+        errorViewModel.ErrorCode = context.Exception is ResourceNotFoundException ? 404 : 500;
+        context.Result = new RedirectToActionResult("Error", "Home", errorViewModel);
     }
 }

@@ -37,7 +37,7 @@ public class SkillService : Service<Skill>, ISkillService
 
         //var result = await _skillRepository.GetPaginatedSkills(query);
 
-        var result = await GetSortedPageList<string>(query, null, OrderByTitle());
+        var result = await GetSortedPageList(query, null, OrderByTitle());
 
         return GetPagedResult(result, query);
     }
@@ -48,14 +48,14 @@ public class SkillService : Service<Skill>, ISkillService
         if (query.Key.IsNullOrEmpty()) return await GetAllAsync(query);
 
         //var result = await _skillRepository.FilterSkillAsync(query, SearchFilter(query.Key!));
-        var result = await GetSortedPageList<string>( pageQuery:query, filter: SearchFilter(query.Key!), orderBy: OrderByTitle());
+        var result = await GetSortedPageList( pageQuery:query, filter: SearchFilter(query.Key!), orderBy: OrderByTitle());
         return GetPagedResult(result, query);
     }
 
     public async Task<bool> CheckIsSkillUniqueAsync(string title, int id) =>
          id == 0
-            ? await GetFirstOrDefaultAsync(TitleFilter(title)) is null
-            : await GetFirstOrDefaultAsync(TitleFilter(title, id)) is null;
+            ? !await AnyAsync(TitleFilter(title))
+            : !await AnyAsync(TitleFilter(title, id));
 
     public async Task<SkillFormDTO?> LoadSkillInformationAsync(int skillId)
     {
@@ -89,9 +89,9 @@ public class SkillService : Service<Skill>, ISkillService
 
     public async Task Delete(int id)
     {
+        _logger.LogInformation("Executing {Action} with {Param}", nameof(Delete), id);
         Skill? skill = await FindSkillByIdAsync(id);
 
-        _logger.LogInformation("Executing {Action} with {Param}", nameof(Delete), id);
         await RemoveAsync(skill);
         await SaveAsync();
     }
@@ -131,7 +131,7 @@ public class SkillService : Service<Skill>, ISkillService
 
     private static Expression<Func<Skill, bool>> FindSkillByIdFilter(int id) => skill => skill.Id == id;
 
-    public static Expression<Func<Skill, string>> OrderByTitle() => skill => skill.Title;
+    private static Expression<Func<Skill, string>> OrderByTitle() => skill => skill.Title;
 
     #endregion
 
@@ -152,10 +152,3 @@ public class SkillService : Service<Skill>, ISkillService
 
     #endregion
 }
-
-
-/*
- //Skill? skill = await GetFirstOrDefaultAsync(FindSkillByIdFilter(id));
-    //if (skill is null) throw new ResourceNotFoundException($"Skill not found for ID: {id}");
-    //return skill;
- */ 

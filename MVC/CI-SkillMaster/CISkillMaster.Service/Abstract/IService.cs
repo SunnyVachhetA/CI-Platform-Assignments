@@ -11,4 +11,6 @@ public interface IService<T> where T : class
     Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter);
     Task UpdateAsync(T entity);
     Task RemoveAsync(T entity);
+
+    Task<bool> AnyAsync(Expression<Func<T, bool>> filter);
 }

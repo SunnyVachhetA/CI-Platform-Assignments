@@ -540,3 +540,4 @@ D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CI-SkillMaster\
 D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CI-SkillMaster\bin\Debug\net6.0\System.Text.Encodings.Web.dll
 D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CI-SkillMaster\bin\Debug\net6.0\System.Text.Json.dll
 D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CI-SkillMaster\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+D:\AssignmentProjects\CI-Platform-Assignments\MVC\CI-SkillMaster\CI-SkillMaster\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

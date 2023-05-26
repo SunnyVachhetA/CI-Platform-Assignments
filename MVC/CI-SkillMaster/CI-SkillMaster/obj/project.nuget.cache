@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/b/p5p2k/V9CT5VJtnCYl4rAzdZzuOzynOhCKwbwGhSgrW6aOUVm66V7pdijvTLgS2vjPuiWdYfTxCa4bd3ayA==",
+  "dgSpecHash": "RuPcJWAzoZN/eNtBI6hEXnwN1IW9R2Rcqq2LspLvIcsdWZEU3Ppcl728t3CJTk7CjOnroP/6vVXs7BNLpOEJSw==",
   "success": true,
   "projectFilePath": "D:\\AssignmentProjects\\CI-Platform-Assignments\\MVC\\CI-SkillMaster\\CI-SkillMaster\\CI-SkillMaster.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\pct205\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\pct205\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\pct205\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",
+    "C:\\Users\\pct205\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.16\\microsoft.aspnetcore.authentication.jwtbearer.6.0.16.nupkg.sha512",
     "C:\\Users\\pct205\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.0\\microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
     "C:\\Users\\pct205\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\pct205\\.nuget\\packages\\microsoft.build\\17.3.2\\microsoft.build.17.3.2.nupkg.sha512",

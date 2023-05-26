@@ -1,11 +1,10 @@
 ﻿using CI_SkillMaster.Models;
-using CI_SkillMaster.Utility.Filter;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CI_SkillMaster.Controllers;
 
 [Area("Volunteer")]
-[ServiceFilter(typeof(GlobalExceptionAttribute))]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -28,9 +27,18 @@ public class HomeController : Controller
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error(ErrorViewModel model)
+    public IActionResult Error()
     {
         _logger.LogInformation("Executing {Action}", nameof(Error));
-        return View(model);
+        var exception = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+        var error = new ErrorViewModel
+        {
+            ErrorCode = HttpContext.Response.StatusCode,
+            Message = exception.Error.Message,
+            Type = exception.Error.GetType().Name
+        };
+
+        return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? Json(error) : View(error);
     }
+
 }

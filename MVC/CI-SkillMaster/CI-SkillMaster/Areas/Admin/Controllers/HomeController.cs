@@ -6,7 +6,7 @@ namespace CI_SkillMaster.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [AdminAuthentication]
-[ServiceFilter(typeof(GlobalExceptionAttribute))]
+//[ServiceFilter(typeof(GlobalExceptionAttribute))]
 public class HomeController : Controller
 {
     [HttpGet]

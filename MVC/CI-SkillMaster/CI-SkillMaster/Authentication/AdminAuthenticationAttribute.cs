@@ -6,24 +6,15 @@ namespace CI_SkillMaster.Authentication;
 
 public class AdminAuthenticationAttribute : ActionFilterAttribute
 {
-    public override void OnActionExecuting(ActionExecutingContext filterContext)
+    public override void OnActionExecuting(ActionExecutingContext context)
     {
-        var role = filterContext.HttpContext.Session.GetString("Role");
-        if(role is null)
+        var role = context.HttpContext.Session.GetString("Role");
+        if (role is null || !role.Equals(UserRole.Admin.ToString()))
         {
-            filterContext.Result = new RedirectToRouteResult(
+            context.Result = new RedirectToRouteResult(
            new RouteValueDictionary {
                         { "Controller", "User" },
-                        { "Action", "Login" },
-                        { "Area", "Volunteer"}
-                    });
-        }
-        else if(! role.Equals( UserRole.Admin.ToString() ))
-        {
-            filterContext.Result = new RedirectToRouteResult(
-           new RouteValueDictionary {
-                        { "Controller", "Home" },
-                        { "Action", "Index" },
+                        { "Action", role is null ? "Login" : "Index" },
                         { "Area", "Volunteer"}
                     });
         }

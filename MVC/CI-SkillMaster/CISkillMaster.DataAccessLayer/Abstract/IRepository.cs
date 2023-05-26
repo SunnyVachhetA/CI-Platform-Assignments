@@ -13,4 +13,6 @@ public interface IRepository<T> where T : class
     Task SaveAsync();
     Task UpdateAsync(T entity);
     Task<(int count, IEnumerable<T> list)> GetSortedPageList<TKey>(PaginationQuery pageQuery, Expression<Func<T, bool>>? filter = null, Expression<Func<T, TKey>>? orderBy = null);
+
+    Task<bool> AnyAsync(Expression<Func<T, bool>> filter);
 }

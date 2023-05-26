@@ -1,38 +1,65 @@
 ﻿using CI_SkillMaster.Models;
-using CISkillMaster.Entities.Exceptions;
 using CISkillMaster.Services.Logging;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace CI_SkillMaster.Utility;
 
 public class AppExceptionMiddleware : IMiddleware
 {
     private readonly ILoggerAdapter<AppExceptionMiddleware> _logger;
+
     public AppExceptionMiddleware(ILoggerAdapter<AppExceptionMiddleware> logger)
     {
         _logger = logger;
     }
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+
+    public async Task InvokeAsync(HttpContext context, RequestDelegate _next)
     {
         try
         {
-            await next(context);
+            await _next(context);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, ex.Message);
+            await HandleExceptionMessageAsync(context, ex);
+        }
+    }
 
-            var errorViewModel = new ErrorViewModel()
+    private static Task HandleExceptionMessageAsync(HttpContext context, Exception ex)
+    {
+        int statusCode = (int)HttpStatusCode.InternalServerError;
+
+        if (context.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        {
+            context.Response.ContentType = "application/json";
+            var result = JsonConvert.SerializeObject(new
             {
-                RequestId = context.TraceIdentifier,
-                Message = ex.Message,
-                Type = ex.GetType().Name,
+                StatusCode = statusCode,
+                ErrorMessage = ex.Message
+            });
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = statusCode;
+            return context.Response.WriteAsync(result);
+        }
+        ErrorViewModel error = new()
+        {
+            ErrorCode = statusCode,
+            Message = ex.Message,
+        };
+
+        return Task.Run(() =>
+        {
+            var routeValues = new
+            {
+                controller = "Home",
+                action = "Error",
+                model = error,
+                area = "Volunteer"
             };
 
-            errorViewModel.ErrorCode = ex is ResourceNotFoundException ? 404 : 500;
-            context.Items["ErrorViewModel"] = errorViewModel;
-
-            context.Response.Redirect("/Volunteer/Home/Error");
-
-        }
+            return new RedirectToRouteResult(routeValues);
+        });
     }
 }

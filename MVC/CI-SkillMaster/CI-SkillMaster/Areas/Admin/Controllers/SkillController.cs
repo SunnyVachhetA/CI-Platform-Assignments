@@ -1,5 +1,4 @@
 ﻿using CI_SkillMaster.Authentication;
-using CI_SkillMaster.Utility.Filter;
 using CISkillMaster.Entities.DTO;
 using CISkillMaster.Entities.Request;
 using CISkillMaster.Entities.Response;
@@ -11,7 +10,7 @@ using System.Text.Json;
 namespace CI_SkillMaster.Areas.Admin.Controllers;
 [Area("Admin")]
 [AdminAuthentication]
-[ServiceFilter(typeof(AjaxExceptionAttribute))]
+//[ServiceFilter(typeof(AjaxExceptionAttribute))]
 public class SkillController : Controller
 {
     #region Properties
@@ -34,7 +33,7 @@ public class SkillController : Controller
         _logger.LogInformation("Executing {Action}", nameof(Index));
         var result = await _skillService.GetAllAsync(query);
 
-        return (query.IsPaging) ? PartialView("_SkillList", result) : PartialView("_Skills", result);
+        return query.IsPaging ? PartialView("_SkillList", result) : PartialView("_Skills", result);
     }
 
     [HttpGet]
@@ -53,7 +52,7 @@ public class SkillController : Controller
     public async Task<IActionResult> Add(SkillFormDTO skill)
     {
         _logger.LogInformation("Executing {Action} with {Param}", nameof(Add), JsonSerializer.Serialize(skill));
-        
+
         if (!ModelState.IsValid) return BadRequest();
 
         await _skillService.AddAsync(skill);
@@ -64,14 +63,14 @@ public class SkillController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        if(id <= 0) return NotFound();
+        if (id <= 0) return NotFound();
 
         _logger.LogInformation("Executing {Action} with {Param}", nameof(Edit), nameof(id));
 
-        SkillFormDTO? editSkill = await _skillService.LoadSkillInformationAsync( id );
+        SkillFormDTO? editSkill = await _skillService.LoadSkillInformationAsync(id);
         if (editSkill is null)
         {
-            _logger.LogWarning( "Skill Not Found {Param}", nameof(id) );
+            _logger.LogWarning("Skill Not Found {Param}", nameof(id));
             return NotFound();
         }
 
